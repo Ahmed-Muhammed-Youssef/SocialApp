@@ -8,11 +8,13 @@ using Microsoft.EntityFrameworkCore;
 using API.Data;
 using API.Entities;
 using API.DTOs;
+using Microsoft.AspNetCore.Authorization;
 
 namespace API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class UsersController : ControllerBase
     {
         private readonly DataContext _context;
@@ -23,7 +25,7 @@ namespace API.Controllers
         }
 
         // GET: api/Users
-        [HttpGet]
+        [HttpGet("all")]
         public async Task<ActionResult<IEnumerable<UserDTO>>> GetUsers()
         {
             var users = await _context.Users.ToListAsync();
@@ -31,7 +33,7 @@ namespace API.Controllers
         }
 
         // GET: api/Users/5
-        [HttpGet("{id}")]
+        [HttpGet]
         public async Task<ActionResult<UserDTO>> GetUser(int id)
         {
             var appUser = await _context.Users.FindAsync(id);
@@ -49,7 +51,7 @@ namespace API.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutAppUser(int id, UserDTO user)
         {
-            if (AppUserExists(id))
+            if (await AppUserExists(id))
             {
                 return BadRequest();
             }
@@ -62,7 +64,7 @@ namespace API.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!AppUserExists(id))
+                if (!await AppUserExists(id))
                 {
                     return NotFound();
                 }
@@ -74,19 +76,6 @@ namespace API.Controllers
 
             return NoContent();
         }
-
-        // POST: api/Users
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<AppUser>> PostAppUser(UserDTO user)
-        {
-            var userToPost = DTOtoAppUser(user);
-            _context.Users.Add(userToPost);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("PostAppUser", new { id = userToPost.Id }, user);
-        }
-
         // DELETE: api/Users/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAppUser(int id)
@@ -103,9 +92,9 @@ namespace API.Controllers
             return NoContent();
         }
 
-        private bool AppUserExists(int id)
+        private async Task<bool> AppUserExists(int id)
         {
-            return _context.Users.Any(e => e.Id == id);
+            return await _context.Users.AnyAsync(e => e.Id == id);
         }
         private AppUser DTOtoAppUser(UserDTO user) =>
             new AppUser()

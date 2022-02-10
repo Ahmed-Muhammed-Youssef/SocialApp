@@ -29,6 +29,6 @@ export class AppComponent implements OnInit {
 interface User {
   firstName: string;
   lastName: string;
-  sex: number;
-  interest: number;
+  sex: string;
+  interest: string;
 }

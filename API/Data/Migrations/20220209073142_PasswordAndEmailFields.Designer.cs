@@ -3,14 +3,16 @@ using System;
 using API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace API.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20220209073142_PasswordAndEmailFields")]
+    partial class PasswordAndEmailFields
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -31,8 +33,8 @@ namespace API.Data.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("TEXT");
 
-                    b.Property<char>("Interest")
-                        .HasColumnType("TEXT");
+                    b.Property<int>("Interest")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("LastName")
                         .IsRequired()
@@ -47,8 +49,8 @@ namespace API.Data.Migrations
                         .IsRequired()
                         .HasColumnType("BLOB");
 
-                    b.Property<char>("Sex")
-                        .HasColumnType("TEXT");
+                    b.Property<int>("Sex")
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 

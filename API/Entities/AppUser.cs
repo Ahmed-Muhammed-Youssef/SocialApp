@@ -14,9 +14,18 @@ namespace API.Entities
         [MaxLength(255)]
         public string LastName { get; set; }
         [Required]
-        public Sex Sex { get; set; }
+        public char Sex { get; set; }
         [Required]
-        public Interest Interest { get; set; }
+        public char Interest { get; set; }
+        // Credentials
+        [Required]
+        [EmailAddress]
+        public string Email { get; set; }
+        [Required]
+        public byte[] Password { get; set; }
+        [Required]
+        public byte[] PasswordSalt { get; set; }
+
         // Collection navigation properties
         [InverseProperty(nameof(Like.Liker))]
         public ICollection<Like> LikesLikers { get; set; }
@@ -27,16 +36,5 @@ namespace API.Entities
         [InverseProperty(nameof(Match.Matched))]
         public ICollection<Match> MatchesMatchedId { get; set; }
 
-    }
-    public enum Sex
-    {
-        M,
-        F
-    }
-    public enum Interest
-    {
-        M,
-        F,
-        Both
     }
 }

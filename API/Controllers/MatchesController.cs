@@ -20,14 +20,14 @@ namespace API.Controllers
             this.context = context;
         }
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Match>>> GetAllMatches()
+        public async Task<ActionResult<IEnumerable<IdPairs>>> GetAllMatches()
         {
             var matches = await context.Matches.ToListAsync();
-            return Ok(matches);
+            return Ok(matches.ConvertAll(MatchtoDTO));
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<IEnumerable<Match>>> GetMatches(int id)
+        public async Task<ActionResult<IEnumerable<IdPairs>>> GetMatches(int id)
         {
             var matches = await context.Matches.AsQueryable()
                 .Where(m => m.UserId == id)

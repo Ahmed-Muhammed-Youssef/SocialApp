@@ -19,7 +19,7 @@ namespace API.Controllers
             _context = context;
         }
         [HttpPost]
-        public async Task<ActionResult<IEnumerable<Like>>> PostLike(IdPairs like)
+        public async Task<ActionResult> PostLike(IdPairs like)
         {
             await _context.Likes.AddAsync(DTOtoLike(like));
             // check if the liked id likes him or not if it does, it's a match

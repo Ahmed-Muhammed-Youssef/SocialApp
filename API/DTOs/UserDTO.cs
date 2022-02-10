@@ -10,8 +10,8 @@ namespace API.DTOs
         [Required, MaxLength(255)]
         public string LastName { get; set; }
         [Required]
-        public Sex Sex { get; set; }
+        public char Sex { get; set; }
         [Required]
-        public Interest Interest { get; set; }
+        public char Interest { get; set; }
     }
 }
