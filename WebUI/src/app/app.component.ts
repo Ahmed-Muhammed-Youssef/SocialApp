@@ -19,7 +19,7 @@ export class AppComponent implements OnInit {
   }
 
   getUsers():void {
-    this.http.get<User[]>('/api/users').subscribe(
+    this.http.get<User[]>('/api/users/all').subscribe(
       response => { this.users = response; },
       error => console.log(error)
     );

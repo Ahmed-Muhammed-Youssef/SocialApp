@@ -26,7 +26,11 @@
               "src/favicon.ico",
               "src/assets"
             ],
-            "scripts": []
+            "scripts": [],
+            "styles": [
+              "./node_modules/ngx-bootstrap/datepicker/bs-datepicker.css",
+              "./node_modules/bootstrap/dist/css/bootstrap.min.css"
+            ]
           },
           "configurations": {
             "production": {
