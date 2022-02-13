@@ -1,0 +1,62 @@
+
+
+
+<form #registerForm="ngForm" class="row g-3 mt-2 mt-md-0" (ngSubmit)="register()"
+      autocomplete="off">
+  <h2 class="text-center text-primary">Sign up</h2>
+  <hr />
+  <div class="form-group row">
+    <div class="col w-auto">
+      <label for="firstName">First name</label>
+      <input name="firstName"
+             [(ngModel)]="registerModel.firstName"
+             class="form-control me-2"
+             type="text">
+    </div>
+    <div class="col w-auto">
+      <label for="lastName">Last name</label>
+      <input name="lastName"
+             [(ngModel)]="registerModel.lastName"
+             class="form-control"
+             type="text">
+    </div>
+  </div>
+
+  <div class="row mt-3">
+    <div class="col w-auto form-group">
+      <label for="sex">Sex</label>
+      <select class="form-select" name="sex" [(ngModel)]="registerModel.sex">
+        <option value="m">Male</option>
+        <option value="f">Female</option>
+      </select>
+    </div>
+
+    <div class="col w-auto form-group">
+      <label for="interest">Interested In</label>
+      <select class="form-select" name="interest" [(ngModel)]="registerModel.interest">
+        <option value="m">Male</option>
+        <option value="f">Female</option>
+        <option value="b">Both</option>
+      </select>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="email">Email</label>
+    <input name="email"
+           [(ngModel)]="registerModel.email"
+           class="form-control"
+           type="email"
+           >
+  </div>
+  <div class="form-group">
+    <label for="password">Password</label>
+    <input name="password"
+           [(ngModel)]="registerModel.password"
+           class="form-control"
+           type="password"
+           >
+  </div>
+  <div class="form-group text-center">
+    <button class="btn btn-outline-success my-2" type="submit">Register</button>
+  </div>
+</form>
