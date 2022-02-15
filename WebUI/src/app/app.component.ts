@@ -1,8 +1,5 @@
-import { HttpClient } from '@angular/common/http';
 import { OnInit } from '@angular/core';
 import { Component } from '@angular/core';
-import { LoginResponse } from './_models/AccountModels';
-import { User } from './_models/User';
 import { AccountService } from './_services/account.service';
 
 @Component({
@@ -12,9 +9,10 @@ import { AccountService } from './_services/account.service';
 })
 export class AppComponent implements OnInit {
   public title = 'Dating App';
+
   //public users?: User[];
 
-  constructor(private http: HttpClient, private accountService: AccountService) {
+  constructor(private accountService: AccountService) {
   }
 
   ngOnInit(): void {

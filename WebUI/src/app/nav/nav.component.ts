@@ -1,6 +1,8 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
-import { LoginModel, LoginResponse } from '../_models/AccountModels';
+import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
+import { LoginModel } from '../_models/AccountModels';
 import { AccountService } from '../_services/account.service';
 
 @Component({
@@ -10,7 +12,7 @@ import { AccountService } from '../_services/account.service';
 })
 export class NavComponent implements OnInit {
 
-  constructor(public accountService: AccountService) {
+  constructor(public accountService: AccountService, private router: Router, private toastr: ToastrService) {
   }
   public loginCred: LoginModel = { email: '', password: '' };
   ngOnInit(): void {
@@ -18,11 +20,17 @@ export class NavComponent implements OnInit {
   }
   login(): void {
     this.accountService.login(this.loginCred).subscribe(
-      response => { console.log(response); },
-      error => console.log(error));
+      response => {
+        this.router.navigateByUrl('/members');
+      },
+      (error:HttpErrorResponse) => {
+        console.log(error);
+        this.toastr.error(error.message);
+      });
   }
   logout(): void {
     this.accountService.logout();
+    this.router.navigateByUrl('/home');
   }
 }
 
