@@ -10,6 +10,8 @@
     <Script Include="**" Exclude="*.esproj;**\node_modules\**" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="src\app\members\" />
+    <Folder Include="src\app\_guards\" />
     <Folder Include="src\app\_services\" />
   </ItemGroup>
   <!-- This target is copied from the ASP.NET SPA template in order to ensure node_modules are in place. -->

@@ -56,7 +56,7 @@ namespace API.Controllers
                     Token = tokenService.CreateToken(newUser)
                 });
         }
-        [HttpGet("login")]
+        [HttpPost("login")]
         public async Task<ActionResult<TokenDTO>> Login(LoginDTO loginCredentials)
         {
             if (!ModelState.IsValid)

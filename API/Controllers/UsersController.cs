@@ -26,6 +26,7 @@ namespace API.Controllers
 
         // GET: api/Users
         [HttpGet("all")]
+        [AllowAnonymous] // for testing
         public async Task<ActionResult<IEnumerable<UserDTO>>> GetUsers()
         {
             var users = await _context.Users.ToListAsync();
