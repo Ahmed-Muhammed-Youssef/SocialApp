@@ -1,4 +1,4 @@
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -17,9 +17,16 @@ import { ListsComponent } from './lists/lists.component';
 import { MessagesComponent } from './messages/messages.component';
 import { AuthGuard } from './_guards/auth.guard';
 import { SharedModule } from './_modules/shared.module';
+import { LoginComponent } from './login/login.component';
+import { TestErrorComponent } from './errors/test-error/test-error.component';
+import { ErrorInterceptor } from './_interceptors/error.interceptor';
+import { NotFoundComponent } from './errors/not-found/not-found.component';
+import { ServerErrorComponent } from './errors/server-error/server-error.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
+  { path: 'login', component: LoginComponent },
+  { path: 'register', component: RegisterComponent },
   {
     path: '',
     runGuardsAndResolvers: 'always',
@@ -31,8 +38,11 @@ const routes: Routes = [
       { path: 'messages', component: MessagesComponent }
     ]
   },
-  { path: '**', redirectTo:'/home', pathMatch:'full' }, //a placeholder for the 404 error page
-  { path: '', redirectTo:'/home', pathMatch:'full' }
+  { path: 'errors', component: TestErrorComponent },
+  { path: 'not-found', component: NotFoundComponent },
+  { path: 'server-error', component: ServerErrorComponent },
+  { path: '', redirectTo:'/home', pathMatch:'full' },
+  { path: '**', redirectTo:'/not-found', pathMatch:'full' }
 ];
 
 @NgModule({
@@ -45,14 +55,20 @@ const routes: Routes = [
     MemberListComponent,
     MemberDetailComponent,
     ListsComponent,
-    MessagesComponent
+    MessagesComponent,
+    LoginComponent,
+    TestErrorComponent,
+    NotFoundComponent,
+    ServerErrorComponent
   ],
   imports: [
     BrowserModule, HttpClientModule, BrowserAnimationsModule, FormsModule,
     RouterModule.forRoot(routes),
     SharedModule
   ],
-  providers: [AuthGuard],
+  providers: [
+    {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

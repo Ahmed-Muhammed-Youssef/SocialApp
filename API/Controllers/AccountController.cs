@@ -65,7 +65,7 @@ namespace API.Controllers
            
             if(user == null)
             {
-                return BadRequest(loginCredentials);
+                return Unauthorized(loginCredentials);
             }
 
             using var hasher = new HMACSHA512(user.PasswordSalt);
@@ -74,7 +74,7 @@ namespace API.Controllers
             {
                 if (user.Password[i] != hashedPassword[i])
                 {
-                    return BadRequest(loginCredentials);
+                    return Unauthorized(loginCredentials);
                 }
             }
             return Ok(new TokenDTO()

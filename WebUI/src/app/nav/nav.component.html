@@ -2,8 +2,8 @@
   <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-secondary">
     <div class="container">
       <a class="navbar-brand" routerLink="/home">Dating App</a>
-      <ng-container *ngIf="accountService.currentUser$ | async">
-        <ul class="navbar-nav me-auto">
+      <ul class="navbar-nav me-auto">
+        <ng-container *ngIf="accountService.currentUser$ | async">
           <li class="nav-item">
             <a class="nav-link" routerLink="/members" routerActiveLink="active">Matches</a>
           </li>
@@ -13,8 +13,12 @@
           <li class="nav-item">
             <a class="nav-link" routerLink="/messages" routerActiveLink="active">Messages</a>
           </li>
-        </ul>
-      </ng-container>  
+        </ng-container>
+
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/errors" routerActiveLink="active">errors</a>
+        </li>
+      </ul>
       
       <div class="dropdown" *ngIf="(accountService.currentUser$ | async) as user" dropdown>
         <a class="dropdown-toggle text-light" dropdownToggle>Welcome {{user.email}}!</a>
@@ -24,21 +28,9 @@
           <a class="dropdown-item" (click)="logout()">Logout</a>
         </div>
       </div>
-
-      <form *ngIf="(accountService.currentUser$ | async) === null" #loginForm="ngForm" class="d-flex form-inline mt-2 mt-md-0" (ngSubmit)="login()"
-            autocomplete="off">
-        <input name="email"
-               [(ngModel)]="loginCred.email"
-               class="form-control me-sm-2"
-               type="email"
-               placeholder="Email">
-        <input name="password"
-               [(ngModel)]="loginCred.password"
-               class="form-control me-sm-2"
-               type="password"
-               placeholder="Password">
-        <button class="btn btn-secondary my-2 my-sm-0" type="submit">Login</button>
-      </form>
+      <ng-container *ngIf="(accountService.currentUser$ | async) === null">
+            <a class="btn btn-secondary btn-lg me-2" routerLink="/login">Sign in</a>
+      </ng-container>
     </div>
 
   </nav>

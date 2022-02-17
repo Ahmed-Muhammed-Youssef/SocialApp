@@ -4,7 +4,11 @@ const PROXY_CONFIG = [
         "/api/users",
         "/api/user",
         "/api/account/login",
-        "/api/account/register"
+        "/api/account/register",
+        "/api/buggy/server-error",
+        "/api/buggy/not-found",
+        "/api/buggy/auth",
+        "/api/buggy/bad-request"
       ],
       target: "https://localhost:5001",
       secure: false

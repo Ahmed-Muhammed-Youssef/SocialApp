@@ -11,6 +11,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="src\app\members\" />
+    <Folder Include="src\app\errors\" />
     <Folder Include="src\app\_guards\" />
     <Folder Include="src\app\_services\" />
   </ItemGroup>
