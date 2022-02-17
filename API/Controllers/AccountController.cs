@@ -2,11 +2,8 @@
 using API.DTOs;
 using API.Entities;
 using API.Interfaces;
-using API.Services;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,7 +23,7 @@ namespace API.Controllers
             this.tokenService = tokenService;
         }
         [HttpPost("register")]
-        public async Task<ActionResult> Register(AccountDTO accountDTO)
+        public async Task<ActionResult> Register(RegisterDTO accountDTO)
         {
             if (!ModelState.IsValid)
             {
