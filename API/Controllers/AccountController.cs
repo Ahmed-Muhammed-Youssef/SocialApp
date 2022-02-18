@@ -41,6 +41,10 @@ namespace API.Controllers
                 Email = accountDTO.Email,
                 Sex = accountDTO.Sex,
                 Interest = accountDTO.Interest,
+                Bio = accountDTO.Bio,
+                DateOfBirth = accountDTO.DateOfBirth,
+                City = accountDTO.City,
+                Country = accountDTO.Country,
                 Password = hasher.ComputeHash(Encoding.UTF8.GetBytes(accountDTO.Password)),
                 PasswordSalt = hasher.Key
             };

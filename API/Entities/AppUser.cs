@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using API.Extensions;
 
 namespace API.Entities
 {
@@ -16,7 +18,18 @@ namespace API.Entities
         [Required]
         public char Sex { get; set; }
         [Required]
-        public char Interest { get; set; }
+        public char Interest { get; set; } // can be f (female), m (male) or b (both)
+        [Required]
+        public DateTime DateOfBirth { get; set; }
+        public DateTime Created { get; set; } = DateTime.UtcNow;
+        public DateTime LastActive { get; set; } = DateTime.UtcNow;
+        public string Bio { get; set; }
+        [Required]
+        public string City { get; set; }
+        [Required]
+        public string Country { get; set; }
+        public ICollection<Photo> Photos { get; set; }
+
         // Credentials
         [Required]
         [EmailAddress]
@@ -27,6 +40,7 @@ namespace API.Entities
         public byte[] PasswordSalt { get; set; }
 
         // Collection navigation properties
+        
         [InverseProperty(nameof(Like.Liker))]
         public ICollection<Like> LikesLikers { get; set; }
         [InverseProperty(nameof(Like.Liked))]
@@ -35,6 +49,11 @@ namespace API.Entities
         public ICollection<Match> MatchesId { get; set; }
         [InverseProperty(nameof(Match.Matched))]
         public ICollection<Match> MatchesMatchedId { get; set; }
+
+
+        // Methods
+
+        public int GetAge() => DateOfBirth.CalculateAge();
 
     }
 }
