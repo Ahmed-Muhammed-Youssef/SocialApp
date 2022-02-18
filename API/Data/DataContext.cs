@@ -18,5 +18,6 @@ namespace API.Data
             modelBuilder.Entity<Like>()
             .HasKey(l => new { l.LikedId, l.LikerId });
         }
+        public DbSet<API.Entities.Photo> Photo { get; set; }
     }
 }
