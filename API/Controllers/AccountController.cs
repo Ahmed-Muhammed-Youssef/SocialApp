@@ -33,9 +33,14 @@ namespace API.Controllers
             {
                 return BadRequest("The Email is already taken.");
             }
+            if(await UsernameExists(accountDTO.UserName))
+            {
+                return BadRequest("The Username is already taken.");
+            }
             using var hasher = new HMACSHA512();
             AppUser newUser = new AppUser()
             {
+                UserName = accountDTO.UserName,
                 FirstName = accountDTO.FirstName,
                 LastName = accountDTO.LastName,
                 Email = accountDTO.Email,
@@ -50,7 +55,7 @@ namespace API.Controllers
             };
             context.Users.Add(newUser);
             await context.SaveChangesAsync();
-            return CreatedAtAction("Register", new { email = accountDTO.Email }, 
+            return CreatedAtAction("Register", new {email = accountDTO.Email }, 
                 new TokenDTO()
                 {
                     Email = newUser.Email,
@@ -90,6 +95,10 @@ namespace API.Controllers
         private async Task<bool> EmailExists(string email)
         {
             return await context.Users.AnyAsync(u => u.Email == email);
+        }
+        private async Task<bool> UsernameExists(string username)
+        {
+            return await context.Users.AnyAsync(u => u.UserName == username);
         }
     }
 }

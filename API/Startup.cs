@@ -36,6 +36,7 @@ namespace API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddJwtAuthentication(_config);
+            services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<ITokenService, TokenService>();
             services.AddDbContext<DataContext>( options =>
             {

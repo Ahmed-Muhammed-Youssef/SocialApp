@@ -1,4 +1,6 @@
 ﻿using API.Entities;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace API.DTOs
@@ -15,5 +17,19 @@ namespace API.DTOs
         public char Sex { get; set; }
         [Required]
         public char Interest { get; set; }
+        [Required]
+        public DateTime DateOfBirth { get; set; }
+        [Required]
+        public DateTime Created { get; set; }
+        [Required]
+        public DateTime LastActive { get; set; }
+        [Required]
+        public string Bio { get; set; }
+        [Required]
+        public string City { get; set; }
+        [Required]
+        public string Country { get; set; }
+
+        public IEnumerable<PhotoSentDTO> Photos { get; set; }
     }
 }
