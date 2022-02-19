@@ -11,6 +11,9 @@ namespace API.Entities
         public int Id { get; set; } // this convention names helps with the entity framework.
         [Required]
         [MaxLength(255)]
+        public string UserName { get; set; }
+        [Required]
+        [MaxLength(255)]
         public string FirstName { get; set; }
         [Required]
         [MaxLength(255)]
