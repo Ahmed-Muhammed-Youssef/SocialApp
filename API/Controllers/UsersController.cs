@@ -8,6 +8,7 @@ using API.DTOs;
 using System.Linq;
 using Microsoft.AspNetCore.Authorization;
 using API.Interfaces;
+using AutoMapper;
 
 namespace API.Controllers
 {
@@ -17,54 +18,55 @@ namespace API.Controllers
     public class UsersController : ControllerBase
     {
         private readonly IUserRepository userRepository;
+        private readonly IMapper mapper;
 
-        public UsersController(IUserRepository userRepository)
+        public UsersController(IUserRepository userRepository, IMapper mapper)
         {
             this.userRepository = userRepository;
+            this.mapper = mapper;
         }
 
         // GET: api/Users
         [HttpGet("all")]
         public async Task<ActionResult<IEnumerable<UserDTO>>> GetUsers()
         {
-            var users = await userRepository.GetUsersAsync();
-            return Ok(users.ToList().ConvertAll(AppUsertoDTO));
+            var users = await userRepository.GetUsersDTOAsync();
+            return Ok(users);
         }
 
-        // GET: api/Users/5
         [HttpGet("info/id/{id}")]
         public async Task<ActionResult<UserDTO>> GetUser(int id)
         {
-            var appUser = await userRepository.GetUserByIdAsync(id);
+            var user = await userRepository.GetUserDTOByIdAsync(id);
 
-            if (appUser == null)
+            if (user == null)
             {
                 return NotFound();
             }
-            var user = AppUsertoDTO(appUser);
             return Ok(user);
         }
         [HttpGet("info/username/{username}")]
         public async Task<ActionResult<UserDTO>> GetUser(string username)
         {
-            var appUser = await userRepository.GetUserByUsernameAsync(username);
+            var user = await userRepository.GetUserDTOByUsernameAsync(username);
 
-            if (appUser == null)
+            if (user == null)
             {
                 return NotFound();
             }
-            var user = AppUsertoDTO(appUser);
             return Ok(user);
         }
-        private UserDTO AppUsertoDTO(AppUser user) =>
+
+        // Deprecated manual object mapping
+        /*private UserDTO AppUsertoDTO(AppUser user) =>
             new UserDTO()
             {
-                UserName = user.UserName,
+                Username = user.UserName,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 Sex = user.Sex,
                 Interest = user.Interest,
-                DateOfBirth = user.DateOfBirth,
+                // Age = user.GetAge(),
                 LastActive = user.LastActive,
                 Created = user.Created,
                 Bio = user.Bio,
@@ -77,6 +79,6 @@ namespace API.Controllers
             Id = photo.Id,
             Url = photo.Url,
             Order = photo.Order
-        };
+        };*/
     }
 }

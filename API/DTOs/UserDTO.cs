@@ -8,7 +8,7 @@ namespace API.DTOs
     public class UserDTO
     {
         [Required, MaxLength(255)]
-        public string UserName { get; set; }
+        public string Username { get; set; }
         [Required, MaxLength(255)]
         public string FirstName { get; set; }
         [Required, MaxLength(255)]
@@ -18,7 +18,7 @@ namespace API.DTOs
         [Required]
         public char Interest { get; set; }
         [Required]
-        public DateTime DateOfBirth { get; set; }
+        public int Age { get; set; }
         [Required]
         public DateTime Created { get; set; }
         [Required]

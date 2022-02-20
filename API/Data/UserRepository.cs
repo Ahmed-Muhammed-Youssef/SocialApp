@@ -1,5 +1,8 @@
-﻿using API.Entities;
+﻿using API.DTOs;
+using API.Entities;
 using API.Interfaces;
+using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -11,44 +14,18 @@ namespace API.Data
     public class UserRepository : IUserRepository // using the repository design pattern to isolate the contollers further more from the entity framework. (it may not be neccesary)
     {
         private readonly DataContext dataContext;
+        private readonly IMapper mapper;
 
-        public UserRepository(DataContext dataContext)
+        public UserRepository(DataContext dataContext, IMapper mapper)
         {
             this.dataContext = dataContext;
+            this.mapper = mapper;
         }
 
         public void DeleteUser(AppUser user)
         {
             dataContext.Remove(user);
         }
-
-        public async Task<AppUser> GetUserByEmailAsync(string email)
-        {
-            var appUser = await dataContext.Users.FirstOrDefaultAsync(x => x.Email == email);
-            var photos = await GetUserPhotosAsync(appUser.Id);
-            appUser.Photos = photos.ToList();
-            return appUser;
-        }
-
-        public async Task<AppUser> GetUserByIdAsync(int id)
-        {
-            var appUser = await dataContext.Users.FindAsync(id);
-            var photos = await GetUserPhotosAsync(appUser.Id);
-            appUser.Photos = photos.ToList();
-            return appUser;
-        }
-
-        public async Task<IEnumerable<AppUser>> GetUsersAsync()
-        {
-            var users = await dataContext.Users.ToListAsync();
-            users.ForEach(async u =>
-            {
-                var photos = await GetUserPhotosAsync(u.Id);
-                u.Photos = photos.ToList();
-            });
-            return users;
-        }
-
         public async Task<bool> SaveAllAsync()
         {
             return await dataContext.SaveChangesAsync() > 0; 
@@ -74,6 +51,42 @@ namespace API.Data
         public async Task<IEnumerable<Photo>> GetUserPhotosAsync(int id)
         {
             return await dataContext.Photo.Where(p => p.AppUserId == id).ToListAsync();
+        }
+
+        public async Task<IEnumerable<UserDTO>> GetUsersDTOAsync()
+        {
+            return await dataContext.Users
+                .ProjectTo<UserDTO>(mapper.ConfigurationProvider)
+                .ToListAsync();
+        }
+
+        public async Task<UserDTO> GetUserDTOByIdAsync(int id)
+        {
+            return await dataContext.Users
+                .Where(u => u.Id == id)
+                .ProjectTo<UserDTO>(mapper.ConfigurationProvider).FirstOrDefaultAsync();
+        }
+
+        public async Task<UserDTO> GetUserDTOByUsernameAsync(string username)
+        {
+            return await dataContext.Users
+               .Where(u => u.UserName == username)
+               .ProjectTo<UserDTO>(mapper.ConfigurationProvider).FirstOrDefaultAsync();
+        }
+
+        public async Task<UserDTO> GetUserDTOByEmailAsync(string email)
+        {
+            return await dataContext.Users
+              .Where(u => u.Email == email)
+              .ProjectTo<UserDTO>(mapper.ConfigurationProvider).FirstOrDefaultAsync(); ;
+        }
+
+        public async Task<IEnumerable<PhotoSentDTO>> GetUserPhotoDTOsAsync(int id)
+        {
+            return await dataContext.Photo
+              .Where(p => p.AppUserId == id)
+              .ProjectTo<PhotoSentDTO>(mapper.ConfigurationProvider)
+              .ToListAsync();
         }
     }
 }

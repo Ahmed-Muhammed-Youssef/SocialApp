@@ -53,10 +53,7 @@ namespace API.Entities
         [InverseProperty(nameof(Match.Matched))]
         public ICollection<Match> MatchesMatchedId { get; set; }
 
-
-        // Methods
-
-        public int GetAge() => DateOfBirth.CalculateAge();
+        /*public int GetAge() => DateOfBirth.CalculateAge();*/
 
     }
 }
