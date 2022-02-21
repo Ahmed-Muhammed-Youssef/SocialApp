@@ -16,11 +16,13 @@ namespace API.Controllers
     {
         private readonly DataContext context;
         private readonly ITokenService tokenService;
+        private readonly IUserRepository userRepository;
 
-        public AccountController(DataContext context, ITokenService tokenService)
+        public AccountController(DataContext context, ITokenService tokenService, IUserRepository userRepository)
         {
             this.context = context;
             this.tokenService = tokenService;
+            this.userRepository = userRepository;
         }
         [HttpPost("register")]
         public async Task<ActionResult> Register(RegisterDTO accountDTO)
@@ -54,11 +56,12 @@ namespace API.Controllers
                 PasswordSalt = hasher.Key
             };
             context.Users.Add(newUser);
+            var userData = await userRepository.GetUserDTOByEmailAsync(accountDTO.Email);
             await context.SaveChangesAsync();
             return CreatedAtAction("Register", new {email = accountDTO.Email }, 
                 new TokenDTO()
                 {
-                    Email = newUser.Email,
+                    UserData = userData,
                     Token = tokenService.CreateToken(newUser)
                 });
         }
@@ -86,9 +89,11 @@ namespace API.Controllers
                     return Unauthorized(loginCredentials);
                 }
             }
+            var userData = await userRepository.GetUserDTOByEmailAsync(loginCredentials.Email);
+
             return Ok(new TokenDTO()
             {
-                Email = user.Email,
+                UserData = userData,
                 Token = tokenService.CreateToken(user)
             });
         }

@@ -4,8 +4,7 @@ namespace API.DTOs
 {
     public class TokenDTO
     {
-        [Required, EmailAddress]
-        public string Email { get; set; }
+        public UserDTO UserData { get; set; }
         [Required]
         public string Token { get; set; }
     }
