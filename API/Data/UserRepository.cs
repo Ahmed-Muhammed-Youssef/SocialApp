@@ -39,20 +39,6 @@ namespace API.Data
         {
             dataContext.Entry(appUser).State = EntityState.Modified;
         }
-
-        public async Task<AppUser> GetUserByUsernameAsync(string username)
-        {
-            var appUser = await dataContext.Users.FirstOrDefaultAsync(u => u.UserName == username);
-            var photos = await GetUserPhotosAsync(appUser.Id);
-            appUser.Photos = photos.ToList();
-            return appUser;
-        }
-
-        public async Task<IEnumerable<Photo>> GetUserPhotosAsync(int id)
-        {
-            return await dataContext.Photo.Where(p => p.AppUserId == id).ToListAsync();
-        }
-
         public async Task<IEnumerable<UserDTO>> GetUsersDTOAsync()
         {
             return await dataContext.Users

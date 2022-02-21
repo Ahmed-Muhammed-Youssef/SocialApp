@@ -1,11 +1,11 @@
-<header>
+<header class="mb-6">
   <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-secondary">
     <div class="container">
       <a class="navbar-brand" routerLink="/home">Dating App</a>
       <ul class="navbar-nav me-auto">
         <ng-container *ngIf="accountService.currentUser$ | async">
           <li class="nav-item">
-            <a class="nav-link" routerLink="/members" routerActiveLink="active">Matches</a>
+            <a class="nav-link" routerLink="/users" routerActiveLink="active">Matches</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" routerLink="/lists" routerActiveLink="active">Lists</a>

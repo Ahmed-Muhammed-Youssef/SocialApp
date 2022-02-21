@@ -15,7 +15,6 @@ namespace API.Interfaces
         public Task<UserDTO> GetUserDTOByEmailAsync(string email);
         public void DeleteUser(AppUser user);
         public Task<bool> UserExistsAsync(int id);
-        public Task<IEnumerable<Photo>> GetUserPhotosAsync(int id);
         public Task<IEnumerable<PhotoSentDTO>> GetUserPhotoDTOsAsync(int id);
     }
 }

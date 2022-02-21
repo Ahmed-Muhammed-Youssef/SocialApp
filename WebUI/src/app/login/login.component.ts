@@ -19,7 +19,9 @@ export class LoginComponent implements OnInit {
   public login() {
     this.accountService.login(this.loginCred).subscribe(
       response => {
-        this.router.navigateByUrl('/members');
+        if (response) {
+          this.router.navigateByUrl('/users');
+        }
       },
       (error: HttpErrorResponse) => {
         console.log(error);

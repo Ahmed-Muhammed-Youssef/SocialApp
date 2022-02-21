@@ -11,8 +11,8 @@ import { NavComponent } from './nav/nav.component';
 import { FooterComponent } from './footer/footer.component';
 import { HomeComponent } from './home/home.component';
 import { RegisterComponent } from './register/register.component';
-import { MemberListComponent } from './members/member-list/member-list.component';
-import { MemberDetailComponent } from './members/member-detail/member-detail.component';
+import { UserListComponent } from './users/user-list/user-list.component';
+import { UserDetailComponent } from './users/user-detail/user-detail.component';
 import { ListsComponent } from './lists/lists.component';
 import { MessagesComponent } from './messages/messages.component';
 import { AuthGuard } from './_guards/auth.guard';
@@ -22,22 +22,29 @@ import { TestErrorComponent } from './errors/test-error/test-error.component';
 import { ErrorInterceptor } from './_interceptors/error.interceptor';
 import { NotFoundComponent } from './errors/not-found/not-found.component';
 import { ServerErrorComponent } from './errors/server-error/server-error.component';
+import { UserCardComponent } from './users/user-card/user-card.component';
+import { JwtInterceptor } from './_interceptors/jwt.interceptor';
+import { NgxGalleryModule } from '@kolkov/ngx-gallery';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
-  {
+  { path: 'users', component: UserListComponent, canActivate:[AuthGuard] },
+  { path: 'users/username/:username', component: UserDetailComponent, canActivate:[AuthGuard] },
+  { path: 'lists', component: ListsComponent, canActivate:[AuthGuard] },
+  { path: 'messages', component: MessagesComponent, canActivate:[AuthGuard] },
+  /*{
     path: '',
     runGuardsAndResolvers: 'always',
     canActivate: [AuthGuard],
     children: [
-      { path: 'members', component: MemberListComponent },
-      { path: 'members/:id', component: MemberDetailComponent },
+      { path: 'users', component: UserListComponent },
+      { path: 'users/username/:username', component: UserDetailComponent },
       { path: 'lists', component: ListsComponent },
       { path: 'messages', component: MessagesComponent }
     ]
-  },
+  },*/
   { path: 'errors', component: TestErrorComponent },
   { path: 'not-found', component: NotFoundComponent },
   { path: 'server-error', component: ServerErrorComponent },
@@ -52,22 +59,24 @@ const routes: Routes = [
     FooterComponent,
     HomeComponent,
     RegisterComponent,
-    MemberListComponent,
-    MemberDetailComponent,
+    UserListComponent,
+    UserDetailComponent,
     ListsComponent,
     MessagesComponent,
     LoginComponent,
     TestErrorComponent,
     NotFoundComponent,
-    ServerErrorComponent
+    ServerErrorComponent,
+    UserCardComponent
   ],
   imports: [
     BrowserModule, HttpClientModule, BrowserAnimationsModule, FormsModule,
     RouterModule.forRoot(routes),
-    SharedModule
+    SharedModule, HttpClientModule, NgxGalleryModule
   ],
   providers: [
-    {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true}
+    {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
+    {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true}
   ],
   bootstrap: [AppComponent]
 })

@@ -3,12 +3,17 @@ export interface LoginResponse {
   token: string
 }
 export interface RegisterModel {
-  firstName: string,
-  lastName: string,
-  sex: string,
-  interest: string,
-  email: string,
-  password: string
+  userName: string;
+  firstName: string;
+  lastName: string;
+  sex: string;
+  interest: string;
+  email: string;
+  password: string;
+  dateOfBirth: Date;
+  bio: string;
+  city: string;
+  country: string
 }
 
 export interface LoginModel {
