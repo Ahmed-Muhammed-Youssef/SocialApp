@@ -18,3 +18,12 @@ export interface User {
   country: string;
   photos: Photo[];
 }
+
+export interface UpdateUser {
+  firstName: string;
+  lastName: string;
+  interest: string;
+  bio: string;
+  city: string;
+  country: string;
+}

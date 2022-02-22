@@ -4,6 +4,7 @@ const PROXY_CONFIG = [
         "/api/users/all",
         "/api/users/info/id",
         "/api/users/info/username",
+        "/api/users/update",
         "/api/account/login",
         "/api/account/register",
         "/api/likes",

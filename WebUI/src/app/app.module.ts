@@ -25,6 +25,8 @@ import { ServerErrorComponent } from './errors/server-error/server-error.compone
 import { UserCardComponent } from './users/user-card/user-card.component';
 import { JwtInterceptor } from './_interceptors/jwt.interceptor';
 import { NgxGalleryModule } from '@kolkov/ngx-gallery';
+import { UserEditComponent } from './users/user-edit/user-edit.component';
+import { PreventUnsavedChangesGuard } from './_guards/prevent-unsaved-changes.guard';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -33,7 +35,8 @@ const routes: Routes = [
   { path: 'users', component: UserListComponent, canActivate:[AuthGuard] },
   { path: 'users/username/:username', component: UserDetailComponent, canActivate:[AuthGuard] },
   { path: 'lists', component: ListsComponent, canActivate:[AuthGuard] },
-  { path: 'messages', component: MessagesComponent, canActivate:[AuthGuard] },
+  { path: 'messages', component: MessagesComponent, canActivate: [AuthGuard] },
+  { path: 'users/edit', component: UserEditComponent, canActivate: [AuthGuard], canDeactivate: [PreventUnsavedChangesGuard] },
   /*{
     path: '',
     runGuardsAndResolvers: 'always',
@@ -67,7 +70,8 @@ const routes: Routes = [
     TestErrorComponent,
     NotFoundComponent,
     ServerErrorComponent,
-    UserCardComponent
+    UserCardComponent,
+    UserEditComponent
   ],
   imports: [
     BrowserModule, HttpClientModule, BrowserAnimationsModule, FormsModule,

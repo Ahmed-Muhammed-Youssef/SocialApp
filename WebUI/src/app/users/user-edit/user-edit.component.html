@@ -1,0 +1,99 @@
+<div class="row" *ngIf="user">
+  <div class="col-4 text-center">
+    <h2> Your Profile </h2>
+  </div>
+  <div class="col-8">
+    <div class="alert alert-info" *ngIf="editForm.dirty">
+      <strong>Information: </strong> You have made changes. Any unsaved changes will be lost.
+    </div>
+  </div>
+  <div class="col-4">
+    <div class="card">
+      <img *ngIf="user.photos[0]" class="card-img-top img-thumbnail"
+           src="{{user.photos[0].url || './assets/Pictures/profile-placeholder.png'}}"
+           alt="{{user.firstName}}" />
+      <div class="card-body">
+        <div>
+          <strong>Location:</strong>
+          <p>{{user.city}}, {{user.country}}</p>
+        </div>
+        <div>
+          <strong>Age:</strong>
+          <p>{{user.age}}</p>
+        </div>
+        <div>
+          <strong>Last active:</strong>
+          <p>{{user.lastActive}}</p>
+        </div>
+        <div>
+          <strong>Member since:</strong>
+          <p>{{user.created}}</p>
+        </div>
+        <div class="card-footer d-grid">
+            <button [disabled]="!editForm.dirty" form="editForm" type="submit" class="btn btn-success">Save Changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-8">
+    <tabset class="member-tabset">
+      <tab heading="About {{user.firstName}}">
+        <form #editForm="ngForm" id="editForm" (ngSubmit)="updateUser()" class="form">
+          <div class="mt-4 form-group row">
+            <div class="col w-auto">
+              <label for="firstName">First name</label>
+              <input name="firstName"
+                     [(ngModel)]="user.firstName"
+                     class="form-control me-2"
+                     type="text">
+            </div>
+            <div class="col w-auto">
+              <label for="lastName">Last name</label>
+              <input name="lastName"
+                     [(ngModel)]="user.lastName"
+                     class="form-control"
+                     type="text">
+            </div>
+          </div>
+          <div class="mt-4 form-group">
+            <label for="bio">Bio</label>
+            <textarea rows="6" name="bio"
+                   [(ngModel)]="user.bio"
+                   class="form-control me-2"
+                   type="text">
+            </textarea>
+          </div>
+          <div class="form-group mt-4">
+            <label for="interest">Interested In</label>
+            <select class="form-select" name="interest" [(ngModel)]="user.interest">
+              <option value="m">Male</option>
+              <option value="f">Female</option>
+              <option value="b">Both</option>
+            </select>
+          </div>
+          <div class="mt-4 form-group row">
+          <h5 class="mt-4">Location Details</h5>
+            <div class="col w-auto">
+              <label for="city">City</label>
+              <input name="city"
+                     [(ngModel)]="user.city"
+                     class="form-control me-2"
+                     type="text">
+            </div>
+            <div class="col w-auto">
+              <label for="country">Country</label>
+              <input name="country"
+                     [(ngModel)]="user.country"
+                     class="form-control"
+                     type="text">
+            </div>
+          </div>
+        </form>
+      </tab>
+
+      <tab heading="Edit Pictures">
+        
+      </tab>
+    </tabset>
+  </div>
+</div>
