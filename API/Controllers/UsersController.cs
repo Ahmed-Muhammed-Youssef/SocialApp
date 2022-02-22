@@ -9,6 +9,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Authorization;
 using API.Interfaces;
 using AutoMapper;
+using System.Security.Claims;
 
 namespace API.Controllers
 {
@@ -55,6 +56,29 @@ namespace API.Controllers
                 return NotFound();
             }
             return Ok(user);
+        }
+        [HttpPut("update")]
+        public async Task<ActionResult<UpdatedUserDTO>> PutUser(UpdatedUserDTO userDTO)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(userDTO);
+            }
+            var email = User.FindFirst(ClaimTypes.Email)?.Value;
+            var appUser = await userRepository.GetUserByEmailAsync(email);
+
+            if (appUser == null)
+            {
+                return BadRequest(userDTO);
+            }
+            mapper.Map(userDTO, appUser);
+            userRepository.Update(appUser);
+
+            if(await userRepository.SaveAllAsync())
+            {
+                return Ok(userDTO);
+            }
+            return BadRequest(userDTO);
         }
 
         // Deprecated manual object mapping

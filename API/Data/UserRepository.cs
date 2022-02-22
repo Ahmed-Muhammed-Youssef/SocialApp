@@ -59,7 +59,12 @@ namespace API.Data
                .Where(u => u.UserName == username)
                .ProjectTo<UserDTO>(mapper.ConfigurationProvider).FirstOrDefaultAsync();
         }
-
+        public async Task<AppUser> GetUserByEmailAsync(string email)
+        {
+            return await dataContext.Users
+              .Where(u => u.Email == email)
+              .FirstOrDefaultAsync();
+        }
         public async Task<UserDTO> GetUserDTOByEmailAsync(string email)
         {
             return await dataContext.Users
