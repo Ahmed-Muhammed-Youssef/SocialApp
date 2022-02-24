@@ -29,9 +29,7 @@ export class UserDetailComponent implements OnInit {
   username: string = '';
   galleryOptions: NgxGalleryOptions[] = [];
   galleryImages: NgxGalleryImage[] = [];
-  constructor(private userService: UserService, private route: ActivatedRoute) { }
-  
-  ngOnInit(): void {
+  constructor(private userService: UserService, private route: ActivatedRoute) {
     this.route.paramMap.subscribe(param => {
       this.username = String(param.get('username'));
     });
@@ -44,23 +42,12 @@ export class UserDetailComponent implements OnInit {
         thumbnailsColumns: 4,
         imageAnimation: NgxGalleryAnimation.Slide,
         preview: false
-      }/*,
-      // max-width 800
-      {
-        breakpoint: 800,
-        width: '100%',
-        height: '600px',
-        imagePercent: 80,
-        thumbnailsPercent: 20,
-        thumbnailsMargin: 20,
-        thumbnailMargin: 20
-      },
-      // max-width 400
-      {
-        breakpoint: 400,
-        preview: false
-      }*/
+      }
     ];
+  }
+  
+  ngOnInit(): void {
+    
   }
   loadUser() {
     this.userService.getUserByUsername(this.username).subscribe(u => {
@@ -82,7 +69,6 @@ export class UserDetailComponent implements OnInit {
 
 
   public setImages() {
-    //const imgesUrl: NgxGalleryImage[] = [];
     for (const photo of this.user.photos) {
       this.galleryImages.push({
         small: photo?.url,
