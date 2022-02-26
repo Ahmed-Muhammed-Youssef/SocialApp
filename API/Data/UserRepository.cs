@@ -58,6 +58,12 @@ namespace API.Data
             return await dataContext.Users
                .Where(u => u.UserName == username)
                .ProjectTo<UserDTO>(mapper.ConfigurationProvider).FirstOrDefaultAsync();
+        } 
+        public async Task<AppUser> GetUserByUsernameAsync(string username)
+        {
+            return await dataContext.Users
+                .Where(u => u.UserName == username)
+                .FirstOrDefaultAsync();
         }
         public async Task<AppUser> GetUserByEmailAsync(string email)
         {
@@ -72,12 +78,21 @@ namespace API.Data
               .ProjectTo<UserDTO>(mapper.ConfigurationProvider).FirstOrDefaultAsync(); ;
         }
 
-        public async Task<IEnumerable<PhotoSentDTO>> GetUserPhotoDTOsAsync(int id)
+        public async Task<IEnumerable<PhotoDTO>> GetUserPhotoDTOsAsync(int id)
         {
             return await dataContext.Photo
               .Where(p => p.AppUserId == id)
-              .ProjectTo<PhotoSentDTO>(mapper.ConfigurationProvider)
+              .ProjectTo<PhotoDTO>(mapper.ConfigurationProvider)
               .ToListAsync();
+        }
+
+        public async Task<Photo> AddPhotoAsync(Photo photo)
+        {
+            var photos = await GetUserPhotoDTOsAsync(photo.AppUserId);
+            photo.Order = photos.Count();
+
+            await dataContext.Photo.AddAsync(photo);
+            return photo;
         }
     }
 }

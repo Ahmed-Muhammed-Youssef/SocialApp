@@ -12,9 +12,9 @@ namespace API.Entities
         public int Order { get; set; }
         [Required]
         public string PublicId { get; set; }
+        public int AppUserId { get; set; }
 
         public AppUser AppUser { get; set; }
-        public int AppUserId { get; set; }
 
     }
 }

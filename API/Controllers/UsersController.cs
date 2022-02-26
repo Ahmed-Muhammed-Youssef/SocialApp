@@ -10,6 +10,8 @@ using Microsoft.AspNetCore.Authorization;
 using API.Interfaces;
 using AutoMapper;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Http;
+using API.Extensions;
 
 namespace API.Controllers
 {
@@ -20,11 +22,13 @@ namespace API.Controllers
     {
         private readonly IUserRepository userRepository;
         private readonly IMapper mapper;
+        private readonly IPhotoService photoService;
 
-        public UsersController(IUserRepository userRepository, IMapper mapper)
+        public UsersController(IUserRepository userRepository, IMapper mapper, IPhotoService photoService)
         {
             this.userRepository = userRepository;
             this.mapper = mapper;
+            this.photoService = photoService;
         }
 
         // GET: api/Users
@@ -64,8 +68,7 @@ namespace API.Controllers
             {
                 return BadRequest(userDTO);
             }
-            var email = User.FindFirst(ClaimTypes.Email)?.Value;
-            var appUser = await userRepository.GetUserByEmailAsync(email);
+            var appUser = await userRepository.GetUserByUsernameAsync(User.GetUsername());
 
             if (appUser == null)
             {
@@ -80,29 +83,29 @@ namespace API.Controllers
             }
             return BadRequest(userDTO);
         }
-
-        // Deprecated manual object mapping
-        /*private UserDTO AppUsertoDTO(AppUser user) =>
-            new UserDTO()
-            {
-                Username = user.UserName,
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-                Sex = user.Sex,
-                Interest = user.Interest,
-                // Age = user.GetAge(),
-                LastActive = user.LastActive,
-                Created = user.Created,
-                Bio = user.Bio,
-                Country = user.Country,
-                City = user.City,
-                Photos = user.Photos.ToList().ConvertAll(PhotoToDTO)
-            };
-        private PhotoSentDTO PhotoToDTO(Photo photo) => new PhotoSentDTO()
+        [HttpPost("photo/upload")]
+        public async Task<ActionResult<PhotoDTO>> AddPhoto(IFormFile file)
         {
-            Id = photo.Id,
-            Url = photo.Url,
-            Order = photo.Order
-        };*/
+            var user = await userRepository.GetUserByUsernameAsync(User.GetUsername());
+            var result = await photoService.AddPhotoAsync(file);
+            if(result.Error != null)
+            {
+                return BadRequest(result.Error.Message);
+            }
+            var photo = new Photo
+            {
+                AppUserId = user.Id,
+                Url = result.SecureUrl.AbsoluteUri,
+                PublicId = result.PublicId
+            };
+
+            photo = await userRepository.AddPhotoAsync(photo);
+
+            if(await userRepository.SaveAllAsync())
+            {
+                return CreatedAtAction(nameof(AddPhoto), mapper.Map<PhotoDTO>(photo));
+            }
+            return BadRequest();
+        }
     }
 }

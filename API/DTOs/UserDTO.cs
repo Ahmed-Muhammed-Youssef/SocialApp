@@ -30,6 +30,6 @@ namespace API.DTOs
         [Required]
         public string Country { get; set; }
 
-        public IEnumerable<PhotoSentDTO> Photos { get; set; }
+        public IEnumerable<PhotoDTO> Photos { get; set; }
     }
 }
