@@ -103,9 +103,31 @@ namespace API.Controllers
 
             if(await userRepository.SaveAllAsync())
             {
-                return CreatedAtAction(nameof(AddPhoto), mapper.Map<PhotoDTO>(photo));
+                return CreatedAtAction(nameof(GetUser), new { username = user.UserName }, mapper.Map<PhotoDTO>(photo));
             }
             return BadRequest();
+        }
+        [HttpPost("photo/delete")]
+        public async Task<ActionResult<PhotoDTO>> DeletePhoto(int photoId)
+        {
+            var user = await userRepository.GetUserByUsernameAsync(User.GetUsername());
+            var photos = await userRepository.GetUserPhotoAsync(user.Id);
+            var photo = photos.FirstOrDefault(p => p.Id == photoId);
+            if(photo == null)
+            {
+                return BadRequest($"{photoId} doesn't exist.");
+            }
+            var result = await photoService.DeletePhotoAsync(photo.PublicId);
+            if (result.Error != null)
+            {
+                return BadRequest(result.Error.Message);
+            }
+            userRepository.DeletePhoto(photo);
+            if (await userRepository.SaveAllAsync())
+            {
+                return Ok();
+            }
+            return BadRequest("failed to delete the image from the server.");
         }
     }
 }

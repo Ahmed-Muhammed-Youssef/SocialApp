@@ -94,5 +94,14 @@ namespace API.Data
             await dataContext.Photo.AddAsync(photo);
             return photo;
         }
+        public void DeletePhoto(Photo photo)
+        {
+            dataContext.Photo.Remove(photo);
+        }
+
+        public async Task<IEnumerable<Photo>> GetUserPhotoAsync(int id)
+        {
+            return await dataContext.Photo.Where(p => p.AppUserId == id).ToListAsync();
+        }
     }
 }
