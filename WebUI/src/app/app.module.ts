@@ -1,6 +1,7 @@
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import {DragDropModule} from '@angular/cdk/drag-drop';
 
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -29,6 +30,8 @@ import { UserEditComponent } from './users/user-edit/user-edit.component';
 import { PreventUnsavedChangesGuard } from './_guards/prevent-unsaved-changes.guard';
 import { NgxSpinnerModule } from "ngx-spinner";
 import { LoadingInterceptor } from './_interceptors/loading.interceptor';
+import { PhotoEditorComponent } from './users/photo-editor/photo-editor.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -73,12 +76,13 @@ const routes: Routes = [
     NotFoundComponent,
     ServerErrorComponent,
     UserCardComponent,
-    UserEditComponent
+    UserEditComponent,
+    PhotoEditorComponent
   ],
   imports: [
     BrowserModule, HttpClientModule, BrowserAnimationsModule, FormsModule,
     RouterModule.forRoot(routes),
-    SharedModule, HttpClientModule, NgxGalleryModule, NgxSpinnerModule
+    SharedModule, HttpClientModule, NgxGalleryModule, NgxSpinnerModule, DragDropModule, FontAwesomeModule
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},

@@ -107,7 +107,7 @@ namespace API.Controllers
             }
             return BadRequest();
         }
-        [HttpPost("photo/delete")]
+        [HttpPost("photo/delete/{photoId}")]
         public async Task<ActionResult<PhotoDTO>> DeletePhoto(int photoId)
         {
             var user = await userRepository.GetUserByUsernameAsync(User.GetUsername());
