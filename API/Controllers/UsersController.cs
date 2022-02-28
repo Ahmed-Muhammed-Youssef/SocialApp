@@ -107,7 +107,7 @@ namespace API.Controllers
             }
             return BadRequest();
         }
-        [HttpPost("photo/delete/{photoId}")]
+        [HttpDelete("photo/delete/{photoId}")]
         public async Task<ActionResult<PhotoDTO>> DeletePhoto(int photoId)
         {
             var user = await userRepository.GetUserByUsernameAsync(User.GetUsername());
@@ -117,12 +117,28 @@ namespace API.Controllers
             {
                 return BadRequest($"{photoId} doesn't exist.");
             }
+            if(photo.AppUserId != user.Id)
+            {
+                return Unauthorized();
+            }
+            if(photo.Order == 0)
+            {
+                return BadRequest("you can't delete your profile picture.");
+            }
             var result = await photoService.DeletePhotoAsync(photo.PublicId);
             if (result.Error != null)
             {
                 return BadRequest(result.Error.Message);
             }
             userRepository.DeletePhoto(photo);
+
+            // reorder the photos
+            var photosList = photos.ToList();
+            for (int i = photo.Order + 1; i < photosList.Count(); i++)
+            {
+                photosList[i].Order--;
+                userRepository.UpdatePhoto(photosList[i]);
+            }
             if (await userRepository.SaveAllAsync())
             {
                 return Ok();
