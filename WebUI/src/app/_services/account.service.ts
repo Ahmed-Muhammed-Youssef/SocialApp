@@ -16,8 +16,7 @@ export class AccountService {
       map<LoginResponse, LoginResponse>((response: LoginResponse) => {
         const loginResponse: LoginResponse = response;
         if (loginResponse) {
-          localStorage.setItem('user', JSON.stringify(loginResponse));
-          this.currentUserSource.next(loginResponse);
+          this. setCurrentUser(loginResponse);
         }
         return response;
       })
@@ -25,6 +24,7 @@ export class AccountService {
   }
 
   setCurrentUser(loginResponse: LoginResponse): void {
+    localStorage.setItem('user', JSON.stringify(loginResponse));
     this.currentUserSource.next(loginResponse);
   }
 
@@ -37,8 +37,7 @@ export class AccountService {
       map<LoginResponse, LoginResponse>((response: LoginResponse) => {
         const loginResponse: LoginResponse = response;
         if (loginResponse) {
-          localStorage.setItem('user', JSON.stringify(loginResponse));
-          this.currentUserSource.next(loginResponse);
+          this. setCurrentUser(loginResponse);
         }
         return response;
       })
