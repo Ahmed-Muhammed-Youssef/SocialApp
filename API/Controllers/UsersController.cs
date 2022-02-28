@@ -129,5 +129,49 @@ namespace API.Controllers
             }
             return BadRequest("failed to delete the image from the server.");
         }
+        [HttpPut("photos/reorder")]
+        public async Task<ActionResult<PhotoDTO>> ReorderPhotos(IEnumerable<PhotoDTO> photoDTOs)
+        {
+            var user = await userRepository.GetUserByUsernameAsync(User.GetUsername());
+            var photos = await userRepository.GetUserPhotoAsync(user.Id); //the output is ordered
+            if(photoDTOs.Count() != photos.Count())
+            {
+                return BadRequest(photoDTOs);
+            }
+            var listOfDTOs = photoDTOs.OrderBy(p => p.Order).ToList();
+            // checks if the incoming list has invalid order values
+            for (int i = 0; i < listOfDTOs.Count(); i++)
+            {
+                if(listOfDTOs[i].Order != i)
+                {
+                    return BadRequest(photoDTOs);
+                }
+            }
+            foreach (var photo in photos)
+            {
+                if(photo.Id == listOfDTOs[photo.Order].Id)
+                {
+                    if(photo.Url != listOfDTOs[photo.Order].Url)
+                    {
+                        return BadRequest(photoDTOs);
+                    }
+                    continue; // the current photo order still the same.
+                }
+                // the following executes if the current photo order is changed.
+                var photoDTO = listOfDTOs.FirstOrDefault(p => p.Id == photo.Id);
+                // checks if there is any data changed rather than the order.
+                if(photoDTO.Url != photo.Url)
+                {
+                    return BadRequest(photoDTOs);
+                }
+                photo.Order = photoDTO.Order;
+                userRepository.UpdatePhoto(photo);
+            }
+            if(await userRepository.SaveAllAsync())
+            {
+                return Ok(photoDTOs);
+            }
+            return BadRequest("nothing has changed.");
+        }
     }
 }

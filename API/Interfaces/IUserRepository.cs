@@ -9,6 +9,7 @@ namespace API.Interfaces
     {
         public Task<Photo> AddPhotoAsync(Photo photo);
         public void Update(AppUser appUser);
+        public void UpdatePhoto(Photo photo);
         public Task<bool> SaveAllAsync();
         public Task<IEnumerable<UserDTO>> GetUsersDTOAsync();
         public Task<UserDTO> GetUserDTOByIdAsync(int id);
