@@ -33,6 +33,9 @@ export class UserService {
   public reorderPhotos(photos: Photo[]){
     return this.http.put<Photo[]>('/api/users/photos/reorder', photos);
   }
+  public deletePhoto(photoId:number){
+    return this.http.delete('/api/users/photo/delete/' + String(photoId));
+  }
   updateUser(user: User): Observable<UpdateUser> {
     const userTosend: UpdateUser  = {
       firstName: user.firstName,

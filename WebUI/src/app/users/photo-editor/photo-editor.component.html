@@ -2,7 +2,7 @@
     <div  [cdkDragData]="photo" class="col-2 drag-box mt-2" *ngFor="let photo of user.photos" cdkDrag>
         <div class=" text-center">
             <img src="{{photo.url}}" alt="{{photo.url}}" class="img-thumbnail p-1">
-            <button class="mt-2 btn btn-danger btn-sm">
+            <button (click)="deletePhoto(photo.id)" *ngIf="photo.order != 0" class="mt-2 btn btn-danger btn-sm">
                 <i class="fa fa-trash"></i> 
             </button>
         </div>
@@ -35,8 +35,6 @@
         <div class="custom-file">
             <input class="custom-file-input" id="inputFile" type="file" ng2FileSelect [uploader]="uploader" multiple/>
         </div>
-        <!-- Single
-            <input type="file" ng2FileSelect [uploader]="uploader" /> -->
     </div>
 </div>
         
@@ -63,11 +61,11 @@
     <div>
         <div>
             Queue progress:
-            <div class="progress">
+            <div class="progress mt-2">
                 <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': uploader.progress + '%' }"></div>
             </div>
         </div>
-        <div class="btn-group">
+        <div class="btn-group mt-3">
             <button type="button" class="btn btn-success btn-s"
                     (click)="uploader.uploadAll()" [disabled]="!uploader.getNotUploadedItems().length">
                 <span class="fa fa-upload"></span> Upload all

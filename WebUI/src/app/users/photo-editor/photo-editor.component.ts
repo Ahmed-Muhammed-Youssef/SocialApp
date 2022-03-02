@@ -73,14 +73,26 @@ export class PhotoEditorComponent implements OnInit {
         }
       );
     }
-    // this.initialPhotos = [];
-    // this.user?.photos.forEach(p => {
-    //   this.initialPhotos.push( {
-    //     id: p.id,
-    //     url: p.url,
-    //     order: p.order
-    //   });
-    // });
+  }
+  deletePhoto(photoId:number){
+    this.userService.deletePhoto(photoId).subscribe(
+      () => {
+        if(this.account && this.user){
+          const index = this.user.photos.findIndex(p => p.id === photoId);
+          this.user.photos = this.user.photos.filter(p => p.id !== photoId);
+          console.log(this.user.photos);
+          console.log(this.user.photos);
+          // reassign the order values of the pictures after the deleted picture.
+          for(let i = index + 1; i < this.user.photos.length; i++){
+            this.user.photos[i].order--;
+          }
+          this.account.userData.photos = [];
+          // copying to make sure that the account object 
+          // is isolated from any other incoming unsaved changes
+          this.user.photos.forEach(p =>  this.account?.userData.photos.push(Object.assign({}, p)));
+          this.accountService.setCurrentUser(this.account);
+        }
+      });
   }
   drop(event: any) {
     moveItemInArray(this.user?.photos as Photo[], event.previousIndex, event.currentIndex);
