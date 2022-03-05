@@ -88,11 +88,11 @@ namespace API.Data
         }
         public async Task<UserDTO> GetUserDTOByEmailAsync(string email)
         {
-            var result = await dataContext.Users
+            var user = await dataContext.Users
               .Where(u => u.Email == email)
               .ProjectTo<UserDTO>(mapper.ConfigurationProvider).FirstOrDefaultAsync();
-            result.Photos = result.Photos.OrderBy(p => p.Order);
-            return result;
+            user.Photos = user.Photos.OrderBy(p => p.Order);
+            return user;
         }
 
         public async Task<IEnumerable<PhotoDTO>> GetUserPhotoDTOsAsync(int id)

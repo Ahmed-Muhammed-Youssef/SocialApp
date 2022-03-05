@@ -20,8 +20,8 @@ namespace API.DTOs
         [Required]
         [MinLength(6)]
         public string Password { get; set; }
+        [Required]
         public DateTime DateOfBirth { get; set; }
-        public string Bio { get; set; }
         [Required]
         public string City { get; set; }
         [Required]

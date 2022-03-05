@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
 
 namespace API.Controllers
 {
@@ -17,12 +18,14 @@ namespace API.Controllers
         private readonly DataContext context;
         private readonly ITokenService tokenService;
         private readonly IUserRepository userRepository;
+        private readonly IMapper mapper;
 
-        public AccountController(DataContext context, ITokenService tokenService, IUserRepository userRepository)
+        public AccountController(DataContext context, ITokenService tokenService, IUserRepository userRepository, IMapper mapper)
         {
             this.context = context;
             this.tokenService = tokenService;
             this.userRepository = userRepository;
+            this.mapper = mapper;
         }
         [HttpPost("register")]
         public async Task<ActionResult> Register(RegisterDTO accountDTO)
@@ -39,25 +42,16 @@ namespace API.Controllers
             {
                 return BadRequest("The Username is already taken.");
             }
-            using var hasher = new HMACSHA512();
-            AppUser newUser = new AppUser()
+            AppUser newUser = new AppUser();
+            mapper.Map(accountDTO, newUser);
+            using (var hasher = new HMACSHA512())
             {
-                UserName = accountDTO.UserName,
-                FirstName = accountDTO.FirstName,
-                LastName = accountDTO.LastName,
-                Email = accountDTO.Email,
-                Sex = accountDTO.Sex,
-                Interest = accountDTO.Interest,
-                Bio = accountDTO.Bio,
-                DateOfBirth = accountDTO.DateOfBirth,
-                City = accountDTO.City,
-                Country = accountDTO.Country,
-                Password = hasher.ComputeHash(Encoding.UTF8.GetBytes(accountDTO.Password)),
-                PasswordSalt = hasher.Key
-            };
+                newUser.Password = hasher.ComputeHash(Encoding.UTF8.GetBytes(accountDTO.Password));
+                newUser.PasswordSalt = hasher.Key;
+            }
             context.Users.Add(newUser);
-            var userData = await userRepository.GetUserDTOByEmailAsync(accountDTO.Email);
             await context.SaveChangesAsync();
+            var userData = await userRepository.GetUserDTOByUsernameAsync(accountDTO.UserName);
             return CreatedAtAction("Register", new {email = accountDTO.Email }, 
                 new TokenDTO()
                 {
