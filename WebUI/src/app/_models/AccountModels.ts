@@ -13,7 +13,6 @@ export interface RegisterModel {
   email: string;
   password: string;
   dateOfBirth: Date;
-  bio: string;
   city: string;
   country: string
 }

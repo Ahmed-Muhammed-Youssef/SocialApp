@@ -34,7 +34,6 @@ export class UserEditComponent implements OnInit {
   }
   loadUser() {
     if (this.account?.userData) {
-
       this.userService.getUserByUsername(this.account?.userData.username).subscribe(user => {
         this.user = user;
       });

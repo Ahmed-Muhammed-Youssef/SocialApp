@@ -1,7 +1,8 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { RegisterModel } from '../_models/AccountModels';
 import { AccountService } from '../_services/account.service';
 
 @Component({
@@ -10,26 +11,52 @@ import { AccountService } from '../_services/account.service';
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit {
-
-  constructor(private accountService: AccountService, private toastr: ToastrService) {
-    this.registerModel = {
-      userName: '', email: '', password: '', sex: '', interest: '',
-      firstName: '', lastName: '', city: '', country: '', bio: '', dateOfBirth: new Date()
-    };
+  public registerForm: FormGroup = this.formBuilder.group({
+    username: ['', Validators.required],
+    firstName: ['', Validators.required],
+    lastName: ['', Validators.required],
+    dateOfBirth: ['', Validators.required],
+    country: ['', Validators.required],
+    city:['', Validators.required],
+    email: ['', Validators.required],
+    sex: ['', Validators.required],
+    interest: ['', Validators.required],
+    password: ['', [Validators.required, Validators.minLength(6)]],
+    confirmPassword: ['', [Validators.required, this.passwordConfirming]]
+  });
+  public maxDate:Date = new Date();
+  constructor(private accountService: AccountService, private toastr: ToastrService,
+     private formBuilder: FormBuilder, private router: Router) {
+    this.initializeForm();
+    this.maxDate.setFullYear(this.maxDate.getFullYear() - 18);
   }
-  public registerModel: RegisterModel;
-  ngOnInit(): void {
+  public initializeForm(){
+    this.registerForm.controls.password.valueChanges.subscribe((value) => 
+    {
+      this.registerForm.controls.confirmPassword.updateValueAndValidity();
+    });
   }
-  register(): void {
-    this.accountService.register(this.registerModel).subscribe(
+  // custom validator of type ValidatorFn
+  public passwordConfirming(control: AbstractControl): { passwordMismatch: boolean } | null {
+    if(control){
+      if(control.value != control.parent?.get('password')?.value){
+        return {passwordMismatch: true};
+      }
+    }
+    return null;
+  }
+  public ngOnInit(): void {
+  }
+  public register(): void {
+    this.accountService.register(this.registerForm.value).subscribe(
       response => {
-        console.log(response);
+        if(response){
+          this.router.navigateByUrl('users');
+        }
       },
       (error: HttpErrorResponse) => {
-        console.log(error.message);
-        this.toastr.error(error.error);
-      }
-    );
+      
+       });
   }
   public countryList: string[] = [
     "Afghanistan",

@@ -6,7 +6,7 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule, Routes } from '@angular/router';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { NavComponent } from './nav/nav.component';
 import { FooterComponent } from './footer/footer.component';
@@ -80,7 +80,7 @@ const routes: Routes = [
     PhotoEditorComponent
   ],
   imports: [
-    BrowserModule, HttpClientModule, BrowserAnimationsModule, FormsModule,
+    BrowserModule, HttpClientModule, BrowserAnimationsModule, FormsModule, ReactiveFormsModule,
     RouterModule.forRoot(routes),
     SharedModule, HttpClientModule, NgxGalleryModule, NgxSpinnerModule, DragDropModule, FontAwesomeModule
   ],

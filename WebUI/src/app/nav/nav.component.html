@@ -22,7 +22,7 @@
       
       <div class="dropdown" *ngIf="(accountService.currentUser$ | async) as user" dropdown>
         <div dropdownToggle class="dropdown-toggle  text-light">
-          <img class="nav-img-circle me-2" src="{{user.userData.photos[0].url}}" alt="{{user.userData.firstName}}" >
+          <img class="nav-img-circle me-2" src="{{user.userData.photos[0]?.url || './assets/Pictures/profile-placeholder.png'}}" alt="{{user.userData.firstName}}" >
           {{user.userData.firstName}}
           {{user.userData.lastName}}
         </div>
