@@ -1,5 +1,6 @@
 ﻿using API.DTOs;
 using API.Entities;
+using API.Helpers;
 using API.Interfaces;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
@@ -43,15 +44,19 @@ namespace API.Data
         {
             dataContext.Entry(photo).State = EntityState.Modified;
         }
-        public async Task<IEnumerable<UserDTO>> GetUsersDTOAsync()
+        public async Task<PagedList<UserDTO>> GetUsersDTOAsync(UserParams userParams)
         {
-            var result = await dataContext.Users
-                .ProjectTo<UserDTO>(mapper.ConfigurationProvider)
-                .ToListAsync();
-            result.ForEach(user => { 
+            var query = dataContext.Users
+                .ProjectTo<UserDTO>(mapper.ConfigurationProvider).AsNoTracking();
+            query.Skip(userParams.PageNumber * userParams.ItemsPerPage).Take(userParams.ItemsPerPage);
+            var pagedResult = await PagedList<UserDTO>.CreatePageAsync(query, userParams.PageNumber, userParams.ItemsPerPage);
+            
+            // order the photos according to the order value.
+            pagedResult.ForEach(user =>
+            {
                 user.Photos = user.Photos.OrderBy(p => p.Order);
             });
-            return result;
+            return pagedResult;
         }
 
         public async Task<UserDTO> GetUserDTOByIdAsync(int id)

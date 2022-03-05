@@ -1,5 +1,6 @@
 ﻿using API.DTOs;
 using API.Entities;
+using API.Helpers;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -11,7 +12,7 @@ namespace API.Interfaces
         public void Update(AppUser appUser);
         public void UpdatePhoto(Photo photo);
         public Task<bool> SaveAllAsync();
-        public Task<IEnumerable<UserDTO>> GetUsersDTOAsync();
+        public Task<PagedList<UserDTO>> GetUsersDTOAsync(UserParams userParams);
         public Task<UserDTO> GetUserDTOByIdAsync(int id);
         public Task<UserDTO> GetUserDTOByUsernameAsync(string username);
         public Task<AppUser> GetUserByUsernameAsync(string username);

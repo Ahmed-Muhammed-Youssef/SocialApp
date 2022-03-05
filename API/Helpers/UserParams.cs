@@ -2,21 +2,32 @@
 {
     public class UserParams
     {
-        private const int MaxPageSize = 50;
-        public int PageNumber { get; set; } = 1;
-        private int pageSize = 10;
-        public int PageSize { 
+        private const int MaxPageSize = 40;
+        private int pageNumber = 1;
+        public int PageNumber { 
             get {
-                return pageSize;
+                return pageNumber; 
+            }
+            set {
+                if(value > 0)
+                {
+                    pageNumber = value;
+                }
+            } 
+        }
+        private int itemsPerPage = 24;
+        public int ItemsPerPage { 
+            get {
+                return itemsPerPage;
             }
             set { 
-                if(value > MaxPageSize)
+                if(value > MaxPageSize || value < 1)
                 {
-                    PageSize = MaxPageSize;
+                    itemsPerPage = MaxPageSize;
                 }
                 else
                 {
-                    PageSize = value;
+                    itemsPerPage = value;
                 }
             } 
         }
