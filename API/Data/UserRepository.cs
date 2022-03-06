@@ -44,12 +44,25 @@ namespace API.Data
         {
             dataContext.Entry(photo).State = EntityState.Modified;
         }
-        public async Task<PagedList<UserDTO>> GetUsersDTOAsync(UserParams userParams)
+        public async Task<PagedList<UserDTO>> GetUsersDTOAsync(string username, UserParams userParams)
         {
-            var query = dataContext.Users
-                .ProjectTo<UserDTO>(mapper.ConfigurationProvider).AsNoTracking();
-            query.Skip(userParams.PageNumber * userParams.ItemsPerPage).Take(userParams.ItemsPerPage);
-            var pagedResult = await PagedList<UserDTO>.CreatePageAsync(query, userParams.PageNumber, userParams.ItemsPerPage);
+            var query = dataContext.Users.AsQueryable().Where(u => u.UserName != username);
+            if(userParams.Sex != "b")
+            {
+                query = query.Where(u => u.Sex == userParams.Sex[0]);
+            }
+            if(userParams.MinAge != null)
+            {
+                var maxDoB = DateTime.Now.AddYears(-(int)userParams.MinAge);
+                query = query.Where(u => u.DateOfBirth <= maxDoB);
+            }
+            if(userParams.MaxAge != null)
+            {
+                var minDoB = DateTime.Now.AddYears(-(int)userParams.MaxAge - 1);
+                query = query.Where(u => u.DateOfBirth >= minDoB);
+            }
+            var queryDto = query.ProjectTo<UserDTO>(mapper.ConfigurationProvider).AsNoTracking();
+            var pagedResult = await PagedList<UserDTO>.CreatePageAsync(queryDto, userParams.PageNumber, userParams.ItemsPerPage);
             
             // order the photos according to the order value.
             pagedResult.ForEach(user =>

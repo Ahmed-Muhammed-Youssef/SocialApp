@@ -12,7 +12,7 @@ namespace API.Interfaces
         public void Update(AppUser appUser);
         public void UpdatePhoto(Photo photo);
         public Task<bool> SaveAllAsync();
-        public Task<PagedList<UserDTO>> GetUsersDTOAsync(UserParams userParams);
+        public Task<PagedList<UserDTO>> GetUsersDTOAsync(string username, UserParams userParams);
         public Task<UserDTO> GetUserDTOByIdAsync(int id);
         public Task<UserDTO> GetUserDTOByUsernameAsync(string username);
         public Task<AppUser> GetUserByUsernameAsync(string username);
