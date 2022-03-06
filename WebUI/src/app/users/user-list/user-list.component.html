@@ -1,6 +1,13 @@
 <div class="row">
-  <div class="col-3" *ngFor="let user of users$ | async">
+  <div class="col-3" *ngFor="let user of users">
     <app-user-card [user]="user"></app-user-card>
   </div>
   
+</div>
+<div class="d-flex justify-content-center" *ngIf="pagination">
+  <pagination class="" [boundaryLinks]="true" [totalItems]="pagination.totalItems" (pageChanged)="pageChanged($event)"
+              [itemsPerPage]="pagination.itemsPerPage" [(ngModel)]="pagination.currentPage" 
+              previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;" >
+  </pagination>
+
 </div>

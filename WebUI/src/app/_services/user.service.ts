@@ -1,6 +1,7 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpResponse, JsonpClientBackend } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, Observable, of } from 'rxjs';
+import { PaginatedResult, Pagination } from '../_models/pagination';
 import { Photo, UpdateUser, User } from '../_models/User';
 
 @Injectable({
@@ -9,19 +10,27 @@ import { Photo, UpdateUser, User } from '../_models/User';
 export class UserService {
   constructor(private http: HttpClient) { }
   public users: User[] = [];
-
-  public getAllUsers(): Observable<User[]> {
-    if (this.users.length > 0) {
-      return of(this.users);
-    }
-    return this.http.get<User[]>('/api/users/all').pipe(map(
-      users => {
-        if(users){
-          this.users = users;
+  public paginationInfo : Pagination = 
+  { 
+    currentPage: 1,
+    itemsPerPage: 10,
+    totalItems: 10,
+    totalPages: 1 
+  }
+  public paginatedResult : PaginatedResult<User[]> =  {result: [], pagination: this.paginationInfo};
+  public getAllUsers(page : number, itemsPerPage : number):Observable<PaginatedResult<User[]>> {
+    //console.log(params.get('itemsPerPage'));
+    return this.http.get<User[]>('/api/users/all', { observe: 'response', params: new HttpParams().set('itemsPerPage', itemsPerPage).set('pageNumber', page) }).pipe(
+      map(response => {
+        if(response?.body){
+          this.paginatedResult.result = response.body;
         }
-        return users;
-      }
-    ));
+        if(response.headers.get('Pagination')){
+          this.paginatedResult.pagination = JSON.parse(response.headers.get('Pagination') as string) as Pagination;
+        }
+        return this.paginatedResult;
+      })
+    );
   }
   public getUserByUsername(username: string): Observable<User> {
     const user = this.users.find(u => u.username === username);

@@ -33,6 +33,7 @@ import { LoadingInterceptor } from './_interceptors/loading.interceptor';
 import { PhotoEditorComponent } from './users/photo-editor/photo-editor.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
+
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'login', component: LoginComponent },

@@ -15,7 +15,7 @@
                 }
             } 
         }
-        private int itemsPerPage = 24;
+        private int itemsPerPage;
         public int ItemsPerPage { 
             get {
                 return itemsPerPage;
