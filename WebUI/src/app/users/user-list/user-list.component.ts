@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, take } from 'rxjs';
+import { LoginResponse } from 'src/app/_models/AccountModels';
 import { Pagination } from 'src/app/_models/pagination';
+import { UserParams } from 'src/app/_models/userParams';
+import { AccountService } from 'src/app/_services/account.service';
 import { User } from '../../_models/User';
 import { UserService } from '../../_services/user.service';
 
@@ -11,21 +14,25 @@ import { UserService } from '../../_services/user.service';
 })
 export class UserListComponent implements OnInit {
   users: User[] = [];
+  account: LoginResponse | null = null;
   pagination : Pagination | null = null ;
-  currentPage = 1;
-  itemsPerPage = 4;
-
+  userParams: UserParams | null = null;
+  genderList = [{value: 'm', display: 'Males'}, {value: 'f', display: 'Females'}, {value: 'b', display: 'Both'}];
   // public users$: Observable<User[]>;
 
-  constructor(private userService: UserService) {
-   
+  constructor(private userService: UserService, private accountService: AccountService) {
+    this.accountService.currentUser$.pipe(take(1)).subscribe(response  => {
+      if (response) {
+        this.account = response;
+        this.userParams = new UserParams(response.userData);
+      }
+    });
   }
   ngOnInit(): void {
     this.loadUsers();
   }
   loadUsers(){
-    
-    this.userService.getAllUsers(this.currentPage, this.itemsPerPage).subscribe(
+    this.userService.getAllUsers(this.userParams as UserParams).subscribe(
       response => {
         if(response){
           this.users = response.result;
@@ -34,10 +41,14 @@ export class UserListComponent implements OnInit {
       }
     );
   }
+  resetFilters(){
+    this.userParams = new UserParams(this.account?.userData as User);
+    this.loadUsers();
+  }
   pageChanged($event:any){
     if(event){
-      if($event){
-        this.currentPage = $event.page;
+      if($event && this.userParams){
+        this.userParams.pageNumber = $event.page;
         this.loadUsers();
       }
     }

@@ -1,10 +1,40 @@
-<div class="row">
+<div class="container mt-3">
+  <form *ngIf="userParams" #form="ngForm" class="" (ngSubmit)="loadUsers()">
+    <div class="row justify-content-center">
+
+      <div class="col-auto form-group">
+        <label for="minAge">Age from</label>
+        <input type="number" class="form-control" 
+        style="width: 70px;" name="minAge" 
+        [(ngModel)]="userParams.minAge">
+      </div>
+      <div class="col-auto form-group">
+        <label for="maxAge">Age to</label>
+        <input type="number" class="form-control" 
+        style="width: 70px;" name="maxAge" 
+        [(ngModel)]="userParams.maxAge">
+      </div>
+      <div class="col-auto form-group">
+        <label>Show </label>
+        <select style="width: 130px;" class="form-select" name="sex" [(ngModel)]="userParams.sex">
+          <option *ngFor="let gender of genderList" [value]="gender.value">{{gender.display}}</option>
+        </select>  
+      </div>
+    </div>
+    <div class="mt-4 row justify-content-center">
+      <button class="col-auto btn btn-secondary me-1" type="submit">Apply</button>
+      <button (click)="resetFilters()" class="col-auto btn btn-primary" type="submit">Reset</button>
+    </div>
+  </form>
+</div>
+
+<div class="row mt-4">
   <div class="col-3" *ngFor="let user of users">
     <app-user-card [user]="user"></app-user-card>
   </div>
   
 </div>
-<div class="d-flex justify-content-center" *ngIf="pagination">
+<div class="d-flex justify-content-center" *ngIf="userParams && pagination">
   <pagination class="" [boundaryLinks]="true" [totalItems]="pagination.totalItems" (pageChanged)="pageChanged($event)"
               [itemsPerPage]="pagination.itemsPerPage" [(ngModel)]="pagination.currentPage" 
               previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;" >

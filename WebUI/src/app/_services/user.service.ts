@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { map, Observable, of } from 'rxjs';
 import { PaginatedResult, Pagination } from '../_models/pagination';
 import { Photo, UpdateUser, User } from '../_models/User';
+import { UserParams } from '../_models/userParams';
 
 @Injectable({
   providedIn: 'root'
@@ -17,18 +18,34 @@ export class UserService {
     totalItems: 10,
     totalPages: 1 
   }
-  public paginatedResult : PaginatedResult<User[]> =  {result: [], pagination: this.paginationInfo};
-  public getAllUsers(page : number, itemsPerPage : number):Observable<PaginatedResult<User[]>> {
-    //console.log(params.get('itemsPerPage'));
-    return this.http.get<User[]>('/api/users/all', { observe: 'response', params: new HttpParams().set('itemsPerPage', itemsPerPage).set('pageNumber', page) }).pipe(
+  
+
+  // helper method
+  private getPaginationParams(userParams: UserParams){
+    let httpParams: HttpParams = new HttpParams()
+    .set('pageNumber',userParams.pageNumber)
+    .set('itemsPerPage', userParams.itemsPerPage)
+    .set('sex', userParams.sex);
+    if(userParams.minAge){
+      httpParams = httpParams.set('minAge', userParams.minAge);
+    }
+    if(userParams.maxAge){
+      httpParams = httpParams.set('maxAge', userParams.maxAge);
+    }
+    return httpParams;
+  }
+  public getAllUsers(userParams: UserParams):Observable<PaginatedResult<User[]>> {
+    let paginatedResult : PaginatedResult<User[]> =  {result: [], pagination: this.paginationInfo};
+    return this.http.get<User[]>('/api/users/all', { observe: 'response', params: this.getPaginationParams(userParams)})
+     .pipe(
       map(response => {
         if(response?.body){
-          this.paginatedResult.result = response.body;
+          paginatedResult.result = response.body;
         }
         if(response.headers.get('Pagination')){
-          this.paginatedResult.pagination = JSON.parse(response.headers.get('Pagination') as string) as Pagination;
+          paginatedResult.pagination = JSON.parse(response.headers.get('Pagination') as string) as Pagination;
         }
-        return this.paginatedResult;
+        return paginatedResult;
       })
     );
   }
