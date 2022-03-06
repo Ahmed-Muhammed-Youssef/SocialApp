@@ -43,6 +43,7 @@ namespace API
             services.AddJwtAuthentication(_config);
             services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<ILikesRepository, LikesRepository>();
             services.AddScoped<ITokenService, TokenService>();
             services.AddDbContext<DataContext>( options =>
             {

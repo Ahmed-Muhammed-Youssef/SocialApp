@@ -1,49 +1,36 @@
-﻿using API.Data;
-using API.DTOs;
-using API.Entities;
+﻿using API.DTOs;
+using API.Extensions;
+using API.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize]
     public class MatchesController : ControllerBase
     {
-        private readonly DataContext context;
+        private readonly ILikesRepository likesRepository;
+        private readonly IUserRepository userRepository;
 
-        public MatchesController(DataContext context)
+        public MatchesController(ILikesRepository likesRepository, IUserRepository userRepository)
         {
-            this.context = context;
+            this.likesRepository = likesRepository;
+            this.userRepository = userRepository;
         }
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<IdPairs>>> GetAllMatches()
+        public async Task<ActionResult<IEnumerable<UserDTO>>> GetAllMatches()
         {
-            var matches = await context.Matches.ToListAsync();
-            return Ok(matches.ConvertAll(MatchtoDTO));
+            var user = await userRepository.GetUserByUsernameAsync(User.GetUsername());
+            if(user == null)
+            {
+                return Unauthorized();
+            }
+            var matches = await likesRepository.GetMatchesAsync(user.Id);
+            return Ok(matches);
         }
-
-        [HttpGet("{id}")]
-        public async Task<ActionResult<IEnumerable<IdPairs>>> GetMatches(int id)
-        {
-            var matches = await context.Matches.AsQueryable()
-                .Where(m => m.UserId == id)
-                .Select(m => m)
-                .ToListAsync();
-            return Ok(matches.ConvertAll(MatchtoDTO));
-        }
-        private Match DTOtoMatch(IdPairs match) => new Match()
-        {
-            UserId = match.FirstId,
-            MatchedId = match.SecondId
-        };
-        private IdPairs MatchtoDTO(Match match) => new IdPairs()
-        {
-            FirstId = match.UserId,
-            SecondId = match.MatchedId
-        };
     }
 }
