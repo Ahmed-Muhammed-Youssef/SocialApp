@@ -1,4 +1,6 @@
-﻿namespace API.Helpers
+﻿using System.Collections.Generic;
+
+namespace API.Helpers
 {
     public class UserParams
     {
@@ -7,6 +9,7 @@
         private int itemsPerPage;
         private int? minAge = null;
         private int? maxAge = null;
+        private string orderBy = "lastActive";
         public int PageNumber { 
             get {
                 return pageNumber; 
@@ -63,6 +66,21 @@
                 else if (value >= 18)
                 {
                     maxAge=value;
+                }
+            }
+        }
+        private List<string> orderOptions = new List<string>() { "lastActive", "age", "creationTime" };
+        public string OrderBy
+        {
+            get
+            {
+                return orderBy;
+            }
+            set
+            {
+                if( !string.IsNullOrEmpty(value) || orderOptions.Contains(value))
+                {
+                    orderBy = value;
                 }
             }
         }
