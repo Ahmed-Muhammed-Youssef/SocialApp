@@ -77,6 +77,12 @@ namespace API.Data
             });
             return pagedResult;
         }
+        public async Task<AppUser> GetUserByIdAsync(int id)
+        {
+            var result = await dataContext.Users
+                .Where(u => u.Id == id).FirstOrDefaultAsync();
+            return result;
+        }
 
         public async Task<UserDTO> GetUserDTOByIdAsync(int id)
         {

@@ -1,5 +1,6 @@
 ﻿using API.Data;
 using API.Entities;
+using API.Helpers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -7,6 +8,9 @@ namespace API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [ServiceFilter(typeof(LogUserActivity))]
+
+
     public class BuggyController : ControllerBase
     {
         private readonly DataContext context;

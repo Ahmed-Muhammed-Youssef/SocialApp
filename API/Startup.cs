@@ -45,6 +45,7 @@ namespace API
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<ILikesRepository, LikesRepository>();
             services.AddScoped<ITokenService, TokenService>();
+            services.AddScoped<LogUserActivity>();
             services.AddDbContext<DataContext>( options =>
             {
                 options.UseSqlite(_config.GetSection("ConnectionStrings")["DefaultConnection"]);
