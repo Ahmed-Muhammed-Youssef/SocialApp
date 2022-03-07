@@ -36,7 +36,11 @@ namespace API.Controllers
             }
             if(liker.Id == liked.Id)
             {
-                return BadRequest("You can't like yourself");
+                return BadRequest("You can't like yourself.");
+            }
+            if(await likesRepository.GetLikeAsync(liker.Id, liked.Id) != null)
+            {
+                return BadRequest("You already liked this user.");
             }
             bool isMatch = await likesRepository.LikeAsync(liker.Id, liked.Id);
             if( await likesRepository.SaveAllAsync())

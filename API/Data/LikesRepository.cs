@@ -51,5 +51,10 @@ namespace API.Data
         {
             return await dataContext.SaveChangesAsync() > 0;
         }
+
+        public async Task<Like> GetLikeAsync(int likerId, int likedId)
+        {
+            return await dataContext.Likes.FindAsync(likerId, likedId);
+        }
     }
 }
