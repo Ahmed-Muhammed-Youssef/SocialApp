@@ -4,7 +4,7 @@
 
       <div class="col-auto form-group">
         <label for="minAge">Age from</label>
-        <input type="number" class="form-control" 
+        <input placeholder="18" type="number" class="form-control" 
         style="width: 70px;" name="minAge" 
         [(ngModel)]="userParams.minAge">
       </div>
@@ -15,9 +15,15 @@
         [(ngModel)]="userParams.maxAge">
       </div>
       <div class="col-auto form-group">
-        <label>Show </label>
+        <label for="sex">Show </label>
         <select style="width: 130px;" class="form-select" name="sex" [(ngModel)]="userParams.sex">
           <option *ngFor="let gender of genderList" [value]="gender.value">{{gender.display}}</option>
+        </select>  
+      </div>
+      <div class="col-auto form-group">
+        <label for="orderBy">Order By</label>
+        <select style="width: 160px;" class="form-select" name="orderBy" [(ngModel)]="userParams.orderBy">
+          <option *ngFor="let oreder of orderByOptions" [value]="oreder.value">{{oreder.display}}</option>
         </select>  
       </div>
     </div>

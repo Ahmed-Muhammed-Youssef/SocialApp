@@ -25,7 +25,8 @@ export class UserService {
     let httpParams: HttpParams = new HttpParams()
     .set('pageNumber',userParams.pageNumber)
     .set('itemsPerPage', userParams.itemsPerPage)
-    .set('sex', userParams.sex);
+    .set('sex', userParams.sex)
+    .set('orderBy', userParams.orderBy);
     if(userParams.minAge){
       httpParams = httpParams.set('minAge', userParams.minAge);
     }

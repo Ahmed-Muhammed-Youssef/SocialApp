@@ -18,6 +18,7 @@ export class UserListComponent implements OnInit {
   pagination : Pagination | null = null ;
   userParams: UserParams | null = null;
   genderList = [{value: 'm', display: 'Males'}, {value: 'f', display: 'Females'}, {value: 'b', display: 'Both'}];
+  orderByOptions = [{value: 'lastActive', display: 'Last Active'}, {value: 'creationTime', display: 'Newest Users'}, {value: 'age', display: 'Age'} ];
   // public users$: Observable<User[]>;
 
   constructor(private userService: UserService, private accountService: AccountService) {
