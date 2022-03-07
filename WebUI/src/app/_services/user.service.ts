@@ -1,25 +1,45 @@
 import { HttpClient, HttpParams, HttpResponse, JsonpClientBackend } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map, Observable, of } from 'rxjs';
+import { map, Observable, of, take } from 'rxjs';
 import { PaginatedResult, Pagination } from '../_models/pagination';
 import { Photo, UpdateUser, User } from '../_models/User';
 import { UserParams } from '../_models/userParams';
+import { AccountService } from './account.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-  constructor(private http: HttpClient) { }
-  public users: User[] = [];
-  public paginationInfo : Pagination = 
-  { 
-    currentPage: 1,
-    itemsPerPage: 10,
-    totalItems: 10,
-    totalPages: 1 
-  }
-  
+  constructor(private http: HttpClient, private accountService: AccountService) { 
 
+    this.accountService.currentUser$.pipe(take(1)).subscribe(response  => {
+      if (response) {
+        this.currentUser = response.userData;
+        this.userParams = new UserParams(response.userData);
+      }
+    });
+  }
+  private users: User[] = [];
+  private currentUser : User | null = null;
+  private userParams : UserParams| null = null;
+  private paginationInfo : Pagination = 
+  { 
+    currentPage: 0,
+    itemsPerPage: 0,
+    totalItems: 0,
+    totalPages: 0 
+  };
+  private userChache = new Map<string, User[]>();
+  public getUserParams(){
+    return this.userParams;
+  }
+  public setUserParams(params: UserParams){
+    this.userParams = params;
+  }
+  public resetUserParams(){
+    this.userParams = new UserParams(this.currentUser as User);
+    return this.userParams;
+  }
   // helper method
   private getPaginationParams(userParams: UserParams){
     let httpParams: HttpParams = new HttpParams()
@@ -37,6 +57,12 @@ export class UserService {
   }
   public getAllUsers(userParams: UserParams):Observable<PaginatedResult<User[]>> {
     let paginatedResult : PaginatedResult<User[]> =  {result: [], pagination: this.paginationInfo};
+    let cache = this.userChache.get(Object.values(userParams).join('-'));
+    if(cache){
+      paginatedResult.result = cache;
+      return of(paginatedResult);
+    }
+
     return this.http.get<User[]>('/api/users/all', { observe: 'response', params: this.getPaginationParams(userParams)})
      .pipe(
       map(response => {
@@ -46,6 +72,8 @@ export class UserService {
         if(response.headers.get('Pagination')){
           paginatedResult.pagination = JSON.parse(response.headers.get('Pagination') as string) as Pagination;
         }
+        this.userChache.set(Object.values(userParams).join('-'), paginatedResult.result);
+        this.paginationInfo = paginatedResult.pagination;
         return paginatedResult;
       })
     );
