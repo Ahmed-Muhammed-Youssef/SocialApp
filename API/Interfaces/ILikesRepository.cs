@@ -9,6 +9,7 @@ namespace API.Interfaces
     {
         public Task<bool> LikeAsync(int likerId, int likedId);
         public Task<Like> GetLikeAsync(int likerId, int likedId);
+        public Task<IEnumerable<UserDTO>> GetLikedUsersDTOAsync(int likerId);
         public Task<bool> SaveAllAsync();
         public Task<List<UserDTO>> GetMatchesAsync(int id);
     }

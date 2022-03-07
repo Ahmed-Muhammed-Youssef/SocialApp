@@ -1,8 +1,10 @@
-﻿using API.Extensions;
+﻿using API.DTOs;
+using API.Extensions;
 using API.Helpers;
 using API.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace API.Controllers
@@ -21,6 +23,17 @@ namespace API.Controllers
             this.likesRepository = likesRepository;
             this.userRepository = userRepository;
         }
+        [HttpGet("liked")]
+        public async Task<ActionResult<IEnumerable<UserDTO>>> GetLikedUsers()
+        {
+            var liker = await userRepository.GetUserByIdAsync(User.GetId());
+            if(liker == null)
+            {
+                return BadRequest();
+            }
+            var likedUsers = await likesRepository.GetLikedUsersDTOAsync(liker.Id);
+            return Ok(likedUsers);
+        }
         [HttpPost("{username}")]
         public async Task<ActionResult> PostLike(string username)
         {
@@ -28,7 +41,7 @@ namespace API.Controllers
             {
                 return BadRequest();
             }
-            var liker = await userRepository.GetUserByUsernameAsync(User.GetUsername());
+            var liker = await userRepository.GetUserByIdAsync(User.GetId());
             var liked = await userRepository.GetUserByUsernameAsync(username);
             if(liker == null || liked == null)
             {
