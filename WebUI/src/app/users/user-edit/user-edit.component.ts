@@ -39,6 +39,10 @@ export class UserEditComponent implements OnInit {
       });
     }
   }
+  public getLoacaleDateTime(d: Date) : Date{
+    var localDate  = new Date(d.toString() + 'Z');
+    return localDate;
+  }
   updateUser() {
     if (this.user) {
       this.userService.updateUser(this.user).subscribe(r => {

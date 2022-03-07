@@ -15,11 +15,11 @@
         </div>
         <div>
           <strong>Last active:</strong>
-          <p>{{user.lastActive}}</p>
+          <p>{{getLoacaleDateTime(user.lastActive) | timeago}}</p>
         </div>
         <div>
           <strong>Member since:</strong>
-          <p>{{user.created}}</p>
+          <p>{{getLoacaleDateTime(user.created) | date}}</p>
         </div>
         <div class="card-footer">
           <div class="btn-group d-flex">

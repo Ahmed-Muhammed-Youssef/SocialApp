@@ -45,7 +45,10 @@ export class UserDetailComponent implements OnInit {
       }
     ];
   }
-  
+  public getLoacaleDateTime(d: Date) : Date{
+    var localDate  = new Date(d.toString() + 'Z');
+    return localDate;
+  }
   ngOnInit(): void {
     
   }
