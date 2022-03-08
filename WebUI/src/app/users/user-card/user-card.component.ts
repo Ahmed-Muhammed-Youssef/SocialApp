@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { UserService } from 'src/app/_services/user.service';
 import { User } from '../../_models/User';
@@ -10,6 +10,7 @@ import { User } from '../../_models/User';
 })
 export class UserCardComponent implements OnInit {
   @Input () isLiked = false;
+  @Output () liked = new EventEmitter();
   @Input() user: User = {
     username: '',
     firstName: '',
@@ -32,7 +33,7 @@ export class UserCardComponent implements OnInit {
     this.userService.like(user.username).subscribe(
       r => {
           this.toastr.success('You have liked ' + user.firstName);
-          this.userService.deleteCachedValues();
+          this.liked.emit();
       }
     );
   }

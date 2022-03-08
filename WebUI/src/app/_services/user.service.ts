@@ -14,8 +14,8 @@ export class UserService {
 
     this.resetUserParams();
   }
-  private users: User[] = [];
-  private userParams : UserParams| null = null;
+  private users: User[] = []; //used for profile caching
+  private userParams : UserParams| null = null; //used for filter caching
   private paginationInfo : Pagination = 
   { 
     currentPage: 0,

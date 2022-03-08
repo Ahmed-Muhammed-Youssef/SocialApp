@@ -36,7 +36,7 @@
 
 <div class="row mt-4">
   <div class="col-3" *ngFor="let user of users">
-    <app-user-card [user]="user"></app-user-card>
+    <app-user-card (liked)="loadUsers()" [user]="user"></app-user-card>
   </div>
   
 </div>
