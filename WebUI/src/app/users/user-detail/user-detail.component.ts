@@ -5,6 +5,7 @@ import { UserService } from '../../_services/user.service';
 import { NgxGalleryOptions } from '@kolkov/ngx-gallery';
 import { NgxGalleryImage } from '@kolkov/ngx-gallery';
 import { NgxGalleryAnimation } from '@kolkov/ngx-gallery';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-user-detail',
@@ -26,10 +27,11 @@ export class UserDetailComponent implements OnInit {
     country: '',
     photos: []
   };
+  isLiked : boolean = false;
   username: string = '';
   galleryOptions: NgxGalleryOptions[] = [];
   galleryImages: NgxGalleryImage[] = [];
-  constructor(private userService: UserService, private route: ActivatedRoute) {
+  constructor(private userService: UserService, private route: ActivatedRoute, private toastr: ToastrService) {
     this.route.paramMap.subscribe(param => {
       this.username = String(param.get('username'));
     });
@@ -45,6 +47,17 @@ export class UserDetailComponent implements OnInit {
       }
     ];
   }
+  addLike(){
+    this.userService.like(this.user.username).subscribe(
+      r => {
+          this.isLiked = true;
+          this.toastr.success('You have liked ' + this.user.firstName);
+          if(r == true){
+            this.toastr.success("You have a new match!")
+          }
+      }
+    );
+  }
   public getLoacaleDateTime(d: Date) : Date{
     var localDate  = new Date(d.toString() + 'Z');
     return localDate;
@@ -56,6 +69,9 @@ export class UserDetailComponent implements OnInit {
     this.userService.getUserByUsername(this.username).subscribe(u => {
       this.user = u;
       this.setImages();
+    });
+    this.userService.getIsLiked(this.username).subscribe(r => {
+      this.isLiked = r;
     });
   }
   public formatInterest(interest: string): string {

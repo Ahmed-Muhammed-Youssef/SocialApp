@@ -33,6 +33,9 @@ export class UserCardComponent implements OnInit {
     this.userService.like(user.username).subscribe(
       r => {
           this.toastr.success('You have liked ' + user.firstName);
+          if(r == true){
+            this.toastr.success("You have a new match!")
+          }
           this.liked.emit();
       }
     );

@@ -23,7 +23,7 @@
         </div>
         <div class="card-footer">
           <div class="btn-group d-flex">
-            <button class="btn btn-secondary">Like</button>
+            <button *ngIf="!isLiked" (click)="addLike()" class="btn btn-secondary">Like</button>
             <button class="btn btn-success">Message</button>
           </div>
         </div>

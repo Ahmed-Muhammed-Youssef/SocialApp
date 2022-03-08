@@ -11,6 +11,7 @@ const PROXY_CONFIG = [
         "/api/account/login",
         "/api/account/register",
         "/api/like",
+        "/api/like/isliked",
         "/api/like/liked",
         "/api/matches",
         "/api/matches",

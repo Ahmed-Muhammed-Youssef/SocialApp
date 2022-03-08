@@ -110,6 +110,10 @@ export class UserService {
     return this.http.get<User[]>('api/like/liked');
 
   }
+  getIsLiked(username:string) : Observable<boolean>{
+    return this.http.get<boolean>('/api/like/isliked/' + username);
+
+  }
   getMatches(): Observable<User[]>{
     return this.http.get<User[]>('api/matches');
 
