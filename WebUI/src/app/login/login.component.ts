@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { LoginModel } from '../_models/AccountModels';
 import { AccountService } from '../_services/account.service';
+import { UserService } from '../_services/user.service';
 
 @Component({
   selector: 'app-login',
@@ -12,7 +13,8 @@ import { AccountService } from '../_services/account.service';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(public accountService: AccountService, private router: Router, private toastr: ToastrService) { }
+  constructor(public accountService: AccountService, private router: Router,
+     private toastr: ToastrService, private userService: UserService) { }
   public loginCred: LoginModel = { email: '', password: '' };
   ngOnInit(): void {
   }
@@ -21,6 +23,7 @@ export class LoginComponent implements OnInit {
       response => {
         if (response) {
           this.router.navigateByUrl('/users');
+          this.userService.deleteCachedValues();
         }
       },
       (error: HttpErrorResponse) => {

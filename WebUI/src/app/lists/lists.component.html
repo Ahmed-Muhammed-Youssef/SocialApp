@@ -1,1 +1,7 @@
-<p>lists works!</p>
+<div class="container mt-4" *ngIf="matches.length > 0">
+    <div class="row mt-4">
+        <div class="col-3" *ngFor="let user of matches">
+            <app-user-card [isLiked]="true" [user]="user"></app-user-card>
+        </div>
+    </div>
+</div>

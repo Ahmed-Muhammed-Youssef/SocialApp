@@ -12,15 +12,9 @@ import { AccountService } from './account.service';
 export class UserService {
   constructor(private http: HttpClient, private accountService: AccountService) { 
 
-    this.accountService.currentUser$.pipe(take(1)).subscribe(response  => {
-      if (response) {
-        this.currentUser = response.userData;
-        this.userParams = new UserParams(response.userData);
-      }
-    });
+    this.resetUserParams();
   }
   private users: User[] = [];
-  private currentUser : User | null = null;
   private userParams : UserParams| null = null;
   private paginationInfo : Pagination = 
   { 
@@ -37,9 +31,14 @@ export class UserService {
     this.userParams = params;
   }
   public resetUserParams(){
-    this.userParams = new UserParams(this.currentUser as User);
+    this.accountService.currentUser$.pipe(take(1)).subscribe(response  => {
+      if (response) {
+        this.userParams = new UserParams(response.userData);
+      }
+    });
     return this.userParams;
   }
+
   // helper method
   private getPaginationParams(userParams: UserParams){
     let httpParams: HttpParams = new HttpParams()
@@ -55,6 +54,15 @@ export class UserService {
     }
     return httpParams;
   }
+  public deleteCachedValues(){
+    this.userChache = new Map();
+    this.resetUserParams();
+  }
+  // public deleteTheCurrentCaschedUserParams(){
+  //   if(this.userParams){
+  //     this.userChache.delete(Object.values(this.userParams).join('-'));
+  //   }
+  // }
   public getAllUsers(userParams: UserParams):Observable<PaginatedResult<User[]>> {
     let paginatedResult : PaginatedResult<User[]> =  {result: [], pagination: this.paginationInfo};
     let cache = this.userChache.get(Object.values(userParams).join('-'));
@@ -90,6 +98,21 @@ export class UserService {
   }
   public deletePhoto(photoId:number){
     return this.http.delete('/api/users/photo/delete/' + String(photoId));
+  }
+  like(username: string): Observable<boolean>{
+    return this.http.post<boolean>('api/like/' + username, {}).pipe( map( r=> {
+      //the correct answer will need a more complex caching system so we will only delete all the cashed data for now
+      this.userChache = new Map();
+      return r;
+    }));
+  }
+  getLikes() : Observable<User[]>{
+    return this.http.get<User[]>('api/like/liked');
+
+  }
+  getMatches(): Observable<User[]>{
+    return this.http.get<User[]>('api/matches');
+
   }
   updateUser(user: User): Observable<UpdateUser> {
     const userTosend: UpdateUser  = {

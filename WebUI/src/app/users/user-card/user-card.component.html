@@ -6,10 +6,10 @@
         <button class="btn btn-secondary me-2" routerLink="/users/username/{{user.username}}">
           <i class="fa fa-user"></i>
         </button>
-        <button class="btn btn-secondary me-2">
+        <button *ngIf="!isLiked" (click)="addLike(user)" class="btn btn-secondary me-2">
           <i class="fa fa-heart"></i>
         </button>
-        <button class="btn btn-secondary ">
+        <button *ngIf="isLiked" class="btn btn-secondary ">
           <i class="fa fa-envelope"></i>
         </button>
       </li>

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { User } from '../_models/User';
+import { UserService } from '../_services/user.service';
 
 @Component({
   selector: 'app-lists',
@@ -6,10 +8,18 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./lists.component.css']
 })
 export class ListsComponent implements OnInit {
-
-  constructor() { }
+  matches: User[] = [];
+  constructor(private userService: UserService) { }
 
   ngOnInit(): void {
+    this.loadMatches();
+  }
+  loadMatches(){
+    this.userService.getMatches().subscribe(
+      r => {
+        this.matches = r;
+      }
+    );
   }
 
 }

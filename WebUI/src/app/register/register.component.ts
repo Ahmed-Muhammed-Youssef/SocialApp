@@ -4,6 +4,7 @@ import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/fo
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { AccountService } from '../_services/account.service';
+import { UserService } from '../_services/user.service';
 
 @Component({
   selector: 'app-register',
@@ -26,7 +27,7 @@ export class RegisterComponent implements OnInit {
   });
   public maxDate:Date = new Date();
   constructor(private accountService: AccountService, private toastr: ToastrService,
-     private formBuilder: FormBuilder, private router: Router) {
+     private formBuilder: FormBuilder, private router: Router, private userService: UserService) {
     this.initializeForm();
     this.maxDate.setFullYear(this.maxDate.getFullYear() - 18);
   }
@@ -52,6 +53,7 @@ export class RegisterComponent implements OnInit {
       response => {
         if(response){
           this.router.navigateByUrl('users');
+          this.userService.deleteCachedValues();
         }
       },
       (error: HttpErrorResponse) => {

@@ -1,4 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
+import { UserService } from 'src/app/_services/user.service';
 import { User } from '../../_models/User';
 
 @Component({
@@ -7,7 +9,7 @@ import { User } from '../../_models/User';
   styleUrls: ['./user-card.component.css']
 })
 export class UserCardComponent implements OnInit {
-
+  @Input () isLiked = false;
   @Input() user: User = {
     username: '',
     firstName: '',
@@ -23,7 +25,15 @@ export class UserCardComponent implements OnInit {
     photos: []
   };
  
-  constructor() { }
+  constructor(private userService: UserService, private toastr: ToastrService) { }
   ngOnInit(): void {
+  }
+  addLike(user: User){
+    this.userService.like(user.username).subscribe(
+      r => {
+          this.toastr.success('You have liked ' + user.firstName);
+          this.userService.deleteCachedValues();
+      }
+    );
   }
 }
