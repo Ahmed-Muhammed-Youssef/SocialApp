@@ -1,5 +1,6 @@
 ﻿using API.DTOs;
 using API.Entities;
+using API.Helpers;
 using API.Interfaces;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
@@ -37,15 +38,20 @@ namespace API.Data
             }
             return isMatch;
         }
-        public async Task<List<UserDTO>> GetMatchesAsync(int id)
+        public async Task<PagedList<UserDTO>> GetMatchesAsync(int id, PaginationParams paginationParams)
         {
             var matchesId = await dataContext.Matches.Where(u => u.UserId == id)
                 .Select(u => u.MatchedId).ToListAsync();
-            var result = await dataContext.Users.Where(user => matchesId.Contains(user.Id))
-                .ProjectTo<UserDTO>(mapper.ConfigurationProvider)
-                .ToListAsync();
-            result.ForEach(u => u.Photos.OrderBy(p => p.Order));
-            return result;
+
+            var queryDto = dataContext.Users.Where(user => matchesId.Contains(user.Id))
+                .ProjectTo<UserDTO>(mapper.ConfigurationProvider).AsNoTracking();
+
+            queryDto = queryDto.OrderByDescending(u => u.LastActive);
+
+            var pagedResult = await PagedList<UserDTO>.CreatePageAsync(queryDto, paginationParams.PageNumber, paginationParams.ItemsPerPage);
+            pagedResult.ForEach(u => u.Photos.OrderBy(p => p.Order));
+
+            return pagedResult;
         }
         public async Task<bool> SaveAllAsync()
         {

@@ -25,14 +25,16 @@ namespace API.Controllers
             this.userRepository = userRepository;
         }
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<UserDTO>>> GetAllMatches()
+        public async Task<ActionResult<IEnumerable<UserDTO>>> GetAllMatches([FromQuery]PaginationParams paginationParams)
         {
             var user = await userRepository.GetUserByUsernameAsync(User.GetUsername());
             if(user == null)
             {
                 return Unauthorized();
             }
-            var matches = await likesRepository.GetMatchesAsync(user.Id);
+            var matches = await likesRepository.GetMatchesAsync(user.Id, paginationParams);
+            var newPaginationHeader = new PaginationHeader(matches.CurrentPage, matches.ItemsPerPage, matches.TotalCount, matches.TotalPages);
+            Response.AddPaginationHeader(newPaginationHeader);
             return Ok(matches);
         }
     }
