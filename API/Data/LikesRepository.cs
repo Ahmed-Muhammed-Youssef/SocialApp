@@ -62,5 +62,12 @@ namespace API.Data
             var users = dataContext.Likes.Where(l => l.LikerId == likerId).Select(l => l.Liked).ProjectTo<UserDTO>(mapper.ConfigurationProvider);
             return await users.ToListAsync();
         }
+
+        public async Task<IEnumerable<int>> GetLikedUsersIdAsync(int likerId)
+        {
+            var users = dataContext.Likes.Where(l => l.LikerId == likerId).Select(l => l.LikedId);
+            return await users.ToListAsync();
+
+        }
     }
 }

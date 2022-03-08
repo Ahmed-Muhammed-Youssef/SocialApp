@@ -44,7 +44,7 @@ namespace API.Data
         {
             dataContext.Entry(photo).State = EntityState.Modified;
         }
-        public async Task<PagedList<UserDTO>> GetUsersDTOAsync(string username, UserParams userParams)
+        public async Task<PagedList<UserDTO>> GetUsersDTOAsync(string username, UserParams userParams, List<int> forbiddenIds)
         {
             var query = dataContext.Users.AsQueryable().Where(u => u.UserName != username);
             if(userParams.Sex != "b")
@@ -61,12 +61,18 @@ namespace API.Data
                 var minDoB = DateTime.Now.AddYears(-(int)userParams.MaxAge - 1);
                 query = query.Where(u => u.DateOfBirth >= minDoB);
             }
+            // removes any liked users
+            if (forbiddenIds != null || forbiddenIds.Count != 0)
+            {
+                query = query.Where(u => !forbiddenIds.Contains(u.Id));
+            }
             query = userParams.OrderBy switch
             {
                 "creationTime" => query.OrderByDescending(u => u.Created),
                 "age" => query.OrderByDescending(u => u.DateOfBirth),
                 _ => query.OrderByDescending(u => u.LastActive)
             };
+            
             var queryDto = query.ProjectTo<UserDTO>(mapper.ConfigurationProvider).AsNoTracking();
             var pagedResult = await PagedList<UserDTO>.CreatePageAsync(queryDto, userParams.PageNumber, userParams.ItemsPerPage);
             

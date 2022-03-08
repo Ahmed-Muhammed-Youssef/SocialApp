@@ -20,12 +20,14 @@ namespace API.Controllers
     public class UsersController : ControllerBase
     {
         private readonly IUserRepository userRepository;
+        private readonly ILikesRepository likesRepository;
         private readonly IMapper mapper;
         private readonly IPhotoService photoService;
 
-        public UsersController(IUserRepository userRepository, IMapper mapper, IPhotoService photoService)
+        public UsersController(IUserRepository userRepository, ILikesRepository likesRepository, IMapper mapper, IPhotoService photoService)
         {
             this.userRepository = userRepository;
+            this.likesRepository = likesRepository;
             this.mapper = mapper;
             this.photoService = photoService;
         }
@@ -39,7 +41,8 @@ namespace API.Controllers
             {
                 userParams.Sex = user.Interest.ToString();
             }
-            var users = await userRepository.GetUsersDTOAsync(user.UserName ,userParams);
+            var forbiddenIds = await likesRepository.GetLikedUsersIdAsync(user.Id);
+            var users = await userRepository.GetUsersDTOAsync(user.UserName ,userParams, forbiddenIds.ToList());
             var newPaginationHeader = new PaginationHeader(users.CurrentPage, users.ItemsPerPage, users.TotalCount, users.TotalPages);
             Response.AddPaginationHeader(newPaginationHeader);
             return Ok(users);
