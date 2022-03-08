@@ -11,7 +11,6 @@ namespace API.DTOs
         public string LastName { get; set; }
         [Required]
         public char Interest { get; set; }
-        [Required]
         public string Bio { get; set; }
         [Required]
         public string City { get; set; }
