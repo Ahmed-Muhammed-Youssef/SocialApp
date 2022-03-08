@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { PaginatedResult, Pagination } from '../_models/pagination';
 import { User } from '../_models/User';
 import { UserService } from '../_services/user.service';
 
@@ -8,6 +9,14 @@ import { UserService } from '../_services/user.service';
   styleUrls: ['./lists.component.css']
 })
 export class ListsComponent implements OnInit {
+  pagination : Pagination = {
+    itemsPerPage: 4,
+    currentPage: 1,
+    totalItems:0,
+    totalPages:0
+  } ;
+
+
   matches: User[] = [];
   constructor(private userService: UserService) { }
 
@@ -15,11 +24,18 @@ export class ListsComponent implements OnInit {
     this.loadMatches();
   }
   loadMatches(){
-    this.userService.getMatches().subscribe(
+    this.userService.getMatches(this.pagination.currentPage, this.pagination.itemsPerPage).subscribe(
       r => {
-        this.matches = r;
+        this.matches = r.result;
+        this.pagination = r.pagination;
       }
     );
+  }
+  pageChanged(event: any){
+    if(event?.page){
+      this.pagination.currentPage = event.page;
+      this.loadMatches();
+    }
   }
 
 }

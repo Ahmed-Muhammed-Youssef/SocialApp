@@ -58,11 +58,6 @@ export class UserService {
     this.userChache = new Map();
     this.resetUserParams();
   }
-  // public deleteTheCurrentCaschedUserParams(){
-  //   if(this.userParams){
-  //     this.userChache.delete(Object.values(this.userParams).join('-'));
-  //   }
-  // }
   public getAllUsers(userParams: UserParams):Observable<PaginatedResult<User[]>> {
     let paginatedResult : PaginatedResult<User[]> =  {result: [], pagination: this.paginationInfo};
     let cache = this.userChache.get(Object.values(userParams).join('-'));
@@ -114,8 +109,29 @@ export class UserService {
     return this.http.get<boolean>('/api/like/isliked/' + username);
 
   }
-  getMatches(): Observable<User[]>{
-    return this.http.get<User[]>('api/matches');
+  getMatches(pageNumber : number = 1, itemsPerPage: number = 2): Observable<PaginatedResult<User[]>>{
+    let paginatedResult : PaginatedResult<User[]> =  {result: [], pagination: this.paginationInfo};
+    let httpParams: HttpParams = new HttpParams()
+    .set('pageNumber', pageNumber)
+    .set('itemsPerPage', itemsPerPage);
+    let cache = this.userChache.get(pageNumber + '-' + itemsPerPage);
+    if(cache){
+      paginatedResult.result = cache;
+      return of(paginatedResult);
+    }
+    return this.http.get<User[]>('api/matches', {observe:'response', params: httpParams})
+    .pipe(
+      map(response => {
+        if(response?.body){
+          paginatedResult.result = response.body;
+        }
+        if(response.headers.get('Pagination')){
+          paginatedResult.pagination = JSON.parse(response.headers.get('Pagination') as string) as Pagination;
+        }
+        this.userChache.set(pageNumber + '-' + itemsPerPage, paginatedResult.result);
+        this.paginationInfo = paginatedResult.pagination;
+        return paginatedResult;
+    }));
 
   }
   updateUser(user: User): Observable<UpdateUser> {
