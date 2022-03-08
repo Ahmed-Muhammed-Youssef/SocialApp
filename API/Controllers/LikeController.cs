@@ -34,6 +34,25 @@ namespace API.Controllers
             var likedUsers = await likesRepository.GetLikedUsersDTOAsync(liker.Id);
             return Ok(likedUsers);
         }
+        [HttpGet("isLiked/{username}")]
+        public async Task<ActionResult<bool>> IsLiked (string username)
+        {
+            var liker = await userRepository.GetUserByIdAsync(User.GetId());
+            var liked = await userRepository.GetUserByUsernameAsync(username);
+            if (liker == null || liked == null)
+            {
+                return NotFound();
+            }
+            if (liker.Id == liked.Id)
+            {
+                return BadRequest("you can't check liking yourself.");
+            }
+            if (await likesRepository.GetLikeAsync(liker.Id, liked.Id) != null)
+            {
+                return Ok(true);
+            }
+            return Ok(false);
+        }
         [HttpPost("{username}")]
         public async Task<ActionResult> PostLike(string username)
         {
