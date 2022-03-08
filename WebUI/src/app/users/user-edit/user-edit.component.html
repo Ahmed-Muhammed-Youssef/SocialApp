@@ -3,7 +3,7 @@
     <h2> Your Profile </h2>
   </div>
   <div class="col-8">
-    <div class="alert alert-info" *ngIf="editForm.dirty">
+    <div class="alert alert-info" *ngIf=" checkIfUserChanged()">
       <strong>Information: </strong> You have made changes. Any unsaved changes will be lost.
     </div>
   </div>
@@ -29,9 +29,7 @@
           <strong>Member since:</strong>
           <p>{{getLoacaleDateTime(user.created) | date}}</p>
         </div>
-        <div class="card-footer d-grid">
-            <button [disabled]="!editForm.dirty" form="editForm" type="submit" class="btn btn-success">Save Changes</button>
-        </div>
+       
       </div>
     </div>
   </div>
@@ -88,6 +86,9 @@
                      type="text">
             </div>
           </div>
+          <div class="mt-5 d-grid justify-content-center">
+            <button [disabled]="!checkIfUserChanged()" form="editForm" type="submit" class="btn btn-success">Save Changes</button>
+        </div>
         </form>
       </tab>
 

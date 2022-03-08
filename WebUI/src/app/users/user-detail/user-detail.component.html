@@ -33,10 +33,15 @@
   <div class="col-8">
     <tabset class="member-tabset">
       <tab heading="About {{user.firstName}}">
-        <h4 class="mt-4">Description</h4>
-        <p>{{user.bio}}</p>
-        <h4>Interested in</h4>
-        <p>{{formatInterest(user.interest)}}</p>
+        <div class="mt-4" *ngIf="user.bio">
+          <h4>Description</h4>
+          <p>{{user.bio}}</p>
+
+        </div>
+        <div class="mt-4">
+          <h4>Interested in</h4>
+          <p>{{formatInterest(user.interest)}}</p>
+        </div>
       </tab>
       <tab heading="Pictures">
         <ngx-gallery [options]="galleryOptions" [images]="galleryImages" class="ngx-gallery"></ngx-gallery>

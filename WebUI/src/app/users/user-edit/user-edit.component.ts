@@ -14,10 +14,11 @@ import { UserService } from '../../_services/user.service';
 })
 export class UserEditComponent implements OnInit {
   public user: User | undefined;
+  public oldUser: User | undefined;
   public account: LoginResponse | undefined;
   @ViewChild('editForm') editForm?: NgForm;
   @HostListener('window:beforeunload', ['$event']) unloadNotification($event: any) {
-    if (this.editForm?.dirty) {
+    if (this.checkIfUserChanged()) {
       $event.returnValue = true;
     }
   }
@@ -36,8 +37,20 @@ export class UserEditComponent implements OnInit {
     if (this.account?.userData) {
       this.userService.getUserByUsername(this.account?.userData.username).subscribe(user => {
         this.user = user;
+        this.oldUser = Object.assign({}, this.user);
       });
     }
+  }
+  checkIfUserChanged(){
+    let prop : keyof User;
+    if(this.oldUser && this.user){
+      for(prop in this.oldUser){
+        if(this.oldUser[prop] !== this.user[prop]){
+          return true;
+        }
+      }
+    }
+    return false;
   }
   public getLoacaleDateTime(d: Date) : Date{
     var localDate  = new Date(d.toString() + 'Z');
@@ -48,6 +61,7 @@ export class UserEditComponent implements OnInit {
       this.userService.updateUser(this.user).subscribe(r => {
         if (r && this.user) {
           this.toastr.success('Profile updated successfully');
+          this.oldUser = Object.assign({}, this.user);
           this.editForm?.reset(this.user);
         }
       });

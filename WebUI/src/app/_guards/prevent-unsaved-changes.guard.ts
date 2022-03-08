@@ -8,7 +8,7 @@ import { UserEditComponent } from '../users/user-edit/user-edit.component';
 })
 export class PreventUnsavedChangesGuard implements CanDeactivate<unknown> {
   canDeactivate(component: UserEditComponent): boolean {
-    if (component.editForm?.dirty) {
+    if (component.checkIfUserChanged()) {
       return confirm('Are you sure you want to discard the unsaved changes?');
     }
     return true;
