@@ -35,7 +35,6 @@ namespace API.Data
         {
             return await dataContext.Users.AnyAsync(e => e.Id == id);
         }
-
         public void Update(AppUser appUser)
         {
             dataContext.Entry(appUser).State = EntityState.Modified;
@@ -89,7 +88,6 @@ namespace API.Data
                 .Where(u => u.Id == id).FirstOrDefaultAsync();
             return result;
         }
-
         public async Task<UserDTO> GetUserDTOByIdAsync(int id)
         {
             var result = await dataContext.Users
@@ -98,7 +96,6 @@ namespace API.Data
             result.Photos = result.Photos.OrderBy(p => p.Order);
             return result;
         }
-
         public async Task<UserDTO> GetUserDTOByUsernameAsync(string username)
         {
             var result =  await dataContext.Users
@@ -130,7 +127,6 @@ namespace API.Data
             user.Photos = user.Photos.OrderBy(p => p.Order);
             return user;
         }
-
         public async Task<IEnumerable<PhotoDTO>> GetUserPhotoDTOsAsync(int id)
         {
             var result =  await dataContext.Photo
@@ -144,7 +140,6 @@ namespace API.Data
             var result =  dataContext.Photo.Where(p => p.AppUserId == id).OrderBy(p => p.Order);
             return await result.ToListAsync();
         }
-
         public async Task<Photo> AddPhotoAsync(Photo photo)
         {
             var photos = await GetUserPhotoDTOsAsync(photo.AppUserId);
@@ -157,6 +152,5 @@ namespace API.Data
         {
             dataContext.Photo.Remove(photo);
         }
-
     }
 }
