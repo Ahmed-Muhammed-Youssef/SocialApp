@@ -5,6 +5,7 @@ using API.Interfaces;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -84,17 +85,25 @@ namespace API.Data
         }
 
 
-        public async Task<IEnumerable<MessageDTO>> GetMessagesDTOThreadAsync(int senderId, int recipientId)
+        public async Task<IEnumerable<MessageDTO>> GetMessagesDTOThreadAsync(int issuerId, int theOtherUserId)
         {
             var query = dataContext.Messages
                 .Where(
                 m =>
-                (m.SenderId == senderId && m.RecipientId == recipientId && !m.SenderDeleted)
-                || (m.SenderId == recipientId && m.RecipientId == senderId && !m.RecipientDeleted))
-                .ProjectTo<MessageDTO>(mapper.ConfigurationProvider)
-                .OrderByDescending(m => m.SentDate);
-
-            return await query.ToListAsync();
+                (m.SenderId == issuerId && m.RecipientId == theOtherUserId && !m.SenderDeleted)
+                || (m.SenderId == theOtherUserId && m.RecipientId == issuerId && !m.RecipientDeleted));
+            var unreadMessages = query.Where(m => m.ReadDate == null && m.RecipientId == issuerId);
+            if (unreadMessages.Any())
+            {
+                foreach (var message in unreadMessages)
+                {
+                    message.ReadDate = DateTime.UtcNow;
+                }
+                await dataContext.SaveChangesAsync();
+            }
+            var messageDTOs = await query.ProjectTo<MessageDTO>(mapper.ConfigurationProvider)
+                .OrderByDescending(m => m.SentDate).ToListAsync();
+            return messageDTOs;
         }
 
     }
