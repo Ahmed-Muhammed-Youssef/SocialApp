@@ -41,7 +41,7 @@ namespace API.Controllers
             return Ok(await messageRepository.GetMessagesDTOThreadAsync(issuerId, user.Id));
         }
         // GET: api/Messages/
-        public async Task<ActionResult<IEnumerable<MessageDTO>>> ReceiveMessages(string mode)
+        public async Task<ActionResult<IEnumerable<MessageDTO>>> ReceiveMessages(string mode, [FromQuery]PaginationParams paginationParams)
         {
             var issuerId = User.GetId();
             var user = await userRepository.GetUserByIdAsync(issuerId);
@@ -50,7 +50,24 @@ namespace API.Controllers
                 return BadRequest("Invalid Token");
             }
 
-            return Ok(await messageRepository.GetAllPagedMessagesDTOForUserAsync(issuerId, ReceiveMessagesOptions.AllMessages));
+            ReceiveMessagesOptions option = ReceiveMessagesOptions.AllMessages;
+
+            if(mode == "sent")
+            {
+                option = ReceiveMessagesOptions.SentMessages;
+            }
+            else if(mode == "received")
+            {
+                option = ReceiveMessagesOptions.ReceivedMessages;
+            }
+            else if(mode == "unread")
+            {
+                option = ReceiveMessagesOptions.UnreadMessages;
+            }
+            var result = await messageRepository.GetAllPagedMessagesDTOForUserAsync(issuerId, option, paginationParams);
+            var paginationHeader = new PaginationHeader(result.CurrentPage, result.ItemsPerPage, result.TotalCount, result.TotalPages);
+            Response.AddPaginationHeader(paginationHeader);
+            return Ok(result);
         }
         // POST: api/Messages
         [HttpPost]

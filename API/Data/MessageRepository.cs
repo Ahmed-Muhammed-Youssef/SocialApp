@@ -60,11 +60,10 @@ namespace API.Data
             return await dataContext.SaveChangesAsync() > 0;
         }
 
-        public async Task<IEnumerable<MessageDTO>> GetAllPagedMessagesDTOForUserAsync(int issuerId, ReceiveMessagesOptions options)
+        public async Task<PagedList<MessageDTO>> GetAllPagedMessagesDTOForUserAsync(int issuerId, ReceiveMessagesOptions options, PaginationParams paginationParams)
         {
             var query = dataContext.Messages
                .OrderByDescending(m => m.SentDate).AsQueryable();
-
             switch (options)
             {
                 case ReceiveMessagesOptions.AllMessages:
@@ -80,7 +79,8 @@ namespace API.Data
                     query = query.Where(m => m.RecipientId == issuerId && !m.RecipientDeleted);
                     break;
             }
-             return await query.ProjectTo<MessageDTO>(mapper.ConfigurationProvider).ToListAsync();
+            var pagedResult = await PagedList<MessageDTO>.CreatePageAsync(query.ProjectTo<MessageDTO>(mapper.ConfigurationProvider), paginationParams.PageNumber, paginationParams.ItemsPerPage);
+            return pagedResult;
         }
 
 
@@ -93,6 +93,7 @@ namespace API.Data
                 || (m.SenderId == recipientId && m.RecipientId == senderId && !m.RecipientDeleted))
                 .ProjectTo<MessageDTO>(mapper.ConfigurationProvider)
                 .OrderByDescending(m => m.SentDate);
+
             return await query.ToListAsync();
         }
 
