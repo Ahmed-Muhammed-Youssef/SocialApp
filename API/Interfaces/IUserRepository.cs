@@ -24,5 +24,6 @@ namespace API.Interfaces
         public Task<IEnumerable<Photo>> GetUserPhotoAsync(int id);
         public Task<AppUser> GetUserByEmailAsync(string email);
         public void DeletePhoto(Photo photo);
+        public Task<Photo> GetProfilePhotoAsync(int userId);
     }
 }

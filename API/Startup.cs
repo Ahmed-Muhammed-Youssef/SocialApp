@@ -44,6 +44,7 @@ namespace API
             services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<ILikesRepository, LikesRepository>();
+            services.AddScoped<IMessageRepository, MessageRepository>();
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<LogUserActivity>();
             services.AddDbContext<DataContext>( options =>

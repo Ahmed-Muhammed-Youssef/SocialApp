@@ -152,5 +152,17 @@ namespace API.Data
         {
             dataContext.Photo.Remove(photo);
         }
+        public async Task<Photo> GetProfilePhotoAsync(int userId)
+        {
+            var user = await GetUserByIdAsync(userId);
+            if(user == null)
+            {
+                return null;
+            }
+            var result = await dataContext.Photo
+            .Where(p => p.AppUserId == userId)
+            .FirstOrDefaultAsync(p => p.Order == 0);
+            return result;
+        }
     }
 }
