@@ -36,9 +36,9 @@ namespace API.Data
             }
             else if(message.RecipientId == issuerId)
             {
-                if (message.SenderDeleted == false)
+                if (message.RecipientDeleted == false)
                 {
-                    message.SenderDeleted = true;
+                    message.RecipientDeleted = true;
                 }
             }
             if(message.RecipientDeleted && message.SenderDeleted)
@@ -74,8 +74,8 @@ namespace API.Data
             var query = dataContext.Messages
                 .Where(
                 m => 
-                (m.SenderId == senderId && m.RecipientId == recipientId)
-                || (m.SenderId == recipientId && m.RecipientId == senderId))
+                (m.SenderId == senderId && m.RecipientId == recipientId && !m.SenderDeleted)
+                || (m.SenderId == recipientId && m.RecipientId == senderId && !m.RecipientDeleted))
                 .ProjectTo<MessageDTO>(mapper.ConfigurationProvider)
                 .OrderByDescending(m => m.SentDate);
             return await query.ToListAsync();
