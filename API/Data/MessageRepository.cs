@@ -62,7 +62,7 @@ namespace API.Data
         public async Task<IEnumerable<MessageDTO>> GetAllPagedMessagesDTOForUserAsync(int userId)
         {
             var query = dataContext.Messages
-               .Where(m => m.SenderId == userId && m.RecipientId == userId)
+               .Where(m => m.SenderId == userId || m.RecipientId == userId)
                .ProjectTo<MessageDTO>(mapper.ConfigurationProvider)
                .OrderByDescending(m => m.SentDate);
             return await query.ToListAsync();
@@ -72,7 +72,10 @@ namespace API.Data
         public async Task<IEnumerable<MessageDTO>> GetMessagesDTOThreadAsync(int senderId, int recipientId)
         {
             var query = dataContext.Messages
-                .Where(m => m.SenderId == senderId && m.RecipientId == recipientId)
+                .Where(
+                m => 
+                (m.SenderId == senderId && m.RecipientId == recipientId)
+                || (m.SenderId == recipientId && m.RecipientId == senderId))
                 .ProjectTo<MessageDTO>(mapper.ConfigurationProvider)
                 .OrderByDescending(m => m.SentDate);
             return await query.ToListAsync();
