@@ -12,6 +12,7 @@ using API.Extensions;
 using API.DTOs;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
+using API.Helpers;
 
 namespace API.Controllers
 {
@@ -31,14 +32,25 @@ namespace API.Controllers
             this.userRepository = userRepository;
             this.mapper = mapper;
         }
-
-        // GET: api/Messages
+        // GET: api/Messages/inbox/{username}
         [HttpGet("inbox/{username}")]
         public async Task<ActionResult<IEnumerable<MessageDTO>>> GetChat(string username)
         {
             var issuerId = User.GetId();
             var user = await userRepository.GetUserByUsernameAsync(username);
             return Ok(await messageRepository.GetMessagesDTOThreadAsync(issuerId, user.Id));
+        }
+        // GET: api/Messages/
+        public async Task<ActionResult<IEnumerable<MessageDTO>>> ReceiveMessages(string mode)
+        {
+            var issuerId = User.GetId();
+            var user = await userRepository.GetUserByIdAsync(issuerId);
+            if(user == null)
+            {
+                return BadRequest("Invalid Token");
+            }
+
+            return Ok(await messageRepository.GetAllPagedMessagesDTOForUserAsync(issuerId, ReceiveMessagesOptions.AllMessages));
         }
         // POST: api/Messages
         [HttpPost]

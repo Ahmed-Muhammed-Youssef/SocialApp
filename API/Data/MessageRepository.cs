@@ -1,5 +1,6 @@
 ﻿using API.DTOs;
 using API.Entities;
+using API.Helpers;
 using API.Interfaces;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
@@ -59,13 +60,27 @@ namespace API.Data
             return await dataContext.SaveChangesAsync() > 0;
         }
 
-        public async Task<IEnumerable<MessageDTO>> GetAllPagedMessagesDTOForUserAsync(int userId)
+        public async Task<IEnumerable<MessageDTO>> GetAllPagedMessagesDTOForUserAsync(int issuerId, ReceiveMessagesOptions options)
         {
             var query = dataContext.Messages
-               .Where(m => m.SenderId == userId || m.RecipientId == userId)
-               .ProjectTo<MessageDTO>(mapper.ConfigurationProvider)
-               .OrderByDescending(m => m.SentDate);
-            return await query.ToListAsync();
+               .OrderByDescending(m => m.SentDate).AsQueryable();
+
+            switch (options)
+            {
+                case ReceiveMessagesOptions.AllMessages:
+                    query = query.Where(m => (m.SenderId == issuerId && !m.SenderDeleted) || (m.RecipientId == issuerId && !m.RecipientDeleted));
+                    break;
+                case ReceiveMessagesOptions.UnreadMessages:
+                    query = query.Where(m => m.RecipientId == issuerId && m.ReadDate == null);
+                    break;
+                case ReceiveMessagesOptions.SentMessages:
+                    query = query.Where(m => m.SenderId == issuerId && !m.SenderDeleted);
+                    break;
+                case ReceiveMessagesOptions.ReceivedMessages:
+                    query = query.Where(m => m.RecipientId == issuerId && !m.RecipientDeleted);
+                    break;
+            }
+             return await query.ProjectTo<MessageDTO>(mapper.ConfigurationProvider).ToListAsync();
         }
 
 
@@ -73,7 +88,7 @@ namespace API.Data
         {
             var query = dataContext.Messages
                 .Where(
-                m => 
+                m =>
                 (m.SenderId == senderId && m.RecipientId == recipientId && !m.SenderDeleted)
                 || (m.SenderId == recipientId && m.RecipientId == senderId && !m.RecipientDeleted))
                 .ProjectTo<MessageDTO>(mapper.ConfigurationProvider)
