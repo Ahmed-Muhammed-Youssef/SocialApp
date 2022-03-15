@@ -25,10 +25,8 @@ export class LoginComponent implements OnInit {
           this.router.navigateByUrl('/users');
           this.userService.deleteCachedValues();
         }
-      },
-      (error: HttpErrorResponse) => {
-        console.log(error);
-      });
+      }
+     );
   }
 
 }
