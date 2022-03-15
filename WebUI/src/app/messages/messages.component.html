@@ -1,1 +1,59 @@
-<p>messages works!</p>
+<div class="container">
+    <div class="row clearfix">
+        <div class="col-lg-12">
+            <div class="card chat-app">
+                <div id="plist" class="people-list">
+                    <ul class="list-unstyled chat-list mt-2 mb-0">
+                        <li class="clearfix" (click)="loadChat(match)" *ngFor="let match of matches">
+                            <img [src]="match.photos[0].url" alt="avatar">
+                            <div class="about">
+                                <div class="name">{{match.firstName}} {{match.lastName}}</div>
+                                <div class="status"> {{match.lastActive | timeago}}</div>                                            
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="d-flex justify-content-center" *ngIf="matchesPagination && matchesPagination.totalPages > 1">
+                        <pagination class="" [boundaryLinks]="true" [totalItems]="matchesPagination.totalItems" (pageChanged)="matchPageChanged($event)"
+                                    [itemsPerPage]="matchesPagination.itemsPerPage" [(ngModel)]="matchesPagination.currentPage" 
+                                    previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;" >
+                        </pagination>
+                      </div>
+                </div>
+                <div class="chat"  *ngIf="currentMatch">
+                    <div class="chat-header clearfix">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <img [src]="currentMatch.photos[0].url" alt="avatar">
+                                <div class="chat-about">
+                                    <h6 class="m-b-0">{{currentMatch.firstName}} {{currentMatch.lastName}}</h6>
+                                    <small>{{currentMatch.lastActive | timeago}}</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="chat-history">
+                        <div class="mt-4" *ngIf="messages.length === 0">
+                            <h4 class="text-center">No messages yet, say hi in the message box below</h4>
+                        </div>
+                        <ul *ngIf="messages.length > 0" class="m-b-0">
+                            <li class="clearfix" *ngFor="let message of messages">
+                                <div *ngIf="message.senderId == currentMatch.id" class="message my-message">
+                                    {{message.content}}
+                                </div>
+                                <div *ngIf="message.senderId != currentMatch.id" class="message other-message float-right">
+                                    {{message.content}}
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <form #sendForm="ngForm" (ngSubmit)="sendMessage()" class="chat-message clearfix">
+                        <div class="input-group mb-0">
+                            <input name="content" type="text" [(ngModel)]="newMessage" class="form-control" autocomplete="off">                                    
+                            <button type="submit" class="btn btn-secondary"><i class="fa fa-send"></i></button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
