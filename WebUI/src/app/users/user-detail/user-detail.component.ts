@@ -14,6 +14,7 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class UserDetailComponent implements OnInit {
   user: User = {
+    id: 0,
     username: '',
     firstName: '',
     lastName: '',

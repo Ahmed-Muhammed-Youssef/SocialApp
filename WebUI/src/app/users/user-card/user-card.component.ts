@@ -12,6 +12,7 @@ export class UserCardComponent implements OnInit {
   @Input () isLiked = false;
   @Output () liked = new EventEmitter();
   @Input() user: User = {
+    id: 0,
     username: '',
     firstName: '',
     lastName: '',

@@ -7,6 +7,8 @@ namespace API.DTOs
 {
     public class UserDTO
     {
+        [Required]
+        public int Id { get; set; }
         [Required, MaxLength(255)]
         public string Username { get; set; }
         [Required, MaxLength(255)]
