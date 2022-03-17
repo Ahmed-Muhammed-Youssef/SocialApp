@@ -29,12 +29,14 @@ export class UserDetailComponent implements OnInit {
     photos: []
   };
   isLiked : boolean = false;
+  isMatch: boolean = false;
   username: string = '';
   galleryOptions: NgxGalleryOptions[] = [];
   galleryImages: NgxGalleryImage[] = [];
   constructor(private userService: UserService, private route: ActivatedRoute, private toastr: ToastrService) {
     this.route.paramMap.subscribe(param => {
       this.username = String(param.get('username'));
+      this.userService.getIsMatch(this.username).subscribe(r => this.isMatch = r);
     });
     this.loadUser();
     this.galleryOptions = [

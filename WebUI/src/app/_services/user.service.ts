@@ -109,6 +109,10 @@ export class UserService {
     return this.http.get<boolean>('/api/like/isliked/' + username);
 
   }
+  getIsMatch(username:string): Observable<boolean>{
+    return this.http.get<boolean>('/api/matches/ismatch/' + username);
+
+  }
   getMatches(pageNumber : number = 1, itemsPerPage: number = 2): Observable<PaginatedResult<User[]>>{
     let paginatedResult : PaginatedResult<User[]> =  {result: [], pagination: this.paginationInfo};
     let httpParams: HttpParams = new HttpParams()

@@ -14,7 +14,7 @@ const PROXY_CONFIG = [
         "/api/like/isliked",
         "/api/like/liked",
         "/api/matches",
-        "/api/matches",
+        "/api/matches/ismatch",
         "/api/messages",
         "/api/messages/inbox/",
         "/api/buggy/server-error",

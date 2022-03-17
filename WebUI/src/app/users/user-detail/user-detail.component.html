@@ -24,7 +24,7 @@
         <div class="card-footer">
           <div class="btn-group d-flex">
             <button *ngIf="!isLiked" (click)="addLike()" class="btn btn-secondary">Like</button>
-            <a class="btn btn-success" routerLink="/messages" [state]="user">Message</a>
+            <a *ngIf="!isMatch" class="btn btn-success" routerLink="/messages" [state]="user">Message</a>
           </div>
         </div>
       </div>
