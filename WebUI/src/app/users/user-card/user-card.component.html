@@ -9,9 +9,9 @@
         <button *ngIf="!isLiked" (click)="addLike(user)" class="btn btn-secondary me-2">
           <i class="fa fa-heart"></i>
         </button>
-        <button *ngIf="isLiked" class="btn btn-secondary ">
+        <a *ngIf="isLiked" class="btn btn-secondary " routerLink="/messages" [state]="user">
           <i class="fa fa-envelope"></i>
-        </button>
+        </a>
       </li>
     </ul>
   </div>

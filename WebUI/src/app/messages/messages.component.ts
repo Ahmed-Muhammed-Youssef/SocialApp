@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Message } from '../_models/message';
 import { Pagination } from '../_models/pagination';
 import { User } from '../_models/User';
@@ -20,11 +21,19 @@ export class MessagesComponent implements OnInit {
   matchesPerPage = 10;
 
   newMessage: string = "";
-  constructor(private messageService: MessageService, private userService: UserService) { }
+  constructor(private messageService: MessageService, private userService: UserService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
+    console.log(history.state);
     this.loadMatches();
-  }
+    if(history.state?.username){
+      this.currentMatch = history.state as User;
+    }
+    if(this.currentMatch){
+      this.loadChat(this.currentMatch);
+    }
+}
+
   matchPageChanged(e: any){
     if(e && e.page != this.matchPageNumber){
       this.matchPageNumber = e.page;
