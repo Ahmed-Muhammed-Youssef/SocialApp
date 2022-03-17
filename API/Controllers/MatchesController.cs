@@ -37,5 +37,17 @@ namespace API.Controllers
             Response.AddPaginationHeader(newPaginationHeader);
             return Ok(matches);
         }
+        [HttpGet("isMatch/{username}")]
+        public async Task<ActionResult<bool>> IsMatch(string username)
+        {
+            var user = await userRepository.GetUserByUsernameAsync(User.GetUsername());
+            var otherUser = await userRepository.GetUserByUsernameAsync(username);
+            if(otherUser == null)
+            {
+                return NotFound();
+            }
+            return Ok(likesRepository.IsMacth(user.Id, otherUser.Id));
+
+        }
     }
 }

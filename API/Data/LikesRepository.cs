@@ -53,6 +53,10 @@ namespace API.Data
 
             return pagedResult;
         }
+        public async Task<bool> IsMacth(int userId, int matchedId)
+        {
+            return await dataContext.Matches.AnyAsync(u => u.UserId == userId && u.MatchedId == matchedId);
+        }
         public async Task<bool> SaveAllAsync()
         {
             return await dataContext.SaveChangesAsync() > 0;
