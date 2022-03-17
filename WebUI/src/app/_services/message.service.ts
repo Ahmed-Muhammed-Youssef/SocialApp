@@ -16,7 +16,7 @@ export class MessageService {
 };
   constructor(private http: HttpClient) { }
   sendMessage(username: string, content: string){
-    return this.http.post('api/messages', {"recipientUsername": username, "content": content});
+    return this.http.post<Message>('api/messages', {"recipientUsername": username, "content": content});
   }
 
  getMessages(pageNumber : number = 1, itemsPerPage: number = 2, mode: string = 'unread') : Observable<PaginatedResult<Message[]>>{

@@ -1,4 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Message } from '../_models/message';
 import { Pagination } from '../_models/pagination';
@@ -15,6 +16,7 @@ export class MessagesComponent implements OnInit {
   messages: Message[] = [];
   mode = 'unread';
   @Input () currentMatch?: User;
+  @ViewChild('sendForm') sendForm?: NgForm; 
   matchesPagination?: Pagination;
   matches: User[] = [];
   matchPageNumber = 1;
@@ -52,9 +54,15 @@ export class MessagesComponent implements OnInit {
   }
   sendMessage(){
     if(this.currentMatch){
-      this.messageService.sendMessage(this.currentMatch?.username, this.newMessage).subscribe();
-      this.newMessage = "";
-      this.loadChat(this.currentMatch);
+      this.messageService.sendMessage(this.currentMatch?.username, this.newMessage).subscribe(
+        r => 
+        {
+          if(r){
+            this.messages.push(r);
+          }
+        }
+      );
+      this.sendForm?.reset();      
     }
   }
   loadChat(user: User){

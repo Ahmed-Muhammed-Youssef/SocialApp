@@ -28,17 +28,11 @@ export class UserDetailComponent implements OnInit {
     country: '',
     photos: []
   };
-  isLiked : boolean = false;
-  isMatch: boolean = false;
-  username: string = '';
+  isLiked : boolean = true;
+  isMatch: boolean = true;
   galleryOptions: NgxGalleryOptions[] = [];
   galleryImages: NgxGalleryImage[] = [];
   constructor(private userService: UserService, private route: ActivatedRoute, private toastr: ToastrService) {
-    this.route.paramMap.subscribe(param => {
-      this.username = String(param.get('username'));
-      this.userService.getIsMatch(this.username).subscribe(r => this.isMatch = r);
-    });
-    this.loadUser();
     this.galleryOptions = [
       {
         width: '500px',
@@ -66,16 +60,16 @@ export class UserDetailComponent implements OnInit {
     return localDate;
   }
   ngOnInit(): void {
-    
-  }
-  loadUser() {
-    this.userService.getUserByUsername(this.username).subscribe(u => {
-      this.user = u;
-      this.setImages();
-    });
-    this.userService.getIsLiked(this.username).subscribe(r => {
-      this.isLiked = r;
-    });
+    this.route.data.subscribe(
+      data => {
+        this.user = data.user;
+        this.setImages();
+        this.userService.getIsLiked(this.user.username).subscribe(r => {
+          this.isLiked = r;
+        });
+      this.userService.getIsMatch(this.user.username).subscribe(r => this.isMatch = r);
+      }
+    );
   }
   public formatInterest(interest: string): string {
     if (interest === 'f') {

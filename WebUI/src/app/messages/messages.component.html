@@ -48,8 +48,8 @@
                     </div>
                     <form #sendForm="ngForm" (ngSubmit)="sendMessage()" class="chat-message clearfix">
                         <div class="input-group mb-0">
-                            <input name="content" type="text" [(ngModel)]="newMessage" class="form-control" autocomplete="off">                                    
-                            <button type="submit" class="btn btn-secondary"><i class="fa fa-send"></i></button>
+                            <input name="content" required type="text" [(ngModel)]="newMessage" class="form-control" autocomplete="off">                                    
+                            <button type="submit" [disabled]="!sendForm.valid" class="btn btn-secondary"><i class="fa fa-send"></i></button>
                         </div>
                     </form>
                 </div>

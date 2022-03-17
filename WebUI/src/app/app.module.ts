@@ -32,6 +32,7 @@ import { NgxSpinnerModule } from "ngx-spinner";
 import { LoadingInterceptor } from './_interceptors/loading.interceptor';
 import { PhotoEditorComponent } from './users/photo-editor/photo-editor.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { UserDetailedResolver } from './_resolvers/user-detailed.resolver';
 
 
 const routes: Routes = [
@@ -39,7 +40,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'users', component: UserListComponent, canActivate:[AuthGuard] },
-  { path: 'users/username/:username', component: UserDetailComponent, canActivate:[AuthGuard] },
+  { path: 'users/username/:username', component: UserDetailComponent, canActivate:[AuthGuard], resolve: {user: UserDetailedResolver} },
   { path: 'lists', component: ListsComponent, canActivate:[AuthGuard] },
   { path: 'messages', component: MessagesComponent, canActivate: [AuthGuard] },
   { path: 'users/edit', component: UserEditComponent, canActivate: [AuthGuard], canDeactivate: [PreventUnsavedChangesGuard] },
