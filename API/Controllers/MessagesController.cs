@@ -24,13 +24,15 @@ namespace API.Controllers
         private readonly IMessageRepository messageRepository;
         private readonly IUserRepository userRepository;
         private readonly IMapper mapper;
+        private readonly ILikesRepository likesRepository;
 
         public MessagesController(IMessageRepository messageRepository, IUserRepository userRepository,
-             IMapper mapper)
+             IMapper mapper, ILikesRepository likesRepository)
         {
             this.messageRepository = messageRepository;
             this.userRepository = userRepository;
             this.mapper = mapper;
+            this.likesRepository = likesRepository;
         }
         // GET: api/Messages/inbox/{username}
         [HttpGet("inbox/{username}")]
@@ -82,6 +84,11 @@ namespace API.Controllers
             if(sender.Id == recipient.Id)
             {
                 return BadRequest("You can't send messages to yourself");
+            }
+            if (!await likesRepository.IsMacth(sender.Id, recipient.Id))
+            {
+                return BadRequest("You can't send messages to an unmatch");
+
             }
             var createdMessage = new Message
             {
