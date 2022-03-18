@@ -22,6 +22,11 @@ namespace API.Extensions
                 .AddSignInManager<SignInManager<AppUser>>()
                 .AddRoleValidator<RoleValidator<AppRole>>()
                 .AddEntityFrameworkStores<DataContext>();
+            services.AddAuthorization(opt =>
+            {
+                opt.AddPolicy("RequireAdminRole", policy => policy.RequireRole("admin"));
+                opt.AddPolicy("RequireModeratorOrAdmin", policy => policy.RequireRole("admin", "moderator"));
+            } );
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options =>
             {
