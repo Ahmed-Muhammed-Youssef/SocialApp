@@ -40,7 +40,7 @@ namespace API
 
             services.Configure<CloudinarySettings>(_config.GetSection("Cloudinary"));
             services.AddScoped<IPhotoService, PhotoService>();
-            services.AddJwtAuthentication(_config);
+            services.AddIdentityConfigurations(_config);
             services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<ILikesRepository, LikesRepository>();

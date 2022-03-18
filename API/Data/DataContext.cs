@@ -1,20 +1,35 @@
 ﻿using API.Entities;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Data
 {
-    public class DataContext : DbContext
+    public class DataContext : IdentityDbContext <AppUser, AppRole, int,
+        IdentityUserClaim<int>, AppUserRole, IdentityUserLogin<int>
+        , IdentityRoleClaim<int>, IdentityUserToken<int>>
     {
         public DataContext(DbContextOptions options) : base(options)
         {
         }
-        public DbSet<AppUser> Users { get; set; }
         public DbSet<Like> Likes { get; set; }
         public DbSet<Match> Matches { get; set; }
         public DbSet<Photo> Photo { get; set; }
         public DbSet<Message> Messages { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<AppUser>()
+                .HasMany(u => u.UserRoles)
+                .WithOne(ur => ur.User)
+                .HasForeignKey(ur => ur.UserId)
+                .IsRequired();
+            modelBuilder.Entity<AppRole>()
+               .HasMany(u => u.UserRoles)
+               .WithOne(ur => ur.Role)
+               .HasForeignKey(ur => ur.RoleId)
+               .IsRequired();
             modelBuilder.Entity<Match>()
             .HasKey(m => new { m.UserId, m.MatchedId });
             modelBuilder.Entity<Like>()

@@ -2,16 +2,12 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using API.Extensions;
+using Microsoft.AspNetCore.Identity;
 
 namespace API.Entities
 {
-    public class AppUser
+    public class AppUser : IdentityUser<int>
     {
-        public int Id { get; set; } // this convention names helps with the entity framework.
-        [Required]
-        [MaxLength(255)]
-        public string UserName { get; set; }
         [Required]
         [MaxLength(255)]
         public string FirstName { get; set; }
@@ -35,18 +31,8 @@ namespace API.Entities
         public ICollection<Message> MessagesSent { get; set; }
         public ICollection<Message> MessagesReceived { get; set; }
 
-
-        // Credentials
-        [Required]
-        [EmailAddress]
-        public string Email { get; set; }
-        [Required]
-        public byte[] Password { get; set; }
-        [Required]
-        public byte[] PasswordSalt { get; set; }
-
         // Collection navigation properties
-        
+        public ICollection<AppUserRole> UserRoles { get; set; }
         [InverseProperty(nameof(Like.Liker))]
         public ICollection<Like> LikesLikers { get; set; }
         [InverseProperty(nameof(Like.Liked))]
@@ -55,8 +41,5 @@ namespace API.Entities
         public ICollection<Match> MatchesId { get; set; }
         [InverseProperty(nameof(Match.Matched))]
         public ICollection<Match> MatchesMatchedId { get; set; }
-
-        /*public int GetAge() => DateOfBirth.CalculateAge();*/
-
     }
 }
