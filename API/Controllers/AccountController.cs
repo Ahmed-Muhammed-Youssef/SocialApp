@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using API.Helpers;
+using Microsoft.AspNetCore.Identity;
 
 namespace API.Controllers
 {
@@ -17,14 +18,16 @@ namespace API.Controllers
     [ServiceFilter(typeof(LogUserActivity))]
     public class AccountController : ControllerBase
     {
-        private readonly DataContext context;
+        private readonly UserManager<AppUser> userManager;
+        private readonly SignInManager<AppUser> signInManager;
         private readonly ITokenService tokenService;
         private readonly IUserRepository userRepository;
         private readonly IMapper mapper;
 
-        public AccountController(DataContext context, ITokenService tokenService, IUserRepository userRepository, IMapper mapper)
+        public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, ITokenService tokenService, IUserRepository userRepository, IMapper mapper)
         {
-            this.context = context;
+            this.userManager = userManager;
+            this.signInManager = signInManager;
             this.tokenService = tokenService;
             this.userRepository = userRepository;
             this.mapper = mapper;
@@ -46,13 +49,12 @@ namespace API.Controllers
             }
             AppUser newUser = new AppUser();
             mapper.Map(accountDTO, newUser);
-            using (var hasher = new HMACSHA512())
+            newUser.UserName = newUser.UserName.ToLower();
+            var result = await userManager.CreateAsync(newUser, accountDTO.Password);
+            if (!result.Succeeded)
             {
-                newUser.Password = hasher.ComputeHash(Encoding.UTF8.GetBytes(accountDTO.Password));
-                newUser.PasswordSalt = hasher.Key;
+                return BadRequest("Failed to register the user.");
             }
-            context.Users.Add(newUser);
-            await context.SaveChangesAsync();
             var userData = await userRepository.GetUserDTOByUsernameAsync(accountDTO.UserName);
             return CreatedAtAction("Register", new {email = accountDTO.Email }, 
                 new TokenDTO()
@@ -68,22 +70,16 @@ namespace API.Controllers
             {
                 return BadRequest(loginCredentials);
             }
-
-            var user = await context.Users.FirstOrDefaultAsync(u => u.Email == loginCredentials.Email);
-           
+            var user = await userManager.Users.Include(u => u.Photos).FirstOrDefaultAsync(u => u.Email == loginCredentials.Email);           
             if(user == null)
             {
-                return Unauthorized(loginCredentials);
+                return Unauthorized();
             }
-
-            using var hasher = new HMACSHA512(user.PasswordSalt);
-            var hashedPassword = hasher.ComputeHash(Encoding.UTF8.GetBytes(loginCredentials.Password));
-            for (int i = 0; i < hashedPassword.Length; i++)
+            var signInResult = await signInManager
+                .CheckPasswordSignInAsync(user, loginCredentials.Password, lockoutOnFailure: false);
+            if (!signInResult.Succeeded)
             {
-                if (user.Password[i] != hashedPassword[i])
-                {
-                    return Unauthorized(loginCredentials);
-                }
+                return Unauthorized();
             }
             var userData = await userRepository.GetUserDTOByEmailAsync(loginCredentials.Email);
 
@@ -95,11 +91,11 @@ namespace API.Controllers
         }
         private async Task<bool> EmailExists(string email)
         {
-            return await context.Users.AnyAsync(u => u.Email == email);
+            return await userManager.Users.AnyAsync(u => u.Email == email);
         }
         private async Task<bool> UsernameExists(string username)
         {
-            return await context.Users.AnyAsync(u => u.UserName == username);
+            return await userManager.Users.AnyAsync(u => u.UserName == username);
         }
     }
 }
