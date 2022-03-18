@@ -56,11 +56,16 @@ namespace API.Controllers
                 return BadRequest("Failed to register the user.");
             }
             var userData = await userRepository.GetUserDTOByUsernameAsync(accountDTO.UserName);
+            var adddRoleresult = await userManager.AddToRoleAsync(newUser, "user");
+            if (!adddRoleresult.Succeeded)
+            {
+                return BadRequest();
+            }
             return CreatedAtAction("Register", new {email = accountDTO.Email }, 
                 new TokenDTO()
                 {
                     UserData = userData,
-                    Token = tokenService.CreateToken(newUser)
+                    Token = await tokenService.CreateTokenAsync(newUser)
                 });
         }
         [HttpPost("login")]
@@ -86,7 +91,7 @@ namespace API.Controllers
             return Ok(new TokenDTO()
             {
                 UserData = userData,
-                Token = tokenService.CreateToken(user)
+                Token = await tokenService.CreateTokenAsync(user)
             });
         }
         private async Task<bool> EmailExists(string email)
