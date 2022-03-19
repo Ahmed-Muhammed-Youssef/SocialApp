@@ -26,7 +26,6 @@ export class MessagesComponent implements OnInit {
   constructor(private messageService: MessageService, private userService: UserService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    console.log(history.state);
     this.loadMatches();
     if(history.state?.username){
       this.currentMatch = history.state as User;
