@@ -5,7 +5,7 @@
                 <div id="plist" class="people-list">
                     <ul class="list-unstyled chat-list mt-2 mb-0">
                         <li class="clearfix" (click)="loadChat(match)" *ngFor="let match of matches">
-                            <img [src]="match.photos[0].url" alt="avatar">
+                            <img [src]="match.photos[0]?.url || './assets/Pictures/profile-placeholder.png'" alt="avatar">
                             <div class="about">
                                 <div class="name">{{match.firstName}} {{match.lastName}}</div>
                                 <div class="status"> {{match.lastActive | timeago}}</div>                                            
@@ -23,7 +23,7 @@
                     <div class="chat-header clearfix">
                         <div class="row">
                             <div class="col-lg-6">
-                                <img [src]="currentMatch.photos[0].url" alt="avatar">
+                                <img [src]="currentMatch.photos[0]?.url || './assets/Pictures/profile-placeholder.png'" alt="avatar">
                                 <div class="chat-about">
                                     <h6 class="m-b-0">{{currentMatch.firstName}} {{currentMatch.lastName}}</h6>
                                     <small>{{currentMatch.lastActive | timeago}}</small>

@@ -1,8 +1,8 @@
 <div class="row" *ngIf="user.username">
   <div class="col-4">
     <div class="card">
-      <img *ngIf="user.photos[0]" class="card-img-top img-thumbnail"
-           src="{{user.photos[0].url || './assets/Pictures/profile-placeholder.png'}}"
+      <img *ngIf="user.photos" class="card-img-top img-thumbnail"
+           src="{{user.photos[0]?.url || './assets/Pictures/profile-placeholder.png'}}"
            alt="{{user.firstName}}" />
       <div class="card-body">
         <div>
