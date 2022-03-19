@@ -24,6 +24,9 @@ export class AccountService {
   }
 
   setCurrentUser(loginResponse: LoginResponse): void {
+    loginResponse.userData.roles = [];
+    const roles = this.getDecodedToken(loginResponse.token).role;
+    Array.isArray(roles)? loginResponse.userData.roles = roles: loginResponse.userData.roles.push(roles);
     localStorage.setItem('user', JSON.stringify(loginResponse));
     this.currentUserSource.next(loginResponse);
   }
@@ -42,5 +45,8 @@ export class AccountService {
         return response;
       })
     );
+  }
+  getDecodedToken(token: string){
+    return JSON.parse(atob(token.split('.')[1]))
   }
 }

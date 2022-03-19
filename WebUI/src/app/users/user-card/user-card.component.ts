@@ -24,7 +24,8 @@ export class UserCardComponent implements OnInit {
     bio: '',
     city: '',
     country: '',
-    photos: []
+    photos: [],
+    roles: []
   };
  
   constructor(private userService: UserService, private toastr: ToastrService) { }

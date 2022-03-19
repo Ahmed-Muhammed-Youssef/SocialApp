@@ -33,6 +33,9 @@ import { LoadingInterceptor } from './_interceptors/loading.interceptor';
 import { PhotoEditorComponent } from './users/photo-editor/photo-editor.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { UserDetailedResolver } from './_resolvers/user-detailed.resolver';
+import { AdminPanelComponent } from './admin/admin-panel/admin-panel.component';
+import { AdminGuard } from './_guards/admin.guard';
+import { HasRoleDirective } from './_directives/has-role.directive';
 
 
 const routes: Routes = [
@@ -43,6 +46,7 @@ const routes: Routes = [
   { path: 'users/username/:username', component: UserDetailComponent, canActivate:[AuthGuard], resolve: {user: UserDetailedResolver} },
   { path: 'lists', component: ListsComponent, canActivate:[AuthGuard] },
   { path: 'messages', component: MessagesComponent, canActivate: [AuthGuard] },
+  { path: 'admin', component: AdminPanelComponent, canActivate: [AuthGuard, AdminGuard]},
   { path: 'users/edit', component: UserEditComponent, canActivate: [AuthGuard], canDeactivate: [PreventUnsavedChangesGuard] },
   /*{
     path: '',
@@ -79,7 +83,9 @@ const routes: Routes = [
     ServerErrorComponent,
     UserCardComponent,
     UserEditComponent,
-    PhotoEditorComponent
+    PhotoEditorComponent,
+    AdminPanelComponent,
+    HasRoleDirective
   ],
   imports: [
     BrowserModule, HttpClientModule, BrowserAnimationsModule, FormsModule, ReactiveFormsModule,

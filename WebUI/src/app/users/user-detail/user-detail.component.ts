@@ -26,7 +26,8 @@ export class UserDetailComponent implements OnInit {
     bio: '',
     city: '',
     country: '',
-    photos: []
+    photos: [],
+    roles: []
   };
   isLiked : boolean = true;
   isMatch: boolean = true;
