@@ -104,7 +104,10 @@ namespace API.Controllers
             messageRepository.AddMessage(createdMessage);
             var msgDTO = mapper.Map<MessageDTO>(createdMessage);
             var profilePhoto = await userRepository.GetProfilePhotoAsync(sender.Id);
-            msgDTO.SenderPhotoUrl = profilePhoto.Url;
+            if(profilePhoto != null)
+            {
+                msgDTO.SenderPhotoUrl = profilePhoto.Url;
+            }
             if (await messageRepository.SaveAsync())
             {
                 msgDTO.Id = createdMessage.Id;
