@@ -7,133 +7,114 @@
               >
           <h2 class="text-center text-secondary">Create your account</h2>
           <hr />
-          <!-- <app-text-input [formControl]="$any(registerForm).controls['username']" 
-          [label]='"Username"' 
-          [type]="'text'">
-
-          </app-text-input> -->
-          <div class="mt-5 form-group row">
-            <div class="col w-auto">
-              <label for="firstName">First name</label>
-              <input
-              [class.is-invalid]='registerForm.get("firstName")?.errors 
-              && registerForm.get("firstName")?.touched' 
-              formControlName="firstName"
-              class="form-control me-2"
-              type="text">
-              <div class="invalid-feedback">What's your first name?</div>
-            </div>
-            <div class="col w-auto">
-              <label for="lastName">Last name</label>
-              <input
-              [class.is-invalid]='registerForm.get("lastName")?.errors 
-              && registerForm.get("lastName")?.touched' 
-              formControlName="lastName"
-              class="form-control"
-              type="text">
-              <div class="invalid-feedback">What's your last name?</div>
-            </div>
+          <div class="row">
+            <mat-form-field class="col" appearance="fill">
+              <mat-label>First name</mat-label>
+              <input matInput formControlName="firstName">
+              <mat-error>
+                Invalid First Name
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field class="col" appearance="fill">
+              <mat-label>Last Name</mat-label>
+              <input matInput formControlName="lastName">
+              <mat-error>
+                Invalid Last Name
+              </mat-error>
+            </mat-form-field>
           </div>
-          <div class="mt-3">
-            <label for="username">Username</label>
-            <div class="input-group">
-              <span class="input-group-text" id="inputGroupPrepend">@</span>
-              <input
-              [class.is-invalid]='registerForm.get("username")?.errors 
-              && registerForm.get("username")?.touched'
-              formControlName="username"
-              class="form-control"
-              type="text">
-              <div class="invalid-feedback">Please enter your username.</div>
-            </div>
+          <div class="row">
+            <mat-form-field appearance="fill">
+              <mat-label> Username </mat-label>
+              <input matInput formControlName="username">
+              <mat-error>
+                Invalid Username
+              </mat-error>
+            </mat-form-field>
           </div>
-          <div class="mt-3 form-group">
-            <label for="dateOfBirth">Date of birth</label>
-            <input  type="text"
-                    formControlName="dateOfBirth"
-                    class="form-control"
-                    [class.is-invalid]='registerForm.get("dateOfBirth")?.errors 
-                    && registerForm.get("dateOfBirth")?.touched'
-                    bsDatepicker
-                    [maxDate]="maxDate"
-                    [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY', containerClass: 'theme-red' }">
-              <div *ngIf="registerForm.get('dateOfBirth')?.hasError('required')" class="invalid-feedback">Please enter your birth date.</div>
+          <div class="row">
+            <mat-form-field appearance="fill">
+              <mat-label>Choose a date</mat-label>
+              <input matInput [max]="maxDate" formControlName="dateOfBirth" [matDatepicker]="picker">
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+              <mat-error>
+                Invalid Date Of Birth
+              </mat-error>
+            </mat-form-field>
           </div>
 
+          <div class="row">
+            <mat-form-field class="col" appearance="fill">
+              <mat-label>Sex</mat-label>
+              <mat-select formControlName="sex">
+                <mat-option value="m">Male</mat-option>
+                <mat-option value="f">Female</mat-option>
+              </mat-select>
+              <mat-error>
+                Invalid Field
+              </mat-error>
+            </mat-form-field>
 
-          <div class="mt-3 row">
-            <div class="col form-group">
-              <label for="sex">Sex</label>
-              <select class="form-select" formControlName="sex">
-                <option value="m">Male</option>
-                <option value="f">Female</option>
-              </select>
-            </div>
-
-            <div class="col form-group">
-              <label for="interest">Interested In</label>
-              <select class="form-select" formControlName="interest">
-                <option value="m">Male</option>
-                <option value="f">Female</option>
-                <option value="b">Both</option>
-              </select>
-            </div>
+            <mat-form-field class="col" appearance="fill">
+              <mat-label>Interested In</mat-label>
+              <mat-select formControlName="interest">
+                <mat-option value="m">Males</mat-option>
+                <mat-option value="f">Females</mat-option>
+                <mat-option value="b">Both</mat-option>
+              </mat-select>
+              <mat-error>
+                Invalid Field
+              </mat-error>
+            </mat-form-field>
           </div>
 
-          <div class="mt-3 row">
-            <div class="col form-group">
-              <label for="country">Country</label>
-              <select class="form-select" formControlName="country">
-               <option *ngFor="let country of countryList" value="{{country}}">{{country}}</option>
-              </select>
-            </div>
+          <div class="row">
+            <mat-form-field class="col" appearance="fill">
+              <mat-label>Country</mat-label>
+              <mat-select formControlName="country">
+                <mat-option *ngFor="let country of countryList" value="{{country}}">{{country}}</mat-option>
+              </mat-select>
+              <mat-error>
+                Invalid Country
+              </mat-error>
+            </mat-form-field>
 
-            <div class="col form-group">
-              <label for="city">City</label>
-              <input 
-              [class.is-invalid]='registerForm.get("city")?.errors 
-              && registerForm.get("city")?.touched'
-              formControlName="city"
-                   class="form-control"
-                   type="text">
-            <div class="invalid-feedback">Please enter your city/town name.</div>
-            </div>
+            <mat-form-field class="col" appearance="fill">
+              <mat-label>City</mat-label>
+              <input formControlName="city" matInput placeholder="Ex. Cairo">
+              <mat-error>
+                Invalid City
+              </mat-error>
+            </mat-form-field>
           </div>
-       
-          <div class="mt-3 form-group">
-            <label for="email">Email</label>
-            <input 
-            [class.is-invalid]='registerForm.get("email")?.errors 
-              && registerForm.get("email")?.touched'
-            formControlName="email"
-                   class="form-control"
-                   type="email">
-            <div class="invalid-feedback">Please enter you email address.</div>
+          <div class="row">
+            <mat-form-field appearance="fill">
+              <mat-label> Email </mat-label>
+              <input matInput formControlName="email">
+              <mat-error>
+                Invalid Email
+              </mat-error>
+            </mat-form-field>
           </div>
-          <div class="mt-3 form-group">
-            <label for="password">Password</label>
-            <input
-            [class.is-invalid]='registerForm.get("password")?.errors 
-              && registerForm.get("password")?.touched'
-            formControlName="password"
-                   class="form-control"
-                   type="password">
-            <div *ngIf="registerForm.get('password')?.hasError('invalid')" class="invalid-feedback">Password mismatch.</div>
-            <div *ngIf="registerForm.get('password')?.hasError('required')" class="invalid-feedback">Please enter your password.</div>
-            <div *ngIf="registerForm.get('password')?.hasError('minlength')" class="invalid-feedback">Your password must be at least 6 characters.</div>
+          <div class="row">
+            <mat-form-field appearance="fill">
+              <mat-label> Password </mat-label>
+              <input matInput formControlName="password">
+              <mat-error>
+                Invalid Password
+              </mat-error>
+            </mat-form-field>
+          </div>
 
-          </div>
-          <div class="mt-3 form-group">
-            <label for="password">Confirm password</label>
-            <input
-            [class.is-invalid]='registerForm.get("confirmPassword")?.errors 
-              && registerForm.get("confirmPassword")?.touched' 
-            formControlName="confirmPassword"
-            class="form-control"
-            type="password">
-            <div *ngIf="registerForm.get('confirmPassword')?.hasError('required')" class="invalid-feedback">Please re-type your password</div>
-            <div *ngIf="registerForm.get('confirmPassword')?.hasError('passwordMismatch')" class="invalid-feedback">Password mismatch.</div>
-
+          <div class="row">
+            <mat-form-field appearance="fill">
+              <mat-label> Confirm password </mat-label>
+              <input matInput formControlName="confirmPassword">
+              <mat-error>
+                Invalid field
+              </mat-error>
+            </mat-form-field>
           </div>
           <div class="mt-3">
             <span>
@@ -142,7 +123,7 @@
           </div>
           
           <div class="form-group text-center my-3">
-            <button [disabled]="!registerForm.valid" class="btn btn-secondary " type="submit">Sign up</button>
+            <button [disabled]="!registerForm.valid" mat-raised-button color="primary" type="submit">Sign up</button>
           </div>
         </form>
       </div>
