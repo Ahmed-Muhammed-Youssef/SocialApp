@@ -1,12 +1,4 @@
 <div class="row" *ngIf="user">
-  <div class="col-4 text-center">
-    <h2> Your Profile </h2>
-  </div>
-  <div class="col-8">
-    <div class="alert alert-info" *ngIf=" checkIfUserChanged()">
-      <strong>Information: </strong> You have made changes. Any unsaved changes will be lost.
-    </div>
-  </div>
   <div class="col-4">
     <div class="card">
       <img class="card-img-top img-thumbnail"
@@ -33,68 +25,66 @@
       </div>
     </div>
   </div>
-  <div class="col-8">
-    <tabset class="member-tabset">
-      <tab heading="About {{user.firstName}}">
-        <form #editForm="ngForm" id="editForm" (ngSubmit)="updateUser()" class="form">
-          <div class="mt-4 form-group row">
-            <div class="col w-auto">
-              <label for="firstName">First name</label>
-              <input name="firstName"
-                     [(ngModel)]="user.firstName"
-                     class="form-control me-2"
-                     type="text">
-            </div>
-            <div class="col w-auto">
-              <label for="lastName">Last name</label>
-              <input name="lastName"
-                     [(ngModel)]="user.lastName"
-                     class="form-control"
-                     type="text">
-            </div>
+  <div class="col">
+    <div class="alert alert-info" *ngIf=" checkIfUserChanged()">
+      <strong>Information: </strong> You have made changes. Any unsaved changes will be lost.
+    </div>
+    <mat-tab-group mat-align-tabs="center">
+      <mat-tab label="About {{user.firstName}}">
+        <form #editForm="ngForm" id="editForm" (ngSubmit)="updateUser()" >
+          <div class="row mt-4 mx-0">
+            <mat-form-field class="col">
+              <mat-label>First name</mat-label>
+              <input matInput name="firstName" [(ngModel)]="user.firstName">
+            </mat-form-field>
+
+            <mat-form-field class="col">
+              <mat-label>Last name</mat-label>
+              <input matInput [(ngModel)]="user.lastName" name="lastName">
+            </mat-form-field>
           </div>
-          <div class="mt-4 form-group">
-            <label for="bio">Bio</label>
-            <textarea rows="6" name="bio"
-                   [(ngModel)]="user.bio"
-                   class="form-control me-2"
-                   type="text">
-            </textarea>
+          <div class="row mt-2 mx-0">
+            <mat-form-field>
+              <mat-label>
+                Bio
+              </mat-label>
+              <textarea matInput name="bio" [(ngModel)]="user.bio"></textarea>   
+            </mat-form-field>
           </div>
-          <div class="form-group mt-4">
-            <label for="interest">Interested In</label>
-            <select class="form-select" name="interest" [(ngModel)]="user.interest">
-              <option value="m">Male</option>
-              <option value="f">Female</option>
-              <option value="b">Both</option>
-            </select>
+          <div class="row mt-2 mx-0">
+            <mat-form-field>
+              <mat-label>
+                Interested In
+              </mat-label>
+              <mat-select name="interest" [(ngModel)]="user.interest">
+                <mat-option value="m"> Males </mat-option>
+                <mat-option value="f"> Females</mat-option>
+                <mat-option value="b"> Both </mat-option>
+              </mat-select>
+            </mat-form-field>
           </div>
-          <div class="mt-4 form-group row">
-          <h5 class="mt-4">Location Details</h5>
-            <div class="col w-auto">
-              <label for="city">City</label>
-              <input name="city"
-                     [(ngModel)]="user.city"
-                     class="form-control me-2"
-                     type="text">
-            </div>
-            <div class="col w-auto">
-              <label for="country">Country</label>
-              <input name="country"
-                     [(ngModel)]="user.country"
-                     class="form-control"
-                     type="text">
-            </div>
+          <div class="row mt-2 mx-0">
+            <mat-form-field class="col">
+              <mat-label> Country </mat-label>
+              <mat-select name="country" [(ngModel)]="user.country">
+                <mat-option *ngFor="let country of countryList" [value]="country">{{country}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field class="col">
+              <mat-label> City </mat-label>
+              <input matInput name="city"
+              [(ngModel)]="user.city">
+            </mat-form-field>
           </div>
           <div class="mt-5 d-grid justify-content-center">
-            <button [disabled]="!checkIfUserChanged()" form="editForm" type="submit" class="btn btn-success">Save Changes</button>
-        </div>
+            <button mat-flat-button color="primary" [disabled]="!checkIfUserChanged()" form="editForm" type="submit">Save Changes</button>
+          </div>
         </form>
-      </tab>
-
-      <tab heading="Edit Pictures">
-        <app-photo-editor [user]="user"></app-photo-editor>
-      </tab>
-    </tabset>
+      </mat-tab>
+        <mat-tab label="Edit Pictures">
+          <app-photo-editor [user]="user"></app-photo-editor>
+        </mat-tab>
+      </mat-tab-group>
   </div>
 </div>

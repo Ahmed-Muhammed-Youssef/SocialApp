@@ -1,3 +1,4 @@
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
 .tab-panel {
   border: 1px solid #ddd;
   padding: 10px;

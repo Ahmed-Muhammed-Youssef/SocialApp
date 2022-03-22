@@ -39,7 +39,7 @@ export class ErrorInterceptor implements HttpInterceptor {
               this.router.navigateByUrl('not-found');
               break;
             case 401:
-              this.toastr.error(error.statusText, error.status);
+              // this.toastr.error(error.statusText, error.status);
               break;
             case 500:
               const navigationExtras: NavigationExtras = { state: { error: error.error } };
@@ -47,7 +47,6 @@ export class ErrorInterceptor implements HttpInterceptor {
               break;
             default:
               this.toastr.error('something unexpected occured.');
-              console.log(error);
               break;
           }
         }
