@@ -1,7 +1,5 @@
-import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
 import { LoginModel } from '../_models/AccountModels';
 import { AccountService } from '../_services/account.service';
 import { UserService } from '../_services/user.service';
@@ -12,9 +10,8 @@ import { UserService } from '../_services/user.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-
-  constructor(public accountService: AccountService, private router: Router,
-     private toastr: ToastrService, private userService: UserService) { }
+  loginValid = true;
+  constructor(public accountService: AccountService, private router: Router, private userService: UserService) { }
   public loginCred: LoginModel = { email: '', password: '' };
   ngOnInit(): void {
   }
@@ -22,10 +19,13 @@ export class LoginComponent implements OnInit {
     this.accountService.login(this.loginCred).subscribe(
       response => {
         if (response) {
-          this.router.navigateByUrl('/users');
-          this.userService.deleteCachedValues();
+          if(response.token){
+            this.router.navigateByUrl('/users');
+            this.userService.deleteCachedValues();
+          }
         }
-      }
+      },
+       () => this.loginValid = false
      );
   }
 
