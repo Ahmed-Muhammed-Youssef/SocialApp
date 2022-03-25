@@ -46,7 +46,7 @@ namespace API.Controllers
             {
                 return NotFound();
             }
-            return Ok(likesRepository.IsMacth(user.Id, otherUser.Id));
+            return Ok(await likesRepository.IsMacth(user.Id, otherUser.Id));
 
         }
     }

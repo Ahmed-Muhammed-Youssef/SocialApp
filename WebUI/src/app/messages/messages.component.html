@@ -13,10 +13,11 @@
                         </li>
                     </ul>
                     <div class="d-flex justify-content-center" *ngIf="matchesPagination && matchesPagination.totalPages > 1">
-                        <pagination class="" [boundaryLinks]="true" [totalItems]="matchesPagination.totalItems" (pageChanged)="matchPageChanged($event)"
-                                    [itemsPerPage]="matchesPagination.itemsPerPage" [(ngModel)]="matchesPagination.currentPage" 
-                                    previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;" >
-                        </pagination>
+                        <mat-paginator [length]="matchesPagination.totalItems"
+                            [pageSize]="matchesPagination.itemsPerPage"
+                            (page)="matchPageChanged($event)"
+                            aria-label="Select page">
+                        </mat-paginator>  
                       </div>
                 </div>
                 <div class="chat"  *ngIf="currentMatch">
@@ -25,7 +26,7 @@
                             <div class="col-lg-6">
                                 <img [src]="currentMatch.photos[0]?.url || './assets/Pictures/profile-placeholder.png'" alt="avatar">
                                 <div class="chat-about">
-                                    <h6 class="m-b-0">{{currentMatch.firstName}} {{currentMatch.lastName}}</h6>
+                                    <h3 class="m-b-0">{{currentMatch.firstName}} {{currentMatch.lastName}}</h3>
                                     <small>{{currentMatch.lastActive | timeago}}</small>
                                 </div>
                             </div>
@@ -49,7 +50,9 @@
                     <form #sendForm="ngForm" (ngSubmit)="sendMessage()" class="chat-message clearfix">
                         <div class="input-group mb-0">
                             <input name="content" required type="text" [(ngModel)]="newMessage" class="form-control" autocomplete="off">                                    
-                            <button type="submit" [disabled]="!sendForm.valid" class="btn btn-secondary"><i class="fa fa-send"></i></button>
+                            <button mat-flat-button color="primary" type="submit" [disabled]="!sendForm.valid">
+                                <mat-icon>send</mat-icon>
+                            </button>
                         </div>
                     </form>
                 </div>

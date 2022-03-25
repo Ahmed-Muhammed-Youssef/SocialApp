@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { LoginResponse } from 'src/app/_models/AccountModels';
 import { Pagination } from 'src/app/_models/pagination';
 import { UserParams } from 'src/app/_models/userParams';
 import { User } from '../../_models/User';
@@ -16,8 +15,6 @@ export class UserListComponent implements OnInit {
   userParams: UserParams | null = null;
   genderList = [{value: 'm', display: 'Males'}, {value: 'f', display: 'Females'}, {value: 'b', display: 'Both'}];
   orderByOptions = [{value: 'lastActive', display: 'Last Active'}, {value: 'creationTime', display: 'Newest Users'}, {value: 'age', display: 'Age'} ];
-  // public users$: Observable<User[]>;
-
   constructor(private userService: UserService) {
    this.userParams = userService.getUserParams();
   }
@@ -40,9 +37,9 @@ export class UserListComponent implements OnInit {
     this.loadUsers();
   }
   pageChanged($event:any){
-    if(event){
+    if($event){
       if($event && this.userParams){
-        this.userParams.pageNumber = $event.page;
+        this.userParams.pageNumber = $event.pageIndex + 1;
         this.userService.setUserParams(this.userParams);
         this.loadUsers();
       }

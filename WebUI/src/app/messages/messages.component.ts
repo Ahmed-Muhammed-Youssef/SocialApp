@@ -36,8 +36,8 @@ export class MessagesComponent implements OnInit {
 }
 
   matchPageChanged(e: any){
-    if(e && e.page != this.matchPageNumber){
-      this.matchPageNumber = e.page;
+    if(e && (e.pageIndex + 1) != this.matchPageNumber){
+      this.matchPageNumber = e.pageIndex + 1;
       this.loadMatches();
     }
   }

@@ -133,15 +133,9 @@
 }
 
 .chat .chat-history .other-message {
-    background: #FFBBBB;
+    background: #D2D2FF;
     text-align: right
 }
-
-.chat .chat-history .other-message:after {
-    border-bottom-color: #e8f1f3;
-    left: 93%
-}
-
 .chat .chat-message {
     padding: 20px
 }

@@ -3,13 +3,13 @@
     <mat-card-content>
       <form #loginForm="ngForm" (ngSubmit)="login()">
         <h1>Sign In</h1>
-        <mat-form-field appearance="fill">
+        <mat-form-field>
           <input matInput placeholder="Email" [(ngModel)]="loginCred.email" name="email" required>
           <mat-error>
             Please provide a valid email address
           </mat-error>
         </mat-form-field>
-        <mat-form-field appearance="fill">
+        <mat-form-field>
           <input matInput type="password" placeholder="Password" [(ngModel)]="loginCred.password" name="password" required>
           <mat-error>
             Please provide a valid password

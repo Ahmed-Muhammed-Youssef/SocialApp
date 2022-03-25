@@ -23,6 +23,7 @@ import {MatTableModule} from '@angular/material/table';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatPaginatorModule} from '@angular/material/paginator';
 
 @NgModule({
   declarations: [],
@@ -35,7 +36,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     MatFormFieldModule, MatIconModule, MatGridListModule, MatInputModule,
     MatCardModule, MatSelectModule, MatDatepickerModule, MatNativeDateModule,
     MatProgressBarModule, MatTableModule, MatMenuModule, MatDialogModule,
-    MatCheckboxModule
+    MatCheckboxModule, MatPaginatorModule
   ],
   exports: [
     BsDropdownModule,
@@ -60,7 +61,8 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     MatTableModule,
     MatMenuModule,
     MatDialogModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatPaginatorModule
     ]
 })
 export class SharedModule { }

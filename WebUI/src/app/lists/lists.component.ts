@@ -31,9 +31,9 @@ export class ListsComponent implements OnInit {
       }
     );
   }
-  pageChanged(event: any){
-    if(event?.page){
-      this.pagination.currentPage = event.page;
+  pageChanged($event: any){
+    if($event){
+      this.pagination.currentPage = $event.pageIndex + 1;
       this.loadMatches();
     }
   }

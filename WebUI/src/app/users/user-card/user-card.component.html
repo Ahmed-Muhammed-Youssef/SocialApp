@@ -1,27 +1,20 @@
-<div class="card mb-4">
-  <div class="card-img-wrapper">
-    <img src="{{user.photos[0]?.url || './assets/Pictures/profile-placeholder.png'}}" class="card-img-top" alt="{{user.firstName}}">
-    <ul class="list-inline member-icons animate text-center">
-      <li class="list-inline-item">
-        <button class="btn btn-secondary me-2" routerLink="/users/username/{{user.username}}">
-          <i class="fa fa-user"></i>
-        </button>
-        <button *ngIf="!isLiked" (click)="addLike(user)" class="btn btn-secondary me-2">
-          <i class="fa fa-heart"></i>
-        </button>
-        <a *ngIf="isLiked" class="btn btn-secondary " routerLink="/messages" [state]="user">
-          <i class="fa fa-envelope"></i>
-        </a>
-      </li>
-    </ul>
-  </div>
-  <div class="card-body p-1">
-    <h5 class="card-title text-center mb-1">
-      <i class="fa fa-user me-2"></i>
-      {{user.firstName}}
-    </h5>
-    <p class="card-text text-muted text-center">
-      {{user.city}}
-    </p>
-  </div>
-</div>
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>{{user.firstName}} {{user.lastName}}</mat-card-title>
+    <mat-card-subtitle>{{user.lastActive | timeago}}</mat-card-subtitle>
+  </mat-card-header>
+  <img mat-card-image src="{{user.photos[0]?.url || './assets/Pictures/profile-placeholder.png'}}" alt="Profile picture">
+  <mat-card-content>
+  </mat-card-content>
+  <mat-card-actions class="text-center">
+    <button mat-mini-fab color="primary" class="me-2" routerLink="/users/username/{{user.username}}">
+      <mat-icon>person</mat-icon>
+    </button>
+    <button mat-mini-fab color="accent" *ngIf="!isLiked" (click)="addLike(user)" class="me-2">
+      <mat-icon>favorite</mat-icon>
+    </button>
+    <button mat-mini-fab color="primary" *ngIf="isLiked" routerLink="/messages" [state]="user">
+      <mat-icon>chat</mat-icon>
+    </button>
+  </mat-card-actions>
+</mat-card>

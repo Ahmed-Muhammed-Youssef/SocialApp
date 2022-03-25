@@ -30,7 +30,7 @@ export class UserDetailComponent implements OnInit {
     roles: []
   };
   isLiked : boolean = true;
-  isMatch: boolean = true;
+  isMatch: boolean = false;
   galleryOptions: NgxGalleryOptions[] = [];
   galleryImages: NgxGalleryImage[] = [];
   constructor(private userService: UserService, private route: ActivatedRoute, private toastr: ToastrService) {
