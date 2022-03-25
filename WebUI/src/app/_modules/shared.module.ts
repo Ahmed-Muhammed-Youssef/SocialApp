@@ -18,6 +18,11 @@ import { MatCardModule } from '@angular/material/card';
 import {MatSelectModule} from '@angular/material/select';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
+import {MatTableModule} from '@angular/material/table';
+import {MatMenuModule} from '@angular/material/menu';
+import {MatDialogModule} from '@angular/material/dialog';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 @NgModule({
   declarations: [],
@@ -28,7 +33,9 @@ import { MatNativeDateModule } from '@angular/material/core';
     PaginationModule.forRoot(), TimeagoModule.forRoot(), ButtonsModule.forRoot(),
     MatTabsModule, MatButtonModule, 
     MatFormFieldModule, MatIconModule, MatGridListModule, MatInputModule,
-    MatCardModule, MatSelectModule, MatDatepickerModule, MatNativeDateModule
+    MatCardModule, MatSelectModule, MatDatepickerModule, MatNativeDateModule,
+    MatProgressBarModule, MatTableModule, MatMenuModule, MatDialogModule,
+    MatCheckboxModule
   ],
   exports: [
     BsDropdownModule,
@@ -48,7 +55,12 @@ import { MatNativeDateModule } from '@angular/material/core';
     MatCardModule,
     MatSelectModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatProgressBarModule,
+    MatTableModule,
+    MatMenuModule,
+    MatDialogModule,
+    MatCheckboxModule
     ]
 })
 export class SharedModule { }

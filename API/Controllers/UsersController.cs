@@ -154,6 +154,12 @@ namespace API.Controllers
             }
             return BadRequest("failed to delete the image from the server.");
         }
+        [HttpGet("photos/all")]
+        public async Task<ActionResult<PhotoDTO>> GetPhotos()
+        {
+            var photos = await userRepository.GetUserPhotoDTOsAsync(User.GetId()); //the output is ordered
+            return Ok(photos);
+        }
         [HttpPut("photos/reorder")]
         public async Task<ActionResult<PhotoDTO>> ReorderPhotos(IEnumerable<PhotoDTO> photoDTOs)
         {

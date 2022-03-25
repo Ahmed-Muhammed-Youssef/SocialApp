@@ -1,1 +1,9 @@
-<p>admin-panel works!</p>
+<h1>Management Panel</h1>
+<mat-tab-group mat-align-tabs="start">
+    <mat-tab label="User Management" *appHasRole="['admin']">
+      <app-user-management></app-user-management>
+    </mat-tab>
+    <mat-tab label="Photo Management">
+      <app-photo-management></app-photo-management>
+    </mat-tab>
+  </mat-tab-group>

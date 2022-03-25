@@ -1,4 +1,5 @@
-﻿using API.Entities;
+﻿using API.DTOs;
+using API.Entities;
 using API.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -80,24 +81,24 @@ namespace API.Controllers
         }
         [Authorize(Policy = "RequireAdminRole")]
         [HttpPost("add")]
-        public async Task<IActionResult> AddRoleToUser([Required, FromQuery] string username, [Required, FromQuery] string role)
+        public async Task<IActionResult> AddRoleToUser(RoleUserDTO roleUser)
         {
-            var user = await userManager.FindByNameAsync(username);
+            var user = await userManager.FindByNameAsync(roleUser.Username);
             if(user == null)
             {
                 return NotFound("User not found");
             }
-            var Role = await roleManager.FindByNameAsync(role);
+            var Role = await roleManager.FindByNameAsync(roleUser.Role);
             if(Role == null)
             {
                 return NotFound("Role not found");
             }
-            var result = await userManager.AddToRoleAsync(user, role);
+            var result = await userManager.AddToRoleAsync(user, roleUser.Role);
             if (!result.Succeeded)
             {
                 return BadRequest("Failed To create a new role");
             }
-            return Ok(role);
+            return Ok();
         }
         [Authorize(Policy = "RequireAdminRole")]
         [HttpDelete("delete/{role}")]
@@ -117,24 +118,24 @@ namespace API.Controllers
         }
         [Authorize(Policy = "RequireAdminRole")]
         [HttpDelete("removefrom")]
-        public async Task<IActionResult> RemoveRoleFromUser([Required, FromQuery] string username, [Required, FromQuery] string role)
+        public async Task<IActionResult> RemoveRoleFromUser(RoleUserDTO roleUser)
         {
-            var user = await userManager.FindByNameAsync(username);
+            var user = await userManager.FindByNameAsync(roleUser.Username);
             if (user == null)
             {
                 return NotFound("User not found");
             }
-            var Role = await roleManager.FindByNameAsync(role);
+            var Role = await roleManager.FindByNameAsync(roleUser.Role);
             if (Role == null)
             {
                 return NotFound("Role not found");
             }
-            var result = await userManager.RemoveFromRoleAsync(user, role);
+            var result = await userManager.RemoveFromRoleAsync(user, roleUser.Role);
             if (!result.Succeeded)
             {
                 return BadRequest("Failed To create a new role");
             }
-            return Ok(role);
+            return Ok();
         }
     }
 }

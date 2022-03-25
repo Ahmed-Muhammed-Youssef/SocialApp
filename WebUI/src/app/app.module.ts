@@ -36,6 +36,9 @@ import { UserDetailedResolver } from './_resolvers/user-detailed.resolver';
 import { AdminPanelComponent } from './admin/admin-panel/admin-panel.component';
 import { AdminGuard } from './_guards/admin.guard';
 import { HasRoleDirective } from './_directives/has-role.directive';
+import { UserManagementComponent } from './admin/user-management/user-management.component';
+import { PhotoManagementComponent } from './admin/photo-management/photo-management.component';
+import { RoleEditDialogComponent } from './admin/role-edit-dialog/role-edit-dialog.component';
 
 
 const routes: Routes = [
@@ -85,7 +88,10 @@ const routes: Routes = [
     UserEditComponent,
     PhotoEditorComponent,
     AdminPanelComponent,
-    HasRoleDirective
+    HasRoleDirective,
+    UserManagementComponent,
+    PhotoManagementComponent,
+    RoleEditDialogComponent,
   ],
   imports: [
     BrowserModule, HttpClientModule, BrowserAnimationsModule, FormsModule, ReactiveFormsModule,

@@ -155,4 +155,7 @@ export class UserService {
       }
     ));
   }
+  getPhotos(){
+    return this.http.get<Photo[]>("/api/users/photos/all");
+  }
 }
