@@ -1,7 +1,42 @@
-<header class="mb-6">
-  <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-secondary">
+
+  <mat-toolbar style="height: fit-content; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);" class="d-flex flex-row align-items-center p-2"  color="primary">
+    <div>
+      <button mat-button style="font-size: large;" (click)="route()">Dating App</button>
+    </div>
+    <div style="font-size: medium;" class="me-auto">
+      <ng-container *ngIf="accountService.currentUser$ | async">
+          <button mat-flat-button color="primary" routerLink="/users" routerActiveLink="active">Explore</button>
+          <button mat-flat-button color="primary" routerLink="/lists" routerActiveLink="active">Matches</button>
+          <button mat-flat-button color="primary" routerLink="/messages" routerActiveLink="active">Messages</button>
+          <button mat-flat-button color="primary" *appHasRole='["admin", "moderator"]' routerLink="/admin" routerActiveLink="active">Admin</button>
+      </ng-container>
+      <!-- <button mat-button routerLink="/errors" routerActiveLink="active">errors</button> -->
+    </div>
+    <div [matMenuTriggerFor]="menu" class="d-flex pointer align-items-center" *ngIf="(accountService.currentUser$ | async) as user"> 
+        <img class="nav-img-circle me-2" src="{{user.userData.photos[0]?.url || './assets/Pictures/profile-placeholder.png'}}" alt="{{user.userData.firstName}}" >
+        <div style="font-size: medium;" class="ms-1">
+            {{user.userData.firstName}}
+            {{user.userData.lastName}}
+        </div>
+        <mat-icon>arrow_drop_down</mat-icon>
+    </div>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item routerLink="users/edit">
+      <mat-icon>edit</mat-icon> Edit Profile
+      </button>
+      <button mat-menu-item (click)="logout()">
+        <mat-icon>logout</mat-icon> Logout
+      </button>
+    </mat-menu>
+    <button mat-button *ngIf="(accountService.currentUser$ | async) === null" routerLink="/login">
+      <mat-icon>login</mat-icon> Sign in
+    </button>
+  </mat-toolbar>
+
+<!-- <header class="mb-6">
+  <nav class="navbar navbar-expand-md navbar-dark fixed-top" style="background: #3f51b5;">
     <div class="container">
-      <a class="navbar-brand" routerLink="/home">Dating App</a>
+      <a class="navbar-brand" (click)="route()">Dating App</a>
       <ul class="navbar-nav me-auto">
         <ng-container *ngIf="accountService.currentUser$ | async">
           <li class="nav-item">
@@ -21,23 +56,23 @@
           <a class="nav-link" routerLink="/errors" routerActiveLink="active">errors</a>
         </li>
       </ul>
-      
-      <div class="dropdown" *ngIf="(accountService.currentUser$ | async) as user" dropdown>
-        <div dropdownToggle class="dropdown-toggle  text-light">
+      <div mat-icon-button [matMenuTriggerFor]="menu" *ngIf="(accountService.currentUser$ | async) as user" class="text-light dropdown-toggle">
+        
           <img class="nav-img-circle me-2" src="{{user.userData.photos[0]?.url || './assets/Pictures/profile-placeholder.png'}}" alt="{{user.userData.firstName}}" >
           {{user.userData.firstName}}
           {{user.userData.lastName}}
-        </div>
-        <div class="dropdown-menu mt-3" *dropdownMenu>
-          <a routerLink="users/edit" class="dropdown-item">Edit Profile</a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" (click)="logout()">Logout</a>
-        </div>
       </div>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item routerLink="users/edit">
+         <mat-icon>edit</mat-icon> Edit Profile
+        </button>
+        <button mat-menu-item (click)="logout()">
+          <mat-icon>logout</mat-icon> Logout
+        </button>
+      </mat-menu>
       <ng-container *ngIf="(accountService.currentUser$ | async) === null">
-            <a class="btn btn-secondary btn-lg me-2" routerLink="/login">Sign in</a>
-      </ng-container>
+            <a mat-flat-button color="primary" routerLink="/login">Sign in</a>
+      </ng-container> 
     </div>
-
   </nav>
-</header>
+</header> -->

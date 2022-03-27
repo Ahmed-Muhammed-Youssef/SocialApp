@@ -24,6 +24,9 @@ import {MatMenuModule} from '@angular/material/menu';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatPaginatorModule} from '@angular/material/paginator';
+import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatSidenavModule} from '@angular/material/sidenav';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [],
@@ -36,7 +39,8 @@ import {MatPaginatorModule} from '@angular/material/paginator';
     MatFormFieldModule, MatIconModule, MatGridListModule, MatInputModule,
     MatCardModule, MatSelectModule, MatDatepickerModule, MatNativeDateModule,
     MatProgressBarModule, MatTableModule, MatMenuModule, MatDialogModule,
-    MatCheckboxModule, MatPaginatorModule
+    MatCheckboxModule, MatPaginatorModule, MatToolbarModule, MatSidenavModule,
+    MatProgressSpinnerModule
   ],
   exports: [
     BsDropdownModule,
@@ -62,7 +66,10 @@ import {MatPaginatorModule} from '@angular/material/paginator';
     MatMenuModule,
     MatDialogModule,
     MatCheckboxModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatToolbarModule,
+    MatSidenavModule,
+    MatProgressSpinnerModule
     ]
 })
 export class SharedModule { }

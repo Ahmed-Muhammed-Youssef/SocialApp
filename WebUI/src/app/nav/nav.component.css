@@ -1,10 +1,15 @@
-.dropdown-toggle, .dropdown-item{
+.pointer{
     cursor:pointer;
+    text-decoration: none;
+    text-size-adjust: 10pt;
 }
 .nav-img-circle {
-    max-height: 50px;
-    max-width: 50px;
+    max-height: 40px;
+    max-width: 40px;
 
     border-radius: 50%;
     display: inline;
 }
+.example-spacer {
+    flex: 1 1 auto;
+  }
