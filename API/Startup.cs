@@ -9,6 +9,7 @@ using API.Helpers;
 using API.Interfaces;
 using API.Middleware;
 using API.Services;
+using API.SignalR;
 using CloudinaryDotNet;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -52,10 +53,7 @@ namespace API
                 options.UseSqlite(_config.GetSection("ConnectionStrings")["DefaultConnection"]);
             });
             services.AddControllers();
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "API", Version = "v1" });
-            });
+            services.AddSignalR();
            /* services.AddCors( options =>
             {
                 options.AddPolicy("AllowSpecificOrigin", policy => policy.AllowAnyMethod()
@@ -70,8 +68,6 @@ namespace API
             if (env.IsDevelopment())
             {
                 /*app.UseDeveloperExceptionPage();*/
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "API v1"));
             }
 
             app.UseMiddleware<ExceptionMiddleware>();
@@ -82,6 +78,11 @@ namespace API
 
             //app.UseCors("AllowSpecificOrigin");
 
+            app.UseCors(x => x.AllowAnyHeader()
+                .AllowAnyMethod()
+                .AllowCredentials()
+                .WithOrigins("https://localhost:4200"));
+
             app.UseAuthentication();
 
             app.UseAuthorization();
@@ -89,6 +90,7 @@ namespace API
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapHub<PresenceHub>("hubs/presence");
             });
         }
     }
