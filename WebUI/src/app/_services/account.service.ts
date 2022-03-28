@@ -1,22 +1,26 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, Observable, ReplaySubject } from 'rxjs';
+import { environment } from 'src/environments/environment';
 import { LoginModel, LoginResponse, RegisterModel } from '../_models/AccountModels';
+import { PresenceService } from './presence.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AccountService {
-  constructor(private http: HttpClient) { }
+  baseUrl = environment.apiUrl;
+  constructor(private http: HttpClient, private presenceService: PresenceService) { }
   private currentUserSource = new ReplaySubject<LoginResponse | null>(1);
   public currentUser$: Observable<LoginResponse | null> = this.currentUserSource.asObservable();
 
   login(loginCred: LoginModel): Observable<LoginResponse> {
-    return this.http.post<LoginResponse>('/api/account/login', loginCred).pipe<LoginResponse>(
+    return this.http.post<LoginResponse>(this.baseUrl +'account/login', loginCred).pipe<LoginResponse>(
       map<LoginResponse, LoginResponse>((response: LoginResponse) => {
         const loginResponse: LoginResponse = response;
         if (loginResponse) {
           this. setCurrentUser(loginResponse);
+          this.presenceService.createHubConnection(response);
         }
         return response;
       })
@@ -33,14 +37,16 @@ export class AccountService {
 
   logout(): void {
     localStorage.removeItem('user');
+    this.presenceService.stopHubConnection();
     this.currentUserSource.next(null);
   }
   register(model: RegisterModel): Observable<LoginResponse> {
-    return this.http.post<LoginResponse>('/api/account/register', model).pipe<LoginResponse>(
+    return this.http.post<LoginResponse>(this.baseUrl+ 'account/register', model).pipe<LoginResponse>(
       map<LoginResponse, LoginResponse>((response: LoginResponse) => {
-        const loginResponse: LoginResponse = response;
-        if (loginResponse) {
-          this. setCurrentUser(loginResponse);
+        if (response) {
+          this. setCurrentUser(response);
+          this.presenceService.createHubConnection(response);
+
         }
         return response;
       })

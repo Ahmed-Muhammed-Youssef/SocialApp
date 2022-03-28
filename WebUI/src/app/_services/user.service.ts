@@ -1,6 +1,7 @@
 import { HttpClient, HttpParams, HttpResponse, JsonpClientBackend } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, Observable, of, take } from 'rxjs';
+import { environment } from 'src/environments/environment';
 import { PaginatedResult, Pagination } from '../_models/pagination';
 import { Photo, UpdateUser, User } from '../_models/User';
 import { UserParams } from '../_models/userParams';
@@ -10,6 +11,7 @@ import { AccountService } from './account.service';
   providedIn: 'root'
 })
 export class UserService {
+  baseUrl = environment.apiUrl;
   constructor(private http: HttpClient, private accountService: AccountService) { 
 
     this.resetUserParams();
@@ -66,7 +68,7 @@ export class UserService {
       return of(paginatedResult);
     }
 
-    return this.http.get<User[]>('/api/users/all', { observe: 'response', params: this.getPaginationParams(userParams)})
+    return this.http.get<User[]>(this.baseUrl + 'users/all', { observe: 'response', params: this.getPaginationParams(userParams)})
      .pipe(
       map(response => {
         if(response?.body){
@@ -86,31 +88,31 @@ export class UserService {
     if (user) {
       return of(user);
     }
-    return this.http.get<User>('/api/users/info/username/' + username);
+    return this.http.get<User>(this.baseUrl + 'users/info/username/' + username);
   }
   public reorderPhotos(photos: Photo[]){
-    return this.http.put<Photo[]>('/api/users/photos/reorder', photos);
+    return this.http.put<Photo[]>(this.baseUrl + 'users/photos/reorder', photos);
   }
   public deletePhoto(photoId:number){
-    return this.http.delete('/api/users/photo/delete/' + String(photoId));
+    return this.http.delete(this.baseUrl + 'users/photo/delete/' + String(photoId));
   }
   like(username: string): Observable<boolean>{
-    return this.http.post<boolean>('api/like/' + username, {}).pipe( map( r=> {
+    return this.http.post<boolean>(this.baseUrl + 'like/' + username, {}).pipe( map( r=> {
       //the correct answer will need a more complex caching system so we will only delete all the cashed data for now
       this.userChache = new Map();
       return r;
     }));
   }
   getLikes() : Observable<User[]>{
-    return this.http.get<User[]>('api/like/liked');
+    return this.http.get<User[]>(this.baseUrl + 'like/liked');
 
   }
   getIsLiked(username:string) : Observable<boolean>{
-    return this.http.get<boolean>('/api/like/isliked/' + username);
+    return this.http.get<boolean>(this.baseUrl + 'like/isliked/' + username);
 
   }
   getIsMatch(username:string): Observable<boolean>{
-    return this.http.get<boolean>('/api/matches/ismatch/' + username);
+    return this.http.get<boolean>(this.baseUrl + 'matches/ismatch/' + username);
 
   }
   getMatches(pageNumber : number = 1, itemsPerPage: number = 2): Observable<PaginatedResult<User[]>>{
@@ -123,7 +125,7 @@ export class UserService {
       paginatedResult.result = cache;
       return of(paginatedResult);
     }
-    return this.http.get<User[]>('api/matches', {observe:'response', params: httpParams})
+    return this.http.get<User[]>(this.baseUrl + 'matches', {observe:'response', params: httpParams})
     .pipe(
       map(response => {
         if(response?.body){
@@ -147,7 +149,7 @@ export class UserService {
       city: user.city,
       country: user.country
     };
-    return this.http.put<UpdateUser>('/api/users/update', userTosend).pipe(map(
+    return this.http.put<UpdateUser>(this.baseUrl + 'users/update', userTosend).pipe(map(
       () => {
         const index = this.users.indexOf(user);
         this.users[index] = user;
@@ -156,6 +158,6 @@ export class UserService {
     ));
   }
   getPhotos(){
-    return this.http.get<Photo[]>("/api/users/photos/all");
+    return this.http.get<Photo[]>(this.baseUrl + "users/photos/all");
   }
 }

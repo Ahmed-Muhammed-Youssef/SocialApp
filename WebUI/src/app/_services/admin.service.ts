@@ -1,22 +1,24 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, of } from 'rxjs';
+import { environment } from 'src/environments/environment';
 import { RoleUser } from '../_models/roles';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AdminService {
+  baseUrl = environment.apiUrl;
   cachedRoles: string[] = [];
   constructor(private http: HttpClient) { }
   getUsersWithRoles(){
-    return this.http.get<RoleUser[]>("/api/roles/users-roles/all");
+    return this.http.get<RoleUser[]>(this.baseUrl +"roles/users-roles/all");
   }
   getAllRoles(){
     if(this.cachedRoles.length > 0){
       return of(this.cachedRoles)
     }
-    return this.http.get<string[]>("/api/roles/all").pipe(
+    return this.http.get<string[]>(this.baseUrl + "roles/all").pipe(
       map( r => 
       {
         this.cachedRoles = r;
@@ -25,10 +27,10 @@ export class AdminService {
   }
   addRoleToUser(username: string, role:string){
     let obj = {'username': username, 'role': role};
-    return this.http.post<string>('/api/roles/add', obj);
+    return this.http.post<string>(this.baseUrl + 'roles/add', obj);
   }
   deleteRoleFromUser(username: string, role:string){
     let obj = {'username': username, 'role': role};
-    return this.http.delete<string>('/api/roles/removefrom', {body: obj});
+    return this.http.delete<string>(this.baseUrl + 'roles/removefrom', {body: obj});
   }
 }
