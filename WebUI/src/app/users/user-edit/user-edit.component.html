@@ -1,10 +1,11 @@
 <div class="row" *ngIf="user">
-  <div class="col-4">
-    <div class="card">
-      <img class="card-img-top img-thumbnail"
-           src="{{user.photos[0]?.url || './assets/Pictures/profile-placeholder.png'}}"
-           alt="{{user.firstName}}" />
-      <div class="card-body">
+  <mat-card class="col-4">
+    <mat-card-header>
+      <mat-card-title>{{user.firstName}} {{user.lastName}}</mat-card-title>
+    </mat-card-header>
+    <img mat-card-image src="{{user.photos[0]?.url || './assets/Pictures/profile-placeholder.png'}}" 
+      alt="profile picture">
+    <mat-card-content>
         <div>
           <strong>Location:</strong>
           <p>{{user.city}}, {{user.country}}</p>
@@ -14,22 +15,16 @@
           <p>{{user.age}}</p>
         </div>
         <div>
-          <strong>Last active:</strong>
-          <p>{{getLoacaleDateTime(user.lastActive) | timeago}}</p>
-        </div>
-        <div>
           <strong>Member since:</strong>
           <p>{{getLoacaleDateTime(user.created) | date}}</p>
         </div>
-       
-      </div>
-    </div>
-  </div>
+    </mat-card-content>
+  </mat-card>
   <div class="col">
     <div class="alert alert-info" *ngIf=" checkIfUserChanged()">
       <strong>Information: </strong> You have made changes. Any unsaved changes will be lost.
     </div>
-    <mat-tab-group mat-align-tabs="center">
+    <mat-tab-group class="p-2" mat-align-tabs="center">
       <mat-tab label="About {{user.firstName}}">
         <form #editForm="ngForm" id="editForm" (ngSubmit)="updateUser()" >
           <div class="row mt-4 mx-0">
