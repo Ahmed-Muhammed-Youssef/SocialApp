@@ -1,19 +1,20 @@
 <mat-card>
   <mat-card-header>
     <mat-card-title>{{user.firstName}} {{user.lastName}}</mat-card-title>
-    <mat-card-subtitle>{{user.lastActive | timeago}}</mat-card-subtitle>
+    <mat-card-subtitle *ngIf="(presenceService.onlineUsers$ | async)?.includes(user.username)"> <span class="online"></span> Active now</mat-card-subtitle>
+    <mat-card-subtitle *ngIf="!(presenceService.onlineUsers$ | async)?.includes(user.username)">{{getLoacaleDateTime(user.lastActive) | timeago}}</mat-card-subtitle>
   </mat-card-header>
   <img mat-card-image src="{{user.photos[0]?.url || './assets/Pictures/profile-placeholder.png'}}" alt="Profile picture">
   <mat-card-content>
   </mat-card-content>
   <mat-card-actions class="text-center">
-    <button mat-mini-fab color="primary" class="me-2" routerLink="/users/username/{{user.username}}">
+    <button mat-button color="primary" class="me-2" routerLink="/users/username/{{user.username}}">
       <mat-icon>person</mat-icon>
     </button>
-    <button mat-mini-fab color="accent" *ngIf="!isLiked" (click)="addLike(user)" class="me-2">
+    <button mat-button color="accent" *ngIf="!isLiked" (click)="addLike(user)" class="me-2">
       <mat-icon>favorite</mat-icon>
     </button>
-    <button mat-mini-fab color="primary" *ngIf="isLiked" routerLink="/messages" [state]="user">
+    <button mat-button color="primary" *ngIf="isLiked" routerLink="/messages" [state]="user">
       <mat-icon>chat</mat-icon>
     </button>
   </mat-card-actions>

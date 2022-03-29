@@ -16,3 +16,10 @@
   display: inline-block;
   margin-bottom: 20px;
 }
+.online{
+    height: 10px;
+    width: 10px;
+    background-color: rgb(1, 189, 42);
+    border-radius: 50%;
+    display: inline-block;
+}

@@ -6,6 +6,7 @@ import { NgxGalleryOptions } from '@kolkov/ngx-gallery';
 import { NgxGalleryImage } from '@kolkov/ngx-gallery';
 import { NgxGalleryAnimation } from '@kolkov/ngx-gallery';
 import { ToastrService } from 'ngx-toastr';
+import { PresenceService } from 'src/app/_services/presence.service';
 
 @Component({
   selector: 'app-user-detail',
@@ -33,7 +34,8 @@ export class UserDetailComponent implements OnInit {
   isMatch: boolean = false;
   galleryOptions: NgxGalleryOptions[] = [];
   galleryImages: NgxGalleryImage[] = [];
-  constructor(private userService: UserService, private route: ActivatedRoute, private toastr: ToastrService) {
+  constructor(private userService: UserService, private route: ActivatedRoute,
+     private toastr: ToastrService, public presenceService: PresenceService) {
     this.galleryOptions = [
       {
         width: '500px',
