@@ -102,7 +102,7 @@ namespace API.Data
                 await dataContext.SaveChangesAsync();
             }
             var messageDTOs = await query.ProjectTo<MessageDTO>(mapper.ConfigurationProvider)
-                .OrderByDescending(m => m.SentDate).ToListAsync();
+                .OrderBy(m => m.SentDate).ToListAsync();
             return messageDTOs;
         }
 
