@@ -1,7 +1,9 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map, Observable } from 'rxjs';
+import { HubConnection, HubConnectionBuilder } from '@microsoft/signalr';
+import { BehaviorSubject, map, Observable, take } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { LoginResponse } from '../_models/AccountModels';
 import { Message } from '../_models/message';
 import { PaginatedResult, Pagination } from '../_models/pagination';
 
@@ -16,12 +18,37 @@ export class MessageService {
     totalPages: 0
   };
   baseUrl = environment.apiUrl;
-
+  hubUrl = environment.hubUrl;
+  private hubConnection: HubConnection | null = null;
+  private messageThreadSource = new BehaviorSubject<Message[]>([]);
+  messageThread$ = this.messageThreadSource.asObservable();
   constructor(private http: HttpClient) { }
-  sendMessage(username: string, content: string){
-    return this.http.post<Message>(this.baseUrl + 'messages', {"recipientUsername": username, "content": content});
+  async sendMessage(username: string, content: string){
+    return this.hubConnection?.invoke("SendMessages", {"recipientUsername": username, "content": content})
+    .catch(e => console.log(e));
   }
-
+  createHubConnection(user: LoginResponse, otherUserId: number){
+    this.hubConnection = new HubConnectionBuilder()
+    .withUrl(this.hubUrl + 'message?userId=' + otherUserId, 
+    {
+      accessTokenFactory: () => user.token
+    })
+    .withAutomaticReconnect()
+    .build();
+    this.hubConnection.start().catch(e => console.log(e));
+    this.hubConnection.on("ReceiveMessages", r => this.messageThreadSource.next(r));
+    this.hubConnection.on("NewMessage", m => {
+      console.log(m);
+      this.messageThread$.pipe(take(1)).subscribe(msgs => {
+        this.messageThreadSource.next([...msgs, m]);
+      });
+    });
+  }
+  stopHubConnection(){
+    if(this.hubConnection){
+      this.hubConnection.stop();
+    } 
+  }
  getMessages(pageNumber : number = 1, itemsPerPage: number = 2, mode: string = 'unread') : Observable<PaginatedResult<Message[]>>{
   let httpParams: HttpParams = new HttpParams().set('pageNumber', pageNumber)
   .set('itemsPerPage', itemsPerPage).set('mode', mode);
@@ -47,3 +74,4 @@ export class MessageService {
  }
 
 }
+

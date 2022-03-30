@@ -31,7 +31,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="chat-history">
+                <div class="chat-history" *ngIf="(messageService.messageThread$ | async); let messages">
                     <div class="mt-4" *ngIf="messages.length === 0">
                         <h4 class="text-center">No messages yet, say hi in the message box below</h4>
                     </div>
@@ -47,8 +47,10 @@
                     </ul>
                 </div>
                 <form #sendForm="ngForm" (ngSubmit)="sendMessage()" class="chat-message clearfix">
-                    <div class="input-group mb-0">
-                        <input name="content" required type="text" [(ngModel)]="newMessage" class="form-control" autocomplete="off">                                    
+                    <div class="row">
+                        <mat-form-field appearance="fill">
+                            <input matInput maxlength="256" name="content" required [(ngModel)]="newMessage" autocomplete="off">                                    
+                        </mat-form-field>
                         <button mat-flat-button color="primary" type="submit" [disabled]="!sendForm.valid">
                             <mat-icon>send</mat-icon>
                         </button>
