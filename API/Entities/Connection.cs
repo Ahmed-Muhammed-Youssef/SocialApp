@@ -6,13 +6,13 @@ namespace API.Entities
         {
             
         }
-        public Connection(string connectionId, string username) 
+        public Connection(string connectionId, int userId) 
         {
             this.ConnectionId = connectionId;
-            this.Username = username;
+            this.UserId = userId;
         }
         
         public string ConnectionId { get; set; }
-        public string Username { get; set; }
+        public int UserId { get; set; }
     }
 }
