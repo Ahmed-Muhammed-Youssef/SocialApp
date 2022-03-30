@@ -106,5 +106,27 @@ namespace API.Data
             return messageDTOs;
         }
 
+        public void AddGroup(Group group)
+        {
+            dataContext.Groups.Add(group);
+        }
+
+        public void RemoveConnection(Connection connection)
+        {
+            dataContext.Connections.Remove(connection);
+        }
+
+        public async Task<Connection> GetConnection(string connectionId)
+        {
+            return await dataContext.Connections.FindAsync(connectionId);
+        }
+
+        public async Task<Group> GetMessageGroup(string groupName)
+        {
+           return await dataContext
+           .Groups
+           .Include(g => g.Connections)
+           .FirstOrDefaultAsync(g => g.Name == groupName);
+        }
     }
 }
