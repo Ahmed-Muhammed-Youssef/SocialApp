@@ -17,14 +17,19 @@ namespace API.SignalR
         private readonly IMapper mapper;
         private readonly IUserRepository userRepository;
         private readonly ILikesRepository likesRepository;
+        private readonly IHubContext<PresenceHub> presenceHubContext;
+        private readonly PresenceTracker presenceTracker;
 
         public MessageHub(IMessageRepository messageRepository, IMapper mapper,
-            IUserRepository userRepository, ILikesRepository likesRepository)
+            IUserRepository userRepository, ILikesRepository likesRepository, 
+            IHubContext<PresenceHub> presenceHubContext, PresenceTracker presenceTracker)
         {
             this.messageRepository = messageRepository;
             this.mapper = mapper;
             this.userRepository = userRepository;
             this.likesRepository = likesRepository;
+            this.presenceHubContext = presenceHubContext;
+            this.presenceTracker = presenceTracker;
         }
         public override async Task OnConnectedAsync()
         {
@@ -69,19 +74,29 @@ namespace API.SignalR
                 RecipientDeleted = false,
                 ReadDate = null
             };
-            var groupName = GetGroupName(sender.Id, recipient.Id);
-            var group = await messageRepository.GetMessageGroup(groupName);
-            if(group.Connections.Any(c => c.UserId == recipient.Id)){
-                createdMessage.ReadDate = DateTime.UtcNow;
-            }
-
-            messageRepository.AddMessage(createdMessage);
             var msgDTO = mapper.Map<MessageDTO>(createdMessage);
             var profilePhoto = await userRepository.GetProfilePhotoAsync(sender.Id);
             if(profilePhoto != null)
             {
                 msgDTO.SenderPhotoUrl = profilePhoto.Url;
             }
+            var groupName = GetGroupName(sender.Id, recipient.Id);
+            var group = await messageRepository.GetMessageGroup(groupName);
+            if(group.Connections.Any(c => c.UserId == recipient.Id)){
+                createdMessage.ReadDate = DateTime.UtcNow;
+                msgDTO.ReadDate = createdMessage.ReadDate;
+            }
+            else {
+                var connections = await presenceTracker.GetConnectionForUser(recipient.UserName);
+                if(connections != null){
+                    var senderDTO = mapper.Map<UserDTO>(sender);
+                    await presenceHubContext.Clients.Clients(connections)
+                    .SendAsync("NewMessage", new { senderDTO, msgDTO });
+                }
+            }
+
+            messageRepository.AddMessage(createdMessage);
+           
 
            
             if (await messageRepository.SaveAsync())
