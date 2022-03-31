@@ -37,14 +37,20 @@ namespace API.SignalR
             var otherUserId = int.Parse(httpContext.Request.Query["userId"]);
             var groupName = GetGroupName(httpContext.User.GetId(), otherUserId);
             await Groups.AddToGroupAsync(Context.ConnectionId, groupName);
-            await AddToGroup(groupName);
-
+            var group = await AddToGroup(groupName);
+            await Clients.Group(groupName).SendAsync("UpdatedGroup", group);
             var messages = await messageRepository.GetMessagesDTOThreadAsync(Context.User.GetId(), otherUserId);
-            await Clients.Group(groupName).SendAsync("ReceiveMessages", messages);
+            await Clients.Caller.SendAsync("ReceiveMessages", messages);
+            // var connectionOfOtherUser = group.Connections.FirstOrDefault(c => c.UserId == otherUserId);
+            // if(connectionOfOtherUser != null){
+            //     await Clients.Client(connectionOfOtherUser.ConnectionId)
+            //     .SendAsync("ReceiveMessages", messages);
+            // }
         }
         public override async Task OnDisconnectedAsync(Exception exception)
         {
-            await RemoveFromMessageGroup();
+            var group = await RemoveFromMessageGroup();
+            await Clients.Group(group.Name).SendAsync("UpdatedGroup", group);
             await base.OnDisconnectedAsync(exception);
         }
         public async Task SendMessages(NewMessageDTO message){
@@ -87,10 +93,10 @@ namespace API.SignalR
                 msgDTO.ReadDate = createdMessage.ReadDate;
             }
             else {
-                var connections = await presenceTracker.GetConnectionForUser(recipient.UserName);
-                if(connections != null){
+                var recipientConnections = await presenceTracker.GetConnectionForUser(recipient.UserName);
+                if(recipientConnections != null){
                     var senderDTO = mapper.Map<UserDTO>(sender);
-                    await presenceHubContext.Clients.Clients(connections)
+                    await presenceHubContext.Clients.Clients(recipientConnections)
                     .SendAsync("NewMessage", new { senderDTO, msgDTO });
                 }
             }
@@ -109,7 +115,7 @@ namespace API.SignalR
             }
         } 
         // utility methods
-        private async Task<bool> AddToGroup(string groupName){
+        private async Task<Group> AddToGroup(string groupName){
             var group = await messageRepository.GetMessageGroup(groupName);
             var connection = new Connection(Context.ConnectionId, Context.User.GetId());
 
@@ -118,13 +124,19 @@ namespace API.SignalR
                 messageRepository.AddGroup(group);
             }
             group.Connections.Add(connection);
-
-            return await messageRepository.SaveAsync();
+            if(await messageRepository.SaveAsync()){
+                return group;
+            }
+            throw new HubException("Failed to craete group");
         }
-        private async Task RemoveFromMessageGroup(){
-            var connection = await messageRepository.GetConnection(Context.ConnectionId);
+        private async Task<Group> RemoveFromMessageGroup(){
+            var group = await messageRepository.GetGroupForConnection(Context.ConnectionId);
+            var connection = group.Connections.FirstOrDefault(c => c.ConnectionId == Context.ConnectionId);
             messageRepository.RemoveConnection(connection);
-            await messageRepository.SaveAsync();
+            if(await messageRepository.SaveAsync()){
+                return group;
+            }
+           throw new HubException("Failed to remove group");
         }
         private string GetGroupName(int callerId, int otherId){
             return callerId > otherId? $"{callerId}-{otherId}" : $"{otherId}-{callerId}";

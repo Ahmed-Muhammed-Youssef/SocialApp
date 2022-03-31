@@ -128,5 +128,14 @@ namespace API.Data
            .Include(g => g.Connections)
            .FirstOrDefaultAsync(g => g.Name == groupName);
         }
+
+        public async Task<Group> GetGroupForConnection(string connectionId)
+        {
+            return await dataContext
+            .Groups
+            .Include(g => g.Connections)
+            .Where(g => g.Connections.Any(c => c.ConnectionId == connectionId))
+            .FirstOrDefaultAsync();
+        }
     }
 }
