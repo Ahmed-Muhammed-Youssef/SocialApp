@@ -38,11 +38,6 @@ namespace API.SignalR
             var messages = await unitOfWork.MessageRepository.GetMessagesDTOThreadAsync(Context.User.GetId(), otherUserId);
             if(unitOfWork.HasChanges()) await unitOfWork.Complete();
             await Clients.Caller.SendAsync("ReceiveMessages", messages);
-            // var connectionOfOtherUser = group.Connections.FirstOrDefault(c => c.UserId == otherUserId);
-            // if(connectionOfOtherUser != null){
-            //     await Clients.Client(connectionOfOtherUser.ConnectionId)
-            //     .SendAsync("ReceiveMessages", messages);
-            // }
         }
         public override async Task OnDisconnectedAsync(Exception exception)
         {
@@ -50,7 +45,8 @@ namespace API.SignalR
             await Clients.Group(group.Name).SendAsync("UpdatedGroup", group);
             await base.OnDisconnectedAsync(exception);
         }
-        public async Task SendMessages(NewMessageDTO message){
+        public async Task SendMessages(NewMessageDTO message)
+        {
             var sender = await unitOfWork.UserRepository.GetUserByIdAsync(Context.User.GetId());
             var recipient = await unitOfWork.UserRepository.GetUserByUsernameAsync(message.RecipientUsername);
             if(recipient == null || sender == null)
@@ -85,29 +81,29 @@ namespace API.SignalR
             }
             var groupName = GetGroupName(sender.Id, recipient.Id);
             var group = await unitOfWork.MessageRepository.GetMessageGroup(groupName);
-            if(group.Connections.Any(c => c.UserId == recipient.Id)){
+            if(group.Connections.Any(c => c.UserId == recipient.Id))
+            {
                 createdMessage.ReadDate = DateTime.UtcNow;
                 msgDTO.ReadDate = createdMessage.ReadDate;
             }
-            else {
+            else 
+            {
                 var recipientConnections = await presenceTracker.GetConnectionForUser(recipient.UserName);
-                if(recipientConnections != null){
+                if(recipientConnections != null)
+                {
                     var senderDTO = mapper.Map<UserDTO>(sender);
                     await presenceHubContext.Clients.Clients(recipientConnections)
                     .SendAsync("NewMessage", new { senderDTO, msgDTO });
                 }
             }
-
             unitOfWork.MessageRepository.AddMessage(createdMessage);
-           
-
-           
             if (await unitOfWork.Complete())
             {
                 msgDTO.Id = createdMessage.Id;
                 await Clients.Group(groupName).SendAsync("NewMessage", msgDTO);
             }
-            else{
+            else
+            {
                 throw new HubException("Couldn't Send the message"); 
             }
         } 
@@ -116,26 +112,31 @@ namespace API.SignalR
             var group = await unitOfWork.MessageRepository.GetMessageGroup(groupName);
             var connection = new Connection(Context.ConnectionId, Context.User.GetId());
 
-            if(group == null){
+            if(group == null)
+            {
                 group = new Group(name: groupName);
                 unitOfWork.MessageRepository.AddGroup(group);
             }
             group.Connections.Add(connection);
-            if(await unitOfWork.Complete()){
+            if(await unitOfWork.Complete())
+            {
                 return group;
             }
             throw new HubException("Failed to craete group");
         }
-        private async Task<Group> RemoveFromMessageGroup(){
+        private async Task<Group> RemoveFromMessageGroup()
+        {
             var group = await unitOfWork.MessageRepository.GetGroupForConnection(Context.ConnectionId);
             var connection = group.Connections.FirstOrDefault(c => c.ConnectionId == Context.ConnectionId);
             unitOfWork.MessageRepository.RemoveConnection(connection);
-            if(await unitOfWork.Complete()){
+            if(await unitOfWork.Complete())
+            {
                 return group;
             }
            throw new HubException("Failed to remove group");
         }
-        private string GetGroupName(int callerId, int otherId){
+        private string GetGroupName(int callerId, int otherId)
+        {
             return callerId > otherId? $"{callerId}-{otherId}" : $"{otherId}-{callerId}";
         }
 
