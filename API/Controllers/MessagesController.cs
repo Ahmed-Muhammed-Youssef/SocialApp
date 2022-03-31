@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using API.Data;
 using API.Entities;
 using API.Interfaces;
 using API.Extensions;
@@ -21,32 +16,28 @@ namespace API.Controllers
     [Authorize]
     public class MessagesController : ControllerBase
     {
-        private readonly IMessageRepository messageRepository;
-        private readonly IUserRepository userRepository;
+        private readonly IUnitOfWork unitOfWork;
         private readonly IMapper mapper;
-        private readonly ILikesRepository likesRepository;
 
-        public MessagesController(IMessageRepository messageRepository, IUserRepository userRepository,
-             IMapper mapper, ILikesRepository likesRepository)
+        public MessagesController(IUnitOfWork unitOfWork ,IMapper mapper)
         {
-            this.messageRepository = messageRepository;
-            this.userRepository = userRepository;
+            this.unitOfWork = unitOfWork;
             this.mapper = mapper;
-            this.likesRepository = likesRepository;
+
         }
         // GET: api/Messages/inbox/{username}
         [HttpGet("inbox/{username}")]
         public async Task<ActionResult<IEnumerable<MessageDTO>>> GetChat(string username)
         {
             var issuerId = User.GetId();
-            var user = await userRepository.GetUserByUsernameAsync(username);
-            return Ok(await messageRepository.GetMessagesDTOThreadAsync(issuerId, user.Id));
+            var user = await unitOfWork.UserRepository.GetUserByUsernameAsync(username);
+            return Ok(await unitOfWork.MessageRepository.GetMessagesDTOThreadAsync(issuerId, user.Id));
         }
         // GET: api/Messages/
         public async Task<ActionResult<IEnumerable<MessageDTO>>> ReceiveMessages(string mode, [FromQuery]PaginationParams paginationParams)
         {
             var issuerId = User.GetId();
-            var user = await userRepository.GetUserByIdAsync(issuerId);
+            var user = await unitOfWork.UserRepository.GetUserByIdAsync(issuerId);
             if(user == null)
             {
                 return BadRequest("Invalid Token");
@@ -66,7 +57,7 @@ namespace API.Controllers
             {
                 option = ReceiveMessagesOptions.UnreadMessages;
             }
-            var result = await messageRepository.GetAllPagedMessagesDTOForUserAsync(issuerId, option, paginationParams);
+            var result = await unitOfWork.MessageRepository.GetAllPagedMessagesDTOForUserAsync(issuerId, option, paginationParams);
             var paginationHeader = new PaginationHeader(result.CurrentPage, result.ItemsPerPage, result.TotalCount, result.TotalPages);
             Response.AddPaginationHeader(paginationHeader);
             return Ok(result);
@@ -75,8 +66,8 @@ namespace API.Controllers
         [HttpPost]
         public async Task<ActionResult<MessageDTO>> PostMessage(NewMessageDTO message)
         {
-            var sender = await userRepository.GetUserByIdAsync(User.GetId());
-            var recipient = await userRepository.GetUserByUsernameAsync(message.RecipientUsername);
+            var sender = await unitOfWork.UserRepository.GetUserByIdAsync(User.GetId());
+            var recipient = await unitOfWork.UserRepository.GetUserByUsernameAsync(message.RecipientUsername);
             if(recipient == null || sender == null)
             {
                 return NotFound();
@@ -85,7 +76,7 @@ namespace API.Controllers
             {
                 return BadRequest("You can't send messages to yourself");
             }
-            if (!await likesRepository.IsMacth(sender.Id, recipient.Id))
+            if (!await unitOfWork.LikesRepository.IsMacth(sender.Id, recipient.Id))
             {
                 return BadRequest("You can't send messages to an unmatch");
 
@@ -101,14 +92,14 @@ namespace API.Controllers
                 RecipientDeleted = false,
                 ReadDate = null
             };
-            messageRepository.AddMessage(createdMessage);
+            unitOfWork.MessageRepository.AddMessage(createdMessage);
             var msgDTO = mapper.Map<MessageDTO>(createdMessage);
-            var profilePhoto = await userRepository.GetProfilePhotoAsync(sender.Id);
+            var profilePhoto = await unitOfWork.UserRepository.GetProfilePhotoAsync(sender.Id);
             if(profilePhoto != null)
             {
                 msgDTO.SenderPhotoUrl = profilePhoto.Url;
             }
-            if (await messageRepository.SaveAsync())
+            if (await unitOfWork.Complete())
             {
                 msgDTO.Id = createdMessage.Id;
                 return Ok(msgDTO);
@@ -120,15 +111,15 @@ namespace API.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteMessage(int id)
         {
-            var message = await messageRepository.GetMessageAsync(id);
+            var message = await unitOfWork.MessageRepository.GetMessageAsync(id);
             if (message == null)
             {
                 return NotFound();
             }
             var issuerId = User.GetId();
-            messageRepository.DeleteMessage(message, issuerId);
+            unitOfWork.MessageRepository.DeleteMessage(message, issuerId);
 
-            if (await messageRepository.SaveAsync()) { 
+            if (await unitOfWork.Complete()) { 
                 return NoContent();
             }
             return BadRequest("Failed to delete the message");

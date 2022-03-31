@@ -16,23 +16,21 @@ namespace API.Controllers
 
     public class MatchesController : ControllerBase
     {
-        private readonly ILikesRepository likesRepository;
-        private readonly IUserRepository userRepository;
+        private readonly IUnitOfWork unitOfWork;
 
-        public MatchesController(ILikesRepository likesRepository, IUserRepository userRepository)
+        public MatchesController(IUnitOfWork unitOfWork)
         {
-            this.likesRepository = likesRepository;
-            this.userRepository = userRepository;
+            this.unitOfWork = unitOfWork;
         }
         [HttpGet]
         public async Task<ActionResult<IEnumerable<UserDTO>>> GetAllMatches([FromQuery]PaginationParams paginationParams)
         {
-            var user = await userRepository.GetUserByUsernameAsync(User.GetUsername());
+            var user = await unitOfWork.UserRepository.GetUserByUsernameAsync(User.GetUsername());
             if(user == null)
             {
                 return Unauthorized();
             }
-            var matches = await likesRepository.GetMatchesAsync(user.Id, paginationParams);
+            var matches = await unitOfWork.LikesRepository.GetMatchesAsync(user.Id, paginationParams);
             var newPaginationHeader = new PaginationHeader(matches.CurrentPage, matches.ItemsPerPage, matches.TotalCount, matches.TotalPages);
             Response.AddPaginationHeader(newPaginationHeader);
             return Ok(matches);
@@ -40,13 +38,13 @@ namespace API.Controllers
         [HttpGet("isMatch/{username}")]
         public async Task<ActionResult<bool>> IsMatch(string username)
         {
-            var user = await userRepository.GetUserByUsernameAsync(User.GetUsername());
-            var otherUser = await userRepository.GetUserByUsernameAsync(username);
+            var user = await unitOfWork.UserRepository.GetUserByUsernameAsync(User.GetUsername());
+            var otherUser = await unitOfWork.UserRepository.GetUserByUsernameAsync(username);
             if(otherUser == null)
             {
                 return NotFound();
             }
-            return Ok(await likesRepository.IsMacth(user.Id, otherUser.Id));
+            return Ok(await unitOfWork.LikesRepository.IsMacth(user.Id, otherUser.Id));
 
         }
     }

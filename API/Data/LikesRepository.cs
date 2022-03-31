@@ -57,11 +57,6 @@ namespace API.Data
         {
             return await dataContext.Matches.AnyAsync(u => u.UserId == userId && u.MatchedId == matchedId);
         }
-        public async Task<bool> SaveAllAsync()
-        {
-            return await dataContext.SaveChangesAsync() > 0;
-        }
-
         public async Task<Like> GetLikeAsync(int likerId, int likedId)
         {
             return await dataContext.Likes.Where(l => l.LikedId == likedId && l.LikerId == likerId).FirstOrDefaultAsync();

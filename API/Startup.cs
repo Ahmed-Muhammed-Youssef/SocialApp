@@ -32,9 +32,7 @@ namespace API
             services.AddScoped<IPhotoService, PhotoService>();
             services.AddIdentityConfigurations(_config);
             services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
-            services.AddScoped<IUserRepository, UserRepository>();
-            services.AddScoped<ILikesRepository, LikesRepository>();
-            services.AddScoped<IMessageRepository, MessageRepository>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<LogUserActivity>();
             services.AddDbContext<DataContext>( options =>

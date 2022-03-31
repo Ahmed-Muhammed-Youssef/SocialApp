@@ -66,9 +66,6 @@ export class MessageService {
       return paginatedResult as  PaginatedResult<Message[]>;
   }));
  }
- loadChat(username:string){
-  return this.http.get<Message[]>(this.baseUrl +'messages/inbox/' + username);
- }
  deleteMessage(msgId: number){
    return this.http.delete(this.baseUrl +'Messages/' + msgId);
  }

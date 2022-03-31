@@ -15,30 +15,28 @@ namespace API.Controllers
     [ServiceFilter(typeof(LogUserActivity))]
     public class LikeController : ControllerBase
     {
-        private readonly ILikesRepository likesRepository;
-        private readonly IUserRepository userRepository;
+        private readonly IUnitOfWork unitOfWork;
 
-        public LikeController(ILikesRepository likesRepository, IUserRepository userRepository)
+        public LikeController(IUnitOfWork unitOfWork)
         {
-            this.likesRepository = likesRepository;
-            this.userRepository = userRepository;
+            this.unitOfWork = unitOfWork;
         }
         [HttpGet("liked")]
         public async Task<ActionResult<IEnumerable<UserDTO>>> GetLikedUsers()
         {
-            var liker = await userRepository.GetUserByIdAsync(User.GetId());
+            var liker = await unitOfWork.UserRepository.GetUserByIdAsync(User.GetId());
             if(liker == null)
             {
                 return BadRequest();
             }
-            var likedUsers = await likesRepository.GetLikedUsersDTOAsync(liker.Id);
+            var likedUsers = await unitOfWork.LikesRepository.GetLikedUsersDTOAsync(liker.Id);
             return Ok(likedUsers);
         }
         [HttpGet("isLiked/{username}")]
         public async Task<ActionResult<bool>> IsLiked (string username)
         {
-            var liker = await userRepository.GetUserByIdAsync(User.GetId());
-            var liked = await userRepository.GetUserByUsernameAsync(username);
+            var liker = await unitOfWork.UserRepository.GetUserByIdAsync(User.GetId());
+            var liked = await unitOfWork.UserRepository.GetUserByUsernameAsync(username);
             if (liker == null || liked == null)
             {
                 return NotFound();
@@ -47,7 +45,7 @@ namespace API.Controllers
             {
                 return BadRequest("you can't check liking yourself.");
             }
-            if (await likesRepository.GetLikeAsync(liker.Id, liked.Id) != null)
+            if (await unitOfWork.LikesRepository.GetLikeAsync(liker.Id, liked.Id) != null)
             {
                 return Ok(true);
             }
@@ -60,8 +58,8 @@ namespace API.Controllers
             {
                 return BadRequest();
             }
-            var liker = await userRepository.GetUserByIdAsync(User.GetId());
-            var liked = await userRepository.GetUserByUsernameAsync(username);
+            var liker = await unitOfWork.UserRepository.GetUserByIdAsync(User.GetId());
+            var liked = await unitOfWork.UserRepository.GetUserByUsernameAsync(username);
             if(liker == null || liked == null)
             {
                 return NotFound();
@@ -70,12 +68,12 @@ namespace API.Controllers
             {
                 return BadRequest("You can't like yourself.");
             }
-            if(await likesRepository.GetLikeAsync(liker.Id, liked.Id) != null)
+            if(await unitOfWork.LikesRepository.GetLikeAsync(liker.Id, liked.Id) != null)
             {
                 return BadRequest("You already liked this user.");
             }
-            bool isMatch = await likesRepository.LikeAsync(liker.Id, liked.Id);
-            if( await likesRepository.SaveAllAsync())
+            bool isMatch = await unitOfWork.LikesRepository.LikeAsync(liker.Id, liked.Id);
+            if( await unitOfWork.Complete())
             {
                 return Ok(isMatch);
             }

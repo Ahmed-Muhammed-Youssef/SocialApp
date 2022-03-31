@@ -21,16 +21,16 @@ namespace API.Controllers
         private readonly UserManager<AppUser> userManager;
         private readonly SignInManager<AppUser> signInManager;
         private readonly ITokenService tokenService;
-        private readonly IUserRepository userRepository;
         private readonly IMapper mapper;
+        private readonly IUnitOfWork unitOfWork;
 
-        public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, ITokenService tokenService, IUserRepository userRepository, IMapper mapper)
+        public AccountController(IUnitOfWork unitOfWork, UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, ITokenService tokenService, IMapper mapper)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
             this.tokenService = tokenService;
-            this.userRepository = userRepository;
             this.mapper = mapper;
+            this.unitOfWork = unitOfWork;
         }
         [HttpPost("register")]
         public async Task<ActionResult> Register(RegisterDTO accountDTO)
@@ -55,7 +55,7 @@ namespace API.Controllers
             {
                 return BadRequest("Failed to register the user.");
             }
-            var userData = await userRepository.GetUserDTOByUsernameAsync(accountDTO.UserName);
+            var userData = await unitOfWork.UserRepository.GetUserDTOByUsernameAsync(accountDTO.UserName);
             var adddRoleresult = await userManager.AddToRoleAsync(newUser, "user");
             if (!adddRoleresult.Succeeded)
             {
@@ -86,7 +86,7 @@ namespace API.Controllers
             {
                 return Unauthorized();
             }
-            var userData = await userRepository.GetUserDTOByEmailAsync(loginCredentials.Email);
+            var userData = await unitOfWork.UserRepository.GetUserDTOByEmailAsync(loginCredentials.Email);
 
             return Ok(new TokenDTO()
             {

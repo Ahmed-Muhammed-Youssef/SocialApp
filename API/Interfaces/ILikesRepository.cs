@@ -12,7 +12,6 @@ namespace API.Interfaces
         public Task<Like> GetLikeAsync(int likerId, int likedId);
         public Task<IEnumerable<UserDTO>> GetLikedUsersDTOAsync(int likerId);
         public Task<IEnumerable<int>> GetLikedUsersIdAsync(int likerId);
-        public Task<bool> SaveAllAsync();
         public Task<bool> IsMacth(int userId, int matchedId);
         public Task<PagedList<UserDTO>> GetMatchesAsync(int id, PaginationParams paginationParams);
     }

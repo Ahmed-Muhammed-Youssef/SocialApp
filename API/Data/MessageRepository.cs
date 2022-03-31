@@ -56,11 +56,6 @@ namespace API.Data
         {
             return await dataContext.Messages.FindAsync(messageId);
         }
-        public async Task<bool> SaveAsync()
-        {
-            return await dataContext.SaveChangesAsync() > 0;
-        }
-
         public async Task<PagedList<MessageDTO>> GetAllPagedMessagesDTOForUserAsync(int issuerId, ReceiveMessagesOptions options, PaginationParams paginationParams)
         {
             var query = dataContext.Messages
@@ -99,7 +94,6 @@ namespace API.Data
                 {
                     message.ReadDate = DateTime.UtcNow;
                 }
-                await dataContext.SaveChangesAsync();
             }
             var messageDTOs = await query.ProjectTo<MessageDTO>(mapper.ConfigurationProvider)
                 .OrderBy(m => m.SentDate).ToListAsync();

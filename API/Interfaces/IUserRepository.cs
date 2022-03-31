@@ -11,7 +11,6 @@ namespace API.Interfaces
         public Task<Photo> AddPhotoAsync(Photo photo);
         public void Update(AppUser appUser);
         public void UpdatePhoto(Photo photo);
-        public Task<bool> SaveAllAsync();
         public Task<PagedList<UserDTO>> GetUsersDTOAsync(string username, UserParams userParams, List<int> ForbiddenIds);
         public Task<AppUser> GetUserByIdAsync(int id);
         public Task<UserDTO> GetUserDTOByIdAsync(int id);

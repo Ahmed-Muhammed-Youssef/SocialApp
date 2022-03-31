@@ -24,7 +24,7 @@ export class MessagesComponent implements OnInit,OnDestroy {
   currentAccount: LoginResponse | null = null;
   newMessage: string = "";
   constructor(public messageService: MessageService, private userService: UserService,
-    private accountService: AccountService) { 
+    accountService: AccountService) { 
     
       accountService.currentUser$.pipe(take(1)).subscribe(
       r => {

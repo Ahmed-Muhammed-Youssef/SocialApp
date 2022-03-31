@@ -27,10 +27,6 @@ namespace API.Data
         {
             dataContext.Remove(user);
         }
-        public async Task<bool> SaveAllAsync()
-        {
-            return await dataContext.SaveChangesAsync() > 0; 
-        }
         public async Task<bool> UserExistsAsync(int id)
         {
             return await dataContext.Users.AnyAsync(e => e.Id == id);
