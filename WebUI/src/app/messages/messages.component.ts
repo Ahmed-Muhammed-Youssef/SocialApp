@@ -68,6 +68,7 @@ export class MessagesComponent implements OnInit,OnDestroy {
     }
   }
   loadChat(user: User){
+    this.messageService.stopHubConnection();
     if(this.currentAccount){
       this.messageService.createHubConnection(this.currentAccount, user.id);
       this.currentMatch = user;
