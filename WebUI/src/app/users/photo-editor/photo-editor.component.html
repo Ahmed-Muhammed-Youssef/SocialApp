@@ -46,7 +46,7 @@
         <tr mat-row *matRowDef="let row; columns: ['name', 'size'];"></tr>
       </table>
 
-    <div>
+    <div class="mt-4">
         <div>
             <mat-progress-bar *ngIf="uploader.isUploading" mode="determinate" [value]="uploader.progress"></mat-progress-bar>
         </div>

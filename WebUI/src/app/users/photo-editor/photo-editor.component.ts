@@ -6,6 +6,7 @@ import { Photo, User } from 'src/app/_models/User';
 import {moveItemInArray} from '@angular/cdk/drag-drop';
 import { AccountService } from 'src/app/_services/account.service';
 import { UserService } from 'src/app/_services/user.service';
+import { environment } from 'src/environments/environment';
 @Component({
   selector: 'app-photo-editor',
   templateUrl: './photo-editor.component.html',
@@ -13,6 +14,7 @@ import { UserService } from 'src/app/_services/user.service';
 })
 export class PhotoEditorComponent implements OnInit {
   @Input() user: User | undefined = undefined;  
+  baseUrl = environment.apiUrl;
   account: LoginResponse|null = null; 
   isOrderChanged = false;
   uploader: FileUploader = new FileUploader({});
@@ -35,7 +37,7 @@ export class PhotoEditorComponent implements OnInit {
   }
   initializeUploader() {
     this.uploader = new FileUploader({
-      url: '/api/users/photo/upload',
+      url: this.baseUrl + 'users/photo/upload',
       authToken: 'Bearer ' + this.account?.token,
       isHTML5: true,
       allowedFileType: ['image'],
