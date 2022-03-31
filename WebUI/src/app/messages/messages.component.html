@@ -47,14 +47,15 @@
                     </ul>
                 </div>
                 <form #sendForm="ngForm" (ngSubmit)="sendMessage()" class="chat-message clearfix">
-                    <div class="row">
-                        <mat-form-field appearance="fill">
-                            <input matInput maxlength="256" name="content" required [(ngModel)]="newMessage" autocomplete="off">                                    
+                   <div class="row" style="height: fit-content;">
+                       <mat-form-field class="col-11">
+                           <input matInput name="content" required [(ngModel)]="newMessage" autocomplete="off">                                    
                         </mat-form-field>
-                        <button mat-flat-button color="primary" type="submit" [disabled]="!sendForm.valid">
+                        <button style="height: min-content;" class="col-1" mat-raised-button color="primary" type="submit" [disabled]="!sendForm.valid">
                             <mat-icon>send</mat-icon>
                         </button>
-                    </div>
+                   </div>
+        
                 </form>
             </div>
         </div>
