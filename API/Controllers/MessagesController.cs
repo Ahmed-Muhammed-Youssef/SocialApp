@@ -25,35 +25,6 @@ namespace API.Controllers
             this.mapper = mapper;
 
         }
-        // GET: api/Messages/
-        public async Task<ActionResult<IEnumerable<MessageDTO>>> ReceiveMessages(string mode, [FromQuery]PaginationParams paginationParams)
-        {
-            var issuerId = User.GetId();
-            var user = await unitOfWork.UserRepository.GetUserByIdAsync(issuerId);
-            if(user == null)
-            {
-                return BadRequest("Invalid Token");
-            }
-
-            ReceiveMessagesOptions option = ReceiveMessagesOptions.AllMessages;
-
-            if(mode == "sent")
-            {
-                option = ReceiveMessagesOptions.SentMessages;
-            }
-            else if(mode == "received")
-            {
-                option = ReceiveMessagesOptions.ReceivedMessages;
-            }
-            else if(mode == "unread")
-            {
-                option = ReceiveMessagesOptions.UnreadMessages;
-            }
-            var result = await unitOfWork.MessageRepository.GetAllPagedMessagesDTOForUserAsync(issuerId, option, paginationParams);
-            var paginationHeader = new PaginationHeader(result.CurrentPage, result.ItemsPerPage, result.TotalCount, result.TotalPages);
-            Response.AddPaginationHeader(paginationHeader);
-            return Ok(result);
-        }
         // DELETE: api/Messages/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteMessage(int id)

@@ -9,6 +9,7 @@ namespace API.Interfaces
     public interface IUserRepository
     {
         public Task<Photo> AddPhotoAsync(Photo photo);
+        public Task<char> GetUserInterest(int userId);
         public void Update(AppUser appUser);
         public void UpdatePhoto(Photo photo);
         public Task<PagedList<UserDTO>> GetUsersDTOAsync(string username, UserParams userParams, List<int> ForbiddenIds);

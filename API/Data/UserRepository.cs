@@ -39,6 +39,10 @@ namespace API.Data
         {
             dataContext.Entry(photo).State = EntityState.Modified;
         }
+        public async Task<char> GetUserInterest(int userId)
+        {
+            return await dataContext.Users.Where(u => u.Id == userId).Select(u => u.Interest).FirstOrDefaultAsync();
+        }
         public async Task<PagedList<UserDTO>> GetUsersDTOAsync(string username, UserParams userParams, List<int> forbiddenIds)
         {
             var query = dataContext.Users.AsQueryable().Where(u => u.UserName != username);
@@ -48,12 +52,12 @@ namespace API.Data
             }
             if(userParams.MinAge != null)
             {
-                var maxDoB = DateTime.Now.AddYears(-(int)userParams.MinAge);
+                var maxDoB = DateTime.UtcNow.AddYears(-(int)userParams.MinAge);
                 query = query.Where(u => u.DateOfBirth <= maxDoB);
             }
             if(userParams.MaxAge != null)
             {
-                var minDoB = DateTime.Now.AddYears(-(int)userParams.MaxAge - 1);
+                var minDoB = DateTime.UtcNow.AddYears(-(int)userParams.MaxAge - 1);
                 query = query.Where(u => u.DateOfBirth >= minDoB);
             }
             // removes any liked users

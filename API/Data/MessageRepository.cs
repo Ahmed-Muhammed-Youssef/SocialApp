@@ -56,37 +56,14 @@ namespace API.Data
         {
             return await dataContext.Messages.FindAsync(messageId);
         }
-        public async Task<PagedList<MessageDTO>> GetAllPagedMessagesDTOForUserAsync(int issuerId, ReceiveMessagesOptions options, PaginationParams paginationParams)
-        {
-            var query = dataContext.Messages
-               .OrderByDescending(m => m.SentDate).AsQueryable();
-            switch (options)
-            {
-                case ReceiveMessagesOptions.AllMessages:
-                    query = query.Where(m => (m.SenderId == issuerId && !m.SenderDeleted) || (m.RecipientId == issuerId && !m.RecipientDeleted));
-                    break;
-                case ReceiveMessagesOptions.UnreadMessages:
-                    query = query.Where(m => m.RecipientId == issuerId && m.ReadDate == null);
-                    break;
-                case ReceiveMessagesOptions.SentMessages:
-                    query = query.Where(m => m.SenderId == issuerId && !m.SenderDeleted);
-                    break;
-                case ReceiveMessagesOptions.ReceivedMessages:
-                    query = query.Where(m => m.RecipientId == issuerId && !m.RecipientDeleted);
-                    break;
-            }
-            var pagedResult = await PagedList<MessageDTO>.CreatePageAsync(query.ProjectTo<MessageDTO>(mapper.ConfigurationProvider), paginationParams.PageNumber, paginationParams.ItemsPerPage);
-            return pagedResult;
-        }
-
-
         public async Task<IEnumerable<MessageDTO>> GetMessagesDTOThreadAsync(int issuerId, int theOtherUserId)
         {
             var query = dataContext.Messages
                 .Where(
                 m =>
                 (m.SenderId == issuerId && m.RecipientId == theOtherUserId && !m.SenderDeleted)
-                || (m.SenderId == theOtherUserId && m.RecipientId == issuerId && !m.RecipientDeleted));
+                || (m.SenderId == theOtherUserId && m.RecipientId == issuerId && !m.RecipientDeleted))
+                .ProjectTo<MessageDTO>(mapper.ConfigurationProvider).OrderBy(m => m.SentDate);
             var unreadMessages = query.Where(m => m.ReadDate == null && m.RecipientId == issuerId);
             if (unreadMessages.Any())
             {
@@ -95,9 +72,7 @@ namespace API.Data
                     message.ReadDate = DateTime.UtcNow;
                 }
             }
-            var messageDTOs = await query.ProjectTo<MessageDTO>(mapper.ConfigurationProvider)
-                .OrderBy(m => m.SentDate).ToListAsync();
-            return messageDTOs;
+            return await query.ToListAsync();;
         }
 
         public void AddGroup(Group group)
