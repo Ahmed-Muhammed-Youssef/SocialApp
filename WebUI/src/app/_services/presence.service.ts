@@ -25,7 +25,7 @@ export class PresenceService {
     .build();
     this.hubConnection
     .start()
-    .catch(e => {console.log(e)});
+    .catch(e => {});
     this.hubConnection.on("UserIsOnline", username => {
       this.onlineUsers$.pipe(take(1))
       .subscribe(usernames => 
@@ -47,7 +47,6 @@ export class PresenceService {
       });
       this.hubConnection.on("NewMessage", 
       (userMsg) => {
-        console.log(userMsg);
         this.toastr.info(userMsg.senderDTO.firstName + ": " + userMsg.msgDTO.content)
         .onTap
         .pipe(take(1))
@@ -57,6 +56,6 @@ export class PresenceService {
       });
   }
   stopHubConnection(){
-    this.hubConnection?.stop().catch(e => console.log(e));
+    this.hubConnection?.stop().catch(e => {});
   }
 }

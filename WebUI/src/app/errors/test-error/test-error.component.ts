@@ -14,59 +14,32 @@ export class TestErrorComponent implements OnInit {
   }
   get404Error(): void {
     this.http.get('/api/buggy/not-found').subscribe(
-      response => {
-        console.log(response);
-
-      },
-      error => {
-        console.log(error);
-
-      }
+      response => {},
+      error => {}
     );
   }
   get400Error(): void {
     this.http.get('/api/buggy/bad-request').subscribe(
-      response => {
-        console.log(response);
-      },
-      error => {
-        console.log(error);
-
-      }
+      response => {},
+      error => {}
     );
   }
   get401Error(): void {
     this.http.get('/api/buggy/auth').subscribe(
-      response => {
-        console.log(response);
-
-      },
-      error => {
-        console.log(error);
-
-      }
+      response => {},
+      error => {}
     );
   }
   get500Error(): void {
     this.http.get('/api/buggy/server-error').subscribe(
-      response => {
-        console.log(response);
-
-      },
-      error => {
-        console.log(error);
-
-      }
+      response => {},
+      error => {}
     );
   }
   get400ValidationError(): void {
     this.http.post('/api/account/register', {}).subscribe(
-      response => {
-        console.log(response);
-
-      },
+      response => {},
       error => {
-        console.log(error);
         this.validationErrors = error;
       }
     );

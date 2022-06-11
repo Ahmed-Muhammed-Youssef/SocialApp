@@ -18,7 +18,7 @@ export class MessageService {
   constructor(private http: HttpClient) { }
   async sendMessage(username: string, content: string){
     return this.hubConnection?.invoke("SendMessages", {"recipientUsername": username, "content": content})
-    .catch(e => console.log(e));
+    .catch(e => {});
   }
   createHubConnection(user: LoginResponse, otherUserId: number){
     this.hubConnection = new HubConnectionBuilder()
@@ -28,10 +28,9 @@ export class MessageService {
     })
     .withAutomaticReconnect()
     .build();
-    this.hubConnection.start().catch(e => console.log(e));
+    this.hubConnection.start().catch(e => {});
     this.hubConnection.on("ReceiveMessages", r => this.messageThreadSource.next(r));
     this.hubConnection.on("NewMessage", m => {
-      console.log(m);
       this.messageThread$.pipe(take(1)).subscribe(msgs => {
         this.messageThreadSource.next([...msgs, m]);
       });
