@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { take } from 'rxjs';
 import { LoginResponse } from '../_models/AccountModels';
@@ -6,9 +6,11 @@ import { Pagination } from '../_models/pagination';
 import { User } from '../_models/User';
 import { AccountService } from '../_services/account.service';
 import { MessageService } from '../_services/message.service';
+import { PresenceService } from '../_services/presence.service';
 import { UserService } from '../_services/user.service';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-messages',
   templateUrl: './messages.component.html',
   styleUrls: ['./messages.component.css']
@@ -24,7 +26,7 @@ export class MessagesComponent implements OnInit,OnDestroy {
   currentAccount: LoginResponse | null = null;
   newMessage: string = "";
   constructor(public messageService: MessageService, private userService: UserService,
-    accountService: AccountService) { 
+    accountService: AccountService, public presenceService: PresenceService) { 
     
       accountService.currentUser$.pipe(take(1)).subscribe(
       r => {
@@ -32,7 +34,10 @@ export class MessagesComponent implements OnInit,OnDestroy {
       }
     );
   }
- 
+  public getLoacaleDateTime(d: Date) : Date{
+    var localDate  = new Date(d.toString() + 'Z');
+    return localDate;
+  }
   ngOnInit(): void {
     this.loadMatches();
     if(history.state?.username){
@@ -41,7 +46,7 @@ export class MessagesComponent implements OnInit,OnDestroy {
     if(this.currentMatch){
       this.loadChat(this.currentMatch);
     }
-}
+  }
 
   matchPageChanged(e: any){
     if(e && (e.pageIndex + 1) != this.matchPageNumber){
@@ -64,7 +69,7 @@ export class MessagesComponent implements OnInit,OnDestroy {
       this.messageService.sendMessage(this.currentMatch?.username, this.newMessage).then(
         () => {}
       );
-      this.sendForm?.reset();      
+      this.newMessage = '';     
     }
   }
   loadChat(user: User){

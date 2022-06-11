@@ -7,7 +7,8 @@
                         <img [src]="match.photos[0]?.url || './assets/Pictures/profile-placeholder.png'" alt="avatar">
                         <div class="about">
                             <div class="name">{{match.firstName}} {{match.lastName}}</div>
-                            <div class="status"> {{match.lastActive | timeago}}</div>                                            
+                            <div class="status" *ngIf="(presenceService.onlineUsers$ | async)?.includes(match.username)"> <span class="online"></span> Active now</div>
+                            <div class="status" *ngIf="!(presenceService.onlineUsers$ | async)?.includes(match.username)">{{getLoacaleDateTime(match.lastActive) | timeago}}</div>
                         </div>
                     </li>
                 </ul>
@@ -22,12 +23,13 @@
             <div class="chat"  *ngIf="currentMatch">
                 <div class="chat-header clearfix">
                     <div class="row">
-                        <div class="col-lg-6">
+                        <div class="col-1">
                             <img [src]="currentMatch.photos[0]?.url || './assets/Pictures/profile-placeholder.png'" alt="avatar">
-                            <div class="chat-about">
-                                <h3 class="m-b-0">{{currentMatch.firstName}} {{currentMatch.lastName}}</h3>
-                                <small>{{currentMatch.lastActive | timeago}}</small>
-                            </div>
+                        </div>
+                        <div class="col-2">
+                            <h3 class="mb-0">{{currentMatch.firstName}} {{currentMatch.lastName}}</h3>
+                            <small *ngIf="(presenceService.onlineUsers$ | async)?.includes(currentMatch.username)"> <span class="online"></span> Active now</small>
+                            <small *ngIf="!(presenceService.onlineUsers$ | async)?.includes(currentMatch.username)">{{getLoacaleDateTime(currentMatch.lastActive) | timeago}}</small>
                         </div>
                     </div>
                 </div>
@@ -35,7 +37,9 @@
                     <div class="mt-4" *ngIf="messages.length === 0">
                         <h4 class="text-center">No messages yet, say hi in the message box below</h4>
                     </div>
-                    <ul *ngIf="messages.length > 0" class="m-b-0">
+                    <ul #scrollMe style="overflow-y: scroll; height: 500px;"
+                        [scrollTop]="scrollMe.scrollHeight"
+                    *ngIf="messages.length > 0" class="m-b-0">
                         <li class="clearfix" *ngFor="let message of messages">
                             <div *ngIf="message.senderId == currentMatch.id" class="message my-message">
                                 {{message.content}}
@@ -49,13 +53,12 @@
                 <form #sendForm="ngForm" (ngSubmit)="sendMessage()" class="chat-message clearfix">
                    <div class="row" style="height: fit-content;">
                        <mat-form-field class="col-11">
-                           <input matInput name="content" required [(ngModel)]="newMessage" autocomplete="off">                                    
+                           <input matInput name="content" [(ngModel)]="newMessage" autocomplete="off">                                    
                         </mat-form-field>
-                        <button style="height: min-content;" class="col-1" mat-raised-button color="primary" type="submit" [disabled]="!sendForm.valid">
+                        <button style="height: min-content;" class="col-1" mat-raised-button color="primary" type="submit" [disabled]="newMessage===''">
                             <mat-icon>send</mat-icon>
                         </button>
                    </div>
-        
                 </form>
             </div>
         </div>
