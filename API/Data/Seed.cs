@@ -26,7 +26,17 @@ namespace API.Data
             }
             var admin = new AppUser
             {
-                UserName = "admin"
+                UserName = "admin",
+                FirstName = "admin",
+                LastName = "admin",
+                Interest = 'f',
+                DateOfBirth = System.DateTime.UtcNow,
+                LastActive = System.DateTime.UtcNow,
+                Email = "admin",
+                City = "admin",
+                Country = "admin",
+                Created = System.DateTime.UtcNow,
+                Sex = 'm'
             };
             await userManager.CreateAsync(admin, "Pwd12345");
             await userManager.AddToRolesAsync(admin, new[] {"user", "admin", "moderator" });
