@@ -11,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
 using System;
 
 namespace API
@@ -40,14 +41,14 @@ namespace API
             {
                 var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
 
-                string connStr;
+                
 
                 // Depending on if in development or production, use either Heroku-provided
                 // connection string, or development connection string from env var.
                 if (env == "Development")
                 {
                     // Use connection string from file.
-                    connStr = _config.GetConnectionString("DefaultConnection");
+                    options.UseSqlite(_config.GetConnectionString("DefaultConnection"));
                 }
                 else
                 {
@@ -65,22 +66,24 @@ namespace API
                     var pgHost = pgHostPort.Split(":")[0];
                     var pgPort = pgHostPort.Split(":")[1];
 
-                    connStr = $"Server={pgHost};Port={pgPort};User Id={pgUser};Password={pgPass};Database={pgDb};SSL Mode=Require;TrustServerCertificate=True";
+                    string connStr = $"Server={pgHost};Port={pgPort};User Id={pgUser};Password={pgPass};Database={pgDb};SSL Mode=Require;TrustServerCertificate=True";
+                    options.UseNpgsql(connStr);
                 }
 
-                // Whether the connection string came from the local development configuration file
-                // or from the environment variable from Heroku, use it to set up your DbContext.
-                options.UseNpgsql(connStr);
 
             });
             services.AddControllers();
             services.AddSignalR();
-           /* services.AddCors( options =>
+            services.AddSwaggerGen(c =>
             {
-                options.AddPolicy("AllowSpecificOrigin", policy => policy.AllowAnyMethod()
-                .AllowAnyHeader().AllowAnyOrigin());
-            }
-                );*/
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "API", Version = "v1" });
+            });
+            /* services.AddCors( options =>
+             {
+                 options.AddPolicy("AllowSpecificOrigin", policy => policy.AllowAnyMethod()
+                 .AllowAnyHeader().AllowAnyOrigin());
+             }
+                 );*/
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -88,6 +91,8 @@ namespace API
         {
             if (env.IsDevelopment())
             {
+                app.UseSwagger();
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "API v1"));
                 /*app.UseDeveloperExceptionPage();*/
             }
 
