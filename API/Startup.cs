@@ -78,12 +78,11 @@ namespace API
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "API", Version = "v1" });
             });
-            /* services.AddCors( options =>
-             {
-                 options.AddPolicy("AllowSpecificOrigin", policy => policy.AllowAnyMethod()
-                 .AllowAnyHeader().AllowAnyOrigin());
-             }
-                 );*/
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowSpecificOrigin", policy => policy.AllowAnyMethod()
+                .AllowAnyHeader().WithOrigins("https://localhost:4200").AllowCredentials());
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -93,6 +92,7 @@ namespace API
             {
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "API v1"));
+                app.UseCors("AllowSpecificOrigin");
                 /*app.UseDeveloperExceptionPage();*/
             }
 
@@ -102,18 +102,12 @@ namespace API
 
             app.UseRouting();
 
-            //app.UseCors("AllowSpecificOrigin");
-
-           /* app.UseCors(x => x.AllowAnyHeader()
-                .AllowAnyMethod()
-                .AllowCredentials()
-                .WithOrigins("https://localhost:4200"));*/
-
             app.UseAuthentication();
 
             app.UseAuthorization();
 
             app.UseDefaultFiles();
+
             app.UseStaticFiles();
 
             app.UseEndpoints(endpoints =>
