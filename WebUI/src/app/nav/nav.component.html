@@ -11,7 +11,7 @@
     <!-- <button mat-button routerLink="/errors" routerActiveLink="active">errors</button> -->
   </div>
   <div [matMenuTriggerFor]="menu" class="nav-user pointer" *ngIf="(accountService.currentUser$ | async) as user"> 
-      <img class="nav-img-circle me-2" src="{{user.userData.photos[0]?.url || './assets/Pictures/profile-placeholder.png'}}" alt="{{user.userData.firstName}}" >
+      <img class="nav-img-circle me-2" src="{{user.userData.photos[0].url || './assets/Pictures/profile-placeholder.png'}}" alt="{{user.userData.firstName}}" >
   </div>
   <mat-menu #menu="matMenu">
     <button mat-menu-item routerLink="users/edit">
