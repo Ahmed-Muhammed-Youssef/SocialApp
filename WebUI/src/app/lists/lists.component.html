@@ -1,8 +1,7 @@
-<div class="container mt-4" *ngIf="matches.length > 0">
-    <div class="row mt-4">
-        <div class="col-3" *ngFor="let user of matches">
+<div class="users-grid" *ngIf="matches.length > 0">
+    
+        <div class="user-card-res" *ngFor="let user of matches">
             <app-user-card [isLiked]="true" [user]="user"></app-user-card>
-        </div>
     </div>
 </div>
 <div class="d-flex justify-content-center" *ngIf="pagination && pagination.totalPages > 1">

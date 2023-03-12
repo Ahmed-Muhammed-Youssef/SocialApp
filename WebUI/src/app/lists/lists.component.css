@@ -1,0 +1,12 @@
+.user-card-res {
+    display: block;
+    width: 250px;
+    height: fit-content;
+    margin: 8px;
+}
+.users-grid{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+}

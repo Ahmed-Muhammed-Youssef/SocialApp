@@ -1,27 +1,27 @@
 <div class="container mt-3">
   <form *ngIf="userParams" #form="ngForm" class="" (ngSubmit)="loadUsers()">
     <div class="row justify-content-center">
-      <mat-form-field class="col-1">
+      <mat-form-field class="col-5">
         <mat-label>Age from</mat-label>
         <input matInput type="number" name="minAge" [(ngModel)]="userParams.minAge" min="18">
         <mat-error *ngIf="userParams.minAge < 18">18 is the minimum</mat-error>
       </mat-form-field>
 
-      <mat-form-field class="col-1">
+      <mat-form-field class="col-5">
         <mat-label>Age to</mat-label>
         <input matInput type="number" name="maxAge" [(ngModel)]="userParams.maxAge" min="18">
         <mat-error *ngIf="userParams.maxAge && userParams.maxAge < 18">18 is the minimum</mat-error>
       </mat-form-field>
 
 
-      <mat-form-field class="col-2">
+      <mat-form-field class="col-5">
         <mat-label>Show</mat-label>
         <mat-select name="sex" [(ngModel)]="userParams.sex">
           <mat-option *ngFor="let gender of genderList" [value]="gender.value">{{gender.display}}</mat-option>
         </mat-select>
       </mat-form-field>
 
-      <mat-form-field class="col-2">
+      <mat-form-field class="col-5">
         <mat-label>Order By</mat-label>
         <mat-select name="orderBy" [(ngModel)]="userParams.orderBy">
           <mat-option *ngFor="let oreder of orderByOptions" [value]="oreder.value">{{oreder.display}}</mat-option>
