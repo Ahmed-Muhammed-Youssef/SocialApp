@@ -1,3 +1,4 @@
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -11,8 +12,21 @@ import { UserService } from '../_services/user.service';
   styleUrls: ['./nav.component.css']
 })
 export class NavComponent implements OnInit {
-
-  constructor(private userService: UserService, public accountService: AccountService, private router: Router, private toastr: ToastrService) {
+  isMobilePhone : boolean = false;
+  constructor(private userService: UserService, public accountService: AccountService,
+     private router: Router, private toastr: ToastrService,
+     private breakpointObserver: BreakpointObserver) {
+      breakpointObserver.observe(["(max-width: 700px)"])
+      .subscribe(
+        result => 
+        {
+          this.isMobilePhone = false;
+          if(result.matches)
+          {
+            this.isMobilePhone = true;
+          }
+        }
+      );
   }
   ngOnInit(): void {  }
   logout(): void {

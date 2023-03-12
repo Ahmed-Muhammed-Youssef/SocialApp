@@ -2,11 +2,14 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import {DragDropModule} from '@angular/cdk/drag-drop';
+import {LayoutModule} from '@angular/cdk/layout';
 
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {MatSidenavModule} from '@angular/material/sidenav';
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
 
 import { NavComponent } from './nav/nav.component';
 import { FooterComponent } from './footer/footer.component';
@@ -39,6 +42,7 @@ import { HasRoleDirective } from './_directives/has-role.directive';
 import { UserManagementComponent } from './admin/user-management/user-management.component';
 import { PhotoManagementComponent } from './admin/photo-management/photo-management.component';
 import { RoleEditDialogComponent } from './admin/role-edit-dialog/role-edit-dialog.component';
+import { MobileNavComponent } from './mobile-nav/mobile-nav.component';
 
 
 const routes: Routes = [
@@ -92,11 +96,16 @@ const routes: Routes = [
     UserManagementComponent,
     PhotoManagementComponent,
     RoleEditDialogComponent,
+    MobileNavComponent
   ],
   imports: [
-    BrowserModule, HttpClientModule, BrowserAnimationsModule, FormsModule, ReactiveFormsModule,
-    RouterModule.forRoot(routes),
-    SharedModule, HttpClientModule, NgxGalleryModule, NgxSpinnerModule, DragDropModule, FontAwesomeModule
+    BrowserModule, HttpClientModule,
+    BrowserAnimationsModule, FormsModule,
+    ReactiveFormsModule, RouterModule.forRoot(routes),
+    SharedModule, HttpClientModule,
+    NgxGalleryModule, NgxSpinnerModule,
+    DragDropModule, FontAwesomeModule, LayoutModule,
+    MatSidenavModule, MatButtonToggleModule
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},

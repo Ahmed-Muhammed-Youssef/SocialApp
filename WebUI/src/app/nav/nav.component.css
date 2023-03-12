@@ -1,15 +1,23 @@
 .pointer{
-    cursor:pointer;
-    text-decoration: none;
-    text-size-adjust: 10pt;
+  cursor:pointer;
+  text-decoration: none;
+  text-size-adjust: 10pt;
+}
+.nav-user {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  position: fixed;
+  right: 32px;
 }
 .nav-img-circle {
-    max-height: 40px;
-    max-width: 40px;
+  max-height: 40px;
+  max-width: 40px;
 
-    border-radius: 50%;
-    display: inline;
+  border-radius: 50%;
+  display: inline;
 }
-.example-spacer {
-    flex: 1 1 auto;
-  }
+.main-nav-bar{
+  width: inherit;
+  height: inherit;
+}

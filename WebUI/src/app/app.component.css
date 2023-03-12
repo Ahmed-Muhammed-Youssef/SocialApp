@@ -1,0 +1,24 @@
+.container{
+    margin-top: 100px;
+    margin-bottom: 75px;
+    overflow-x: hidden;
+}
+.tool-bar{
+    position: fixed;
+    top: 0;
+    width: 100%;
+    overflow: hidden;
+    z-index: 10;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    height: 60px;
+}
+.mobile-nav{
+    height: 72px;
+    width: 100%;
+    overflow: hidden;
+    position: fixed;
+    bottom: 0;
+    z-index: 10;
+    background-color: #DFDFDE;
+    font-size: medium;
+}

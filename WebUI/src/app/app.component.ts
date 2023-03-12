@@ -1,3 +1,4 @@
+import { BreakpointObserver } from '@angular/cdk/layout';
 import { OnInit } from '@angular/core';
 import { Component } from '@angular/core';
 import { LoginResponse } from './_models/AccountModels';
@@ -12,9 +13,19 @@ import { PresenceService } from './_services/presence.service';
 export class AppComponent implements OnInit {
   public title = 'Dating App';
 
-  //public users?: User[];
+  isMobilePhone: boolean = false;
 
-  constructor(private accountService: AccountService, private presenceService: PresenceService) {
+  constructor(public accountService: AccountService, private presenceService: PresenceService,
+    private breakpointObserver: BreakpointObserver) {
+    breakpointObserver.observe(["(max-width: 700px)"])
+      .subscribe(
+        result => {
+          this.isMobilePhone = false;
+          if (result.matches) {
+            this.isMobilePhone = true;
+          }
+        }
+      );
   }
 
   ngOnInit(): void {
