@@ -26,7 +26,7 @@
       <button mat-button color="accent" *ngIf="!isLiked" (click)="addLike()">
         <mat-icon>favorite</mat-icon>  LIKE
       </button>
-      <button mat-button color="primary" *ngIf="isMatch" routerLink="/messages" [state]="user">
+      <button mat-button color="primary" *ngIf="isMatch" routerLink="/chat" [state]="user">
         <mat-icon>chat</mat-icon>
         Chat
       </button>

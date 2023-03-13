@@ -18,7 +18,7 @@ import { RegisterComponent } from './register/register.component';
 import { UserListComponent } from './users/user-list/user-list.component';
 import { UserDetailComponent } from './users/user-detail/user-detail.component';
 import { ListsComponent } from './lists/lists.component';
-import { MessagesComponent } from './messages/messages.component';
+import { ChatComponent } from './chat/chat.component';
 import { AuthGuard } from './_guards/auth.guard';
 import { SharedModule } from './_modules/shared.module';
 import { LoginComponent } from './login/login.component';
@@ -43,6 +43,7 @@ import { UserManagementComponent } from './admin/user-management/user-management
 import { PhotoManagementComponent } from './admin/photo-management/photo-management.component';
 import { RoleEditDialogComponent } from './admin/role-edit-dialog/role-edit-dialog.component';
 import { MobileNavComponent } from './mobile-nav/mobile-nav.component';
+import { ContactComponent } from './contact/contact.component';
 
 
 const routes: Routes = [
@@ -52,7 +53,8 @@ const routes: Routes = [
   { path: 'users', component: UserListComponent, canActivate:[AuthGuard] },
   { path: 'users/username/:username', component: UserDetailComponent, canActivate:[AuthGuard], resolve: {user: UserDetailedResolver} },
   { path: 'lists', component: ListsComponent, canActivate:[AuthGuard] },
-  { path: 'messages', component: MessagesComponent, canActivate: [AuthGuard] },
+  { path: 'messages', component: ContactComponent, canActivate: [AuthGuard] },
+  { path: 'chat', component: ChatComponent, canActivate: [AuthGuard] },
   { path: 'admin', component: AdminPanelComponent, canActivate: [AuthGuard, AdminGuard]},
   { path: 'users/edit', component: UserEditComponent, canActivate: [AuthGuard], canDeactivate: [PreventUnsavedChangesGuard] },
   /*{
@@ -83,7 +85,7 @@ const routes: Routes = [
     UserListComponent,
     UserDetailComponent,
     ListsComponent,
-    MessagesComponent,
+    ChatComponent,
     LoginComponent,
     TestErrorComponent,
     NotFoundComponent,
@@ -96,7 +98,8 @@ const routes: Routes = [
     UserManagementComponent,
     PhotoManagementComponent,
     RoleEditDialogComponent,
-    MobileNavComponent
+    MobileNavComponent,
+    ContactComponent
   ],
   imports: [
     BrowserModule, HttpClientModule,

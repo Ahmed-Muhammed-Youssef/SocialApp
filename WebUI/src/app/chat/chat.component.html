@@ -1,0 +1,37 @@
+<div class="row">
+    <div class="card" *ngIf="currentMatch">
+        <div class="chat-header">
+            <img [src]="currentMatch.photos[0]?.url || './assets/Pictures/profile-placeholder.png'" alt="avatar">
+            <div class="user-info">
+                <h3 class="mb-0">{{currentMatch.firstName}} {{currentMatch.lastName}}</h3>
+                <small *ngIf="(presenceService.onlineUsers$ | async)?.includes(currentMatch.username)"> <span class="online"></span> Active now</small>
+                <small *ngIf="!(presenceService.onlineUsers$ | async)?.includes(currentMatch.username)">{{getLoacaleDateTime(currentMatch.lastActive) | timeago}}</small>
+            </div>
+        </div>
+        <div class="chat-history" *ngIf="(messageService.messageThread$ | async); let messages">
+            <div class="mt-4" *ngIf="messages.length === 0">
+                <h4 class="text-center">No messages yet, say hi in the message box below</h4>
+            </div>
+            <ul #scrollMe
+                [scrollTop]="scrollMe.scrollHeight"
+            *ngIf="messages.length > 0" class="m-b-0">
+                <li class="clearfix" *ngFor="let message of messages">
+                    <div *ngIf="message.senderId == currentMatch.id" class="message my-message">
+                        {{message.content}}
+                    </div>
+                    <div *ngIf="message.senderId != currentMatch.id" class="message other-message float-right">
+                        {{message.content}}
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <form #sendForm="ngForm" (ngSubmit)="sendMessage()" class="send-form">
+            <mat-form-field class="message-box">
+                <input matInput name="content" [(ngModel)]="newMessage" autocomplete="off">                                    
+            </mat-form-field>
+            <button mat-raised-button color="primary" type="submit" [disabled]="newMessage===''">
+                <mat-icon>send</mat-icon>
+            </button>
+        </form>
+    </div>
+</div>

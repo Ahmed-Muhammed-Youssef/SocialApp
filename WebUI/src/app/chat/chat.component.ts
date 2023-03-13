@@ -11,16 +11,16 @@ import { UserService } from '../_services/user.service';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
-  selector: 'app-messages',
-  templateUrl: './messages.component.html',
-  styleUrls: ['./messages.component.css']
+  selector: 'app-chat',
+  templateUrl: './chat.component.html',
+  styleUrls: ['./chat.component.css']
 })
-export class MessagesComponent implements OnInit,OnDestroy {
+export class ChatComponent implements OnInit,OnDestroy {
   mode = 'unread';
   @Input () currentMatch?: User;
   @ViewChild('sendForm') sendForm?: NgForm; 
   matchesPagination?: Pagination;
-  matches: User[] = [];
+  matches: User[] | null = null;
   matchPageNumber = 1;
   matchesPerPage = 10;
   currentAccount: LoginResponse | null = null;
