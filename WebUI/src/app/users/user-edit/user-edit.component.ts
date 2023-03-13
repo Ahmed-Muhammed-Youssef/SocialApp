@@ -1,3 +1,4 @@
+import { BreakpointObserver } from '@angular/cdk/layout';
 import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
@@ -14,6 +15,7 @@ import { UserService } from '../../_services/user.service';
 })
 export class UserEditComponent implements OnInit {
   public user: User | undefined;
+  public isMobilePhone : boolean = false;
   public oldUser: User | undefined;
   public account: LoginResponse | undefined;
   @ViewChild('editForm') editForm?: NgForm;
@@ -22,7 +24,17 @@ export class UserEditComponent implements OnInit {
       $event.returnValue = true;
     }
   }
-  constructor(private toastr: ToastrService, private userService: UserService, private accountService: AccountService) {
+  constructor(private toastr: ToastrService, private userService: UserService, 
+    private accountService: AccountService, private breakpointObserver: BreakpointObserver) {
+    breakpointObserver.observe(["(max-width: 500px)"])
+      .subscribe(
+        result => {
+          this.isMobilePhone = false;
+          if (result.matches) {
+            this.isMobilePhone = true;
+          }
+        }
+      );
     this.accountService.currentUser$.pipe(take(1)).subscribe(account => {
       if (account) {
         this.account = account;

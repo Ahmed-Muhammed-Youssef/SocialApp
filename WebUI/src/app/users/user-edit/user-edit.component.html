@@ -1,5 +1,5 @@
 <div class="row" *ngIf="user">
-  <mat-card class="col-4">
+  <mat-card *ngIf="!isMobilePhone" class="col-4">
     <mat-card-header>
       <mat-card-title>{{user.firstName}} {{user.lastName}}</mat-card-title>
     </mat-card-header>
