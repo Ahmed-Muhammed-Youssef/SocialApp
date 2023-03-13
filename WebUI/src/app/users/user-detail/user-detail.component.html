@@ -1,5 +1,5 @@
-<div class="row" *ngIf="user.username">
-  <mat-card class="col-4">
+<div class="profile" *ngIf="user.username">
+  <mat-card class="info-card" *ngIf="!isMobilePhone">
     <mat-card-header>
       <mat-card-title>{{user.firstName}} {{user.lastName}}</mat-card-title>
       <mat-card-subtitle *ngIf="(presenceService.onlineUsers$ | async)?.includes(user.username)"> <span class="online"></span> Active now</mat-card-subtitle>
@@ -32,7 +32,7 @@
       </button>
     </mat-card-actions>
   </mat-card>
-  <mat-tab-group mat-align-tabs="center" class="ps-4 col-8">
+  <mat-tab-group mat-align-tabs="center" class="tabs">
     <mat-tab label="About"> 
       <div class="mt-4" *ngIf="user.bio">
       <h2>Bio</h2>
@@ -42,8 +42,10 @@
       <h2>Interested in</h2>
       <p>{{formatInterest(user.interest)}}</p>
     </div></mat-tab>
-    <mat-tab label="Gallery">
-      <ngx-gallery [options]="galleryOptions" [images]="galleryImages" class="ngx-gallery"></ngx-gallery>
+    <mat-tab class="gallery" label="Gallery">
+      <div class="galler">
+        <ngx-gallery [options]="galleryOptions" [images]="galleryImages" class="ngx-gallery"></ngx-gallery>
+      </div>
     </mat-tab>
   </mat-tab-group>
 </div>

@@ -1,3 +1,15 @@
+.profile{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+.tabs{
+    width: 100%;
+}
+.info-card{
+    width: 300px;
+    margin-right: 16px;
+}
 .img-thumbnail{
     margin: 25px;
     width: 85%;
@@ -12,9 +24,15 @@
     background-color: #fff;
     border-top: none;
 }
+.gallery{
+    display: flex;
+    align-content: center;
+}
 .ngx-gallery {
-  display: inline-block;
-  margin-bottom: 20px;
+    display: flex;
+    margin-bottom: 20px;
+    width: 100%;
+    align-items: center;
 }
 .online{
     height: 10px;

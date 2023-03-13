@@ -7,6 +7,7 @@ import { NgxGalleryImage } from '@kolkov/ngx-gallery';
 import { NgxGalleryAnimation } from '@kolkov/ngx-gallery';
 import { ToastrService } from 'ngx-toastr';
 import { PresenceService } from 'src/app/_services/presence.service';
+import { BreakpointObserver } from '@angular/cdk/layout';
 
 @Component({
   selector: 'app-user-detail',
@@ -14,6 +15,7 @@ import { PresenceService } from 'src/app/_services/presence.service';
   styleUrls: ['./user-detail.component.css']
 })
 export class UserDetailComponent implements OnInit {
+  isMobilePhone : boolean = false;
   user: User = {
     id: 0,
     username: '',
@@ -35,7 +37,16 @@ export class UserDetailComponent implements OnInit {
   galleryOptions: NgxGalleryOptions[] = [];
   galleryImages: NgxGalleryImage[] = [];
   constructor(private userService: UserService, private route: ActivatedRoute,
-     private toastr: ToastrService, public presenceService: PresenceService) {
+     private toastr: ToastrService, public presenceService: PresenceService, private breakpointObserver: BreakpointObserver) {
+      breakpointObserver.observe(["(max-width: 770px)"])
+        .subscribe(
+          result => {
+            this.isMobilePhone = false;
+            if (result.matches) {
+              this.isMobilePhone = true;
+            }
+          }
+        );
     this.galleryOptions = [
       {
         width: '500px',
