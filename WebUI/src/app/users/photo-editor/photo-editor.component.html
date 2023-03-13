@@ -19,7 +19,7 @@
             <mat-icon>save</mat-icon>
             Save
         </button>
-        <button mat-raised-button color="accent" (click)="fileUpload.click()"><mat-icon>add_photo_alternate</mat-icon>
+        <button mat-raised-button color="accent" (click)="fileUpload.click()" [disabled]="uploader.queue.length > 0"><mat-icon>add_photo_alternate</mat-icon>
             Add Picture
         </button>
     </div>
@@ -56,11 +56,10 @@
                         (click)="uploader.uploadAll()" [disabled]="!uploader.getNotUploadedItems().length">
                     <mat-icon>upload</mat-icon> Upload all
                 </button>
-            
-                <button type="button" mat-raised-button color="accent" class="me-2"
+                <!-- <button type="button" mat-raised-button color="accent" class="me-2"
                         (click)="uploader.cancelAll()" [disabled]="!uploader.isUploading">
                     <mat-icon>block</mat-icon> Cancel all
-                </button>
+                </button> -->
                 <button type="button" mat-raised-button color="warn"
                         (click)="uploader.clearQueue()" [disabled]="!uploader.queue.length">
                     <mat-icon>delete</mat-icon> Remove all
