@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { AccountService } from '../_services/account.service';
@@ -12,7 +12,7 @@ import { UserService } from '../_services/user.service';
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit {
-  public registerForm: FormGroup = this.formBuilder.group({
+  public registerForm: UntypedFormGroup = this.formBuilder.group({
     username: ['', Validators.required],
     firstName: ['', Validators.required],
     lastName: ['', Validators.required],
@@ -27,7 +27,7 @@ export class RegisterComponent implements OnInit {
   });
   public maxDate:Date = new Date();
   constructor(private accountService: AccountService, private toastr: ToastrService,
-     private formBuilder: FormBuilder, private router: Router, private userService: UserService) {
+     private formBuilder: UntypedFormBuilder, private router: Router, private userService: UserService) {
     this.initializeForm();
     this.maxDate.setFullYear(this.maxDate.getFullYear() - 18);
   }
