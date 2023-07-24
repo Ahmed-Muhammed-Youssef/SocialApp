@@ -4,7 +4,7 @@
     <mat-card-subtitle *ngIf="(presenceService.onlineUsers$ | async)?.includes(user.username)"> <span class="online"></span> Active now</mat-card-subtitle>
     <mat-card-subtitle *ngIf="!(presenceService.onlineUsers$ | async)?.includes(user.username)">{{getLoacaleDateTime(user.lastActive) | timeago}}</mat-card-subtitle>
   </mat-card-header>
-  <img mat-card-image src="{{user.photos[0]?.url || './assets/Pictures/profile-placeholder.png'}}" alt="Profile picture">
+  <img mat-card-image src="{{user.photos[0].url || './assets/Pictures/profile-placeholder.png'}}" alt="Profile picture">
   <mat-card-content>
   </mat-card-content>
   <mat-card-actions class="text-center">
