@@ -32,7 +32,7 @@ namespace API.Data
                 Interest = 'f',
                 DateOfBirth = System.DateTime.UtcNow,
                 LastActive = System.DateTime.UtcNow,
-                Email = "admin",
+                Email = "admin@test",
                 City = "admin",
                 Country = "admin",
                 Created = System.DateTime.UtcNow,
