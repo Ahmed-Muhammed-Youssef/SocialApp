@@ -4,7 +4,8 @@
         <div class="about">
             <div class="name">{{match.firstName}} {{match.lastName}}</div>
             <div class="status" *ngIf="(presenceService.onlineUsers$ | async)?.includes(match.username)"> <span class="online"></span> Active now</div>
-            <div class="status" *ngIf="!(presenceService.onlineUsers$ | async)?.includes(match.username)">{{getLoacaleDateTime(match.lastActive) | timeago}}</div>
+            <!-- Foramt last time active time -->
+            <div class="status" *ngIf="!(presenceService.onlineUsers$ | async)?.includes(match.username)">{{getLoacaleDateTime(match.lastActive)}}</div>
         </div>
     </div>
     <div class="d-flex justify-content-center" *ngIf="matchesPagination && matchesPagination.totalPages > 1">
