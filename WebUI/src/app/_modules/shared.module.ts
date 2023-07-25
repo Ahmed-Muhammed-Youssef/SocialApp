@@ -1,31 +1,31 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {MatLegacyTabsModule as MatTabsModule} from '@angular/material/legacy-tabs';
+import { MatTabsModule } from '@angular/material/tabs';
 import { ToastrModule } from 'ngx-toastr';
-import {MatButtonModule} from '@angular/material/button';
-import {MatLegacyFormFieldModule as MatFormFieldModule} from '@angular/material/legacy-form-field';
-import {MatIconModule} from '@angular/material/icon';
-import {MatGridListModule} from '@angular/material/grid-list';
-import {MatLegacyInputModule as MatInputModule} from '@angular/material/legacy-input';
-import { MatLegacyCardModule as MatCardModule } from '@angular/material/legacy-card';
-import {MatLegacySelectModule as MatSelectModule} from '@angular/material/legacy-select';
-import {MatDatepickerModule} from '@angular/material/datepicker';
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field'
+import { MatIconModule } from '@angular/material/icon';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatInputModule } from '@angular/material/input';
+import { MatCardModule } from '@angular/material/card';
+import { MatSelectModule } from '@angular/material/select';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
-import {MatLegacyProgressBarModule as MatProgressBarModule} from '@angular/material/legacy-progress-bar';
-import {MatLegacyTableModule as MatTableModule} from '@angular/material/legacy-table';
-import {MatLegacyMenuModule as MatMenuModule} from '@angular/material/legacy-menu';
-import {MatLegacyDialogModule as MatDialogModule} from '@angular/material/legacy-dialog';
-import {MatLegacyCheckboxModule as MatCheckboxModule} from '@angular/material/legacy-checkbox';
-import {MatLegacyPaginatorModule as MatPaginatorModule} from '@angular/material/legacy-paginator';
-import {MatToolbarModule} from '@angular/material/toolbar';
-import {MatSidenavModule} from '@angular/material/sidenav';
-import {MatLegacyProgressSpinnerModule as MatProgressSpinnerModule} from '@angular/material/legacy-progress-spinner';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatTableModule } from '@angular/material/table';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [],
   imports: [
     CommonModule, ToastrModule.forRoot({ positionClass: 'toast-bottom-right' }),
-    MatTabsModule, MatButtonModule, 
+    MatTabsModule, MatButtonModule,
     MatFormFieldModule, MatIconModule, MatGridListModule, MatInputModule,
     MatCardModule, MatSelectModule, MatDatepickerModule, MatNativeDateModule,
     MatProgressBarModule, MatTableModule, MatMenuModule, MatDialogModule,
@@ -33,9 +33,9 @@ import {MatLegacyProgressSpinnerModule as MatProgressSpinnerModule} from '@angul
     MatProgressSpinnerModule
   ],
   exports: [
-    
-    ToastrModule,   
-    MatTabsModule, 
+
+    ToastrModule,
+    MatTabsModule,
     MatButtonModule,
     MatFormFieldModule,
     MatIconModule,
@@ -54,6 +54,6 @@ import {MatLegacyProgressSpinnerModule as MatProgressSpinnerModule} from '@angul
     MatToolbarModule,
     MatSidenavModule,
     MatProgressSpinnerModule
-    ]
+  ]
 })
 export class SharedModule { }
