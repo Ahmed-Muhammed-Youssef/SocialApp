@@ -1,14 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {MatLegacyTabsModule as MatTabsModule} from '@angular/material/legacy-tabs';
-import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { ToastrModule } from 'ngx-toastr';
-import { TabsModule } from 'ngx-bootstrap/tabs'
-import { FileUploadModule } from 'ng2-file-upload';
-import {BsDatepickerModule} from 'ngx-bootstrap/datepicker';
-import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { TimeagoModule } from 'ngx-timeago';
-import { ButtonsModule } from 'ngx-bootstrap/buttons';
+
 import {MatLegacyButtonModule as MatButtonModule} from '@angular/material/legacy-button';
 import {MatLegacyFormFieldModule as MatFormFieldModule} from '@angular/material/legacy-form-field';
 import {MatIconModule} from '@angular/material/icon';
@@ -31,10 +26,8 @@ import {MatLegacyProgressSpinnerModule as MatProgressSpinnerModule} from '@angul
 @NgModule({
   declarations: [],
   imports: [
-    CommonModule, BsDropdownModule.forRoot(),
-    ToastrModule.forRoot({ positionClass: 'toast-bottom-right' }),
-    TabsModule.forRoot(), FileUploadModule, BsDatepickerModule.forRoot(),
-    PaginationModule.forRoot(), TimeagoModule.forRoot(), ButtonsModule.forRoot(),
+    CommonModule, ToastrModule.forRoot({ positionClass: 'toast-bottom-right' }),
+     TimeagoModule.forRoot(),
     MatTabsModule, MatButtonModule, 
     MatFormFieldModule, MatIconModule, MatGridListModule, MatInputModule,
     MatCardModule, MatSelectModule, MatDatepickerModule, MatNativeDateModule,
@@ -43,14 +36,9 @@ import {MatLegacyProgressSpinnerModule as MatProgressSpinnerModule} from '@angul
     MatProgressSpinnerModule
   ],
   exports: [
-    BsDropdownModule,
-    ToastrModule,
-    TabsModule,
-    FileUploadModule,
-    BsDatepickerModule,
-    PaginationModule,
-    TimeagoModule,
-    ButtonsModule,
+    
+    ToastrModule,   
+    TimeagoModule,  
     MatTabsModule, 
     MatButtonModule,
     MatFormFieldModule,
