@@ -1,6 +1,6 @@
 <!--<app-footer></app-footer>-->
 <app-nav class="tool-bar"></app-nav>
-<div class="container">
+<div style="margin-top: 60px;">
   <router-outlet></router-outlet>
 </div>
 <app-mobile-nav class="mobile-nav" *ngIf="isMobilePhone && (accountService.currentUser$ | async)"></app-mobile-nav>
