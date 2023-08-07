@@ -24,12 +24,15 @@ export class ListsComponent implements OnInit {
     this.loadMatches();
   }
   loadMatches(){
-    this.userService.getMatches(this.pagination.currentPage, this.pagination.itemsPerPage).subscribe(
-      r => {
-        this.matches = r.result;
-        this.pagination = r.pagination;
-      }
-    );
+    this.userService.getMatches(this.pagination.currentPage, this.pagination.itemsPerPage).subscribe({
+      next: response => {
+        if (response) {
+          if(response){
+            this.matches = response.result;
+            this.pagination = response.pagination;
+          }
+        }
+      }});
   }
   pageChanged($event: any){
     if($event){
