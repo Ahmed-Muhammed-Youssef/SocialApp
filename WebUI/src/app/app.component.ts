@@ -1,4 +1,3 @@
-import { BreakpointObserver } from '@angular/cdk/layout';
 import { OnInit } from '@angular/core';
 import { Component } from '@angular/core';
 import { LoginResponse } from './_models/AccountModels';
@@ -15,18 +14,7 @@ export class AppComponent implements OnInit {
 
   isMobilePhone: boolean = false;
 
-  constructor(public accountService: AccountService, private presenceService: PresenceService,
-    private breakpointObserver: BreakpointObserver) {
-    breakpointObserver.observe(["(max-width: 700px)"])
-      .subscribe(
-        result => {
-          this.isMobilePhone = false;
-          if (result.matches) {
-            this.isMobilePhone = true;
-          }
-        }
-      );
-  }
+  constructor(public accountService: AccountService, private presenceService: PresenceService) {  }
 
   ngOnInit(): void {
     this.setCurrentUser();

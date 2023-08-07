@@ -41,7 +41,6 @@ import { HasRoleDirective } from './_directives/has-role.directive';
 import { UserManagementComponent } from './admin/user-management/user-management.component';
 import { PhotoManagementComponent } from './admin/photo-management/photo-management.component';
 import { RoleEditDialogComponent } from './admin/role-edit-dialog/role-edit-dialog.component';
-import { MobileNavComponent } from './mobile-nav/mobile-nav.component';
 import { ContactComponent } from './contact/contact.component';
 
 
@@ -97,7 +96,6 @@ const routes: Routes = [
     UserManagementComponent,
     PhotoManagementComponent,
     RoleEditDialogComponent,
-    MobileNavComponent,
     ContactComponent
   ],
   imports: [
