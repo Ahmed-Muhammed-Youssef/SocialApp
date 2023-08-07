@@ -10,7 +10,7 @@ import { PresenceService } from './_services/presence.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  public title = 'Dating App';
+  public title = 'Social App';
 
   isMobilePhone: boolean = false;
 
