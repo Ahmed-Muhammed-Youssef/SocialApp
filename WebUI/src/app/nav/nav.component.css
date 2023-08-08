@@ -1,23 +1,33 @@
-.nav-img-circle {
-  height: 40px;
-  width: 40px;
-  border-radius: 50%;
-  align-self: flex-end;
-  margin-right: 32px;
-}
- .nav-img-circle:hover{
-  cursor: pointer;
- }
-.main-nav-bar{
-  width: inherit;
-  height: inherit;
+nav{
+  background-color: #3f51b5;
 }
 .nav-bar {
-  background-color: #3f51b5;
+  
   display: flex;
   flex-direction: row;
-  padding: 10px;
+  flex-wrap: nowrap;
 }
 .nav-bar-title{
   font-size: large;
+}
+.nav-img-circle {
+  height: 40px;
+  width: 40px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-right: 32px;
+}
+.nav-img-circle:hover{
+  cursor: pointer;
+}
+button:hover{
+  background-color: rgb(32, 0, 119);
+}
+.active-button{
+  background-color: rgb(49, 1, 184);
+}
+
+/* mobile */
+.nav-bar-item{
+  flex-grow: 1;
 }

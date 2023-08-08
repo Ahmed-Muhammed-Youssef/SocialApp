@@ -19,7 +19,7 @@ export class NavComponent implements OnInit {
   constructor(private userService: UserService, public accountService: AccountService,
      private router: Router, private toastr: ToastrService,
      private breakpointObserver: BreakpointObserver) {
-      breakpointObserver.observe(["(max-width: 700px)"])
+      breakpointObserver.observe(["(max-width: 750px)"])
       .subscribe(
         result => 
         {
