@@ -1,43 +1,25 @@
-
-<!-- <mat-toolbar color="primary">
-  <mat-toolbar-row>
-    <span>My App</span>
-    <span class="example-spacer"></span>
-    <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
-      <mat-icon>menu</mat-icon>
-    </button>
-  </mat-toolbar-row>
-
-  <mat-toolbar-row>
-    <span>Second Line</span>
-    <span class="example-spacer"></span>
-    <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
-      <mat-icon>favorite</mat-icon>
-    </button>
-    <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
-      <mat-icon>share</mat-icon>
-    </button>
-  </mat-toolbar-row>
-</mat-toolbar> -->
-
-<mat-toolbar color="primary">
-  
-  <button mat-button style="font-size: large;" (click)="route()">Social App</button>
+<nav class="nav-bar">
+  <button mat-flat-button color="primary" class="nav-bar-title" (click)="route()">Social App</button>
   <div style="font-size: medium;" class="me-auto">
-    <ng-container *ngIf="(accountService.currentUser$ | async)">
-        <button mat-flat-button color="primary" routerLink="/users" routerActiveLink="active">Explore</button>
-        <button mat-flat-button color="primary" routerLink="/lists" routerActiveLink="active">Matches</button>
-        <button mat-flat-button color="primary" routerLink="/messages" routerActiveLink="active">Messages</button>
-        <button mat-flat-button color="primary" *appHasRole='["admin", "moderator"]' routerLink="/admin" routerActiveLink="active">Admin</button>
+    <ng-container *ngIf="!isMobilePhone && (accountService.currentUser$ | async)">
+        <button mat-flat-button color="primary" routerLink="/users" routerActiveLink="active">
+          <i class="material-icons me-1">explore</i> Explore
+        </button>
+        <button mat-flat-button color="primary" routerLink="/lists" routerActiveLink="active">
+          <i class="material-icons me-1">people</i> Friends
+        </button>
+        <!-- <button mat-flat-button color="primary" routerLink="/messages" routerActiveLink="active">Messages</button> -->
+        <button mat-flat-button color="primary" *appHasRole='["admin", "moderator"]' routerLink="/admin" routerActiveLink="active">
+          <i class="material-icons me-1">settings</i> Admin
+        </button>
     </ng-container>
   </div>
-  <div [matMenuTriggerFor]="menu" class="nav-user pointer" *ngIf="(accountService.currentUser$ | async) as user"> 
-      <img class="nav-img-circle me-2" src="{{user.userData.photos[0].url || './assets/Pictures/profile-placeholder.png'}}" alt="{{user.userData.firstName}}" >
-      <p style="font-size:medium; margin: 0px; align-self: center;">{{user.userData.firstName}}</p>
-    </div>  
+  <div [matMenuTriggerFor]="menu" *ngIf="(accountService.currentUser$ | async) as user"> 
+    <img class="nav-img-circle" src="{{userProfilePicture || './assets/Pictures/profile-placeholder.png'}}" alt="{{user.userData.firstName}}" >
+  </div>  
   <mat-menu #menu="matMenu">
     <button mat-menu-item routerLink="users/edit">
-    <mat-icon>edit</mat-icon> Edit Profile
+      <mat-icon>edit</mat-icon> Edit Profile
     </button>
     <button mat-menu-item (click)="logout()">
       <mat-icon>logout</mat-icon> Logout
@@ -46,4 +28,4 @@
   <button mat-button *ngIf="(accountService.currentUser$ | async) === null" routerLink="/login">
     Sign in
   </button>
-</mat-toolbar>
+</nav>
