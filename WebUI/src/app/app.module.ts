@@ -28,7 +28,6 @@ import { NotFoundComponent } from './errors/not-found/not-found.component';
 import { ServerErrorComponent } from './errors/server-error/server-error.component';
 import { UserCardComponent } from './users/user-card/user-card.component';
 import { JwtInterceptor } from './_interceptors/jwt.interceptor';
-import { NgxGalleryModule } from '@kolkov/ngx-gallery';
 import { UserEditComponent } from './users/user-edit/user-edit.component';
 import { PreventUnsavedChangesGuard } from './_guards/prevent-unsaved-changes.guard';
 import { NgxSpinnerModule } from "ngx-spinner";
@@ -42,7 +41,6 @@ import { HasRoleDirective } from './_directives/has-role.directive';
 import { UserManagementComponent } from './admin/user-management/user-management.component';
 import { PhotoManagementComponent } from './admin/photo-management/photo-management.component';
 import { RoleEditDialogComponent } from './admin/role-edit-dialog/role-edit-dialog.component';
-import { MobileNavComponent } from './mobile-nav/mobile-nav.component';
 import { ContactComponent } from './contact/contact.component';
 
 
@@ -98,15 +96,13 @@ const routes: Routes = [
     UserManagementComponent,
     PhotoManagementComponent,
     RoleEditDialogComponent,
-    MobileNavComponent,
     ContactComponent
   ],
   imports: [
     BrowserModule, HttpClientModule,
     BrowserAnimationsModule, FormsModule,
     ReactiveFormsModule, RouterModule.forRoot(routes),
-    SharedModule, HttpClientModule,
-    NgxGalleryModule, NgxSpinnerModule,
+    SharedModule, HttpClientModule, NgxSpinnerModule,
     DragDropModule, FontAwesomeModule, LayoutModule,
     MatSidenavModule, MatButtonToggleModule
   ],

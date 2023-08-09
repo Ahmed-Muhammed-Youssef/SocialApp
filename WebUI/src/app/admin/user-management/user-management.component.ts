@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { RoleUser } from 'src/app/_models/roles';
 import { AdminService } from 'src/app/_services/admin.service';
 import { RoleEditDialogComponent } from '../role-edit-dialog/role-edit-dialog.component';

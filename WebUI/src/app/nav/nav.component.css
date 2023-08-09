@@ -1,23 +1,33 @@
-.pointer{
-  cursor:pointer;
-  text-decoration: none;
-  text-size-adjust: 10pt;
+nav{
+  background-color: #3f51b5;
 }
-.nav-user {
+.nav-bar {
+  
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
-  position: fixed;
-  right: 32px;
+}
+.nav-bar-title{
+  font-size: large;
 }
 .nav-img-circle {
-  max-height: 40px;
-  max-width: 40px;
-
+  height: 40px;
+  width: 40px;
+  object-fit: cover;
   border-radius: 50%;
-  display: inline;
+  margin-right: 32px;
 }
-.main-nav-bar{
-  width: inherit;
-  height: inherit;
+.nav-img-circle:hover{
+  cursor: pointer;
+}
+button:hover{
+  background-color: rgb(32, 0, 119);
+}
+.active-button{
+  background-color: rgb(49, 1, 184);
+}
+
+/* mobile */
+.nav-bar-item{
+  flex-grow: 1;
 }

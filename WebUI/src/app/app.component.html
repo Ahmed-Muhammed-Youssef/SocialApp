@@ -1,7 +1,10 @@
-<!--<app-footer></app-footer>-->
-<app-nav class="tool-bar"></app-nav>
-<div class="container">
-  <router-outlet></router-outlet>
+<div class="content-container">
+  <app-nav class="tool-bar"></app-nav>
+  <div>
+    <router-outlet></router-outlet>
+  </div>
+  <app-footer></app-footer>
 </div>
-<app-mobile-nav class="mobile-nav" *ngIf="isMobilePhone && (accountService.currentUser$ | async)"></app-mobile-nav>
-<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="ball-spin" [fullScreen]="true"><p style="color: white"> Loading... </p></ngx-spinner>
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="ball-spin" [fullScreen]="true">
+  <p style="color: white"> Loading... </p>
+</ngx-spinner>

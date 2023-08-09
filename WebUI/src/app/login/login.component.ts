@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { LoginModel } from '../_models/AccountModels';
+import { LoginModel, LoginResponse } from '../_models/AccountModels';
 import { AccountService } from '../_services/account.service';
 import { UserService } from '../_services/user.service';
 
@@ -16,8 +16,8 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
   }
   public login() {
-    this.accountService.login(this.loginCred).subscribe(
-      response => {
+    this.accountService.login(this.loginCred).subscribe({
+      next: response => {
         if (response) {
           if(response.token){
             this.router.navigateByUrl('/users');
@@ -25,8 +25,7 @@ export class LoginComponent implements OnInit {
           }
         }
       },
-       () => this.loginValid = false
-     );
+      error: (e) => this.loginValid = false
+    });
   }
-
 }

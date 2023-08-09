@@ -1,11 +1,12 @@
 <div class="row">
     <div class="card" *ngIf="currentMatch">
         <div class="chat-header">
-            <img [src]="currentMatch.photos[0]?.url || './assets/Pictures/profile-placeholder.png'" alt="avatar">
+            <img [src]="currentMatch.photos[0].url || './assets/Pictures/profile-placeholder.png'" alt="avatar">
             <div class="user-info">
                 <h3 class="mb-0">{{currentMatch.firstName}} {{currentMatch.lastName}}</h3>
                 <small *ngIf="(presenceService.onlineUsers$ | async)?.includes(currentMatch.username)"> <span class="online"></span> Active now</small>
-                <small *ngIf="!(presenceService.onlineUsers$ | async)?.includes(currentMatch.username)">{{getLoacaleDateTime(currentMatch.lastActive) | timeago}}</small>
+                <!-- Foramt last time online -->
+                <small *ngIf="!(presenceService.onlineUsers$ | async)?.includes(currentMatch.username)">{{getLoacaleDateTime(currentMatch.lastActive)}}</small>
             </div>
         </div>
         <div class="chat-history" *ngIf="(messageService.messageThread$ | async); let messages">

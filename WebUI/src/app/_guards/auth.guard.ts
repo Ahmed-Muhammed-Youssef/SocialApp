@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CanActivate} from '@angular/router';
+
 import { ToastrService } from 'ngx-toastr';
 import { map, Observable } from 'rxjs';
 import { LoginResponse } from '../_models/AccountModels';
@@ -8,7 +8,7 @@ import { AccountService } from '../_services/account.service';
 @Injectable({
   providedIn: 'root'
 })
-export class AuthGuard implements CanActivate {
+export class AuthGuard  {
   constructor(private accountService: AccountService, private toastr: ToastrService) {
 
   }

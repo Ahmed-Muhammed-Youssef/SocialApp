@@ -1,10 +1,11 @@
 <div class="matches-container">
     <div class="match-card" (click)="loadChat(match)" *ngFor="let match of matches" routerLink="/chat" [state]="match">
-        <img class="match-img-circle" [src]="match.photos[0]?.url || './assets/Pictures/profile-placeholder.png'" alt="avatar">
+        <img class="match-img-circle" [src]="match.photos[0].url || './assets/Pictures/profile-placeholder.png'" alt="avatar">
         <div class="about">
             <div class="name">{{match.firstName}} {{match.lastName}}</div>
             <div class="status" *ngIf="(presenceService.onlineUsers$ | async)?.includes(match.username)"> <span class="online"></span> Active now</div>
-            <div class="status" *ngIf="!(presenceService.onlineUsers$ | async)?.includes(match.username)">{{getLoacaleDateTime(match.lastActive) | timeago}}</div>
+            <!-- Foramt last time active time -->
+            <div class="status" *ngIf="!(presenceService.onlineUsers$ | async)?.includes(match.username)">{{getLoacaleDateTime(match.lastActive)}}</div>
         </div>
     </div>
     <div class="d-flex justify-content-center" *ngIf="matchesPagination && matchesPagination.totalPages > 1">

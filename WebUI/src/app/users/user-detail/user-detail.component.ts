@@ -2,9 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { User } from '../../_models/User';
 import { UserService } from '../../_services/user.service';
-import { NgxGalleryOptions } from '@kolkov/ngx-gallery';
-import { NgxGalleryImage } from '@kolkov/ngx-gallery';
-import { NgxGalleryAnimation } from '@kolkov/ngx-gallery';
+
 import { ToastrService } from 'ngx-toastr';
 import { PresenceService } from 'src/app/_services/presence.service';
 import { BreakpointObserver } from '@angular/cdk/layout';
@@ -34,8 +32,7 @@ export class UserDetailComponent implements OnInit {
   };
   isLiked : boolean = true;
   isMatch: boolean = false;
-  galleryOptions: NgxGalleryOptions[] = [];
-  galleryImages: NgxGalleryImage[] = [];
+  
   constructor(private userService: UserService, private route: ActivatedRoute,
      private toastr: ToastrService, public presenceService: PresenceService, private breakpointObserver: BreakpointObserver) {
       breakpointObserver.observe(["(max-width: 770px)"])
@@ -47,16 +44,16 @@ export class UserDetailComponent implements OnInit {
             }
           }
         );
-    this.galleryOptions = [
-      {
-        width: '500px',
-        height: '500px',
-        imagePercent: 100,
-        thumbnailsColumns: 4,
-        imageAnimation: NgxGalleryAnimation.Slide,
-        preview: false
-      }
-    ];
+    // this.galleryOptions = [
+    //   {
+    //     width: '500px',
+    //     height: '500px',
+    //     imagePercent: 100,
+    //     thumbnailsColumns: 4,
+    //     imageAnimation: NgxGalleryAnimation.Slide,
+    //     preview: false
+    //   }
+    // ];
   }
   addLike(){
     this.userService.like(this.user.username).subscribe(
@@ -97,15 +94,15 @@ export class UserDetailComponent implements OnInit {
     }
   }
 
-
+  // need to be replaced
   public setImages() {
-    for (const photo of this.user.photos) {
-      this.galleryImages.push({
-        small: photo?.url,
-        medium: photo?.url,
-        big: photo?.url
-      });
-    }
+    // for (const photo of this.user.photos) {
+    //   this.galleryImages.push({
+    //     small: photo?.url,
+    //     medium: photo?.url,
+    //     big: photo?.url
+    //   });
+    // }
   }
 
 }

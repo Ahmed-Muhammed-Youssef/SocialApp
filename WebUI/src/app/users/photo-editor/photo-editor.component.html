@@ -11,7 +11,9 @@
     </div>
    
 </div>
-<input #fileUpload style="display:none;" id="inputFile" type="file" ng2FileSelect [uploader]="uploader" multiple/>
+
+<!-- Add photo uploader -->
+<!-- <input #fileUpload style="display:none;" id="inputFile" type="file" multiple/>
 <div class="mt-2 d-grid justify-content-center">
     <div >
         <button mat-raised-button color="primary" class="me-2" [disabled]="!isOrderChanged"
@@ -23,7 +25,7 @@
             Add Picture
         </button>
     </div>
-</div>
+</div> -->
 
 
 <div class="row mt-4 mx-0" style="margin-bottom: 40px" *ngIf="uploader?.queue?.length">

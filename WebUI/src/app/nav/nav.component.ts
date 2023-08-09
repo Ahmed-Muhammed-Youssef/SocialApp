@@ -5,6 +5,8 @@ import { ToastrService } from 'ngx-toastr';
 import { LoginResponse } from '../_models/AccountModels';
 import { AccountService } from '../_services/account.service';
 import { UserService } from '../_services/user.service';
+import { take } from 'rxjs';
+import { Photo } from '../_models/User';
 
 @Component({
   selector: 'app-nav',
@@ -13,10 +15,11 @@ import { UserService } from '../_services/user.service';
 })
 export class NavComponent implements OnInit {
   isMobilePhone : boolean = false;
+  public userProfilePicture: Photo | undefined;
   constructor(private userService: UserService, public accountService: AccountService,
      private router: Router, private toastr: ToastrService,
      private breakpointObserver: BreakpointObserver) {
-      breakpointObserver.observe(["(max-width: 700px)"])
+      breakpointObserver.observe(["(max-width: 750px)"])
       .subscribe(
         result => 
         {
@@ -27,6 +30,11 @@ export class NavComponent implements OnInit {
           }
         }
       );
+      this.accountService.currentUser$.pipe(take(1)).subscribe(account => {
+        if (account) {
+          this.userProfilePicture = account.userData.photos[0];
+        }
+      });
   }
   ngOnInit(): void {  }
   logout(): void {

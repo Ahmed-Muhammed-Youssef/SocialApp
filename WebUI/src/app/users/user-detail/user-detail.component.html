@@ -3,9 +3,10 @@
     <mat-card-header>
       <mat-card-title>{{user.firstName}} {{user.lastName}}</mat-card-title>
       <mat-card-subtitle *ngIf="(presenceService.onlineUsers$ | async)?.includes(user.username)"> <span class="online"></span> Active now</mat-card-subtitle>
-    <mat-card-subtitle *ngIf="!(presenceService.onlineUsers$ | async)?.includes(user.username)">{{getLoacaleDateTime(user.lastActive) | timeago}}</mat-card-subtitle>
+    <!-- Foramt the last time online -->
+    <mat-card-subtitle *ngIf="!(presenceService.onlineUsers$ | async)?.includes(user.username)">{{getLoacaleDateTime(user.lastActive) }}</mat-card-subtitle>
     </mat-card-header>
-    <img mat-card-image src="{{user.photos[0]?.url || './assets/Pictures/profile-placeholder.png'}}" 
+    <img mat-card-image src="{{user.photos[0].url || './assets/Pictures/profile-placeholder.png'}}" 
     alt="profile picture">
     <mat-card-content>
         <div>
@@ -43,9 +44,7 @@
       <p>{{formatInterest(user.interest)}}</p>
     </div></mat-tab>
     <mat-tab class="gallery" label="Gallery">
-      <div class="galler">
-        <ngx-gallery [options]="galleryOptions" [images]="galleryImages" class="ngx-gallery"></ngx-gallery>
-      </div>
+      <!-- @todo gallery needed -->
     </mat-tab>
   </mat-tab-group>
 </div>

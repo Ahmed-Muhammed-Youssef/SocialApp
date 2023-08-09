@@ -1,24 +1,16 @@
-.container{
-    margin-top: 80px;
-    margin-bottom: 75px;
-    overflow-x: hidden;
-}
+
 .tool-bar{
     position: fixed;
     top: 0;
     width: 100%;
     overflow: hidden;
     z-index: 10;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    height: 60px;
+    box-shadow:  0 3px 5px -1px #0003, 0 6px 10px #00000024, 0 1px 18px #0000001f;
 }
-.mobile-nav{
-    height: fit-content;
-    width: 100%;
-    overflow: hidden;
-    position: fixed;
-    bottom: 0;
-    z-index: 10;
-    background-color: #DFDFDE;
-    font-size: medium;
+.content-container{
+   padding-top: 120px;
+   min-height: 100vh;
+   display: flex;
+   flex-direction: column;
+   justify-content: space-between;
 }

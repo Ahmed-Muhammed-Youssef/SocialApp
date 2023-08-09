@@ -36,8 +36,8 @@ namespace API.Extensions
                     ValidateIssuer = false,
                     ValidateAudience = false,
                     ValidateIssuerSigningKey = true,
-                    //ValidIssuer = config["Jwt:Issuer"],
-                    //ValidAudience = config["Jwt:Issuer"],
+                    ValidIssuer = config["Jwt:Issuer"],
+                    ValidAudience = config["Jwt:Issuer"],
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["Jwt:Key"]))
                 };
                 options.Events = new JwtBearerEvents {
