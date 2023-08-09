@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { LoginResponse } from '../_models/AccountModels';
 import { AccountService } from '../_services/account.service';
-import { UserService } from '../_services/user.service';
 import { take } from 'rxjs';
 import { Photo } from '../_models/User';
 
@@ -16,7 +15,7 @@ import { Photo } from '../_models/User';
 export class NavComponent implements OnInit {
   isMobilePhone : boolean = false;
   public userProfilePicture: Photo | undefined;
-  constructor(private userService: UserService, public accountService: AccountService,
+  constructor(public accountService: AccountService,
      private router: Router, private toastr: ToastrService,
      private breakpointObserver: BreakpointObserver) {
       breakpointObserver.observe(["(max-width: 750px)"])

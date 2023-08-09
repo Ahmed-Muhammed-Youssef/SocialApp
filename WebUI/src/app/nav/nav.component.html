@@ -1,5 +1,5 @@
 <nav>
-  <div class="nav-bar p-3">
+  <div class="nav-bar p-2">
     <button mat-flat-button color="primary" class="nav-bar-title" (click)="route()">Social App</button>
     <div style="font-size: medium;" class="me-auto" *ngIf="!isMobilePhone && (accountService.currentUser$ | async)">
       <button mat-flat-button color="primary" routerLink="/users">

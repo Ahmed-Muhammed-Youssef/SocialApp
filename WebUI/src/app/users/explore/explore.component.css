@@ -1,0 +1,31 @@
+.user-card-res {
+    display: block;
+    width: 250px;
+    height: fit-content;
+    margin: 8px;
+}
+.users-grid{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.mobile-subtitle-margin{
+    margin-top: 92px;
+}
+.normal-subtitle-margin{
+    margin-top: 56px;
+}
+.subtitle-container{
+    width: 100%;
+    height: 72px;
+    display: flex;
+    align-items: center;
+    color: white;
+    background-color: #3f51b5;
+    padding-left: 32px;
+}
+.subtitle{
+    font-weight: normal;
+    margin-bottom: 0;
+}
