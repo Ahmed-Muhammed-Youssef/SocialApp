@@ -1,3 +1,12 @@
+<div [ngClass]="(isMobilePhone)? 'mobile-subtitle-margin': 'normal-subtitle-margin'" class="subtitle-container">
+    <h1 class="subtitle">
+      Messages
+    </h1>
+</div>
+<div class="text-center mt-4" *ngIf="matches == null || matches.length == 0">
+    <h1>Your friends list is empty...</h1>
+    <a mat-flat-button color="primary" routerLink="/users"> Find new friends now</a>
+</div>
 <div class="matches-container">
     <div class="match-card" (click)="loadChat(match)" *ngFor="let match of matches" routerLink="/chat" [state]="match">
         <img class="match-img-circle" [src]="match.photos[0].url || './assets/Pictures/profile-placeholder.png'" alt="avatar">

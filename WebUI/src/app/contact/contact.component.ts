@@ -5,6 +5,7 @@ import { User } from '../_models/User';
 import { MessageService } from '../_services/message.service';
 import { PresenceService } from '../_services/presence.service';
 import { UserService } from '../_services/user.service';
+import { BreakpointObserver } from '@angular/cdk/layout';
 
 @Component({
   selector: 'app-contact',
@@ -19,8 +20,19 @@ export class ContactComponent implements OnInit {
   matchesPerPage = 10;
   currentAccount: LoginResponse | null = null;
   newMessage: string = "";
+  isMobilePhone: boolean = false;
+
   constructor(public messageService: MessageService, private userService: UserService,
-  public presenceService: PresenceService, private changeDetectorRef: ChangeDetectorRef) { }
+  public presenceService: PresenceService, private changeDetectorRef: ChangeDetectorRef, private breakpointObserver: BreakpointObserver) {
+    breakpointObserver.observe(["(max-width: 750px)"])
+      .subscribe(
+        result => {
+          this.isMobilePhone = false;
+          if (result.matches) {
+            this.isMobilePhone = true;
+          }
+        }
+      ); }
 
   ngOnInit(): void {
     this.loadMatches();
