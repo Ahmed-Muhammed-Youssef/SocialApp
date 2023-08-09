@@ -1,0 +1,19 @@
+<div [ngClass]="(isMobilePhone)? 'mobile-subtitle-margin': 'normal-subtitle-margin'" class="subtitle-container">
+    <h1 class="subtitle">
+      Friends List
+    </h1>
+</div>
+<div class="users-grid" *ngIf="matches.length > 0">
+    <div class="user-card-res" *ngFor="let user of matches">
+        <app-user-card [isLiked]="true" [user]="user"></app-user-card>
+    </div>
+</div>
+<div class="text-center mt-4" *ngIf="matches.length == 0">
+    <h1>Your friends list is empty...</h1>
+    <a mat-flat-button color="primary" routerLink="/users"> Find new friends now</a>
+</div>
+<div class="d-flex justify-content-center" *ngIf="pagination && pagination.totalPages > 1">
+    <mat-paginator [length]="pagination.totalItems" [pageSize]="pagination.itemsPerPage" (page)="pageChanged($event)"
+        aria-label="Select page">
+    </mat-paginator>
+</div>
