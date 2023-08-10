@@ -1,6 +1,9 @@
 ﻿using API.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -8,10 +11,31 @@ namespace API.Data
 {
     public class Seed
     {
-        public static async Task SeedUsers(UserManager<AppUser> userManager,
-           RoleManager<AppRole> roleManager)
+        public static async Task SeedUsersAsync(IServiceProvider serviceProvider)
         {
-            if (await userManager.Users.AnyAsync()) 
+            using (var scope = serviceProvider.CreateScope())
+            {
+                var services = scope.ServiceProvider;
+                try
+                {
+                    var context = services.GetRequiredService<DataContext>();
+                    var userManager = services.GetRequiredService<UserManager<AppUser>>();
+                    var roleManager = services.GetRequiredService<RoleManager<AppRole>>();
+                    await AddData(userManager, roleManager);
+                    await context.Database.MigrateAsync();
+                }
+                catch (Exception ex)
+                {
+                    var logger = services.GetRequiredService<ILogger<Program>>();
+                    logger.LogError(ex, "An error occurred during migration");
+                }
+            }
+
+           
+        }
+        private static async Task AddData(UserManager<AppUser> userManager, RoleManager<AppRole> roleManager)
+        {
+            if (await userManager.Users.AnyAsync())
                 return;
             var roles = new List<AppRole>
             {
@@ -30,16 +54,16 @@ namespace API.Data
                 FirstName = "admin",
                 LastName = "admin",
                 Interest = 'f',
-                DateOfBirth = System.DateTime.UtcNow,
-                LastActive = System.DateTime.UtcNow,
+                DateOfBirth = DateTime.UtcNow,
+                LastActive = DateTime.UtcNow,
                 Email = "admin@test",
                 City = "admin",
                 Country = "admin",
-                Created = System.DateTime.UtcNow,
+                Created = DateTime.UtcNow,
                 Sex = 'm'
             };
             await userManager.CreateAsync(admin, "Pwd12345");
-            await userManager.AddToRolesAsync(admin, new[] {"user", "admin", "moderator" });
+            await userManager.AddToRolesAsync(admin, new[] { "user", "admin", "moderator" });
         }
     }
 }
