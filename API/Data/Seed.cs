@@ -1,4 +1,6 @@
-﻿using API.Entities;
+﻿using API.Data.Static_Values;
+using API.Entities;
+using Bogus;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -35,15 +37,14 @@ namespace API.Data
         }
         private static async Task AddData(UserManager<AppUser> userManager, RoleManager<AppRole> roleManager)
         {
-            if (await userManager.Users.AnyAsync())
-                return;
+            // add admin
+            if (await userManager.Users.AnyAsync()) return;
             var roles = new List<AppRole>
             {
-                new AppRole{Name = "user"},
-                new AppRole{Name = "admin"},
-                new AppRole{Name = "moderator"},
+                new AppRole{Name = RolesNameValues.Admin},
+                new AppRole{Name = RolesNameValues.Moderator},
+                new AppRole{Name = RolesNameValues.User}
             };
-
             foreach (var role in roles)
             {
                 await roleManager.CreateAsync(role);
@@ -63,7 +64,30 @@ namespace API.Data
                 Sex = 'm'
             };
             await userManager.CreateAsync(admin, "Pwd12345");
-            await userManager.AddToRolesAsync(admin, new[] { "user", "admin", "moderator" });
+            await userManager.AddToRolesAsync(admin, new[] { RolesNameValues.User, RolesNameValues.Admin, RolesNameValues.Moderator });
+            char[] sex = { 'm', 'f' };
+            var tasks = new List<Task>();
+            for (int i = 0; i < 10000; i++)
+            {
+                var testUsers = new Faker<AppUser>()
+                    .RuleFor(u => u.UserName, (f, u) => $"user{i}")
+                    .RuleFor(u => u.Sex, f => f.PickRandom(new List<char>() { 'f', 'm' }))
+                    .RuleFor(u => u.FirstName, (f, u) => f.Name.FirstName((u.Sex == 'm') ? Bogus.DataSets.Name.Gender.Male : Bogus.DataSets.Name.Gender.Female))
+                    .RuleFor(u => u.LastName, (f, u) => f.Name.LastName(Bogus.DataSets.Name.Gender.Male))
+                    .RuleFor(u => u.Email, (f, u) => $"user{i}@test")
+                    .RuleFor(u => u.Bio, f => f.Lorem.Paragraph())
+                    .RuleFor(u => u.Interest, f => f.PickRandom(new List<char>() { 'f', 'm', 'b' }))
+                    .RuleFor(u => u.City, f => f.Address.City())
+                    .RuleFor(u => u.Country, f => f.Address.Country())
+                    .RuleFor(u => u.DateOfBirth, f => f.Date.Past(refDate: DateTime.UtcNow.AddYears(-18), yearsToGoBack: 70))
+                    .RuleFor(u => u.LastActive, f => f.Date.Recent())
+                    .RuleFor(u => u.Created, f => f.Date.Past(refDate: DateTime.UtcNow.AddMonths(-5), yearsToGoBack: 2));
+
+                var user = testUsers.Generate();
+                tasks.Add(userManager.CreateAsync(user, "Pwd12345"));
+                tasks.Add(userManager.AddToRolesAsync(user, new[] { RolesNameValues.User }));
+            }
+            await Task.WhenAll(tasks);
         }
     }
 }
