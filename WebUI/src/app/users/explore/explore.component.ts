@@ -33,7 +33,7 @@ export class ExploreComponent implements OnInit {
     this.loadUsers();
   }
   loadUsers() {
-    this.userService.setUserParams(this.userParams as UserParams);
+    // this.userService.setUserParams(this.userParams as UserParams);
     this.userService.getAllUsers(this.userParams as UserParams).subscribe(
       response => {
         if (response) {
@@ -51,7 +51,7 @@ export class ExploreComponent implements OnInit {
     if ($event) {
       if ($event && this.userParams) {
         this.userParams.pageNumber = $event.pageIndex + 1;
-        this.userService.setUserParams(this.userParams);
+        // this.userService.setUserParams(this.userParams);
         this.loadUsers();
       }
     }

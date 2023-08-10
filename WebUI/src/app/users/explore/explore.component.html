@@ -45,8 +45,8 @@
     <app-user-card class="user-card-res" (liked)="loadUsers()" [user]="user"></app-user-card>
   </div>
 </div>
-<div class="d-flex justify-content-center" *ngIf="userParams && pagination && pagination.totalPages > 1">
-  <mat-paginator [length]="pagination.totalItems" [pageSize]="pagination.itemsPerPage" (page)="pageChanged($event)"
+<div class="d-flex justify-content-center" *ngIf="users.length > 0 && userParams && pagination && pagination.totalPages > 1">
+  <mat-paginator [pageIndex]="pagination.currentPage - 1" [length]="pagination.totalItems" [pageSize]="pagination.itemsPerPage" (page)="pageChanged($event)"
     aria-label="Select page">
   </mat-paginator>
 </div>
