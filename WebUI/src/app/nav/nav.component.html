@@ -1,5 +1,5 @@
 <nav>
-  <div class="nav-bar p-3">
+  <div class="nav-bar p-2">
     <button mat-flat-button color="primary" class="nav-bar-title" (click)="route()">Social App</button>
     <div style="font-size: medium;" class="me-auto" *ngIf="!isMobilePhone && (accountService.currentUser$ | async)">
       <button mat-flat-button color="primary" routerLink="/users">
@@ -28,11 +28,11 @@
         <mat-icon>logout</mat-icon> Logout
       </button>
     </mat-menu>
-    <button mat-button *ngIf="(accountService.currentUser$ | async) === null" routerLink="/login">
+    <button class="me-3" mat-flat-button color="primary" *ngIf="(accountService.currentUser$ | async) === null" routerLink="/login">
       Sign in
     </button>
   </div>
-  <div *ngIf="isMobilePhone" class="nav-bar">
+  <div *ngIf="isMobilePhone && (accountService.currentUser$ | async)" class="nav-bar">
     <button class="nav-bar-item" mat-flat-button color="primary" routerLink="/users" routerActiveLink="active-button">
       <i class="material-icons me-1">explore</i> Explore
     </button>

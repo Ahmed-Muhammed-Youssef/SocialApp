@@ -15,9 +15,9 @@ import { NavComponent } from './nav/nav.component';
 import { FooterComponent } from './footer/footer.component';
 import { HomeComponent } from './home/home.component';
 import { RegisterComponent } from './register/register.component';
-import { UserListComponent } from './users/user-list/user-list.component';
+import { ExploreComponent } from './users/explore/explore.component';
 import { UserDetailComponent } from './users/user-detail/user-detail.component';
-import { ListsComponent } from './lists/lists.component';
+import { FriendsListComponent } from './friends-list/friends-list.component';
 import { ChatComponent } from './chat/chat.component';
 import { AuthGuard } from './_guards/auth.guard';
 import { SharedModule } from './_modules/shared.module';
@@ -48,9 +48,9 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
-  { path: 'users', component: UserListComponent, canActivate:[AuthGuard] },
+  { path: 'users', component: ExploreComponent, canActivate:[AuthGuard] },
   { path: 'users/username/:username', component: UserDetailComponent, canActivate:[AuthGuard], resolve: {user: UserDetailedResolver} },
-  { path: 'lists', component: ListsComponent, canActivate:[AuthGuard] },
+  { path: 'lists', component: FriendsListComponent, canActivate:[AuthGuard] },
   { path: 'messages', component: ContactComponent, canActivate: [AuthGuard] },
   { path: 'chat', component: ChatComponent, canActivate: [AuthGuard] },
   { path: 'admin', component: AdminPanelComponent, canActivate: [AuthGuard, AdminGuard]},
@@ -80,9 +80,9 @@ const routes: Routes = [
     FooterComponent,
     HomeComponent,
     RegisterComponent,
-    UserListComponent,
+    ExploreComponent,
     UserDetailComponent,
-    ListsComponent,
+    FriendsListComponent,
     ChatComponent,
     LoginComponent,
     TestErrorComponent,
