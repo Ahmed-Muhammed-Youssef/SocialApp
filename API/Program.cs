@@ -1,48 +1,88 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using API.Data;
-using API.Entities;
+using API.Extensions;
+using API.Helpers;
+using API.Interfaces;
+using API.Middleware;
+using API.Services;
+using API.SignalR;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
+using Microsoft.OpenApi.Models;
 
-namespace API
+var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.Configure<CloudinarySettings>(builder.Configuration.GetSection("Cloudinary"));
+builder.Services.AddSingleton<PresenceTracker>();
+builder.Services.AddScoped<IPhotoService, PhotoService>();
+builder.Services.AddIdentityConfigurations(builder.Configuration);
+builder.Services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped<ITokenService, TokenService>();
+builder.Services.AddScoped<LogUserActivity>();
+builder.Services.AddDbContext<DataContext>(options =>
 {
-    public class Program
+    var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+    // Depending on if in development or production, use either Heroku-provided
+    // connection string, or development connection string from env var.
+    if (env == "Development")
     {
-        public static async Task Main(string[] args)
-        {
-            var host = CreateHostBuilder(args).Build();
-            using var scope = host.Services.CreateScope();
-            var services = scope.ServiceProvider;
-            try
-            {
-                var context = services.GetRequiredService<DataContext>();
-                var userManager = services.GetRequiredService<UserManager<AppUser>>();
-                var roleManager = services.GetRequiredService<RoleManager<AppRole>>();
-                await context.Database.MigrateAsync();
-                await Seed.SeedUsers(userManager, roleManager);
-            }
-            catch (Exception ex)
-            {
-                var logger = services.GetRequiredService<ILogger<Program>>();
-                logger.LogError(ex, "An error occurred during migration");
-            }
-
-            await host.RunAsync();
-        }
-
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder =>
-                {
-                    webBuilder.UseStartup<Startup>();
-                });
+        // Use connection string from file.
+        options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));
     }
+    else
+    {
+        // production configurations
+    }
+});
+builder.Services.AddControllers();
+builder.Services.AddSignalR();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "API", Version = "v1" });
+});
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowSpecificOrigin", policy => policy.AllowAnyMethod()
+    .AllowAnyHeader().WithOrigins("https://localhost:4200").AllowCredentials());
+});
+
+
+var app = builder.Build();
+
+// Seeding the application
+await Seed.SeedUsersAsync(app.Services);
+
+
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "API v1"));
+    app.UseCors("AllowSpecificOrigin");
 }
+
+app.UseMiddleware<ExceptionMiddleware>();
+
+app.UseHttpsRedirection();
+
+app.UseRouting();
+
+app.UseAuthentication();
+
+app.UseAuthorization();
+
+app.UseDefaultFiles();
+
+app.UseStaticFiles();
+
+
+app.MapControllers();
+app.MapHub<PresenceHub>("hubs/presence");
+app.MapHub<MessageHub>("hubs/message");
+app.MapFallbackToController("Index", "FallBack");
+
+await app.RunAsync();
