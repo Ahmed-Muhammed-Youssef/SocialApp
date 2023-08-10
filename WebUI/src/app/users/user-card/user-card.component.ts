@@ -2,7 +2,7 @@ import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { PresenceService } from 'src/app/_services/presence.service';
 import { UserService } from 'src/app/_services/user.service';
-import { User } from '../../_models/User';
+import { Photo, User } from '../../_models/User';
 
 @Component({
   selector: 'app-user-card',
@@ -28,9 +28,10 @@ export class UserCardComponent implements OnInit {
     photos: [],
     roles: []
   };
- 
+  public profilePicture : Photo | undefined;
   constructor(private userService: UserService, private toastr: ToastrService, public presenceService: PresenceService) { }
   ngOnInit(): void {
+    this.profilePicture = this.user.photos[0];
   }
   public getLoacaleDateTime(d: Date) : Date{
     var localDate  = new Date(d.toString() + 'Z');
