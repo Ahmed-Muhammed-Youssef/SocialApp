@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { User } from '../../_models/User';
+import { Photo, User } from '../../_models/User';
 import { UserService } from '../../_services/user.service';
 
 import { ToastrService } from 'ngx-toastr';
@@ -14,6 +14,7 @@ import { BreakpointObserver } from '@angular/cdk/layout';
 })
 export class UserDetailComponent implements OnInit {
   isMobilePhone : boolean = false;
+  profilePicture : Photo | undefined;
   user: User = {
     id: 0,
     username: '',
@@ -35,7 +36,7 @@ export class UserDetailComponent implements OnInit {
   
   constructor(private userService: UserService, private route: ActivatedRoute,
      private toastr: ToastrService, public presenceService: PresenceService, private breakpointObserver: BreakpointObserver) {
-      breakpointObserver.observe(["(max-width: 770px)"])
+      breakpointObserver.observe(["(max-width: 750px)"])
         .subscribe(
           result => {
             this.isMobilePhone = false;
@@ -44,16 +45,7 @@ export class UserDetailComponent implements OnInit {
             }
           }
         );
-    // this.galleryOptions = [
-    //   {
-    //     width: '500px',
-    //     height: '500px',
-    //     imagePercent: 100,
-    //     thumbnailsColumns: 4,
-    //     imageAnimation: NgxGalleryAnimation.Slide,
-    //     preview: false
-    //   }
-    // ];
+    
   }
   addLike(){
     this.userService.like(this.user.username).subscribe(
@@ -74,6 +66,7 @@ export class UserDetailComponent implements OnInit {
     this.route.data.subscribe(
       data => {
         this.user = data.user;
+        this.profilePicture = this.user.photos[0];
         this.setImages();
         this.userService.getIsLiked(this.user.username).subscribe(r => {
           this.isLiked = r;
@@ -96,13 +89,35 @@ export class UserDetailComponent implements OnInit {
 
   // need to be replaced
   public setImages() {
-    // for (const photo of this.user.photos) {
-    //   this.galleryImages.push({
-    //     small: photo?.url,
-    //     medium: photo?.url,
-    //     big: photo?.url
-    //   });
-    // }
+   
   }
-
+  public getDateTimeAgo(date: Date) {
+    var now = new Date();
+    date = this.getLoacaleDateTime(date);
+    var yearDiff = now.getFullYear() - date.getFullYear();
+    var monthDiff = now.getMonth()- date.getMonth();
+    var dayDiff = now.getDate()- date.getDate();
+    var hourDiff = now.getHours() - date.getHours();
+    var minuteDiff = now.getMinutes() - date.getMinutes();
+    if(yearDiff > 0)
+    {
+      return yearDiff + ' year'+ (yearDiff> 1? 's':'') + ' ago';
+    }
+    else 
+    if (monthDiff > 0){
+      return monthDiff + ' month'+ (monthDiff> 1? 's':'') + ' ago';
+    }
+    else if (dayDiff > 0){
+      return dayDiff + ' day'+ (dayDiff> 1? 's':'') + ' ago';
+    }
+    else if (hourDiff > 0){
+      return hourDiff + ' hour'+ (hourDiff> 1? 's':'') + ' ago';
+    }
+    else if (minuteDiff > 0){
+      return minuteDiff + ' minute'+ (minuteDiff> 1? 's':'') + ' ago';
+    }
+    else {
+      return 'online';
+    }
+  }
 }
