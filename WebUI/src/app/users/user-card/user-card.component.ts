@@ -29,11 +29,9 @@ export class UserCardComponent implements OnInit {
     photos: [],
     roles: []
   };
-  public profilePicture: Photo | undefined;
   constructor(private userService: UserService, private toastr: ToastrService,
      public presenceService: PresenceService, private router: Router) { }
   ngOnInit(): void {
-    this.profilePicture = this.user.photos[0];
   }
   private getLoacaleDateTime(d: Date): Date {
     var localDate = new Date(d.toString() + 'Z');
