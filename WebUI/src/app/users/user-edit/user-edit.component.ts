@@ -26,7 +26,7 @@ export class UserEditComponent implements OnInit {
   }
   constructor(private toastr: ToastrService, private userService: UserService, 
     private accountService: AccountService, private breakpointObserver: BreakpointObserver) {
-    breakpointObserver.observe(["(max-width: 500px)"])
+    breakpointObserver.observe(["(max-width: 750px)"])
       .subscribe(
         result => {
           this.isMobilePhone = false;

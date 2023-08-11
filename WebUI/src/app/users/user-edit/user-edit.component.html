@@ -1,9 +1,14 @@
+<div [ngClass]="(isMobilePhone)? 'mobile-subtitle-margin': 'normal-subtitle-margin'" class="subtitle-container">
+  <h1 class="subtitle">
+    Edit your profile
+  </h1>
+</div>
 <div class="row" *ngIf="user">
   <mat-card *ngIf="!isMobilePhone" class="col-4">
     <mat-card-header>
       <mat-card-title>{{user.firstName}} {{user.lastName}}</mat-card-title>
     </mat-card-header>
-    <img mat-card-image src="{{user.photos[0].url || './assets/Pictures/profile-placeholder.png'}}" 
+    <img mat-card-image src="{{user.photos.length > 0 ? user.photos[0].url : './assets/Pictures/profile-placeholder.png'}}" 
       alt="profile picture">
     <mat-card-content>
         <div>
