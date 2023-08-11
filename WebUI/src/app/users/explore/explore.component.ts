@@ -16,7 +16,7 @@ export class ExploreComponent implements OnInit {
   pagination: Pagination | null = null;
   userParams: UserParams | null = null;
   genderList = [{ value: 'm', display: 'Males' }, { value: 'f', display: 'Females' }, { value: 'b', display: 'Both' }];
-  orderByOptions = [{ value: 'lastActive', display: 'Last Active' }, { value: 'creationTime', display: 'Newest Users' }, { value: 'age', display: 'Age' }];
+  orderByOptions = [{ value: 'lastActive', display: 'Last Active' }, { value: 'creationTime', display: 'Newest' }, { value: 'age', display: 'Age' }];
   constructor(private userService: UserService, private breakpointObserver: BreakpointObserver) {
     breakpointObserver.observe(["(max-width: 750px)"])
       .subscribe(
