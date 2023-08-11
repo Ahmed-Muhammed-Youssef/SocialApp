@@ -1,22 +1,17 @@
-<mat-card>
-  <mat-card-header>
+<mat-card class="user-card" >
+  <mat-card-header routerLink="/users/username/{{user.username}}">
     <mat-card-title>{{user.firstName}} {{user.lastName}}</mat-card-title>
     <mat-card-subtitle *ngIf="(presenceService.onlineUsers$ | async)?.includes(user.username)"> <span class="online"></span> Active now</mat-card-subtitle>
-    <!-- Foramt last timr online -->
-    <mat-card-subtitle *ngIf="!(presenceService.onlineUsers$ | async)?.includes(user.username)">{{getLoacaleDateTime(user.lastActive)}}</mat-card-subtitle>
+    <mat-card-subtitle *ngIf="!(presenceService.onlineUsers$ | async)?.includes(user.username)">{{getDateTimeAgo(user.lastActive)}}</mat-card-subtitle>
   </mat-card-header>
-  <img mat-card-image src="{{profilePicture || './assets/Pictures/profile-placeholder.png'}}" alt="Profile picture">
-  <mat-card-content>
-  </mat-card-content>
-  <mat-card-actions class="text-center">
-    <button mat-button color="primary" class="me-2" routerLink="/users/username/{{user.username}}">
-      <mat-icon>person</mat-icon>
+  <img routerLink="/users/username/{{user.username}}" mat-card-image src="{{profilePicture || './assets/Pictures/profile-placeholder.png'}}" alt="Profile picture">
+  
+  <mat-card-actions class="text-center d-block">
+    <button mat-flat-button color="accent" *ngIf="!isLiked" (click)="addLike(user)">
+      <i class="material-icons me-1">person_add_alt_1</i> Add friend
     </button>
-    <button mat-button color="accent" *ngIf="!isLiked" (click)="addLike(user)" class="me-2">
-      <mat-icon>favorite</mat-icon>
-    </button>
-    <button mat-button color="primary" *ngIf="isLiked" routerLink="/chat" [state]="user">
-      <mat-icon>chat</mat-icon>
+    <button mat-flat-button color="primary" *ngIf="isLiked" routerLink="/chat" [state]="user">
+      <mat-icon>chat</mat-icon> Message
     </button>
   </mat-card-actions>
 </mat-card>
