@@ -2,12 +2,10 @@ import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit, ViewChild
 import { NgForm } from '@angular/forms';
 import { take } from 'rxjs';
 import { LoginResponse } from '../_models/AccountModels';
-import { Pagination } from '../_models/pagination';
 import { User } from '../_models/User';
 import { AccountService } from '../_services/account.service';
 import { MessageService } from '../_services/message.service';
 import { PresenceService } from '../_services/presence.service';
-import { UserService } from '../_services/user.service';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -15,72 +13,72 @@ import { UserService } from '../_services/user.service';
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.css']
 })
-export class ChatComponent implements OnInit,OnDestroy {
-  mode = 'unread';
-  @Input () currentMatch?: User;
-  @ViewChild('sendForm') sendForm?: NgForm; 
-  matchesPagination?: Pagination;
-  matches: User[] | null = null;
-  matchPageNumber = 1;
-  matchesPerPage = 10;
+export class ChatComponent implements OnInit, OnDestroy {
+  @Input() currentFriend: User | undefined;
+  @ViewChild('sendForm') sendForm?: NgForm;
   currentAccount: LoginResponse | null = null;
   newMessage: string = "";
-  constructor(public messageService: MessageService, private userService: UserService,
-    accountService: AccountService, public presenceService: PresenceService) { 
-    
-      accountService.currentUser$.pipe(take(1)).subscribe(
+  constructor(public messageService: MessageService, accountService: AccountService, public presenceService: PresenceService) {
+    accountService.currentUser$.pipe(take(1)).subscribe(
       r => {
         this.currentAccount = r;
       }
     );
   }
-  public getLoacaleDateTime(d: Date) : Date{
-    var localDate  = new Date(d.toString() + 'Z');
-    return localDate;
-  }
   ngOnInit(): void {
-    this.loadMatches();
-    if(history.state?.username){
-      this.currentMatch = history.state as User;
-    }
-    if(this.currentMatch){
-      this.loadChat(this.currentMatch);
-    }
+   
+    this.loadChat();
   }
-
-  matchPageChanged(e: any){
-    if(e && (e.pageIndex + 1) != this.matchPageNumber){
-      this.matchPageNumber = e.pageIndex + 1;
-      this.loadMatches();
-    }
-  }
-  loadMatches(){
-    this.userService.getMatches(this.matchPageNumber, this.matchesPerPage).subscribe(
-      r => {
-        if(r){
-          this.matches = r.result;
-          this.matchesPagination = r.pagination;
-        }
-      }
-    );
-  }
-  sendMessage(){
-    if(this.currentMatch){
-      this.messageService.sendMessage(this.currentMatch?.username, this.newMessage).then(
-        () => {}
+  sendMessage() {
+    if (this.currentFriend) {
+      this.messageService.sendMessage(this.currentFriend?.username, this.newMessage).then(
+        () => { }
       );
-      this.newMessage = '';     
+      this.newMessage = '';
     }
   }
-  loadChat(user: User){
-    this.messageService.stopHubConnection();
-    if(this.currentAccount){
-      this.messageService.createHubConnection(this.currentAccount, user.id);
-      this.currentMatch = user;
+  loadChat() {
+    if (this.currentFriend) {
+      this.messageService.stopHubConnection();
+      if (this.currentAccount) {
+        this.messageService.createHubConnection(this.currentAccount, this.currentFriend.id);
+      }
     }
   }
   ngOnDestroy(): void {
     this.messageService.stopHubConnection();
   }
-
+  private getLoacaleDateTime(d: Date): Date {
+    var localDate = new Date(d.toString() + 'Z');
+    return localDate;
+  }
+  public getDateTimeAgo(date: Date) {
+    var now = new Date();
+    date = this.getLoacaleDateTime(date);
+    var yearDiff = now.getFullYear() - date.getFullYear();
+    var monthDiff = now.getMonth()- date.getMonth();
+    var dayDiff = now.getDate()- date.getDate();
+    var hourDiff = now.getHours() - date.getHours();
+    var minuteDiff = now.getMinutes() - date.getMinutes();
+    if(yearDiff > 0)
+    {
+      return yearDiff + ' year'+ (yearDiff> 1? 's':'') + ' ago';
+    }
+    else 
+    if (monthDiff > 0){
+      return monthDiff + ' month'+ (monthDiff> 1? 's':'') + ' ago';
+    }
+    else if (dayDiff > 0){
+      return dayDiff + ' day'+ (dayDiff> 1? 's':'') + ' ago';
+    }
+    else if (hourDiff > 0){
+      return hourDiff + ' hour'+ (hourDiff> 1? 's':'') + ' ago';
+    }
+    else if (minuteDiff > 0){
+      return minuteDiff + ' minute'+ (minuteDiff> 1? 's':'') + ' ago';
+    }
+    else {
+      return 'online';
+    }
+  }
 }
