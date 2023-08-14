@@ -455,3 +455,4 @@ $RECYCLE.BIN/
 API/dataingapp.db
 *.db-wal
 *.db-shm
+/API/socialapp.db
