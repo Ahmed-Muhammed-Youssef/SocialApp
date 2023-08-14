@@ -7,7 +7,7 @@
     <h1>Your friends list is empty...</h1>
     <a mat-flat-button color="primary" routerLink="/users"> Find new friends now</a>
 </div>
-<div class="row" style="width: 100%;">
+<div class="row" style="width: 100%;" *ngIf="friends != null && friends.length > 0">
     <div class="col-md-3 friends-container pe-0 border-end">
         <div class="cards-container">
             <div class="friend-card" (click)="loadChat(friend)" *ngFor="let friend of friends">
