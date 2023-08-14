@@ -6,6 +6,7 @@ import { UserService } from '../../_services/user.service';
 import { ToastrService } from 'ngx-toastr';
 import { PresenceService } from 'src/app/_services/presence.service';
 import { BreakpointObserver } from '@angular/cdk/layout';
+import { TimeFormatterService } from 'src/app/_services/activityTimeForamtter.service';
 
 @Component({
   selector: 'app-user-detail',
@@ -35,7 +36,8 @@ export class UserDetailComponent implements OnInit {
   isMatch: boolean = false;
   
   constructor(private userService: UserService, private route: ActivatedRoute,
-     private toastr: ToastrService, public presenceService: PresenceService, private breakpointObserver: BreakpointObserver) {
+     private toastr: ToastrService, public presenceService: PresenceService,
+      private breakpointObserver: BreakpointObserver, public timeFormatterService:TimeFormatterService) {
       breakpointObserver.observe(["(max-width: 750px)"])
         .subscribe(
           result => {
@@ -57,10 +59,6 @@ export class UserDetailComponent implements OnInit {
           }
       }
     );
-  }
-  public getLoacaleDateTime(d: Date) : Date{
-    var localDate  = new Date(d.toString() + 'Z');
-    return localDate;
   }
   ngOnInit(): void {
     this.route.data.subscribe(
@@ -90,34 +88,5 @@ export class UserDetailComponent implements OnInit {
   // need to be replaced
   public setImages() {
    
-  }
-  public getDateTimeAgo(date: Date) {
-    var now = new Date();
-    date = this.getLoacaleDateTime(date);
-    var yearDiff = now.getFullYear() - date.getFullYear();
-    var monthDiff = now.getMonth()- date.getMonth();
-    var dayDiff = now.getDate()- date.getDate();
-    var hourDiff = now.getHours() - date.getHours();
-    var minuteDiff = now.getMinutes() - date.getMinutes();
-    if(yearDiff > 0)
-    {
-      return yearDiff + ' year'+ (yearDiff> 1? 's':'') + ' ago';
-    }
-    else 
-    if (monthDiff > 0){
-      return monthDiff + ' month'+ (monthDiff> 1? 's':'') + ' ago';
-    }
-    else if (dayDiff > 0){
-      return dayDiff + ' day'+ (dayDiff> 1? 's':'') + ' ago';
-    }
-    else if (hourDiff > 0){
-      return hourDiff + ' hour'+ (hourDiff> 1? 's':'') + ' ago';
-    }
-    else if (minuteDiff > 0){
-      return minuteDiff + ' minute'+ (minuteDiff> 1? 's':'') + ' ago';
-    }
-    else {
-      return 'online';
-    }
   }
 }

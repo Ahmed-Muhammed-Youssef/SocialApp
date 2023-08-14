@@ -6,7 +6,7 @@
                 <h3 class="mb-0">{{currentFriend.firstName}} {{currentFriend.lastName}}</h3>
                 <small *ngIf="(presenceService.onlineUsers$ | async)?.includes(currentFriend.username)"> <span class="online"></span> Active now</small>
                 <!-- Foramt last time online -->
-                <small *ngIf="!(presenceService.onlineUsers$ | async)?.includes(currentFriend.username)">{{getDateTimeAgo(currentFriend.lastActive)}}</small>
+                <small *ngIf="!(presenceService.onlineUsers$ | async)?.includes(currentFriend.username)">{{timeFormatterService.getDateTimeAgo(currentFriend.lastActive)}}</small>
             </div>
         </div>
         <div class="chat-history" *ngIf="(messageService.messageThread$ | async); let messages">

@@ -16,7 +16,7 @@
                     <div class="name">{{friend.firstName}} {{friend.lastName}}</div>
                     <div class="status" *ngIf="(presenceService.onlineUsers$ | async)?.includes(friend.username)"> <span class="online"></span> Active now</div>
                     
-                    <div class="status" *ngIf="!(presenceService.onlineUsers$ | async)?.includes(friend.username)">{{getDateTimeAgo(friend.lastActive)}}</div>
+                    <div class="status" *ngIf="!(presenceService.onlineUsers$ | async)?.includes(friend.username)">{{timeFormatterService.getDateTimeAgo(friend.lastActive)}}</div>
                 </div>
             </div>
         </div>

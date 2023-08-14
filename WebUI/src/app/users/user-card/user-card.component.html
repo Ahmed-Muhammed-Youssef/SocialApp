@@ -2,7 +2,7 @@
   <mat-card-header routerLink="/users/username/{{user.username}}">
     <mat-card-title>{{user.firstName}} {{user.lastName}}</mat-card-title>
     <mat-card-subtitle *ngIf="(presenceService.onlineUsers$ | async)?.includes(user.username)"> <span class="online"></span> Active now</mat-card-subtitle>
-    <mat-card-subtitle *ngIf="!(presenceService.onlineUsers$ | async)?.includes(user.username)">{{getDateTimeAgo(user.lastActive)}}</mat-card-subtitle>
+    <mat-card-subtitle *ngIf="!(presenceService.onlineUsers$ | async)?.includes(user.username)">{{timeFormatterService.getDateTimeAgo(user.lastActive)}}</mat-card-subtitle>
   </mat-card-header>
   <img routerLink="/users/username/{{user.username}}" mat-card-image src="{{user.photos.length > 0 ? user.photos[0].url : './assets/Pictures/profile-placeholder.png'}}" alt="Profile picture">
   
