@@ -1,11 +1,14 @@
-@keyframes fa-blink {
-    0% {opacity: 1;}
-    100% {opacity: 0.4;}
-}
 .online{
     height: 10px;
     width: 10px;
     background-color: rgb(1, 189, 42);
     border-radius: 50%;
     display: inline-block;
+}
+.user-card{
+    transition: all 0.2s ease-in-out;
+}
+.user-card:hover{
+    cursor: pointer;
+    box-shadow: 0 10px 20px rgba(63, 81, 181, 0.4);
 }

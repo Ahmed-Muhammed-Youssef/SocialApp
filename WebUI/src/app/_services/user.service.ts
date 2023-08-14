@@ -1,4 +1,4 @@
-import { HttpClient, HttpParams, HttpResponse, JsonpClientBackend } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, Observable, of, take } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -12,28 +12,27 @@ import { AccountService } from './account.service';
 })
 export class UserService {
   baseUrl = environment.apiUrl;
-  constructor(private http: HttpClient, private accountService: AccountService) { 
-
+  constructor(private http: HttpClient, private accountService: AccountService) {
     this.resetUserParams();
   }
   private users: User[] = []; //used for profile caching
-  private userParams : UserParams| null = null; //used for filter caching
-  private paginationInfo : Pagination = 
-  { 
-    currentPage: 0,
-    itemsPerPage: 0,
-    totalItems: 0,
-    totalPages: 0 
-  };
-  private userChache = new Map<string, User[]>();
-  public getUserParams(){
+  private userParams: UserParams | null = null; //used for filter caching
+  private paginationInfo: Pagination =
+    {
+      currentPage: 0,
+      itemsPerPage: 0,
+      totalItems: 0,
+      totalPages: 0
+    };
+  private usersChache = new Map<string, PaginatedResult<User[]>>();
+  public getUserParams() {
     return this.userParams;
   }
-  public setUserParams(params: UserParams){
-    this.userParams = params;
-  }
-  public resetUserParams(){
-    this.accountService.currentUser$.pipe(take(1)).subscribe(response  => {
+  // public setUserParams(params: UserParams) {
+  //   this.userParams = params;
+  // }
+  public resetUserParams() {
+    this.accountService.currentUser$.pipe(take(1)).subscribe(response => {
       if (response) {
         this.userParams = new UserParams(response.userData);
       }
@@ -42,46 +41,45 @@ export class UserService {
   }
 
   // helper method
-  private getPaginationParams(userParams: UserParams){
+  private getPaginationParams(userParams: UserParams) {
     let httpParams: HttpParams = new HttpParams()
-    .set('pageNumber',userParams.pageNumber)
-    .set('itemsPerPage', userParams.itemsPerPage)
-    .set('sex', userParams.sex)
-    .set('orderBy', userParams.orderBy);
-    if(userParams.minAge){
+      .set('pageNumber', userParams.pageNumber)
+      .set('itemsPerPage', userParams.itemsPerPage)
+      .set('sex', userParams.sex)
+      .set('orderBy', userParams.orderBy);
+    if (userParams.minAge) {
       httpParams = httpParams.set('minAge', userParams.minAge);
     }
-    if(userParams.maxAge){
+    if (userParams.maxAge) {
       httpParams = httpParams.set('maxAge', userParams.maxAge);
     }
     return httpParams;
   }
-  public deleteCachedValues(){
-    this.userChache = new Map();
+  public deleteCachedValues() {
+    this.usersChache = new Map();
     this.resetUserParams();
   }
-  public getAllUsers(userParams: UserParams):Observable<PaginatedResult<User[]>> {
-    let paginatedResult : PaginatedResult<User[]> =  {result: [], pagination: this.paginationInfo};
-    let cache = this.userChache.get(Object.values(userParams).join('-'));
-    if(cache){
-      paginatedResult.result = cache;
+  public getAllUsers(userParams: UserParams): Observable<PaginatedResult<User[]>> {
+    let paginatedResult: PaginatedResult<User[]> = { result: [], pagination: this.paginationInfo };
+    let cache = this.usersChache.get(Object.values(userParams).join('-'));
+    if (cache) {
+      paginatedResult = cache;
       return of(paginatedResult);
     }
-
-    return this.http.get<User[]>(this.baseUrl + 'users/all', { observe: 'response', params: this.getPaginationParams(userParams)})
-     .pipe(
-      map(response => {
-        if(response?.body){
-          paginatedResult.result = response.body;
-        }
-        if(response.headers.get('Pagination')){
-          paginatedResult.pagination = JSON.parse(response.headers.get('Pagination') as string) as Pagination;
-        }
-        this.userChache.set(Object.values(userParams).join('-'), paginatedResult.result);
-        this.paginationInfo = paginatedResult.pagination;
-        return paginatedResult;
-      })
-    );
+    return this.http.get<User[]>(this.baseUrl + 'users/all', { observe: 'response', params: this.getPaginationParams(userParams) })
+      .pipe(
+        map(response => {
+          if (response?.body) {
+            paginatedResult.result = response.body;
+          }
+          if (response.headers.get('Pagination')) {
+            paginatedResult.pagination = JSON.parse(response.headers.get('Pagination') as string) as Pagination;
+          }
+          this.usersChache.set(Object.values(userParams).join('-'), paginatedResult);
+          this.paginationInfo = paginatedResult.pagination;
+          return paginatedResult;
+        })
+      );
   }
   public getUserByUsername(username: string): Observable<User> {
     const user = this.users.find(u => u.username === username);
@@ -90,58 +88,58 @@ export class UserService {
     }
     return this.http.get<User>(this.baseUrl + 'users/info/username/' + username);
   }
-  public reorderPhotos(photos: Photo[]){
+  public reorderPhotos(photos: Photo[]) {
     return this.http.put<Photo[]>(this.baseUrl + 'users/photos/reorder', photos);
   }
-  public deletePhoto(photoId:number){
+  public deletePhoto(photoId: number) {
     return this.http.delete(this.baseUrl + 'users/photo/delete/' + String(photoId));
   }
-  like(username: string): Observable<boolean>{
-    return this.http.post<boolean>(this.baseUrl + 'like/' + username, {}).pipe( map( r=> {
+  like(username: string): Observable<boolean> {
+    return this.http.post<boolean>(this.baseUrl + 'like/' + username, {}).pipe(map(r => {
       //the correct answer will need a more complex caching system so we will only delete all the cashed data for now
-      this.userChache = new Map();
+      this.usersChache = new Map();
       return r;
     }));
   }
-  getLikes() : Observable<User[]>{
+  getLikes(): Observable<User[]> {
     return this.http.get<User[]>(this.baseUrl + 'like/liked');
 
   }
-  getIsLiked(username:string) : Observable<boolean>{
+  getIsLiked(username: string): Observable<boolean> {
     return this.http.get<boolean>(this.baseUrl + 'like/isliked/' + username);
 
   }
-  getIsMatch(username:string): Observable<boolean>{
+  getIsMatch(username: string): Observable<boolean> {
     return this.http.get<boolean>(this.baseUrl + 'matches/ismatch/' + username);
 
   }
-  getMatches(pageNumber : number = 1, itemsPerPage: number = 2): Observable<PaginatedResult<User[]>>{
-    let paginatedResult : PaginatedResult<User[]> =  {result: [], pagination: this.paginationInfo};
+  getMatches(pageNumber: number = 1, itemsPerPage: number = 2): Observable<PaginatedResult<User[]>> {
+    let paginatedResult: PaginatedResult<User[]> = { result: [], pagination: this.paginationInfo };
     let httpParams: HttpParams = new HttpParams()
-    .set('pageNumber', pageNumber)
-    .set('itemsPerPage', itemsPerPage);
-    let cache = this.userChache.get(pageNumber + '-' + itemsPerPage);
-    if(cache){
-      paginatedResult.result = cache;
+      .set('pageNumber', pageNumber)
+      .set('itemsPerPage', itemsPerPage);
+    let cache = this.usersChache.get(pageNumber + '-' + itemsPerPage);
+    if (cache) {
+      paginatedResult = cache;
       return of(paginatedResult);
     }
-    return this.http.get<User[]>(this.baseUrl + 'matches', {observe:'response', params: httpParams})
-    .pipe(
-      map(response => {
-        if(response?.body){
-          paginatedResult.result = response.body;
-        }
-        if(response.headers.get('Pagination')){
-          paginatedResult.pagination = JSON.parse(response.headers.get('Pagination') as string) as Pagination;
-        }
-        this.userChache.set(pageNumber + '-' + itemsPerPage, paginatedResult.result);
-        this.paginationInfo = paginatedResult.pagination;
-        return paginatedResult;
-    }));
+    return this.http.get<User[]>(this.baseUrl + 'matches', { observe: 'response', params: httpParams })
+      .pipe(
+        map(response => {
+          if (response?.body) {
+            paginatedResult.result = response.body;
+          }
+          if (response.headers.get('Pagination')) {
+            paginatedResult.pagination = JSON.parse(response.headers.get('Pagination') as string) as Pagination;
+          }
+          this.usersChache.set(pageNumber + '-' + itemsPerPage, paginatedResult);
+          this.paginationInfo = paginatedResult.pagination;
+          return paginatedResult;
+        }));
 
   }
   updateUser(user: User): Observable<UpdateUser> {
-    const userTosend: UpdateUser  = {
+    const userTosend: UpdateUser = {
       firstName: user.firstName,
       lastName: user.lastName,
       interest: user.interest,
@@ -157,7 +155,7 @@ export class UserService {
       }
     ));
   }
-  getPhotos(){
+  getPhotos() {
     return this.http.get<Photo[]>(this.baseUrl + "users/photos/all");
   }
 }

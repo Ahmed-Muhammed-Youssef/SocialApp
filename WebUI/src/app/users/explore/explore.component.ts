@@ -16,7 +16,7 @@ export class ExploreComponent implements OnInit {
   pagination: Pagination | null = null;
   userParams: UserParams | null = null;
   genderList = [{ value: 'm', display: 'Males' }, { value: 'f', display: 'Females' }, { value: 'b', display: 'Both' }];
-  orderByOptions = [{ value: 'lastActive', display: 'Last Active' }, { value: 'creationTime', display: 'Newest Users' }, { value: 'age', display: 'Age' }];
+  orderByOptions = [{ value: 'lastActive', display: 'Last Active' }, { value: 'creationTime', display: 'Newest' }, { value: 'age', display: 'Age' }];
   constructor(private userService: UserService, private breakpointObserver: BreakpointObserver) {
     breakpointObserver.observe(["(max-width: 750px)"])
       .subscribe(
@@ -33,7 +33,7 @@ export class ExploreComponent implements OnInit {
     this.loadUsers();
   }
   loadUsers() {
-    this.userService.setUserParams(this.userParams as UserParams);
+    // this.userService.setUserParams(this.userParams as UserParams);
     this.userService.getAllUsers(this.userParams as UserParams).subscribe(
       response => {
         if (response) {
@@ -51,7 +51,7 @@ export class ExploreComponent implements OnInit {
     if ($event) {
       if ($event && this.userParams) {
         this.userParams.pageNumber = $event.pageIndex + 1;
-        this.userService.setUserParams(this.userParams);
+        // this.userService.setUserParams(this.userParams);
         this.loadUsers();
       }
     }

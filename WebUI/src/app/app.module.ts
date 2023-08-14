@@ -41,7 +41,7 @@ import { HasRoleDirective } from './_directives/has-role.directive';
 import { UserManagementComponent } from './admin/user-management/user-management.component';
 import { PhotoManagementComponent } from './admin/photo-management/photo-management.component';
 import { RoleEditDialogComponent } from './admin/role-edit-dialog/role-edit-dialog.component';
-import { ContactComponent } from './contact/contact.component';
+import { InboxComponent } from './Inbox/inbox.component';
 
 
 const routes: Routes = [
@@ -51,8 +51,7 @@ const routes: Routes = [
   { path: 'users', component: ExploreComponent, canActivate:[AuthGuard] },
   { path: 'users/username/:username', component: UserDetailComponent, canActivate:[AuthGuard], resolve: {user: UserDetailedResolver} },
   { path: 'lists', component: FriendsListComponent, canActivate:[AuthGuard] },
-  { path: 'messages', component: ContactComponent, canActivate: [AuthGuard] },
-  { path: 'chat', component: ChatComponent, canActivate: [AuthGuard] },
+  { path: 'messages', component: InboxComponent, canActivate: [AuthGuard] },
   { path: 'admin', component: AdminPanelComponent, canActivate: [AuthGuard, AdminGuard]},
   { path: 'users/edit', component: UserEditComponent, canActivate: [AuthGuard], canDeactivate: [PreventUnsavedChangesGuard] },
   /*{
@@ -96,7 +95,7 @@ const routes: Routes = [
     UserManagementComponent,
     PhotoManagementComponent,
     RoleEditDialogComponent,
-    ContactComponent
+    InboxComponent
   ],
   imports: [
     BrowserModule, HttpClientModule,

@@ -17,7 +17,6 @@
     font-weight: normal;
     margin-bottom: 0;
 }
-/* chat */
 .online{
     height: 10px;
     width: 10px;
@@ -25,20 +24,23 @@
     border-radius: 50%;
     display: inline-block;
 }
-.matches-container {
+.friends-container {
     display: flex;
     flex-direction: column;
-    flex-wrap: wrap;
-    width: 100%;
-    align-items: center;
 }
-.match-card{
+.cards-container{
+    flex-grow: 1;
+}
+.chat-container {
+    height: 520px;
+}
+.friend-card{
     display: flex;
     flex-direction: row;  
     padding: 8px;
-    width: 250px;
+    width: 100%;
 }
-.match-img-circle {
+.friend-img-circle {
     max-height: 40px;
     max-width: 40px;
   
@@ -48,10 +50,10 @@
 .about {
     margin-left: 8px;
 }
-.match-card:hover{
+.friend-card:hover{
     cursor: pointer;
     background-color: #D2D2FF;
 }
-.match-card:active{
+.friend-card:active{
     background-color: #D2D2FF;
 }

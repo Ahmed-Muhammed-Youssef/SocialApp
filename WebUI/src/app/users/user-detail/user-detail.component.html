@@ -1,12 +1,17 @@
+<div [ngClass]="(isMobilePhone)? 'mobile-subtitle-margin': 'normal-subtitle-margin'" class="subtitle-container">
+  <h1 class="subtitle">
+    {{user.firstName}} {{user.lastName}}
+  </h1>
+</div>
 <div class="profile" *ngIf="user.username">
   <mat-card class="info-card" *ngIf="!isMobilePhone">
     <mat-card-header>
       <mat-card-title>{{user.firstName}} {{user.lastName}}</mat-card-title>
       <mat-card-subtitle *ngIf="(presenceService.onlineUsers$ | async)?.includes(user.username)"> <span class="online"></span> Active now</mat-card-subtitle>
     <!-- Foramt the last time online -->
-    <mat-card-subtitle *ngIf="!(presenceService.onlineUsers$ | async)?.includes(user.username)">{{getLoacaleDateTime(user.lastActive) }}</mat-card-subtitle>
+    <mat-card-subtitle *ngIf="!(presenceService.onlineUsers$ | async)?.includes(user.username)">{{getDateTimeAgo(user.lastActive)}}</mat-card-subtitle>
     </mat-card-header>
-    <img mat-card-image src="{{user.photos[0].url || './assets/Pictures/profile-placeholder.png'}}" 
+    <img mat-card-image src="{{profilePicture?.url || './assets/Pictures/profile-placeholder.png'}}" 
     alt="profile picture">
     <mat-card-content>
         <div>
@@ -23,13 +28,12 @@
         </div>
 
     </mat-card-content>
-    <mat-card-actions class="text-center">
-      <button mat-button color="accent" *ngIf="!isLiked" (click)="addLike()">
-        <mat-icon>favorite</mat-icon>  LIKE
+    <mat-card-actions class="d-block text-center">
+      <button mat-flat-button color="accent" *ngIf="!isLiked" (click)="addLike()">
+        <i class="material-icons me-1">person_add_alt_1</i> Add friend
       </button>
-      <button mat-button color="primary" *ngIf="isMatch" routerLink="/chat" [state]="user">
-        <mat-icon>chat</mat-icon>
-        Chat
+      <button mat-flat-button color="primary" *ngIf="isMatch" routerLink="/chat" [state]="user">
+        <mat-icon>chat</mat-icon> Message
       </button>
     </mat-card-actions>
   </mat-card>
