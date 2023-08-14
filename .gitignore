@@ -456,3 +456,4 @@ API/dataingapp.db
 *.db-wal
 *.db-shm
 /API/socialapp.db
+/API/socialapp.db
