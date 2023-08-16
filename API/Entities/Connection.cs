@@ -8,8 +8,8 @@ namespace API.Entities
         }
         public Connection(string connectionId, int userId) 
         {
-            this.ConnectionId = connectionId;
-            this.UserId = userId;
+            ConnectionId = connectionId;
+            UserId = userId;
         }
         
         public string ConnectionId { get; set; }

@@ -1,11 +1,9 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace API.Entities
 {
     // dependent entity on AppUser entity
-    public class Match 
+    public class Friend 
     {
         // Foreign Key
         [Required]
@@ -14,8 +12,8 @@ namespace API.Entities
         public AppUser User { get; set; }
         // Foreign Key
         [Required]
-        public int MatchedId { get; set; }
+        public int FriendId { get; set; }
         // Reference navigation property
-        public AppUser Matched { get; set; }
+        public AppUser FriendUser { get; set; }
     }
 }

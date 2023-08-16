@@ -2,7 +2,7 @@
 
 namespace API.Entities
 {
-    public class Photo
+    public class Picture
     {
         [Required]
         public int Id { get; set; }

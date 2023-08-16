@@ -27,19 +27,19 @@ namespace API.Entities
         public string City { get; set; }
         [Required]
         public string Country { get; set; }
-        public ICollection<Photo> Photos { get; set; }
+        public ICollection<Picture> Photos { get; set; }
         public ICollection<Message> MessagesSent { get; set; }
         public ICollection<Message> MessagesReceived { get; set; }
 
         // Collection navigation properties
         public ICollection<AppUserRole> UserRoles { get; set; }
-        [InverseProperty(nameof(Like.Liker))]
-        public ICollection<Like> LikesLikers { get; set; }
-        [InverseProperty(nameof(Like.Liked))]
-        public ICollection<Like> LikesLikees { get; set; }
-        [InverseProperty(nameof(Match.User))]
-        public ICollection<Match> MatchesId { get; set; }
-        [InverseProperty(nameof(Match.Matched))]
-        public ICollection<Match> MatchesMatchedId { get; set; }
+        [InverseProperty(nameof(FriendRequest.Requister))]
+        public ICollection<FriendRequest> LikesLikers { get; set; }
+        [InverseProperty(nameof(FriendRequest.Requisted))]
+        public ICollection<FriendRequest> LikesLikees { get; set; }
+        [InverseProperty(nameof(Friend.User))]
+        public ICollection<Friend> MatchesId { get; set; }
+        [InverseProperty(nameof(Friend.FriendUser))]
+        public ICollection<Friend> MatchesMatchedId { get; set; }
     }
 }

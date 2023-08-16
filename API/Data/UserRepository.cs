@@ -35,7 +35,7 @@ namespace API.Data
         {
             dataContext.Entry(appUser).State = EntityState.Modified;
         }
-        public void UpdatePhoto(Photo photo)
+        public void UpdatePhoto(Picture photo)
         {
             dataContext.Entry(photo).State = EntityState.Modified;
         }
@@ -116,7 +116,7 @@ namespace API.Data
             var result =  await dataContext.Users
               .Where(u => u.Email == email)
               .FirstOrDefaultAsync();
-            result.Photos = (ICollection<Photo>)result.Photos.OrderBy(p => p.Order);
+            result.Photos = (ICollection<Picture>)result.Photos.OrderBy(p => p.Order);
             return result;
         }
         public async Task<UserDTO> GetUserDTOByEmailAsync(string email)
@@ -127,20 +127,20 @@ namespace API.Data
             user.Photos = user.Photos.OrderBy(p => p.Order);
             return user;
         }
-        public async Task<IEnumerable<PhotoDTO>> GetUserPhotoDTOsAsync(int id)
+        public async Task<IEnumerable<PictureDTO>> GetUserPhotoDTOsAsync(int id)
         {
             var result =  await dataContext.Photo
               .Where(p => p.AppUserId == id)
-              .ProjectTo<PhotoDTO>(mapper.ConfigurationProvider)
+              .ProjectTo<PictureDTO>(mapper.ConfigurationProvider)
               .ToListAsync();
             return result.OrderBy(p => p.Order);
         }
-        public async Task<IEnumerable<Photo>> GetUserPhotoAsync(int id)
+        public async Task<IEnumerable<Picture>> GetUserPhotoAsync(int id)
         {
             var result =  dataContext.Photo.Where(p => p.AppUserId == id).OrderBy(p => p.Order);
             return await result.ToListAsync();
         }
-        public async Task<Photo> AddPhotoAsync(Photo photo)
+        public async Task<Picture> AddPhotoAsync(Picture photo)
         {
             var photos = await GetUserPhotoDTOsAsync(photo.AppUserId);
             photo.Order = photos.Count();
@@ -148,11 +148,11 @@ namespace API.Data
             await dataContext.Photo.AddAsync(photo);
             return photo;
         }
-        public void DeletePhoto(Photo photo)
+        public void DeletePhoto(Picture photo)
         {
             dataContext.Photo.Remove(photo);
         }
-        public async Task<Photo> GetProfilePhotoAsync(int userId)
+        public async Task<Picture> GetProfilePhotoAsync(int userId)
         {
             var user = await GetUserByIdAsync(userId);
             if(user == null)

@@ -1,24 +1,22 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace API.Entities
 {
     // dependent entity on AppUser entity
-    public class Like 
+    public class FriendRequest 
     {
         // Foreign Key
         [Required]
-        public int LikerId { get; set; }
+        public int RequisterId { get; set; }
         // Reference navigation property
-        public AppUser Liker { get; set; }
+        public AppUser Requister { get; set; }
 
         // Foreign Key
         [Required]
-        public int LikedId { get; set; }
+        public int RequistedId { get; set; }
         // Reference navigation property
-        public AppUser Liked { get; set; }
+        public AppUser Requisted { get; set; }
         [Required]
         public DateTime Date { get; set; } = DateTime.UtcNow;
     }

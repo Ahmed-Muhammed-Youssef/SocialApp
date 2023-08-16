@@ -12,9 +12,9 @@ namespace API.Data
         public DataContext(DbContextOptions options) : base(options)
         {
         }
-        public DbSet<Like> Likes { get; set; }
-        public DbSet<Match> Matches { get; set; }
-        public DbSet<Photo> Photo { get; set; }
+        public DbSet<FriendRequest> Likes { get; set; }
+        public DbSet<Friend> Matches { get; set; }
+        public DbSet<Picture> Photo { get; set; }
         public DbSet<Message> Messages { get; set; }
         public DbSet<Group> Groups { get; set; }
         public DbSet<Connection> Connections { get; set; }
@@ -32,10 +32,10 @@ namespace API.Data
                .WithOne(ur => ur.Role)
                .HasForeignKey(ur => ur.RoleId)
                .IsRequired();
-            modelBuilder.Entity<Match>()
-            .HasKey(m => new { m.UserId, m.MatchedId });
-            modelBuilder.Entity<Like>()
-            .HasKey(l => new { l.LikedId, l.LikerId });
+            modelBuilder.Entity<Friend>()
+            .HasKey(m => new { m.UserId, m.FriendId });
+            modelBuilder.Entity<FriendRequest>()
+            .HasKey(l => new { l.RequistedId, l.RequisterId });
             modelBuilder.Entity<Message>()
                 .HasOne(m => m.Sender)
                 .WithMany(u => u.MessagesSent)
