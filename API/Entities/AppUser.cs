@@ -32,11 +32,11 @@ namespace API.Entities
         public ICollection<Message> MessagesReceived { get; set; }
 
         // Collection navigation properties
+        public ICollection<FriendRequest> FriendRequestsSent { get; set; }
+        public ICollection<FriendRequest> FriendRequestsReceived { get; set; }
         public ICollection<AppUserRole> UserRoles { get; set; }
-        [InverseProperty(nameof(FriendRequest.Requester))]
-        public ICollection<FriendRequest> LikesLikers { get; set; }
-        [InverseProperty(nameof(FriendRequest.Requested))]
-        public ICollection<FriendRequest> LikesLikees { get; set; }
+
+
         [InverseProperty(nameof(Friend.User))]
         public ICollection<Friend> FriendsId { get; set; }
         [InverseProperty(nameof(Friend.FriendUser))]

@@ -25,6 +25,7 @@ namespace API.Data
             modelBuilder.ApplyConfiguration(new PictureConfigurations());
             modelBuilder.ApplyConfiguration(new MessageConfigurations());
             modelBuilder.ApplyConfiguration(new GroupConfigurations());
+            modelBuilder.ApplyConfiguration(new FriendRequestConfigurations());
 
             modelBuilder.Entity<AppUser>()
                 .HasMany(u => u.UserRoles)
@@ -38,8 +39,6 @@ namespace API.Data
                .IsRequired();
             modelBuilder.Entity<Friend>()
             .HasKey(m => new { m.UserId, m.FriendId });
-            modelBuilder.Entity<FriendRequest>()
-            .HasKey(l => new { l.RequestedId, l.RequesterId });
             modelBuilder.Entity<Message>()
                 .HasOne(m => m.Sender)
                 .WithMany(u => u.MessagesSent)
