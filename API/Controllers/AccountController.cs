@@ -1,11 +1,8 @@
-﻿using API.Data;
-using API.DTOs;
+﻿using API.DTOs;
 using API.Entities;
 using API.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Security.Cryptography;
-using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using API.Helpers;
@@ -32,6 +29,7 @@ namespace API.Controllers
             this.mapper = mapper;
             this.unitOfWork = unitOfWork;
         }
+        // POST: api/account/register
         [HttpPost("register")]
         public async Task<ActionResult> Register(RegisterDTO accountDTO)
         {
@@ -55,7 +53,7 @@ namespace API.Controllers
             {
                 return BadRequest("Failed to register the user.");
             }
-            var userData = await unitOfWork.UserRepository.GetUserDTOByUsernameAsync(accountDTO.UserName);
+            var userData = await unitOfWork.UsersRepository.GetUserDTOByUsernameAsync(accountDTO.UserName);
             var adddRoleresult = await userManager.AddToRoleAsync(newUser, "user");
             if (!adddRoleresult.Succeeded)
             {
@@ -68,6 +66,7 @@ namespace API.Controllers
                     Token = await tokenService.CreateTokenAsync(newUser)
                 });
         }
+        // POST: api/account/login
         [HttpPost("login")]
         public async Task<ActionResult<TokenDTO>> Login(LoginDTO loginCredentials)
         {
@@ -75,7 +74,7 @@ namespace API.Controllers
             {
                 return BadRequest(loginCredentials);
             }
-            var user = await userManager.Users.Include(u => u.Photos).FirstOrDefaultAsync(u => u.Email == loginCredentials.Email);           
+            var user = await userManager.Users.Include(u => u.Pictures).FirstOrDefaultAsync(u => u.Email == loginCredentials.Email);           
             if(user == null)
             {
                 return Unauthorized();
@@ -86,7 +85,7 @@ namespace API.Controllers
             {
                 return Unauthorized();
             }
-            var userData = await unitOfWork.UserRepository.GetUserDTOByEmailAsync(loginCredentials.Email);
+            var userData = await unitOfWork.UsersRepository.GetUserDTOByEmailAsync(loginCredentials.Email);
 
             return Ok(new TokenDTO()
             {
@@ -94,6 +93,8 @@ namespace API.Controllers
                 Token = await tokenService.CreateTokenAsync(user)
             });
         }
+
+        // Utility Methods
         private async Task<bool> EmailExists(string email)
         {
             return await userManager.Users.AnyAsync(u => u.Email == email);

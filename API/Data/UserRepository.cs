@@ -35,17 +35,20 @@ namespace API.Data
         {
             dataContext.Entry(appUser).State = EntityState.Modified;
         }
-        public void UpdatePhoto(Picture photo)
+        public void UpdatePicture(Picture picture)
         {
-            dataContext.Entry(photo).State = EntityState.Modified;
+            dataContext.Entry(picture).State = EntityState.Modified;
         }
         public async Task<char> GetUserInterest(int userId)
         {
-            return await dataContext.Users.Where(u => u.Id == userId).Select(u => u.Interest).FirstOrDefaultAsync();
+            return await dataContext.Users.Where(u => u.Id == userId)
+                .Select(u => u.Interest)
+                .FirstOrDefaultAsync();
         }
         public async Task<PagedList<UserDTO>> GetUsersDTOAsync(string username, UserParams userParams, List<int> forbiddenIds)
         {
-            var query = dataContext.Users.AsQueryable().Where(u => u.UserName != username);
+            var query = dataContext.Users.AsQueryable()
+                .Where(u => u.UserName != username);
             if(userParams.Sex != "b")
             {
                 query = query.Where(u => u.Sex == userParams.Sex[0]);
@@ -78,7 +81,7 @@ namespace API.Data
             // order the photos according to the order value.
             pagedResult.ForEach(user =>
             {
-                user.Photos = user.Photos.OrderBy(p => p.Order);
+                user.Pictures = user.Pictures.OrderBy(p => p.Order);
             });
             return pagedResult;
         }
@@ -93,7 +96,7 @@ namespace API.Data
             var result = await dataContext.Users
                 .Where(u => u.Id == id)
                 .ProjectTo<UserDTO>(mapper.ConfigurationProvider).FirstOrDefaultAsync();
-            result.Photos = result.Photos.OrderBy(p => p.Order);
+            result.Pictures = result.Pictures.OrderBy(p => p.Order);
             return result;
         }
         public async Task<UserDTO> GetUserDTOByUsernameAsync(string username)
@@ -101,7 +104,7 @@ namespace API.Data
             var result =  await dataContext.Users
                .Where(u => u.UserName == username)
                .ProjectTo<UserDTO>(mapper.ConfigurationProvider).FirstOrDefaultAsync();
-            result.Photos = result.Photos.OrderBy(p => p.Order);
+            result.Pictures = result.Pictures.OrderBy(p => p.Order);
             return result;
         } 
         public async Task<AppUser> GetUserByUsernameAsync(string username)
@@ -124,10 +127,10 @@ namespace API.Data
             var user = await dataContext.Users
               .Where(u => u.Email == email)
               .ProjectTo<UserDTO>(mapper.ConfigurationProvider).FirstOrDefaultAsync();
-            user.Photos = user.Photos.OrderBy(p => p.Order);
+            user.Pictures = user.Pictures.OrderBy(p => p.Order);
             return user;
         }
-        public async Task<IEnumerable<PictureDTO>> GetUserPhotoDTOsAsync(int id)
+        public async Task<IEnumerable<PictureDTO>> GetUserPictureDTOsAsync(int id)
         {
             var result =  await dataContext.Pictures
               .Where(p => p.AppUserId == id)
@@ -135,24 +138,26 @@ namespace API.Data
               .ToListAsync();
             return result.OrderBy(p => p.Order);
         }
-        public async Task<IEnumerable<Picture>> GetUserPhotoAsync(int id)
+        public async Task<IEnumerable<Picture>> GetUserPictureAsync(int id)
         {
-            var result =  dataContext.Pictures.Where(p => p.AppUserId == id).OrderBy(p => p.Order);
+            var result =  dataContext.Pictures
+                .Where(p => p.AppUserId == id)
+                .OrderBy(p => p.Order);
             return await result.ToListAsync();
         }
-        public async Task<Picture> AddPhotoAsync(Picture photo)
+        public async Task<Picture> AddPictureAsync(Picture picture)
         {
-            var photos = await GetUserPhotoDTOsAsync(photo.AppUserId);
-            photo.Order = photos.Count();
+            var photos = await GetUserPictureDTOsAsync(picture.AppUserId);
+            picture.Order = photos.Count();
 
-            await dataContext.Pictures.AddAsync(photo);
-            return photo;
+            await dataContext.Pictures.AddAsync(picture);
+            return picture;
         }
-        public void DeletePhoto(Picture photo)
+        public void DeletePicture(Picture picture)
         {
-            dataContext.Pictures.Remove(photo);
+            dataContext.Pictures.Remove(picture);
         }
-        public async Task<Picture> GetProfilePhotoAsync(int userId)
+        public async Task<Picture> GetProfilePictureAsync(int userId)
         {
             var user = await GetUserByIdAsync(userId);
             if(user == null)

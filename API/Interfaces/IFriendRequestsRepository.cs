@@ -8,11 +8,11 @@ namespace API.Interfaces
 {
     public interface IFriendRequestsRepository
     {
-        public Task<bool> SendFriendRequest(int likerId, int likedId);
-        public Task<FriendRequest> GetFriendRequestAsync(int likerId, int likedId);
-        public Task<IEnumerable<UserDTO>> GetFriendRequestedUsersDTOAsync(int likerId);
-        public Task<IEnumerable<int>> GetFriendRequestedUsersIdAsync(int likerId);
-        public Task<bool> IsFriend(int userId, int matchedId);
+        public Task<bool> SendFriendRequest(int senderId, int targetId);
+        public Task<FriendRequest> GetFriendRequestAsync(int senderId, int targetId);
+        public Task<IEnumerable<UserDTO>> GetFriendRequestedUsersDTOAsync(int senderId);
+        public Task<IEnumerable<int>> GetFriendRequestedUsersIdAsync(int senderId);
+        public Task<bool> IsFriend(int userId, int targetId);
         public Task<PagedList<UserDTO>> GetFriendsAsync(int id, PaginationParams paginationParams);
     }
 }

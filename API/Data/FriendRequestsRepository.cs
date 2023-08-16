@@ -53,7 +53,7 @@ namespace API.Data
             var pagedResult = await PagedList<UserDTO>
                 .CreatePageAsync(queryDto, paginationParams.PageNumber, paginationParams.ItemsPerPage);
 
-            pagedResult.ForEach(u => u.Photos.OrderBy(p => p.Order));
+            pagedResult.ForEach(u => u.Pictures.OrderBy(p => p.Order));
 
             return pagedResult;
         }

@@ -19,13 +19,17 @@ namespace API.Controllers
         {
             this.context = context;
         }
+
+        // GET: api/buggy/auth
         [Authorize]
         [HttpGet("auth")]
         public ActionResult<string> GetSecret()
         {
             return "secret text";
         }
-        [HttpGet("not-foud")]
+
+        // GET: api/buggy/not-found
+        [HttpGet("not-found")]
         public ActionResult<AppUser> GetNotFound()
         {
             var search = context.Users.Find(-1);
@@ -34,7 +38,9 @@ namespace API.Controllers
                 return NotFound();
             }
             return Ok(search);
-        } 
+        }
+        
+        // GET: api/buggy/server-error
         [HttpGet("server-error")]
         public ActionResult<AppUser> GetServerError()
         {
@@ -42,6 +48,8 @@ namespace API.Controllers
             var toPrint = thing.ToString();
             return Ok(toPrint);
         } 
+
+        // GET: api/buggy/bad-request
         [HttpGet("bad-request")]
         public  ActionResult<string> GetBadRequest()
         {

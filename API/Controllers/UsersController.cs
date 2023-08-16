@@ -30,26 +30,27 @@ namespace API.Controllers
             this.photoService = photoService;
         }
 
-        // GET: api/Users
+        // GET: api/users/all
         [HttpGet("all")]
         public async Task<ActionResult<IEnumerable<UserDTO>>> GetUsers([FromQuery] UserParams userParams)
         {
             if(string.IsNullOrEmpty(userParams.Sex))
             {
-                var interest = await unitOfWork.UserRepository.GetUserInterest(User.GetId());
+                var interest = await unitOfWork.UsersRepository.GetUserInterest(User.GetId());
                 userParams.Sex = interest.ToString();
             }
-            var forbiddenIds = await unitOfWork.LikesRepository.GetLikedUsersIdAsync(User.GetId());
-            var users = await unitOfWork.UserRepository.GetUsersDTOAsync(User.GetUsername() ,userParams, forbiddenIds.ToList());
+            var forbiddenIds = await unitOfWork.FriendRequestsRepository.GetFriendRequestedUsersIdAsync(User.GetId());
+            var users = await unitOfWork.UsersRepository.GetUsersDTOAsync(User.GetUsername() ,userParams, forbiddenIds.ToList());
             var newPaginationHeader = new PaginationHeader(users.CurrentPage, users.ItemsPerPage, users.TotalCount, users.TotalPages);
             Response.AddPaginationHeader(newPaginationHeader);
             return Ok(users);
         }
 
+        // GET: api/users/info/id/{id}
         [HttpGet("info/id/{id}")]
         public async Task<ActionResult<UserDTO>> GetUser(int id)
         {
-            var user = await unitOfWork.UserRepository.GetUserDTOByIdAsync(id);
+            var user = await unitOfWork.UsersRepository.GetUserDTOByIdAsync(id);
 
             if (user == null)
             {
@@ -57,10 +58,12 @@ namespace API.Controllers
             }
             return Ok(user);
         }
+
+        // GET: api/users/info/username/{username}
         [HttpGet("info/username/{username}")]
         public async Task<ActionResult<UserDTO>> GetUser(string username)
         {
-            var user = await unitOfWork.UserRepository.GetUserDTOByUsernameAsync(username);
+            var user = await unitOfWork.UsersRepository.GetUserDTOByUsernameAsync(username);
 
             if (user == null)
             {
@@ -68,6 +71,8 @@ namespace API.Controllers
             }
             return Ok(user);
         }
+
+        // PUT: api/users/update
         [HttpPut("update")]
         public async Task<ActionResult<UpdatedUserDTO>> PutUser(UpdatedUserDTO userDTO)
         {
@@ -75,14 +80,14 @@ namespace API.Controllers
             {
                 return BadRequest(userDTO);
             }
-            var appUser = await unitOfWork.UserRepository.GetUserByUsernameAsync(User.GetUsername());
+            var appUser = await unitOfWork.UsersRepository.GetUserByUsernameAsync(User.GetUsername());
 
             if (appUser == null)
             {
                 return BadRequest(userDTO);
             }
             mapper.Map(userDTO, appUser);
-            unitOfWork.UserRepository.Update(appUser);
+            unitOfWork.UsersRepository.Update(appUser);
 
             if(await unitOfWork.Complete())
             {
@@ -90,61 +95,65 @@ namespace API.Controllers
             }
             return BadRequest(userDTO);
         }
-        [HttpPost("photo/upload")]
-        public async Task<ActionResult<PhotoDTO>> AddPhoto(IFormFile file)
+
+        // POST: api/users/picture/upload
+        [HttpPost("picture/upload")]
+        public async Task<ActionResult<PictureDTO>> UploadPicture(IFormFile file)
         {
-            var user = await unitOfWork.UserRepository.GetUserByUsernameAsync(User.GetUsername());
+            var user = await unitOfWork.UsersRepository.GetUserByUsernameAsync(User.GetUsername());
             var result = await photoService.AddPhotoAsync(file);
             if(result.Error != null)
             {
                 return BadRequest(result.Error.Message);
             }
-            var photo = new Photo
+            var photo = new Picture
             {
                 AppUserId = user.Id,
                 Url = result.SecureUrl.AbsoluteUri,
                 PublicId = result.PublicId
             };
 
-            photo = await unitOfWork.UserRepository.AddPhotoAsync(photo);
+            photo = await unitOfWork.UsersRepository.AddPictureAsync(photo);
 
             if(await unitOfWork.Complete())
             {
-                return CreatedAtAction(nameof(GetUser), new { username = user.UserName }, mapper.Map<PhotoDTO>(photo));
+                return CreatedAtAction(nameof(GetUser), new { username = user.UserName }, mapper.Map<PictureDTO>(photo));
             }
             return BadRequest();
         }
-        [HttpDelete("photo/delete/{photoId}")]
-        public async Task<ActionResult<PhotoDTO>> DeletePhoto(int photoId)
+
+        // DELETE: api/users/picture/delete/{pictureId}
+        [HttpDelete("picture/delete/{pictureId}")]
+        public async Task<ActionResult<PictureDTO>> DeletePhoto(int pictureId)
         {
-            var user = await unitOfWork.UserRepository.GetUserByUsernameAsync(User.GetUsername());
-            var photos = await unitOfWork.UserRepository.GetUserPhotoAsync(user.Id);
-            var photo = photos.FirstOrDefault(p => p.Id == photoId);
-            if(photo == null)
+            var user = await unitOfWork.UsersRepository.GetUserByUsernameAsync(User.GetUsername());
+            var pictures = await unitOfWork.UsersRepository.GetUserPictureAsync(user.Id);
+            var picture = pictures.FirstOrDefault(p => p.Id == pictureId);
+            if(picture == null)
             {
-                return BadRequest($"{photoId} doesn't exist.");
+                return BadRequest($"{pictureId} doesn't exist.");
             }
-            if(photo.AppUserId != user.Id)
+            if(picture.AppUserId != user.Id)
             {
                 return Unauthorized();
             }
-            if(photo.Order == 0)
+            if(picture.Order == 0)
             {
                 return BadRequest("you can't delete your profile picture.");
             }
-            var result = await photoService.DeletePhotoAsync(photo.PublicId);
+            var result = await photoService.DeletePhotoAsync(picture.PublicId);
             if (result.Error != null)
             {
                 return BadRequest(result.Error.Message);
             }
-            unitOfWork.UserRepository.DeletePhoto(photo);
+            unitOfWork.UsersRepository.DeletePicture(picture);
 
             // reorder the photos
-            var photosList = photos.ToList();
-            for (int i = photo.Order + 1; i < photosList.Count(); i++)
+            var picturesList = pictures.ToList();
+            for (int i = picture.Order + 1; i < picturesList.Count(); i++)
             {
-                photosList[i].Order--;
-                unitOfWork.UserRepository.UpdatePhoto(photosList[i]);
+                picturesList[i].Order--;
+                unitOfWork.UsersRepository.UpdatePicture(picturesList[i]);
             }
             if (await unitOfWork.Complete())
             {
@@ -152,53 +161,57 @@ namespace API.Controllers
             }
             return BadRequest("failed to delete the image from the server.");
         }
-        [HttpGet("photos/all")]
-        public async Task<ActionResult<PhotoDTO>> GetPhotos()
+
+        // GET: api/users/pictures/all
+        [HttpGet("pictures/all")]
+        public async Task<ActionResult<PictureDTO>> GetPictures()
         {
-            var photos = await unitOfWork.UserRepository.GetUserPhotoDTOsAsync(User.GetId()); //the output is ordered
-            return Ok(photos);
+            var pictures = await unitOfWork.UsersRepository.GetUserPictureDTOsAsync(User.GetId()); //the output is ordered
+            return Ok(pictures);
         }
-        [HttpPut("photos/reorder")]
-        public async Task<ActionResult<PhotoDTO>> ReorderPhotos(IEnumerable<PhotoDTO> photoDTOs)
+
+        // GET: api/users/pictures/reorder
+        [HttpPut("pictures/reorder")]
+        public async Task<ActionResult<PictureDTO>> ReorderPictures(IEnumerable<PictureDTO> pictureDTOs)
         {
-            var user = await unitOfWork.UserRepository.GetUserByUsernameAsync(User.GetUsername());
-            var photos = await unitOfWork.UserRepository.GetUserPhotoAsync(user.Id); //the output is ordered
-            if(photoDTOs.Count() != photos.Count())
+            var user = await unitOfWork.UsersRepository.GetUserByUsernameAsync(User.GetUsername());
+            var pictures = await unitOfWork.UsersRepository.GetUserPictureAsync(user.Id); //the output is ordered
+            if(pictureDTOs.Count() != pictures.Count())
             {
-                return BadRequest(photoDTOs);
+                return BadRequest(pictureDTOs);
             }
-            var listOfDTOs = photoDTOs.OrderBy(p => p.Order).ToList();
+            var listOfDTOs = pictureDTOs.OrderBy(p => p.Order).ToList();
             // checks if the incoming list has invalid order values
             for (int i = 0; i < listOfDTOs.Count(); i++)
             {
                 if(listOfDTOs[i].Order != i)
                 {
-                    return BadRequest(photoDTOs);
+                    return BadRequest(pictureDTOs);
                 }
             }
-            foreach (var photo in photos)
+            foreach (var picture in pictures)
             {
-                if(photo.Id == listOfDTOs[photo.Order].Id)
+                if(picture.Id == listOfDTOs[picture.Order].Id)
                 {
-                    if(photo.Url != listOfDTOs[photo.Order].Url)
+                    if(picture.Url != listOfDTOs[picture.Order].Url)
                     {
-                        return BadRequest(photoDTOs);
+                        return BadRequest(pictureDTOs);
                     }
-                    continue; // the current photo order still the same.
+                    continue; // the current picture order still the same.
                 }
-                // the following executes if the current photo order is changed.
-                var photoDTO = listOfDTOs.FirstOrDefault(p => p.Id == photo.Id);
+                // the following executes if the current picture order is changed.
+                var pictureDTO = listOfDTOs.FirstOrDefault(p => p.Id == picture.Id);
                 // checks if there is any data changed rather than the order.
-                if(photoDTO.Url != photo.Url)
+                if(pictureDTO.Url != picture.Url)
                 {
-                    return BadRequest(photoDTOs);
+                    return BadRequest(pictureDTOs);
                 }
-                photo.Order = photoDTO.Order;
-                unitOfWork.UserRepository.UpdatePhoto(photo);
+                picture.Order = pictureDTO.Order;
+                unitOfWork.UsersRepository.UpdatePicture(picture);
             }
             if(await unitOfWork.Complete())
             {
-                return Ok(photoDTOs);
+                return Ok(pictureDTOs);
             }
             return BadRequest("nothing has changed.");
         }

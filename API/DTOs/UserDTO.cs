@@ -1,5 +1,4 @@
-﻿using API.Entities;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
@@ -32,6 +31,6 @@ namespace API.DTOs
         [Required]
         public string Country { get; set; }
 
-        public IEnumerable<PictureDTO> Photos { get; set; }
+        public IEnumerable<PictureDTO> Pictures { get; set; }
     }
 }

@@ -74,7 +74,7 @@ namespace API.SignalR
                 ReadDate = null
             };
             var msgDTO = mapper.Map<MessageDTO>(createdMessage);
-            var profilePhoto = await unitOfWork.UsersRepository.GetProfilePhotoAsync(sender.Id);
+            var profilePhoto = await unitOfWork.UsersRepository.GetProfilePictureAsync(sender.Id);
             if(profilePhoto != null)
             {
                 msgDTO.SenderPhotoUrl = profilePhoto.Url;

@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -24,6 +23,8 @@ namespace API.Controllers
             this.roleManager = roleManager;
             this.userManager = userManager;
         }
+
+        // GET: roles/all
         [Authorize(Policy="RequireAdminRole")]
         [HttpGet("all")]
         public async Task<ActionResult<IEnumerable<string>>> GetRoles()
@@ -31,6 +32,9 @@ namespace API.Controllers
             var result = await roleManager.Roles.Select(r => r.Name).ToListAsync();
             return Ok(result);
         }
+
+        // @ToDo: add pagination this endpoint takes alot of time
+        // GET: roles/users-roles/all
         [Authorize(Policy = "RequireAdminRole")]
         [HttpGet("users-roles/all")]
         public async Task<ActionResult> GetUsersRoles()
@@ -47,6 +51,8 @@ namespace API.Controllers
                 .ToListAsync();
             return Ok(result);
         }
+
+        // GET: roles/user/{username}
         [Authorize(Policy = "RequireAdminRole")]
         [HttpGet("user/{username}")]
         public async Task<ActionResult<IEnumerable<string>>> GetUserRoles(string username)
@@ -60,6 +66,8 @@ namespace API.Controllers
            
             return Ok(result);
         }
+
+        // GET: roles/user
         [HttpGet("user")]
         public ActionResult<IEnumerable<string>> GetMyRoles()
         {
@@ -67,6 +75,8 @@ namespace API.Controllers
 
             return Ok(result);
         }
+
+        // POST: roles/create/{role}
         [Authorize(Policy = "RequireAdminRole")]
         [HttpPost("create/{role}")]
         public async Task<IActionResult>  CreateRole(string role)
@@ -79,6 +89,8 @@ namespace API.Controllers
             }
             return Ok(role);
         }
+
+        // POST: roles/add
         [Authorize(Policy = "RequireAdminRole")]
         [HttpPost("add")]
         public async Task<IActionResult> AddRoleToUser(RoleUserDTO roleUser)
@@ -100,6 +112,8 @@ namespace API.Controllers
             }
             return Ok();
         }
+
+        // DELETE: roles/delete/{role}
         [Authorize(Policy = "RequireAdminRole")]
         [HttpDelete("delete/{role}")]
         public async Task<IActionResult> DeleteRole(string role)
@@ -116,6 +130,8 @@ namespace API.Controllers
             }
             return NoContent();
         }
+
+        // DELETE: roles/removefrom
         [Authorize(Policy = "RequireAdminRole")]
         [HttpDelete("removefrom")]
         public async Task<IActionResult> RemoveRoleFromUser(RoleUserDTO roleUser)
