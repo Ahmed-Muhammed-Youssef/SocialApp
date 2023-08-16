@@ -28,8 +28,12 @@ namespace API.Controllers
                 return NotFound();
             }
             var issuerId = User.GetId();
-            // IMPORTANT
-            //@ToDo Check if the message is related to the issuer
+            
+            // Checks if the message is related to the issuer
+            if(message.SenderId != issuerId && message.RecipientId != issuerId) 
+            {
+                return BadRequest("Failed to delete the message");
+            }
             _unitOfWork.MessagesRepository.DeleteMessage(message, issuerId);
 
             if (await _unitOfWork.Complete()) { 
