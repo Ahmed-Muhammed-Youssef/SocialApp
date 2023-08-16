@@ -74,11 +74,9 @@ namespace API.SignalR
                 ReadDate = null
             };
             var msgDTO = _mapper.Map<MessageDTO>(createdMessage);
-            var profilePhoto = await _unitOfWork.UsersRepository.GetProfilePictureAsync(sender.Id);
-            if(profilePhoto != null)
-            {
-                msgDTO.SenderPhotoUrl = profilePhoto.Url;
-            }
+           
+            // @ToDo: Add Profile Picture Here
+            // msgDTO.SenderPhotoUrl = null;
             var groupName = GetGroupName(sender.Id, recipient.Id);
             var group = await _unitOfWork.MessagesRepository.GetMessageGroup(groupName);
             if(group.Connections.Any(c => c.UserId == recipient.Id))

@@ -131,7 +131,7 @@ namespace API.Data
                 .AsNoTracking()
                 .Where(u => u.Email == email)
                 .FirstOrDefaultAsync();
-            result.Pictures = (ICollection<Picture>)result.Pictures.OrderBy(p => p.Order);
+            result.Pictures = (ICollection<Picture>)result.Pictures.OrderBy(p => p.Created);
             return result;
         }
         public async Task<UserDTO> GetUserDTOByEmailAsync(string email)
@@ -157,33 +157,17 @@ namespace API.Data
             var result =  _dataContext.Pictures
                 .AsNoTracking()
                 .Where(p => p.AppUserId == id)
-                .OrderBy(p => p.Order);
+                .OrderBy(p => p.Created);
             return await result.ToListAsync();
         }
         public async Task<Picture> AddPictureAsync(Picture picture)
         {
-            var photos = await GetUserPictureDTOsAsync(picture.AppUserId);
-            picture.Order = photos.Count();
-
             await _dataContext.Pictures.AddAsync(picture);
             return picture;
         }
         public void DeletePicture(Picture picture)
         {
             _dataContext.Pictures.Remove(picture);
-        }
-        public async Task<Picture> GetProfilePictureAsync(int userId)
-        {
-            var user = await GetUserByIdAsync(userId);
-            if(user == null)
-            {
-                return null;
-            }
-            var result = await _dataContext.Pictures
-                .AsNoTracking()
-                .Where(p => p.AppUserId == userId)
-                .FirstOrDefaultAsync(p => p.Order == 0);
-            return result;
         }
     }
 }

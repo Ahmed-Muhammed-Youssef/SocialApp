@@ -24,6 +24,5 @@ namespace API.Interfaces
         public Task<IEnumerable<Picture>> GetUserPictureAsync(int id);
         public Task<AppUser> GetUserByEmailAsync(string email);
         public void DeletePicture(Picture picture);
-        public Task<Picture> GetProfilePictureAsync(int userId);
     }
 }
