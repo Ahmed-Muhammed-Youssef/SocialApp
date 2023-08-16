@@ -60,7 +60,7 @@ namespace API.Controllers
         [HttpPost("send/{username}")]
         public async Task<ActionResult> SendFriendRequest(string username)
         {
-            // @ToDo: check if the user is already a friend
+            // retuns true if the user is now a frined
             if(username == null)
             {
                 return BadRequest();
