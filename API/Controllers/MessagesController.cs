@@ -11,18 +11,18 @@ namespace API.Controllers
     [Authorize]
     public class MessagesController : ControllerBase
     {
-        private readonly IUnitOfWork unitOfWork;
+        private readonly IUnitOfWork _unitOfWork;
 
         public MessagesController(IUnitOfWork unitOfWork)
         {
-            this.unitOfWork = unitOfWork;
+            _unitOfWork = unitOfWork;
         }
 
         // DELETE: api/Messages/{id}
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteMessage(int id)
         {
-            var message = await unitOfWork.MessagesRepository.GetMessageAsync(id);
+            var message = await _unitOfWork.MessagesRepository.GetMessageAsync(id);
             if (message == null)
             {
                 return NotFound();
@@ -30,9 +30,9 @@ namespace API.Controllers
             var issuerId = User.GetId();
             // IMPORTANT
             //@ToDo Check if the message is related to the issuer
-            unitOfWork.MessagesRepository.DeleteMessage(message, issuerId);
+            _unitOfWork.MessagesRepository.DeleteMessage(message, issuerId);
 
-            if (await unitOfWork.Complete()) { 
+            if (await _unitOfWork.Complete()) { 
                 return NoContent();
             }
             return BadRequest("Failed to delete the message");

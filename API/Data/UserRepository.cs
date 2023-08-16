@@ -14,40 +14,40 @@ namespace API.Data
 {
     public class UserRepository : IUsersRepository // using the repository design pattern to isolate the contollers further more from the entity framework. (it may not be neccesary)
     {
-        private readonly DataContext dataContext;
-        private readonly IMapper mapper;
+        private readonly DataContext _dataContext;
+        private readonly IMapper _mapper;
 
         public UserRepository(DataContext dataContext, IMapper mapper)
         {
-            this.dataContext = dataContext;
-            this.mapper = mapper;
+            _dataContext = dataContext;
+            _mapper = mapper;
         }
 
         public void DeleteUser(AppUser user)
         {
-            dataContext.Remove(user);
+            _dataContext.Remove(user);
         }
         public async Task<bool> UserExistsAsync(int id)
         {
-            return await dataContext.Users.AnyAsync(e => e.Id == id);
+            return await _dataContext.Users.AnyAsync(e => e.Id == id);
         }
         public void Update(AppUser appUser)
         {
-            dataContext.Entry(appUser).State = EntityState.Modified;
+            _dataContext.Entry(appUser).State = EntityState.Modified;
         }
         public void UpdatePicture(Picture picture)
         {
-            dataContext.Entry(picture).State = EntityState.Modified;
+            _dataContext.Entry(picture).State = EntityState.Modified;
         }
         public async Task<char> GetUserInterest(int userId)
         {
-            return await dataContext.Users.Where(u => u.Id == userId)
+            return await _dataContext.Users.Where(u => u.Id == userId)
                 .Select(u => u.Interest)
                 .FirstOrDefaultAsync();
         }
         public async Task<PagedList<UserDTO>> GetUsersDTOAsync(string username, UserParams userParams, List<int> forbiddenIds)
         {
-            var query = dataContext.Users.AsQueryable()
+            var query = _dataContext.Users.AsQueryable()
                 .Where(u => u.UserName != username);
             if(userParams.Sex != "b")
             {
@@ -75,7 +75,7 @@ namespace API.Data
                 _ => query.OrderByDescending(u => u.LastActive)
             };
             
-            var queryDto = query.ProjectTo<UserDTO>(mapper.ConfigurationProvider).AsNoTracking();
+            var queryDto = query.ProjectTo<UserDTO>(_mapper.ConfigurationProvider).AsNoTracking();
             var pagedResult = await PagedList<UserDTO>.CreatePageAsync(queryDto, userParams.PageNumber, userParams.ItemsPerPage);
             
             // order the photos according to the order value.
@@ -87,36 +87,36 @@ namespace API.Data
         }
         public async Task<AppUser> GetUserByIdAsync(int id)
         {
-            var result = await dataContext.Users
+            var result = await _dataContext.Users
                 .Where(u => u.Id == id).FirstOrDefaultAsync();
             return result;
         }
         public async Task<UserDTO> GetUserDTOByIdAsync(int id)
         {
-            var result = await dataContext.Users
+            var result = await _dataContext.Users
                 .Where(u => u.Id == id)
-                .ProjectTo<UserDTO>(mapper.ConfigurationProvider).FirstOrDefaultAsync();
+                .ProjectTo<UserDTO>(_mapper.ConfigurationProvider).FirstOrDefaultAsync();
             result.Pictures = result.Pictures.OrderBy(p => p.Order);
             return result;
         }
         public async Task<UserDTO> GetUserDTOByUsernameAsync(string username)
         {
-            var result =  await dataContext.Users
+            var result =  await _dataContext.Users
                .Where(u => u.UserName == username)
-               .ProjectTo<UserDTO>(mapper.ConfigurationProvider).FirstOrDefaultAsync();
+               .ProjectTo<UserDTO>(_mapper.ConfigurationProvider).FirstOrDefaultAsync();
             result.Pictures = result.Pictures.OrderBy(p => p.Order);
             return result;
         } 
         public async Task<AppUser> GetUserByUsernameAsync(string username)
         {
-            var result = await dataContext.Users
+            var result = await _dataContext.Users
                 .Where(u => u.UserName == username)
                 .FirstOrDefaultAsync();
             return result;
         }
         public async Task<AppUser> GetUserByEmailAsync(string email)
         {
-            var result =  await dataContext.Users
+            var result =  await _dataContext.Users
               .Where(u => u.Email == email)
               .FirstOrDefaultAsync();
             result.Pictures = (ICollection<Picture>)result.Pictures.OrderBy(p => p.Order);
@@ -124,23 +124,23 @@ namespace API.Data
         }
         public async Task<UserDTO> GetUserDTOByEmailAsync(string email)
         {
-            var user = await dataContext.Users
+            var user = await _dataContext.Users
               .Where(u => u.Email == email)
-              .ProjectTo<UserDTO>(mapper.ConfigurationProvider).FirstOrDefaultAsync();
+              .ProjectTo<UserDTO>(_mapper.ConfigurationProvider).FirstOrDefaultAsync();
             user.Pictures = user.Pictures.OrderBy(p => p.Order);
             return user;
         }
         public async Task<IEnumerable<PictureDTO>> GetUserPictureDTOsAsync(int id)
         {
-            var result =  await dataContext.Pictures
+            var result =  await _dataContext.Pictures
               .Where(p => p.AppUserId == id)
-              .ProjectTo<PictureDTO>(mapper.ConfigurationProvider)
+              .ProjectTo<PictureDTO>(_mapper.ConfigurationProvider)
               .ToListAsync();
             return result.OrderBy(p => p.Order);
         }
         public async Task<IEnumerable<Picture>> GetUserPictureAsync(int id)
         {
-            var result =  dataContext.Pictures
+            var result =  _dataContext.Pictures
                 .Where(p => p.AppUserId == id)
                 .OrderBy(p => p.Order);
             return await result.ToListAsync();
@@ -150,12 +150,12 @@ namespace API.Data
             var photos = await GetUserPictureDTOsAsync(picture.AppUserId);
             picture.Order = photos.Count();
 
-            await dataContext.Pictures.AddAsync(picture);
+            await _dataContext.Pictures.AddAsync(picture);
             return picture;
         }
         public void DeletePicture(Picture picture)
         {
-            dataContext.Pictures.Remove(picture);
+            _dataContext.Pictures.Remove(picture);
         }
         public async Task<Picture> GetProfilePictureAsync(int userId)
         {
@@ -164,7 +164,7 @@ namespace API.Data
             {
                 return null;
             }
-            var result = await dataContext.Pictures
+            var result = await _dataContext.Pictures
             .Where(p => p.AppUserId == userId)
             .FirstOrDefaultAsync(p => p.Order == 0);
             return result;

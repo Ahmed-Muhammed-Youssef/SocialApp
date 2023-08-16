@@ -8,16 +8,16 @@ using System.Threading.Tasks;
 
 namespace API.Services
 {
-    public class PhotoService : IPhotoService
+    public class PictureService : IPictureService
     {
-        private readonly Cloudinary cloudinary;
+        private readonly Cloudinary _cloudinary;
 
-        public PhotoService(IOptions<CloudinarySettings> config)
+        public PictureService(IOptions<CloudinarySettings> config)
         {
             var account = new Account(config.Value.CloudName, config.Value.APIKey, config.Value.APISecret);
-            cloudinary = new Cloudinary(account);
+            _cloudinary = new Cloudinary(account);
         }
-        public async Task<ImageUploadResult> AddPhotoAsync(IFormFile file)
+        public async Task<ImageUploadResult> AddPictureAsync(IFormFile file)
         {
             var uploadResult = new ImageUploadResult();
             if(file.Length > 0)
@@ -28,15 +28,15 @@ namespace API.Services
                     File = new FileDescription(file.FileName, stream),
                     Transformation = new Transformation().Height(500).Width(500).Crop("fill").Gravity("face")
                 };
-                uploadResult = await cloudinary.UploadAsync(uploadParams);
+                uploadResult = await _cloudinary.UploadAsync(uploadParams);
             }
             return uploadResult;
         }
 
-        public async Task<DeletionResult> DeletePhotoAsync(string publiId)
+        public async Task<DeletionResult> DeletePictureAsync(string publiId)
         {
             var deletionParams = new DeletionParams(publiId);
-            var result = await cloudinary.DestroyAsync(deletionParams);
+            var result = await _cloudinary.DestroyAsync(deletionParams);
             return result;
         }
     }

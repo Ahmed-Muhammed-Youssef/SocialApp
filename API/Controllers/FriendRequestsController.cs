@@ -15,10 +15,10 @@ namespace API.Controllers
     [ServiceFilter(typeof(LogUserActivity))]
     public class FriendRequestsController : ControllerBase
     {
-        private readonly IUnitOfWork unitOfWork;
+        private readonly IUnitOfWork _unitOfWork;
         public FriendRequestsController(IUnitOfWork unitOfWork)
         {
-            this.unitOfWork = unitOfWork;
+            _unitOfWork = unitOfWork;
         }
 
         // @ToDo: add pagination for scaling
@@ -26,12 +26,12 @@ namespace API.Controllers
         [HttpGet("sent")]
         public async Task<ActionResult<IEnumerable<UserDTO>>> GetFriendRequestedUsers()
         {
-            var sender = await unitOfWork.UsersRepository.GetUserByIdAsync(User.GetId());
+            var sender = await _unitOfWork.UsersRepository.GetUserByIdAsync(User.GetId());
             if(sender == null)
             {
                 return BadRequest();
             }
-            var friendRequestedUsers = await unitOfWork.FriendRequestsRepository.GetFriendRequestedUsersDTOAsync(sender.Id);
+            var friendRequestedUsers = await _unitOfWork.FriendRequestsRepository.GetFriendRequestedUsersDTOAsync(sender.Id);
             return Ok(friendRequestedUsers);
         }
 
@@ -39,8 +39,8 @@ namespace API.Controllers
         [HttpGet("issent/{username}")]
         public async Task<ActionResult<bool>> IsFriendRequested (string username)
         {
-            var sender = await unitOfWork.UsersRepository.GetUserByIdAsync(User.GetId());
-            var target = await unitOfWork.UsersRepository.GetUserByUsernameAsync(username);
+            var sender = await _unitOfWork.UsersRepository.GetUserByIdAsync(User.GetId());
+            var target = await _unitOfWork.UsersRepository.GetUserByUsernameAsync(username);
             if (sender == null || target == null)
             {
                 return NotFound();
@@ -49,7 +49,7 @@ namespace API.Controllers
             {
                 return BadRequest("you can't check liking yourself.");
             }
-            if (await unitOfWork.FriendRequestsRepository.GetFriendRequestAsync(sender.Id, target.Id) != null)
+            if (await _unitOfWork.FriendRequestsRepository.GetFriendRequestAsync(sender.Id, target.Id) != null)
             {
                 return Ok(true);
             }
@@ -65,8 +65,8 @@ namespace API.Controllers
             {
                 return BadRequest();
             }
-            var sender = await unitOfWork.UsersRepository.GetUserByIdAsync(User.GetId());
-            var target = await unitOfWork.UsersRepository.GetUserByUsernameAsync(username);
+            var sender = await _unitOfWork.UsersRepository.GetUserByIdAsync(User.GetId());
+            var target = await _unitOfWork.UsersRepository.GetUserByUsernameAsync(username);
             if(sender == null || target == null)
             {
                 return NotFound();
@@ -75,12 +75,12 @@ namespace API.Controllers
             {
                 return BadRequest("You can't send friend requests to yourself.");
             }
-            if(await unitOfWork.FriendRequestsRepository.GetFriendRequestAsync(sender.Id, target.Id) != null)
+            if(await _unitOfWork.FriendRequestsRepository.GetFriendRequestAsync(sender.Id, target.Id) != null)
             {
                 return BadRequest("You already sent a frient request to this user.");
             }
-            bool isFriend = await unitOfWork.FriendRequestsRepository.SendFriendRequest(sender.Id, target.Id);
-            if( await unitOfWork.Complete())
+            bool isFriend = await _unitOfWork.FriendRequestsRepository.SendFriendRequest(sender.Id, target.Id);
+            if( await _unitOfWork.Complete())
             {
                 return Ok(isFriend);
             }

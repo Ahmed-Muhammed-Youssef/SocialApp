@@ -13,11 +13,11 @@ namespace API.Controllers
 
     public class BuggyController : ControllerBase
     {
-        private readonly DataContext context;
+        private readonly DataContext _context;
 
         public BuggyController(DataContext context)
         {
-            this.context = context;
+            _context = context;
         }
 
         // GET: api/buggy/auth
@@ -32,7 +32,7 @@ namespace API.Controllers
         [HttpGet("not-found")]
         public ActionResult<AppUser> GetNotFound()
         {
-            var search = context.Users.Find(-1);
+            var search = _context.Users.Find(-1);
             if(search == null)
             {
                 return NotFound();
@@ -44,7 +44,7 @@ namespace API.Controllers
         [HttpGet("server-error")]
         public ActionResult<AppUser> GetServerError()
         {
-            var thing = context.Users.Find(-1);
+            var thing = _context.Users.Find(-1);
             var toPrint = thing.ToString();
             return Ok(toPrint);
         } 

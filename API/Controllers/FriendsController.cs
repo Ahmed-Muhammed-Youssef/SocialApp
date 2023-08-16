@@ -16,23 +16,23 @@ namespace API.Controllers
 
     public class FriendsController : ControllerBase
     {
-        private readonly IUnitOfWork unitOfWork;
+        private readonly IUnitOfWork _unitOfWork;
 
         public FriendsController(IUnitOfWork unitOfWork)
         {
-            this.unitOfWork = unitOfWork;
+            _unitOfWork = unitOfWork;
         }
 
         // GET: api/friends
         [HttpGet]
         public async Task<ActionResult<IEnumerable<UserDTO>>> GetAll([FromQuery]PaginationParams paginationParams)
         {
-            var user = await unitOfWork.UsersRepository.GetUserByUsernameAsync(User.GetUsername());
+            var user = await _unitOfWork.UsersRepository.GetUserByUsernameAsync(User.GetUsername());
             if(user == null)
             {
                 return Unauthorized();
             }
-            var friends = await unitOfWork.FriendRequestsRepository.GetFriendsAsync(user.Id, paginationParams);
+            var friends = await _unitOfWork.FriendRequestsRepository.GetFriendsAsync(user.Id, paginationParams);
             var newPaginationHeader = new PaginationHeader(friends.CurrentPage, friends.ItemsPerPage, friends.TotalCount, friends.TotalPages);
             Response.AddPaginationHeader(newPaginationHeader);
             return Ok(friends);
@@ -42,13 +42,13 @@ namespace API.Controllers
         [HttpGet("isFriend/{username}")]
         public async Task<ActionResult<bool>> IsFriend(string username)
         {
-            var user = await unitOfWork.UsersRepository.GetUserByUsernameAsync(User.GetUsername());
-            var target = await unitOfWork.UsersRepository.GetUserByUsernameAsync(username);
+            var user = await _unitOfWork.UsersRepository.GetUserByUsernameAsync(User.GetUsername());
+            var target = await _unitOfWork.UsersRepository.GetUserByUsernameAsync(username);
             if(target == null)
             {
                 return NotFound();
             }
-            return Ok(await unitOfWork.FriendRequestsRepository.IsFriend(user.Id, target.Id));
+            return Ok(await _unitOfWork.FriendRequestsRepository.IsFriend(user.Id, target.Id));
 
         }
     }

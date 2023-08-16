@@ -13,17 +13,17 @@ namespace API.Data
 {
     public class MessageRepository : IMessagesRepository
     {
-        private readonly DataContext dataContext;
-        private readonly IMapper mapper;
+        private readonly DataContext _dataContext;
+        private readonly IMapper _mapper;
 
         public MessageRepository(DataContext dataContext, IMapper mapper)
         {
-            this.dataContext = dataContext;
-            this.mapper = mapper;
+            _dataContext = dataContext;
+            _mapper = mapper;
         }
         public void AddMessage(Message message)
         {
-            dataContext.Messages.Add(message);
+            _dataContext.Messages.Add(message);
         }
 
         public void DeleteMessage(Message message, int issuerId)
@@ -46,22 +46,22 @@ namespace API.Data
             }
             if(message.RecipientDeleted && message.SenderDeleted)
             {
-                dataContext.Messages.Remove(message);
+                _dataContext.Messages.Remove(message);
             }
             else
             {
-                dataContext.Messages.Update(message);
+                _dataContext.Messages.Update(message);
             }
         }
         public async Task<Message> GetMessageAsync(int messageId)
         {
-            return await dataContext.Messages.FindAsync(messageId);
+            return await _dataContext.Messages.FindAsync(messageId);
         }
         public async Task<IEnumerable<MessageDTO>> GetMessagesDTOThreadAsync(int issuerId, int theOtherUserId)
         {
-            var query = dataContext.Messages
+            var query = _dataContext.Messages
                 .Where(m => (m.SenderId == issuerId && m.RecipientId == theOtherUserId && !m.SenderDeleted) || (m.SenderId == theOtherUserId && m.RecipientId == issuerId && !m.RecipientDeleted))
-                .ProjectTo<MessageDTO>(mapper.ConfigurationProvider)
+                .ProjectTo<MessageDTO>(_mapper.ConfigurationProvider)
                 .OrderBy(m => m.SentDate);
 
             // update unread messages state to read
@@ -78,22 +78,22 @@ namespace API.Data
 
         public void AddGroup(Group group)
         {
-            dataContext.Groups.Add(group);
+            _dataContext.Groups.Add(group);
         }
 
         public void RemoveConnection(Connection connection)
         {
-            dataContext.Connections.Remove(connection);
+            _dataContext.Connections.Remove(connection);
         }
 
         public async Task<Connection> GetConnection(string connectionId)
         {
-            return await dataContext.Connections.FindAsync(connectionId);
+            return await _dataContext.Connections.FindAsync(connectionId);
         }
 
         public async Task<Group> GetMessageGroup(string groupName)
         {
-           return await dataContext
+           return await _dataContext
            .Groups
            .Include(g => g.Connections)
            .FirstOrDefaultAsync(g => g.Name == groupName);
@@ -101,7 +101,7 @@ namespace API.Data
 
         public async Task<Group> GetGroupForConnection(string connectionId)
         {
-            return await dataContext
+            return await _dataContext
             .Groups
             .Include(g => g.Connections)
             .Where(g => g.Connections.Any(c => c.ConnectionId == connectionId))
