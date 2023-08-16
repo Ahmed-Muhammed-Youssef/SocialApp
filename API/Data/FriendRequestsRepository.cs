@@ -29,16 +29,18 @@ namespace API.Data
                 RequestedId = targetId
             });
 
-            // check if the friend id sent him a request already or not if it does, add him to friends
+            // check if the taret id sent him a request already or not if it does, add him to friends
 
-            bool isFriend = await _dataContext.FriendRequests.AsNoTracking()
-                .AnyAsync(fr => fr.RequesterId == targetId && fr.RequestedId == senderId);
-            if (isFriend)
+            var frFromTarget = await _dataContext.FriendRequests
+                .AsNoTracking()
+                .FirstOrDefaultAsync(fr => fr.RequesterId == targetId && fr.RequestedId == senderId);
+            if (frFromTarget != null)
             {
                 await _dataContext.Friends.AddAsync(new Friend { UserId = senderId, FriendId = targetId });
                 await _dataContext.Friends.AddAsync(new Friend { UserId = targetId, FriendId = senderId });
+                _dataContext.FriendRequests.Remove(frFromTarget);
             }
-            return isFriend;
+            return frFromTarget != null;
         }
         public async Task<PagedList<UserDTO>> GetFriendsAsync(int id, PaginationParams paginationParams)
         {
