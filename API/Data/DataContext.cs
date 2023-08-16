@@ -1,4 +1,5 @@
-﻿using API.Entities;
+﻿using API.Data.Configurations;
+using API.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -20,7 +21,8 @@ namespace API.Data
         public DbSet<Connection> Connections { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder);
+            // Apply configurations
+            modelBuilder.ApplyConfiguration(new PictureConfigurations());
 
             modelBuilder.Entity<AppUser>()
                 .HasMany(u => u.UserRoles)
@@ -45,6 +47,7 @@ namespace API.Data
                 .WithMany(u => u.MessagesReceived)
                 .OnDelete(DeleteBehavior.Restrict);
 
+            base.OnModelCreating(modelBuilder);
         }
     }
 }
