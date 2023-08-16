@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace API.Entities
 {
@@ -9,7 +10,7 @@ namespace API.Entities
         [Required]
         public string Url { get; set; }
         [Required]
-        public int Order { get; set; }
+        public DateTime Created { get; set; } = DateTime.UtcNow;
         [Required]
         public string PublicId { get; set; }
         public int AppUserId { get; set; }
