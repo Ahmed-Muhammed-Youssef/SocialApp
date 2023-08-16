@@ -23,6 +23,7 @@ namespace API.Data
         {
             // Apply configurations
             modelBuilder.ApplyConfiguration(new PictureConfigurations());
+            modelBuilder.ApplyConfiguration(new MessageConfigurations());
 
             modelBuilder.Entity<AppUser>()
                 .HasMany(u => u.UserRoles)
