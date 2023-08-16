@@ -1,0 +1,11 @@
+.main-button{
+    padding: 30px;
+    border-radius: 30px;
+    font-weight: 500;
+    font-size: larger;
+}
+hr{
+    height: 4px;
+    color: #3f51b5;
+    opacity: 1;
+}
