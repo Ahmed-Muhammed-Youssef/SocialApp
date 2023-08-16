@@ -11,7 +11,7 @@ namespace API.Entities
         public DateTime? ReadDate { get; set; }
         public DateTime SentDate { get; set; } = DateTime.UtcNow;
 
-        // we only delete the messages from the server only if both of them delted the message
+        // we only delete the messages from the server only if both of them deleted the message
         [Required]
         public bool SenderDeleted { get; set; }
         [Required]

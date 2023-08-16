@@ -8,15 +8,15 @@ namespace API.Entities
     {
         // Foreign Key
         [Required]
-        public int RequisterId { get; set; }
+        public int RequesterId { get; set; }
         // Reference navigation property
-        public AppUser Requister { get; set; }
+        public AppUser Requester { get; set; }
 
         // Foreign Key
         [Required]
-        public int RequistedId { get; set; }
+        public int RequestedId { get; set; }
         // Reference navigation property
-        public AppUser Requisted { get; set; }
+        public AppUser Requested { get; set; }
         [Required]
         public DateTime Date { get; set; } = DateTime.UtcNow;
     }

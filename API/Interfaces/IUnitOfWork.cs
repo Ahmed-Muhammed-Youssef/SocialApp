@@ -7,9 +7,9 @@ namespace API.Interfaces
 {
     public interface IUnitOfWork
     {
-        IUserRepository UserRepository {get;}
-        IMessageRepository MessageRepository {get;}
-        ILikesRepository LikesRepository {get;}
+        IUsersRepository UsersRepository {get;}
+        IMessagesRepository MessagesRepository {get;}
+        IFriendRequestsRepository FriendRequestsRepository {get;}
         Task<bool> Complete();
         bool HasChanges();
     }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace API.Interfaces
 {
-    public interface IUserRepository
+    public interface IUsersRepository
     {
         public Task<Picture> AddPhotoAsync(Picture photo);
         public Task<char> GetUserInterest(int userId);

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace API.Interfaces
 {
-    public interface IMessageRepository
+    public interface IMessagesRepository
     {
         void AddGroup(Group group);
         void RemoveConnection(Connection connection);

@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace API.Data
 {
-    public class MessageRepository : IMessageRepository
+    public class MessageRepository : IMessagesRepository
     {
         private readonly DataContext dataContext;
         private readonly IMapper mapper;
@@ -28,6 +28,8 @@ namespace API.Data
 
         public void DeleteMessage(Message message, int issuerId)
         {
+
+            // Delete the message when it's deleted from both sender and recipient
             if(message.SenderId == issuerId)
             {
                 if(message.SenderDeleted == false)
@@ -58,11 +60,11 @@ namespace API.Data
         public async Task<IEnumerable<MessageDTO>> GetMessagesDTOThreadAsync(int issuerId, int theOtherUserId)
         {
             var query = dataContext.Messages
-                .Where(
-                m =>
-                (m.SenderId == issuerId && m.RecipientId == theOtherUserId && !m.SenderDeleted)
-                || (m.SenderId == theOtherUserId && m.RecipientId == issuerId && !m.RecipientDeleted))
-                .ProjectTo<MessageDTO>(mapper.ConfigurationProvider).OrderBy(m => m.SentDate);
+                .Where(m => (m.SenderId == issuerId && m.RecipientId == theOtherUserId && !m.SenderDeleted) || (m.SenderId == theOtherUserId && m.RecipientId == issuerId && !m.RecipientDeleted))
+                .ProjectTo<MessageDTO>(mapper.ConfigurationProvider)
+                .OrderBy(m => m.SentDate);
+
+            // update unread messages state to read
             var unreadMessages = query.Where(m => m.ReadDate == null && m.RecipientId == issuerId);
             if (unreadMessages.Any())
             {
