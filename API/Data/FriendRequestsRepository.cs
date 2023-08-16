@@ -31,8 +31,8 @@ namespace API.Data
 
             // check if the friend id sent him a request already or not if it does, add him to friends
 
-            bool isFriend = await _dataContext.FriendRequests.AnyAsync(fr => fr.RequesterId == targetId
-            && fr.RequestedId == senderId);
+            bool isFriend = await _dataContext.FriendRequests.AsNoTracking()
+                .AnyAsync(fr => fr.RequesterId == targetId && fr.RequestedId == senderId);
             if (isFriend)
             {
                 await _dataContext.Friends.AddAsync(new Friend { UserId = senderId, FriendId = targetId });
@@ -42,10 +42,13 @@ namespace API.Data
         }
         public async Task<PagedList<UserDTO>> GetFriendsAsync(int id, PaginationParams paginationParams)
         {
-            var friendsIds = await _dataContext.Friends.Where(u => u.UserId == id)
+            var friendsIds = await _dataContext.Friends
+                .AsNoTracking()
+                .Where(u => u.UserId == id)
                 .Select(u => u.FriendId).ToListAsync();
 
-            var queryDto = _dataContext.Users.Where(user => friendsIds.Contains(user.Id))
+            var queryDto = _dataContext.Users
+                .Where(user => friendsIds.Contains(user.Id))
                 .ProjectTo<UserDTO>(_mapper.ConfigurationProvider).AsNoTracking();
 
             queryDto = queryDto.OrderByDescending(u => u.LastActive);
@@ -60,11 +63,13 @@ namespace API.Data
         public async Task<bool> IsFriend(int userId, int targetId)
         {
             return await _dataContext.Friends
+                .AsNoTracking()
                 .AnyAsync(u => u.UserId == userId && u.FriendId == targetId);
         }
         public async Task<FriendRequest> GetFriendRequestAsync(int senderId, int targetId)
         {
             return await _dataContext.FriendRequests
+                .AsNoTracking()
                 .Where(fr => fr.RequestedId == targetId && fr.RequesterId == senderId)
                 .FirstOrDefaultAsync();
         }
@@ -72,6 +77,7 @@ namespace API.Data
         public async Task<IEnumerable<UserDTO>> GetFriendRequestedUsersDTOAsync(int senderId)
         {
             var users = _dataContext.FriendRequests
+                .AsNoTracking()
                 .Where(fr => fr.RequesterId == senderId)
                 .Select(fr => fr.Requested)
                 .ProjectTo<UserDTO>(_mapper.ConfigurationProvider);
@@ -81,6 +87,7 @@ namespace API.Data
         public async Task<IEnumerable<int>> GetFriendRequestedUsersIdAsync(int senderId)
         {
             var users = _dataContext.FriendRequests
+                .AsNoTracking()
                 .Where(fr => fr.RequesterId == senderId)
                 .Select(fr => fr.RequestedId);
             return await users.ToListAsync();

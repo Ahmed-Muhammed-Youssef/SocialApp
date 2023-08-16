@@ -96,7 +96,7 @@ namespace API.SignalR
                     .SendAsync("NewMessage", new { senderDTO, msgDTO });
                 }
             }
-            _unitOfWork.MessagesRepository.AddMessage(createdMessage);
+            await _unitOfWork.MessagesRepository.AddMessageAsync(createdMessage);
             if (await _unitOfWork.Complete())
             {
                 msgDTO.Id = createdMessage.Id;
@@ -115,7 +115,7 @@ namespace API.SignalR
             if(group == null)
             {
                 group = new Group(name: groupName);
-                _unitOfWork.MessagesRepository.AddGroup(group);
+                await _unitOfWork.MessagesRepository.AddGroupAsync(group);
             }
             group.Connections.Add(connection);
             if(await _unitOfWork.Complete())
