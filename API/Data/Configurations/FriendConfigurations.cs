@@ -25,7 +25,7 @@ namespace API.Data.Configurations
 
             // with app user (friend)
             builder.HasOne(f => f.FriendUser)
-                .WithMany(u => u.Friends)
+                .WithMany()
                 .HasForeignKey(f => f.FriendId)
                 .IsRequired()
                 .OnDelete(DeleteBehavior.ClientCascade);
