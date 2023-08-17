@@ -26,6 +26,7 @@ namespace API.Data
             modelBuilder.ApplyConfiguration(new MessageConfigurations());
             modelBuilder.ApplyConfiguration(new GroupConfigurations());
             modelBuilder.ApplyConfiguration(new FriendRequestConfigurations());
+            modelBuilder.ApplyConfiguration(new FriendConfigurations());
 
             modelBuilder.Entity<AppUser>()
                 .HasMany(u => u.UserRoles)
@@ -37,16 +38,6 @@ namespace API.Data
                .WithOne(ur => ur.Role)
                .HasForeignKey(ur => ur.RoleId)
                .IsRequired();
-            modelBuilder.Entity<Friend>()
-            .HasKey(m => new { m.UserId, m.FriendId });
-            modelBuilder.Entity<Message>()
-                .HasOne(m => m.Sender)
-                .WithMany(u => u.MessagesSent)
-                .OnDelete(DeleteBehavior.Restrict);
-            modelBuilder.Entity<Message>()
-                .HasOne(m => m.Recipient)
-                .WithMany(u => u.MessagesReceived)
-                .OnDelete(DeleteBehavior.Restrict);
 
             base.OnModelCreating(modelBuilder);
         }

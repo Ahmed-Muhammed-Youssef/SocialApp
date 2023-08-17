@@ -20,17 +20,17 @@ namespace API.Data.Configurations
             // relationships
             // with appuser (sender)
             builder.HasOne(m => m.Sender)
-                .WithMany()
+                .WithMany(u => u.MessagesSent)
                 .HasForeignKey(m => m.SenderId)
                 .IsRequired()
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.Restrict);
 
             // with appuser (recipient)
             builder.HasOne(m => m.Recipient)
-                .WithMany()
+                .WithMany(u => u.MessagesReceived)
                 .HasForeignKey(m => m.RecipientId)
                 .IsRequired()
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.Restrict);
         }
 
     }
