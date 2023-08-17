@@ -28,13 +28,7 @@ namespace API.Data
             modelBuilder.ApplyConfiguration(new FriendRequestConfigurations());
             modelBuilder.ApplyConfiguration(new FriendConfigurations());
             modelBuilder.ApplyConfiguration(new AppUserConfigurations());
-
-            // AppRole relation with user roles
-            modelBuilder.Entity<AppRole>()
-               .HasMany(u => u.UserRoles)
-               .WithOne(ur => ur.Role)
-               .HasForeignKey(ur => ur.RoleId)
-               .IsRequired();
+            modelBuilder.ApplyConfiguration(new AppUserRoleConfigurations());
 
             base.OnModelCreating(modelBuilder);
         }
