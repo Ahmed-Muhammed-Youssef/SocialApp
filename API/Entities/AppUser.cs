@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.AspNetCore.Identity;
 
 namespace API.Entities
@@ -27,19 +26,14 @@ namespace API.Entities
         public string City { get; set; }
         [Required]
         public string Country { get; set; }
-        public ICollection<Picture> Pictures { get; set; }
-        public ICollection<Message> MessagesSent { get; set; }
-        public ICollection<Message> MessagesReceived { get; set; }
 
-        // Collection navigation properties
+        // navigation properties
         public ICollection<FriendRequest> FriendRequestsSent { get; set; }
         public ICollection<FriendRequest> FriendRequestsReceived { get; set; }
+        public ICollection<Message> MessagesSent { get; set; }
+        public ICollection<Message> MessagesReceived { get; set; }
+        public ICollection<Friend> Friends { get; set; }
+        public ICollection<Picture> Pictures { get; set; }
         public ICollection<AppUserRole> UserRoles { get; set; }
-
-
-        [InverseProperty(nameof(Friend.User))]
-        public ICollection<Friend> FriendsId { get; set; }
-        [InverseProperty(nameof(Friend.FriendUser))]
-        public ICollection<Friend> MatchesMatchedId { get; set; }
     }
 }
