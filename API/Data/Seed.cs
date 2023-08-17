@@ -67,7 +67,7 @@ namespace API.Data
             await userManager.AddToRolesAsync(admin, new[] { RolesNameValues.User, RolesNameValues.Admin, RolesNameValues.Moderator });
             char[] sex = { 'm', 'f' };
             var tasks = new List<Task>();
-            for (int i = 0; i < 1000; i++)
+            for (int i = 0; i < 100; i++)
             {
                 var testUsers = new Faker<AppUser>()
                     .RuleFor(u => u.UserName, (f, u) => $"user{i}")
