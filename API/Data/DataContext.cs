@@ -21,6 +21,7 @@ namespace API.Data
         public DbSet<Connection> Connections { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
             // Apply configurations
             modelBuilder.ApplyConfiguration(new PictureConfigurations());
             modelBuilder.ApplyConfiguration(new MessageConfigurations());
@@ -30,7 +31,6 @@ namespace API.Data
             modelBuilder.ApplyConfiguration(new AppUserConfigurations());
             modelBuilder.ApplyConfiguration(new AppUserRoleConfigurations());
 
-            base.OnModelCreating(modelBuilder);
         }
     }
 }

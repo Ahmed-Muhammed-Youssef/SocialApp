@@ -24,6 +24,6 @@ namespace API.Entities
         public ICollection<Message> MessagesReceived { get; set; }
         public ICollection<Friend> Friends { get; set; }
         public ICollection<Picture> Pictures { get; set; }
-        public ICollection<AppUserRole> UserRoles { get; set; }
+        public virtual ICollection<AppUserRole> UserRoles { get; set; }
     }
 }
