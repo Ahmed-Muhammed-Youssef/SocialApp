@@ -11,10 +11,6 @@ namespace API.Data.Configurations
             // key
             builder.HasKey(ur => new { ur.UserId, ur.RoleId });
 
-            // properties
-            builder.Property(ur => ur.UserId).IsRequired();
-            builder.Property(ur => ur.RoleId).IsRequired();
-
             // relationships
             builder.HasOne(ur => ur.Role)
                 .WithMany(r => r.UserRoles)

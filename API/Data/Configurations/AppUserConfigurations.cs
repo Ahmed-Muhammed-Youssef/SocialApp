@@ -27,7 +27,6 @@ namespace API.Data.Configurations
             builder.HasMany(u => u.UserRoles)
                .WithOne(ur => ur.User)
                .HasForeignKey(ur => ur.UserId)
-               .IsRequired()
                .OnDelete(DeleteBehavior.Cascade);
         }
     }
