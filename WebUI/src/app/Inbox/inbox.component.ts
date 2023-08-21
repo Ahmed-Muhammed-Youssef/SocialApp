@@ -63,7 +63,7 @@ export class InboxComponent implements OnInit {
     }
   }
   loadFriends() {
-    this.userService.getMatches(this.friendsPageNumber, this.friendsPerPage).subscribe(
+    this.userService.getFriends(this.friendsPageNumber, this.friendsPerPage).subscribe(
       r => {
         if (r) {
           this.friends = r.result;

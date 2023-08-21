@@ -36,7 +36,7 @@ export class FriendsListComponent implements OnInit {
     this.loadMatches();
   }
   loadMatches() {
-    this.userService.getMatches(this.pagination.currentPage, this.pagination.itemsPerPage).subscribe({
+    this.userService.getFriends(this.pagination.currentPage, this.pagination.itemsPerPage).subscribe({
       next: response => {
         if (response) {
           if (response) {
