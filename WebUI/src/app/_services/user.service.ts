@@ -88,9 +88,6 @@ export class UserService {
     }
     return this.http.get<User>(this.baseUrl + 'users/info/' + username);
   }
-  public reorderPhotos(photos: Pictures[]) {
-    return this.http.put<Pictures[]>(this.baseUrl + 'users/photos/reorder', photos);
-  }
   public deletePicture(pictureId: number) {
     return this.http.delete(this.baseUrl + 'users/photo/delete/' + String(pictureId));
   }

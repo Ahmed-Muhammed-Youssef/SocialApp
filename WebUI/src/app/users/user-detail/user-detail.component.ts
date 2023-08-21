@@ -32,8 +32,8 @@ export class UserDetailComponent implements OnInit {
     pictures: [],
     roles: []
   };
-  isLiked : boolean = true;
-  isMatch: boolean = false;
+  isFriendRequested : boolean = true;
+  isFriend: boolean = false;
   
   constructor(private userService: UserService, private route: ActivatedRoute,
      private toastr: ToastrService, public presenceService: PresenceService,
@@ -52,7 +52,7 @@ export class UserDetailComponent implements OnInit {
   addLike(){
     this.userService.sendFriendRequest(this.user.username).subscribe(
       r => {
-          this.isLiked = true;
+          this.isFriendRequested = true;
           this.toastr.success('You have liked ' + this.user.firstName);
           if(r == true){
             this.toastr.success("You have a new match!")
@@ -67,9 +67,9 @@ export class UserDetailComponent implements OnInit {
         this.profilePicture = this.user.pictures[0];
         this.setImages();
         this.userService.isFriendRequested(this.user.username).subscribe(r => {
-          this.isLiked = r;
+          this.isFriendRequested = r;
         });
-      this.userService.isFriend(this.user.username).subscribe(r => this.isMatch = r);
+      this.userService.isFriend(this.user.username).subscribe(r => this.isFriend = r);
       }
     );
   }

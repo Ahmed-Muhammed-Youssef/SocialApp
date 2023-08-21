@@ -7,10 +7,10 @@
   <img routerLink="/users/username/{{user.username}}" mat-card-image src="{{user.pictures.length > 0 ? user.pictures[0].url : './assets/Pictures/profile-placeholder.png'}}" alt="Profile picture">
   
   <mat-card-actions class="text-center d-block">
-    <button mat-flat-button color="accent" *ngIf="!isLiked" (click)="addLike(user)">
+    <button mat-flat-button color="accent" *ngIf="!isFriendRequested" (click)="sendFriendRequest(user)">
       <i class="material-icons me-1">person_add_alt_1</i> Add friend
     </button>
-    <button mat-flat-button color="primary" *ngIf="isLiked" [routerLink]="['/messages', {username: user.username}]">
+    <button mat-flat-button color="primary" *ngIf="isFriendRequested" [routerLink]="['/messages', {username: user.username}]">
       <mat-icon>chat</mat-icon> Message
     </button>
   </mat-card-actions>

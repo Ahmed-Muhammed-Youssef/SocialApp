@@ -19,7 +19,7 @@ export class FriendsListComponent implements OnInit {
 
   isMobilePhone: boolean = false;
 
-  matches: User[] = [];
+  friends: User[] = [];
   constructor(private userService: UserService, private breakpointObserver: BreakpointObserver) {
     breakpointObserver.observe(["(max-width: 750px)"])
       .subscribe(
@@ -33,14 +33,14 @@ export class FriendsListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.loadMatches();
+    this.loadFriends();
   }
-  loadMatches() {
+  loadFriends() {
     this.userService.getFriends(this.pagination.currentPage, this.pagination.itemsPerPage).subscribe({
       next: response => {
         if (response) {
           if (response) {
-            this.matches = response.result;
+            this.friends = response.result;
             this.pagination = response.pagination;
           }
         }
@@ -50,7 +50,7 @@ export class FriendsListComponent implements OnInit {
   pageChanged($event: any) {
     if ($event) {
       this.pagination.currentPage = $event.pageIndex + 1;
-      this.loadMatches();
+      this.loadFriends();
     }
   }
 

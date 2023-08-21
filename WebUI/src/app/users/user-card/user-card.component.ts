@@ -12,7 +12,7 @@ import { TimeFormatterService } from 'src/app/_services/activityTimeForamtter.se
   styleUrls: ['./user-card.component.css']
 })
 export class UserCardComponent implements OnInit {
-  @Input() isLiked = false;
+  @Input() isFriendRequested = false;
   @Output() liked = new EventEmitter();
   @Input() user: User = {
     id: 0,
@@ -39,7 +39,7 @@ export class UserCardComponent implements OnInit {
   {
     this.router.navigateByUrl('users/username/' + this.user.username);
   }
-  addLike(user: User) {
+  sendFriendRequest(user: User) {
     this.userService.sendFriendRequest(user.username).subscribe(
       r => {
         this.toastr.success('You have sent frined request to ' + user.firstName);
