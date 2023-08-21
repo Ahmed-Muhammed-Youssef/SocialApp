@@ -35,6 +35,7 @@ namespace API.Data
         }
         public void Update(AppUser appUser)
         {
+            _dataContext.ChangeTracker.Clear();
             _dataContext.Entry(appUser).State = EntityState.Modified;
         }
         public void UpdatePicture(Picture picture)
@@ -84,11 +85,7 @@ namespace API.Data
             var queryDto = query.ProjectTo<UserDTO>(_mapper.ConfigurationProvider).AsNoTracking();
             var pagedResult = await PagedList<UserDTO>.CreatePageAsync(queryDto, userParams.PageNumber, userParams.ItemsPerPage);
             
-            // order the pictures according to the order value.
-            pagedResult.ForEach(user =>
-            {
-                user.Pictures = user.Pictures.OrderBy(p => p.Order);
-            });
+            // @ToDo: order the pictures according to the upload time (Descending).
             return pagedResult;
         }
         public async Task<AppUser> GetUserByIdAsync(int id)
@@ -105,7 +102,7 @@ namespace API.Data
                 .AsNoTracking()
                 .Where(u => u.Id == id)
                 .ProjectTo<UserDTO>(_mapper.ConfigurationProvider).FirstOrDefaultAsync();
-            result.Pictures = result.Pictures.OrderBy(p => p.Order);
+            // result.Pictures = result.Pictures.OrderBy(p => p.);
             return result;
         }
         public async Task<UserDTO> GetUserDTOByUsernameAsync(string username)
@@ -114,7 +111,7 @@ namespace API.Data
                 .AsNoTracking()
                 .Where(u => u.UserName == username)
                 .ProjectTo<UserDTO>(_mapper.ConfigurationProvider).FirstOrDefaultAsync();
-            result.Pictures = result.Pictures.OrderBy(p => p.Order);
+            // result.Pictures = result.Pictures.OrderBy(p => p.Order);
             return result;
         } 
         public async Task<AppUser> GetUserByUsernameAsync(string username)
@@ -140,7 +137,7 @@ namespace API.Data
                 .AsNoTracking()
                 .Where(u => u.Email == email)
                 .ProjectTo<UserDTO>(_mapper.ConfigurationProvider).FirstOrDefaultAsync();
-            user.Pictures = user.Pictures.OrderBy(p => p.Order);
+            // user.Pictures = user.Pictures.OrderBy(p => p.Order);
             return user;
         }
         public async Task<IEnumerable<PictureDTO>> GetUserPictureDTOsAsync(int id)
@@ -150,7 +147,8 @@ namespace API.Data
                 .Where(p => p.AppUserId == id)
                 .ProjectTo<PictureDTO>(_mapper.ConfigurationProvider)
                 .ToListAsync();
-            return result.OrderBy(p => p.Order);
+            // @ToDo: order pictures
+            return result;
         }
         public async Task<IEnumerable<Picture>> GetUserPictureAsync(int id)
         {
