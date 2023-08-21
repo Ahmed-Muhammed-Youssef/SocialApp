@@ -1,7 +1,7 @@
-<div cdkDropList cdkDropListOrientation="horizontal" 
-[cdkDropListData]="user.photos"  class="mt-4 row drag-list justify-content-center mx-0"
+<!-- <div cdkDropList cdkDropListOrientation="horizontal" 
+[cdkDropListData]="user.pictures"  class="mt-4 row drag-list justify-content-center mx-0"
  *ngIf="user" (cdkDropListDropped)="drop($event)">
-    <div  [cdkDragData]="photo" class="col-2 drag-box mt-2" *ngFor="let photo of user.photos" cdkDrag>
+    <div  [cdkDragData]="photo" class="col-2 drag-box mt-2" *ngFor="let photo of user.pictures" cdkDrag>
         <div class="text-center">
             <img src="{{photo.url}}" alt="{{photo.url}}" class="img-thumbnail p-1">
             <button mat-icon-button color="warn" (click)="deletePhoto(photo.id)" *ngIf="photo.order != 0">
@@ -10,7 +10,7 @@
         </div>
     </div>
    
-</div>
+</div> -->
 
 <!-- Add photo uploader -->
 <!-- <input #fileUpload style="display:none;" id="inputFile" type="file" multiple/>
