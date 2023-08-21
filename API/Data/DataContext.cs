@@ -1,4 +1,5 @@
-﻿using API.Entities;
+﻿using API.Data.Configurations;
+using API.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -21,29 +22,14 @@ namespace API.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-
-            modelBuilder.Entity<AppUser>()
-                .HasMany(u => u.UserRoles)
-                .WithOne(ur => ur.User)
-                .HasForeignKey(ur => ur.UserId)
-                .IsRequired();
-            modelBuilder.Entity<AppRole>()
-               .HasMany(u => u.UserRoles)
-               .WithOne(ur => ur.Role)
-               .HasForeignKey(ur => ur.RoleId)
-               .IsRequired();
-            modelBuilder.Entity<Friend>()
-            .HasKey(m => new { m.UserId, m.FriendId });
-            modelBuilder.Entity<FriendRequest>()
-            .HasKey(l => new { l.RequestedId, l.RequesterId });
-            modelBuilder.Entity<Message>()
-                .HasOne(m => m.Sender)
-                .WithMany(u => u.MessagesSent)
-                .OnDelete(DeleteBehavior.Restrict);
-            modelBuilder.Entity<Message>()
-                .HasOne(m => m.Recipient)
-                .WithMany(u => u.MessagesReceived)
-                .OnDelete(DeleteBehavior.Restrict);
+            // Apply configurations
+            modelBuilder.ApplyConfiguration(new PictureConfigurations());
+            modelBuilder.ApplyConfiguration(new MessageConfigurations());
+            modelBuilder.ApplyConfiguration(new GroupConfigurations());
+            modelBuilder.ApplyConfiguration(new FriendRequestConfigurations());
+            modelBuilder.ApplyConfiguration(new FriendConfigurations());
+            modelBuilder.ApplyConfiguration(new AppUserConfigurations());
+            modelBuilder.ApplyConfiguration(new AppUserRoleConfigurations());
 
         }
     }
