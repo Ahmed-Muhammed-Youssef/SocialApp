@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Photo, User } from '../../_models/User';
+import { Pictures, User } from '../../_models/User';
 import { UserService } from '../../_services/user.service';
 
 import { ToastrService } from 'ngx-toastr';
@@ -15,7 +15,7 @@ import { TimeFormatterService } from 'src/app/_services/activityTimeForamtter.se
 })
 export class UserDetailComponent implements OnInit {
   isMobilePhone : boolean = false;
-  profilePicture : Photo | undefined;
+  profilePicture : Pictures | undefined;
   user: User = {
     id: 0,
     username: '',
@@ -29,7 +29,7 @@ export class UserDetailComponent implements OnInit {
     bio: '',
     city: '',
     country: '',
-    photos: [],
+    pictures: [],
     roles: []
   };
   isLiked : boolean = true;
@@ -64,7 +64,7 @@ export class UserDetailComponent implements OnInit {
     this.route.data.subscribe(
       data => {
         this.user = data.user;
-        this.profilePicture = this.user.photos[0];
+        this.profilePicture = this.user.pictures[0];
         this.setImages();
         this.userService.getIsLiked(this.user.username).subscribe(r => {
           this.isLiked = r;

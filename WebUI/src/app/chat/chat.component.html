@@ -1,7 +1,7 @@
 <div class="row">
     <div class="card" *ngIf="currentFriend">
         <div class="chat-header">
-            <img [src]="currentFriend.photos.length > 0? currentFriend.photos[0].url : './assets/Pictures/profile-placeholder.png'" alt="avatar">
+            <img [src]="currentFriend.pictures.length > 0? currentFriend.pictures[0].url : './assets/Pictures/profile-placeholder.png'" alt="avatar">
             <div class="user-info">
                 <h3 class="mb-0">{{currentFriend.firstName}} {{currentFriend.lastName}}</h3>
                 <small *ngIf="(presenceService.onlineUsers$ | async)?.includes(currentFriend.username)"> <span class="online"></span> Active now</small>
