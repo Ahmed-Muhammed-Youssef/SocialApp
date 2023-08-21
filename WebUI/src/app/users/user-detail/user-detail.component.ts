@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Pictures, User } from '../../_models/User';
 import { UserService } from '../../_services/user.service';
@@ -50,7 +50,7 @@ export class UserDetailComponent implements OnInit {
     
   }
   addLike(){
-    this.userService.like(this.user.username).subscribe(
+    this.userService.sendFriendRequest(this.user.username).subscribe(
       r => {
           this.isLiked = true;
           this.toastr.success('You have liked ' + this.user.firstName);
@@ -66,10 +66,10 @@ export class UserDetailComponent implements OnInit {
         this.user = data.user;
         this.profilePicture = this.user.pictures[0];
         this.setImages();
-        this.userService.getIsLiked(this.user.username).subscribe(r => {
+        this.userService.isFriendRequested(this.user.username).subscribe(r => {
           this.isLiked = r;
         });
-      this.userService.getIsMatch(this.user.username).subscribe(r => this.isMatch = r);
+      this.userService.isFriend(this.user.username).subscribe(r => this.isMatch = r);
       }
     );
   }

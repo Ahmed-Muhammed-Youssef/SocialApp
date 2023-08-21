@@ -91,27 +91,26 @@ export class UserService {
   public reorderPhotos(photos: Pictures[]) {
     return this.http.put<Pictures[]>(this.baseUrl + 'users/photos/reorder', photos);
   }
-  public deletePhoto(photoId: number) {
-    return this.http.delete(this.baseUrl + 'users/photo/delete/' + String(photoId));
+  public deletePicture(pictureId: number) {
+    return this.http.delete(this.baseUrl + 'users/photo/delete/' + String(pictureId));
   }
-  like(username: string): Observable<boolean> {
+  sendFriendRequest(username: string): Observable<boolean> {
     return this.http.post<boolean>(this.baseUrl + 'friendrequests/send/' + username, {}).pipe(map(r => {
       //the correct answer will need a more complex caching system so we will only delete all the cashed data for now
       this.usersChache = new Map();
       return r;
     }));
   }
-  getLikes(): Observable<User[]> {
+  getSentFriendRequests(): Observable<User[]> {
     return this.http.get<User[]>(this.baseUrl + 'friendrequests/sent');
-
   }
-  getIsLiked(username: string): Observable<boolean> {
+  isFriendRequested(username: string): Observable<boolean> {
     return this.http.get<boolean>(this.baseUrl + 'friendrequests/isSent/' + username);
   }
-  getIsMatch(username: string): Observable<boolean> {
+  isFriend(username: string): Observable<boolean> {
     return this.http.get<boolean>(this.baseUrl + 'friends/isfriend/' + username);
   }
-  getMatches(pageNumber: number = 1, itemsPerPage: number = 2): Observable<PaginatedResult<User[]>> {
+  getFriends(pageNumber: number = 1, itemsPerPage: number = 2): Observable<PaginatedResult<User[]>> {
     let paginatedResult: PaginatedResult<User[]> = { result: [], pagination: this.paginationInfo };
     let httpParams: HttpParams = new HttpParams()
       .set('pageNumber', pageNumber)
@@ -153,7 +152,7 @@ export class UserService {
       }
     ));
   }
-  getPhotos() {
+  getPictures() {
     return this.http.get<Pictures[]>(this.baseUrl + "users/photos/all");
   }
 }

@@ -40,7 +40,7 @@ export class UserCardComponent implements OnInit {
     this.router.navigateByUrl('users/username/' + this.user.username);
   }
   addLike(user: User) {
-    this.userService.like(user.username).subscribe(
+    this.userService.sendFriendRequest(user.username).subscribe(
       r => {
         this.toastr.success('You have sent frined request to ' + user.firstName);
         if (r == true) {
