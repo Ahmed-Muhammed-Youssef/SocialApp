@@ -32,7 +32,7 @@ import { UserEditComponent } from './users/user-edit/user-edit.component';
 import { PreventUnsavedChangesGuard } from './_guards/prevent-unsaved-changes.guard';
 import { NgxSpinnerModule } from "ngx-spinner";
 import { LoadingInterceptor } from './_interceptors/loading.interceptor';
-import { PhotoEditorComponent } from './users/photo-editor/photo-editor.component';
+import { PictureEditorComponent } from './users/picture-editor/picture-editor.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { UserDetailedResolver } from './_resolvers/user-detailed.resolver';
 import { AdminPanelComponent } from './admin/admin-panel/admin-panel.component';
@@ -89,7 +89,7 @@ const routes: Routes = [
     ServerErrorComponent,
     UserCardComponent,
     UserEditComponent,
-    PhotoEditorComponent,
+    PictureEditorComponent,
     AdminPanelComponent,
     HasRoleDirective,
     UserManagementComponent,
