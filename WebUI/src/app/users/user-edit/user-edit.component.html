@@ -25,11 +25,11 @@
         </div>
     </mat-card-content>
   </mat-card>
-  <div class="col">
-    <div class="alert alert-info" *ngIf=" checkIfUserChanged()">
+  <div class="col-8">
+    <!-- <div class="alert alert-info" *ngIf=" checkIfUserChanged()">
       <strong>Information: </strong> You have made changes. Any unsaved changes will be lost.
-    </div>
-    <mat-tab-group class="p-2" mat-align-tabs="center">
+    </div> -->
+    <mat-tab-group dynamicHeight class="p-2" mat-align-tabs="center">
       <mat-tab label="About {{user.firstName}}">
         <form #editForm="ngForm" id="editForm" (ngSubmit)="updateUser()" >
           <div class="row mt-4 mx-0">
