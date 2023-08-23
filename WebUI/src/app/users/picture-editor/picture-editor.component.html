@@ -1,1 +1,4 @@
-
+<form method="post">
+    <input id="imageInput" type="file" (change)="UpdatePreview($event)"/>
+</form>
+<img [src]="imagePreviewUrl">
