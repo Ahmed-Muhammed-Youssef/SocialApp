@@ -2,7 +2,7 @@ import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { PresenceService } from 'src/app/_services/presence.service';
 import { UserService } from 'src/app/_services/user.service';
-import { Pictures, User } from '../../_models/User';
+import { User } from '../../_models/User';
 import { Router } from '@angular/router';
 import { TimeFormatterService } from 'src/app/_services/activityTimeForamtter.service';
 
