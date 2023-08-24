@@ -7,13 +7,12 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class PictureService {
-  baseUrl = environment.apiUrl + 'users/photo/upload';    
+  baseUrl = environment.apiUrl + 'pictures/upload';    
   constructor(private http:HttpClient) { }
 
-  public uploadImage(image: File): Observable<Response> {
-    const formData = new FormData();
-
-    formData.append('image', image);
-    return this.http.post<Response>(this.baseUrl, formData);
+  public uploadImage(image: File): Observable<any> {
+    const formData = new FormData(); 
+    formData.append("file", image, image.name);
+    return this.http.post(this.baseUrl, formData, {reportProgress: true, observe: 'events'});
   }
 }
