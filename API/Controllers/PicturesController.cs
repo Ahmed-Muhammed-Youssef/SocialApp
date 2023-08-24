@@ -47,7 +47,7 @@ namespace API.Controllers
 
             if (await _unitOfWork.Complete())
             {
-                return CreatedAtAction(nameof(UsersController.GetUser), new { username = user.UserName }, _mapper.Map<PictureDTO>(photo));
+                return Ok(_mapper.Map<PictureDTO>(photo));
             }
             return BadRequest();
         }
