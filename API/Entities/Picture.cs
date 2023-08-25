@@ -1,19 +1,18 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
 
 namespace API.Entities
 {
-    public class Photo
+    public class Picture
     {
-        [Required]
         public int Id { get; set; }
-        [Required]
         public string Url { get; set; }
-        [Required]
-        public int Order { get; set; }
-        [Required]
+        public DateTime Created { get; set; } = DateTime.UtcNow;
         public string PublicId { get; set; }
+
+        // foreing key
         public int AppUserId { get; set; }
 
+        // navigation properties
         public AppUser AppUser { get; set; }
 
     }

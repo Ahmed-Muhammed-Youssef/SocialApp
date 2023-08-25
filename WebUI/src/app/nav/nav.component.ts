@@ -1,11 +1,11 @@
-import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { BreakpointObserver } from '@angular/cdk/layout';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { LoginResponse } from '../_models/AccountModels';
 import { AccountService } from '../_services/account.service';
 import { take } from 'rxjs';
-import { Photo } from '../_models/User';
+import { Picture } from '../_models/User';
 
 @Component({
   selector: 'app-nav',
@@ -14,7 +14,7 @@ import { Photo } from '../_models/User';
 })
 export class NavComponent implements OnInit {
   isMobilePhone : boolean = false;
-  public userProfilePicture: Photo | undefined;
+  public userProfilePicture: Picture | undefined;
   constructor(public accountService: AccountService,
      private router: Router, private toastr: ToastrService,
      private breakpointObserver: BreakpointObserver) {
@@ -31,7 +31,7 @@ export class NavComponent implements OnInit {
       );
       this.accountService.currentUser$.pipe(take(1)).subscribe(account => {
         if (account) {
-          this.userProfilePicture = account.userData.photos[0];
+          this.userProfilePicture = account.userData.pictures[0];
         }
       });
   }

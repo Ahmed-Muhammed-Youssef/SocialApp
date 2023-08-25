@@ -9,7 +9,7 @@
       <mat-card-title>{{user.firstName}} {{user.lastName}}</mat-card-title>
       <mat-card-subtitle *ngIf="(presenceService.onlineUsers$ | async)?.includes(user.username)"> <span class="online"></span> Active now</mat-card-subtitle>
     <!-- Foramt the last time online -->
-    <mat-card-subtitle *ngIf="!(presenceService.onlineUsers$ | async)?.includes(user.username)">{{getDateTimeAgo(user.lastActive)}}</mat-card-subtitle>
+    <mat-card-subtitle *ngIf="!(presenceService.onlineUsers$ | async)?.includes(user.username)">{{timeFormatterService.getDateTimeAgo(user.lastActive)}}</mat-card-subtitle>
     </mat-card-header>
     <img mat-card-image src="{{profilePicture?.url || './assets/Pictures/profile-placeholder.png'}}" 
     alt="profile picture">
@@ -24,15 +24,15 @@
         </div>
         <div>
           <strong>Member since:</strong>
-          <p>{{getLoacaleDateTime(user.created) | date}}</p>
+          <p>{{timeFormatterService.getLoacaleDateTime(user.created) | date}}</p>
         </div>
 
     </mat-card-content>
     <mat-card-actions class="d-block text-center">
-      <button mat-flat-button color="accent" *ngIf="!isLiked" (click)="addLike()">
+      <button mat-flat-button color="accent" *ngIf="!isFriendRequested" (click)="addLike()">
         <i class="material-icons me-1">person_add_alt_1</i> Add friend
       </button>
-      <button mat-flat-button color="primary" *ngIf="isMatch" routerLink="/chat" [state]="user">
+      <button mat-flat-button color="primary" *ngIf="isFriend" routerLink="/chat" [state]="user">
         <mat-icon>chat</mat-icon> Message
       </button>
     </mat-card-actions>
@@ -48,7 +48,7 @@
       <p>{{formatInterest(user.interest)}}</p>
     </div></mat-tab>
     <mat-tab class="gallery" label="Gallery">
-      <!-- @todo gallery needed -->
+      <app-gallery [user]="user"></app-gallery>
     </mat-tab>
   </mat-tab-group>
 </div>

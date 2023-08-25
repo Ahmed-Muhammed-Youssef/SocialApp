@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { map, Observable, of, take } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { PaginatedResult, Pagination } from '../_models/pagination';
-import { Photo, UpdateUser, User } from '../_models/User';
+import { Picture, UpdateUser, User } from '../_models/User';
 import { UserParams } from '../_models/userParams';
 import { AccountService } from './account.service';
 
@@ -86,34 +86,28 @@ export class UserService {
     if (user) {
       return of(user);
     }
-    return this.http.get<User>(this.baseUrl + 'users/info/username/' + username);
+    return this.http.get<User>(this.baseUrl + 'users/info/' + username);
   }
-  public reorderPhotos(photos: Photo[]) {
-    return this.http.put<Photo[]>(this.baseUrl + 'users/photos/reorder', photos);
+  public deletePicture(pictureId: number) {
+    return this.http.delete(this.baseUrl + 'users/photo/delete/' + String(pictureId));
   }
-  public deletePhoto(photoId: number) {
-    return this.http.delete(this.baseUrl + 'users/photo/delete/' + String(photoId));
-  }
-  like(username: string): Observable<boolean> {
-    return this.http.post<boolean>(this.baseUrl + 'like/' + username, {}).pipe(map(r => {
+  sendFriendRequest(username: string): Observable<boolean> {
+    return this.http.post<boolean>(this.baseUrl + 'friendrequests/send/' + username, {}).pipe(map(r => {
       //the correct answer will need a more complex caching system so we will only delete all the cashed data for now
       this.usersChache = new Map();
       return r;
     }));
   }
-  getLikes(): Observable<User[]> {
-    return this.http.get<User[]>(this.baseUrl + 'like/liked');
-
+  getSentFriendRequests(): Observable<User[]> {
+    return this.http.get<User[]>(this.baseUrl + 'friendrequests/sent');
   }
-  getIsLiked(username: string): Observable<boolean> {
-    return this.http.get<boolean>(this.baseUrl + 'like/isliked/' + username);
-
+  isFriendRequested(username: string): Observable<boolean> {
+    return this.http.get<boolean>(this.baseUrl + 'friendrequests/isSent/' + username);
   }
-  getIsMatch(username: string): Observable<boolean> {
-    return this.http.get<boolean>(this.baseUrl + 'matches/ismatch/' + username);
-
+  isFriend(username: string): Observable<boolean> {
+    return this.http.get<boolean>(this.baseUrl + 'friends/isfriend/' + username);
   }
-  getMatches(pageNumber: number = 1, itemsPerPage: number = 2): Observable<PaginatedResult<User[]>> {
+  getFriends(pageNumber: number = 1, itemsPerPage: number = 2): Observable<PaginatedResult<User[]>> {
     let paginatedResult: PaginatedResult<User[]> = { result: [], pagination: this.paginationInfo };
     let httpParams: HttpParams = new HttpParams()
       .set('pageNumber', pageNumber)
@@ -123,7 +117,7 @@ export class UserService {
       paginatedResult = cache;
       return of(paginatedResult);
     }
-    return this.http.get<User[]>(this.baseUrl + 'matches', { observe: 'response', params: httpParams })
+    return this.http.get<User[]>(this.baseUrl + 'friends', { observe: 'response', params: httpParams })
       .pipe(
         map(response => {
           if (response?.body) {
@@ -155,7 +149,7 @@ export class UserService {
       }
     ));
   }
-  getPhotos() {
-    return this.http.get<Photo[]>(this.baseUrl + "users/photos/all");
+  getPictures() {
+    return this.http.get<Picture[]>(this.baseUrl + "users/photos/all");
   }
 }

@@ -1,6 +1,5 @@
 ﻿using API.DTOs;
 using API.Entities;
-using API.Helpers;
 using API.Interfaces;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
@@ -12,23 +11,25 @@ using System.Threading.Tasks;
 
 namespace API.Data
 {
-    public class MessageRepository : IMessageRepository
+    public class MessageRepository : IMessagesRepository
     {
-        private readonly DataContext dataContext;
-        private readonly IMapper mapper;
+        private readonly DataContext _dataContext;
+        private readonly IMapper _mapper;
 
         public MessageRepository(DataContext dataContext, IMapper mapper)
         {
-            this.dataContext = dataContext;
-            this.mapper = mapper;
+            _dataContext = dataContext;
+            _mapper = mapper;
         }
-        public void AddMessage(Message message)
+        public async Task AddMessageAsync(Message message)
         {
-            dataContext.Messages.Add(message);
+            await _dataContext.Messages.AddAsync(message);
         }
 
         public void DeleteMessage(Message message, int issuerId)
         {
+
+            // Delete the message when it's deleted from both sender and recipient
             if(message.SenderId == issuerId)
             {
                 if(message.SenderDeleted == false)
@@ -45,25 +46,28 @@ namespace API.Data
             }
             if(message.RecipientDeleted && message.SenderDeleted)
             {
-                dataContext.Messages.Remove(message);
+                _dataContext.Messages.Remove(message);
             }
             else
             {
-                dataContext.Messages.Update(message);
+                _dataContext.Messages.Update(message);
             }
         }
         public async Task<Message> GetMessageAsync(int messageId)
         {
-            return await dataContext.Messages.FindAsync(messageId);
+            return await _dataContext.Messages
+                .AsNoTracking()
+                .FirstOrDefaultAsync(m => m.Id == messageId);
         }
         public async Task<IEnumerable<MessageDTO>> GetMessagesDTOThreadAsync(int issuerId, int theOtherUserId)
         {
-            var query = dataContext.Messages
-                .Where(
-                m =>
-                (m.SenderId == issuerId && m.RecipientId == theOtherUserId && !m.SenderDeleted)
-                || (m.SenderId == theOtherUserId && m.RecipientId == issuerId && !m.RecipientDeleted))
-                .ProjectTo<MessageDTO>(mapper.ConfigurationProvider).OrderBy(m => m.SentDate);
+            var query = _dataContext.Messages
+                .AsNoTracking()
+                .Where(m => (m.SenderId == issuerId && m.RecipientId == theOtherUserId && !m.SenderDeleted) || (m.SenderId == theOtherUserId && m.RecipientId == issuerId && !m.RecipientDeleted))
+                .ProjectTo<MessageDTO>(_mapper.ConfigurationProvider)
+                .OrderBy(m => m.SentDate);
+
+            // update unread messages state to read
             var unreadMessages = query.Where(m => m.ReadDate == null && m.RecipientId == issuerId);
             if (unreadMessages.Any())
             {
@@ -75,33 +79,35 @@ namespace API.Data
             return await query.ToListAsync();;
         }
 
-        public void AddGroup(Group group)
+        public async Task AddGroupAsync(Group group)
         {
-            dataContext.Groups.Add(group);
+            await _dataContext.Groups.AddAsync(group);
         }
 
         public void RemoveConnection(Connection connection)
         {
-            dataContext.Connections.Remove(connection);
+            _dataContext.Connections.Remove(connection);
         }
 
         public async Task<Connection> GetConnection(string connectionId)
         {
-            return await dataContext.Connections.FindAsync(connectionId);
+            return await _dataContext.Connections
+                .AsNoTracking()
+                .FirstOrDefaultAsync(c => c.ConnectionId == connectionId);
         }
 
         public async Task<Group> GetMessageGroup(string groupName)
         {
-           return await dataContext
-           .Groups
+           return await _dataContext.Groups
+           .AsNoTracking()
            .Include(g => g.Connections)
            .FirstOrDefaultAsync(g => g.Name == groupName);
         }
 
         public async Task<Group> GetGroupForConnection(string connectionId)
         {
-            return await dataContext
-            .Groups
+            return await _dataContext.Groups
+            .AsNoTracking()
             .Include(g => g.Connections)
             .Where(g => g.Connections.Any(c => c.ConnectionId == connectionId))
             .FirstOrDefaultAsync();

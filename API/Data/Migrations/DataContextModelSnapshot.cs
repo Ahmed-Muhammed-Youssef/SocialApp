@@ -5,6 +5,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
+#nullable disable
+
 namespace API.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
@@ -13,8 +15,7 @@ namespace API.Data.Migrations
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder
-                .HasAnnotation("ProductVersion", "5.0.13");
+            modelBuilder.HasAnnotation("ProductVersion", "7.0.10");
 
             modelBuilder.Entity("API.Entities.AppRole", b =>
                 {
@@ -40,7 +41,7 @@ namespace API.Data.Migrations
                         .IsUnique()
                         .HasDatabaseName("RoleNameIndex");
 
-                    b.ToTable("AspNetRoles");
+                    b.ToTable("AspNetRoles", (string)null);
                 });
 
             modelBuilder.Entity("API.Entities.AppUser", b =>
@@ -141,7 +142,7 @@ namespace API.Data.Migrations
                         .IsUnique()
                         .HasDatabaseName("UserNameIndex");
 
-                    b.ToTable("AspNetUsers");
+                    b.ToTable("AspNetUsers", (string)null);
                 });
 
             modelBuilder.Entity("API.Entities.AppUserRole", b =>
@@ -156,7 +157,7 @@ namespace API.Data.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("AspNetUserRoles");
+                    b.ToTable("AspNetUserRoles", (string)null);
                 });
 
             modelBuilder.Entity("API.Entities.Connection", b =>
@@ -177,6 +178,42 @@ namespace API.Data.Migrations
                     b.ToTable("Connections");
                 });
 
+            modelBuilder.Entity("API.Entities.Friend", b =>
+                {
+                    b.Property<int>("UserId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("FriendId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("UserId", "FriendId");
+
+                    b.HasIndex("FriendId");
+
+                    b.ToTable("Friends");
+                });
+
+            modelBuilder.Entity("API.Entities.FriendRequest", b =>
+                {
+                    b.Property<int>("RequesterId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("RequestedId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("RequesterId", "RequestedId");
+
+                    b.HasIndex("RequestedId");
+
+                    b.ToTable("FriendRequests");
+                });
+
             modelBuilder.Entity("API.Entities.Group", b =>
                 {
                     b.Property<string>("Name")
@@ -185,39 +222,6 @@ namespace API.Data.Migrations
                     b.HasKey("Name");
 
                     b.ToTable("Groups");
-                });
-
-            modelBuilder.Entity("API.Entities.Like", b =>
-                {
-                    b.Property<int>("LikedId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("LikerId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("LikedId", "LikerId");
-
-                    b.HasIndex("LikerId");
-
-                    b.ToTable("Likes");
-                });
-
-            modelBuilder.Entity("API.Entities.Match", b =>
-                {
-                    b.Property<int>("UserId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("MatchedId")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("UserId", "MatchedId");
-
-                    b.HasIndex("MatchedId");
-
-                    b.ToTable("Matches");
                 });
 
             modelBuilder.Entity("API.Entities.Message", b =>
@@ -257,7 +261,7 @@ namespace API.Data.Migrations
                     b.ToTable("Messages");
                 });
 
-            modelBuilder.Entity("API.Entities.Photo", b =>
+            modelBuilder.Entity("API.Entities.Picture", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -266,8 +270,8 @@ namespace API.Data.Migrations
                     b.Property<int>("AppUserId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("Order")
-                        .HasColumnType("INTEGER");
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("PublicId")
                         .IsRequired()
@@ -281,7 +285,7 @@ namespace API.Data.Migrations
 
                     b.HasIndex("AppUserId");
 
-                    b.ToTable("Photo");
+                    b.ToTable("Pictures");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
@@ -303,7 +307,7 @@ namespace API.Data.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("AspNetRoleClaims");
+                    b.ToTable("AspNetRoleClaims", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<int>", b =>
@@ -325,7 +329,7 @@ namespace API.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("AspNetUserClaims");
+                    b.ToTable("AspNetUserClaims", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<int>", b =>
@@ -346,7 +350,7 @@ namespace API.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("AspNetUserLogins");
+                    b.ToTable("AspNetUserLogins", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>
@@ -365,7 +369,7 @@ namespace API.Data.Migrations
 
                     b.HasKey("UserId", "LoginProvider", "Name");
 
-                    b.ToTable("AspNetUserTokens");
+                    b.ToTable("AspNetUserTokens", (string)null);
                 });
 
             modelBuilder.Entity("API.Entities.AppUserRole", b =>
@@ -394,42 +398,42 @@ namespace API.Data.Migrations
                         .HasForeignKey("GroupName");
                 });
 
-            modelBuilder.Entity("API.Entities.Like", b =>
+            modelBuilder.Entity("API.Entities.Friend", b =>
                 {
-                    b.HasOne("API.Entities.AppUser", "Liked")
-                        .WithMany("LikesLikees")
-                        .HasForeignKey("LikedId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("API.Entities.AppUser", "Liker")
-                        .WithMany("LikesLikers")
-                        .HasForeignKey("LikerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Liked");
-
-                    b.Navigation("Liker");
-                });
-
-            modelBuilder.Entity("API.Entities.Match", b =>
-                {
-                    b.HasOne("API.Entities.AppUser", "Matched")
-                        .WithMany("MatchesMatchedId")
-                        .HasForeignKey("MatchedId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                    b.HasOne("API.Entities.AppUser", "FriendUser")
+                        .WithMany()
+                        .HasForeignKey("FriendId")
+                        .OnDelete(DeleteBehavior.ClientCascade)
                         .IsRequired();
 
                     b.HasOne("API.Entities.AppUser", "User")
-                        .WithMany("MatchesId")
+                        .WithMany("Friends")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.ClientCascade)
                         .IsRequired();
 
-                    b.Navigation("Matched");
+                    b.Navigation("FriendUser");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("API.Entities.FriendRequest", b =>
+                {
+                    b.HasOne("API.Entities.AppUser", "Requested")
+                        .WithMany("FriendRequestsReceived")
+                        .HasForeignKey("RequestedId")
+                        .OnDelete(DeleteBehavior.ClientCascade)
+                        .IsRequired();
+
+                    b.HasOne("API.Entities.AppUser", "Requester")
+                        .WithMany("FriendRequestsSent")
+                        .HasForeignKey("RequesterId")
+                        .OnDelete(DeleteBehavior.ClientCascade)
+                        .IsRequired();
+
+                    b.Navigation("Requested");
+
+                    b.Navigation("Requester");
                 });
 
             modelBuilder.Entity("API.Entities.Message", b =>
@@ -451,10 +455,10 @@ namespace API.Data.Migrations
                     b.Navigation("Sender");
                 });
 
-            modelBuilder.Entity("API.Entities.Photo", b =>
+            modelBuilder.Entity("API.Entities.Picture", b =>
                 {
                     b.HasOne("API.Entities.AppUser", "AppUser")
-                        .WithMany("Photos")
+                        .WithMany("Pictures")
                         .HasForeignKey("AppUserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -505,19 +509,17 @@ namespace API.Data.Migrations
 
             modelBuilder.Entity("API.Entities.AppUser", b =>
                 {
-                    b.Navigation("LikesLikees");
+                    b.Navigation("FriendRequestsReceived");
 
-                    b.Navigation("LikesLikers");
+                    b.Navigation("FriendRequestsSent");
 
-                    b.Navigation("MatchesId");
-
-                    b.Navigation("MatchesMatchedId");
+                    b.Navigation("Friends");
 
                     b.Navigation("MessagesReceived");
 
                     b.Navigation("MessagesSent");
 
-                    b.Navigation("Photos");
+                    b.Navigation("Pictures");
 
                     b.Navigation("UserRoles");
                 });

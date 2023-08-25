@@ -1,7 +1,6 @@
-export interface Photo {
+export interface Picture {
   id: number;
   url: string;
-  order: number;
 }
 
 export interface User {
@@ -17,7 +16,7 @@ export interface User {
   bio: string;
   city: string;
   country: string;
-  photos: Photo[];
+  pictures: Picture[];
   roles: string[];
 }
 

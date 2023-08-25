@@ -13,19 +13,19 @@ namespace API.SignalR
 {
     public class MessageHub : Hub
     {
-        private readonly IUnitOfWork unitOfWork;
-        private readonly IMapper mapper;
+        private readonly IUnitOfWork _unitOfWork;
+        private readonly IMapper _mapper;
 
-        private readonly IHubContext<PresenceHub> presenceHubContext;
-        private readonly PresenceTracker presenceTracker;
+        private readonly IHubContext<PresenceHub> _presenceHubContext;
+        private readonly PresenceTracker _presenceTracker;
 
         public MessageHub(IUnitOfWork unitOfWork, IMapper mapper, 
             IHubContext<PresenceHub> presenceHubContext, PresenceTracker presenceTracker)
         {
-            this.unitOfWork = unitOfWork;
-            this.mapper = mapper;
-            this.presenceHubContext = presenceHubContext;
-            this.presenceTracker = presenceTracker;
+            _unitOfWork = unitOfWork;
+            _mapper = mapper;
+            _presenceHubContext = presenceHubContext;
+            _presenceTracker = presenceTracker;
         }
         public override async Task OnConnectedAsync()
         {
@@ -35,8 +35,8 @@ namespace API.SignalR
             await Groups.AddToGroupAsync(Context.ConnectionId, groupName);
             var group = await AddToGroup(groupName);
             await Clients.Group(groupName).SendAsync("UpdatedGroup", group);
-            var messages = await unitOfWork.MessageRepository.GetMessagesDTOThreadAsync(Context.User.GetId(), otherUserId);
-            if(unitOfWork.HasChanges()) await unitOfWork.Complete();
+            var messages = await _unitOfWork.MessagesRepository.GetMessagesDTOThreadAsync(Context.User.GetId(), otherUserId);
+            if(_unitOfWork.HasChanges()) await _unitOfWork.Complete();
             await Clients.Caller.SendAsync("ReceiveMessages", messages);
         }
         public override async Task OnDisconnectedAsync(Exception exception)
@@ -47,8 +47,8 @@ namespace API.SignalR
         }
         public async Task SendMessages(NewMessageDTO message)
         {
-            var sender = await unitOfWork.UserRepository.GetUserByIdAsync(Context.User.GetId());
-            var recipient = await unitOfWork.UserRepository.GetUserByUsernameAsync(message.RecipientUsername);
+            var sender = await _unitOfWork.UsersRepository.GetUserByIdAsync(Context.User.GetId());
+            var recipient = await _unitOfWork.UsersRepository.GetUserByUsernameAsync(message.RecipientUsername);
             if(recipient == null || sender == null)
             {
                 throw new HubException("User not found");
@@ -57,7 +57,7 @@ namespace API.SignalR
             {
                throw new HubException("You can't send messages to yourself");
             }
-            if (!await unitOfWork.LikesRepository.IsMacth(sender.Id, recipient.Id))
+            if (!await _unitOfWork.FriendRequestsRepository.IsFriend(sender.Id, recipient.Id))
             {
                 throw new HubException("You can't send messages to an unmatch");
 
@@ -73,14 +73,12 @@ namespace API.SignalR
                 RecipientDeleted = false,
                 ReadDate = null
             };
-            var msgDTO = mapper.Map<MessageDTO>(createdMessage);
-            var profilePhoto = await unitOfWork.UserRepository.GetProfilePhotoAsync(sender.Id);
-            if(profilePhoto != null)
-            {
-                msgDTO.SenderPhotoUrl = profilePhoto.Url;
-            }
+            var msgDTO = _mapper.Map<MessageDTO>(createdMessage);
+           
+            // @ToDo: Add Profile Picture Here
+            // msgDTO.SenderPhotoUrl = null;
             var groupName = GetGroupName(sender.Id, recipient.Id);
-            var group = await unitOfWork.MessageRepository.GetMessageGroup(groupName);
+            var group = await _unitOfWork.MessagesRepository.GetMessageGroup(groupName);
             if(group.Connections.Any(c => c.UserId == recipient.Id))
             {
                 createdMessage.ReadDate = DateTime.UtcNow;
@@ -88,16 +86,16 @@ namespace API.SignalR
             }
             else 
             {
-                var recipientConnections = await presenceTracker.GetConnectionForUser(recipient.UserName);
+                var recipientConnections = await _presenceTracker.GetConnectionForUser(recipient.UserName);
                 if(recipientConnections != null)
                 {
-                    var senderDTO = mapper.Map<UserDTO>(sender);
-                    await presenceHubContext.Clients.Clients(recipientConnections)
+                    var senderDTO = _mapper.Map<UserDTO>(sender);
+                    await _presenceHubContext.Clients.Clients(recipientConnections)
                     .SendAsync("NewMessage", new { senderDTO, msgDTO });
                 }
             }
-            unitOfWork.MessageRepository.AddMessage(createdMessage);
-            if (await unitOfWork.Complete())
+            await _unitOfWork.MessagesRepository.AddMessageAsync(createdMessage);
+            if (await _unitOfWork.Complete())
             {
                 msgDTO.Id = createdMessage.Id;
                 await Clients.Group(groupName).SendAsync("NewMessage", msgDTO);
@@ -109,16 +107,16 @@ namespace API.SignalR
         } 
         // utility methods
         private async Task<Group> AddToGroup(string groupName){
-            var group = await unitOfWork.MessageRepository.GetMessageGroup(groupName);
+            var group = await _unitOfWork.MessagesRepository.GetMessageGroup(groupName);
             var connection = new Connection(Context.ConnectionId, Context.User.GetId());
 
             if(group == null)
             {
                 group = new Group(name: groupName);
-                unitOfWork.MessageRepository.AddGroup(group);
+                await _unitOfWork.MessagesRepository.AddGroupAsync(group);
             }
             group.Connections.Add(connection);
-            if(await unitOfWork.Complete())
+            if(await _unitOfWork.Complete())
             {
                 return group;
             }
@@ -126,10 +124,10 @@ namespace API.SignalR
         }
         private async Task<Group> RemoveFromMessageGroup()
         {
-            var group = await unitOfWork.MessageRepository.GetGroupForConnection(Context.ConnectionId);
+            var group = await _unitOfWork.MessagesRepository.GetGroupForConnection(Context.ConnectionId);
             var connection = group.Connections.FirstOrDefault(c => c.ConnectionId == Context.ConnectionId);
-            unitOfWork.MessageRepository.RemoveConnection(connection);
-            if(await unitOfWork.Complete())
+            _unitOfWork.MessagesRepository.RemoveConnection(connection);
+            if(await _unitOfWork.Complete())
             {
                 return group;
             }

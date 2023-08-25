@@ -1,4 +1,5 @@
-﻿using API.Entities;
+﻿using API.Data.Configurations;
+using API.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -12,38 +13,23 @@ namespace API.Data
         public DataContext(DbContextOptions options) : base(options)
         {
         }
-        public DbSet<Like> Likes { get; set; }
-        public DbSet<Match> Matches { get; set; }
-        public DbSet<Photo> Photo { get; set; }
+        public DbSet<FriendRequest> FriendRequests { get; set; }
+        public DbSet<Friend> Friends { get; set; }
+        public DbSet<Picture> Pictures { get; set; }
         public DbSet<Message> Messages { get; set; }
         public DbSet<Group> Groups { get; set; }
         public DbSet<Connection> Connections { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-
-            modelBuilder.Entity<AppUser>()
-                .HasMany(u => u.UserRoles)
-                .WithOne(ur => ur.User)
-                .HasForeignKey(ur => ur.UserId)
-                .IsRequired();
-            modelBuilder.Entity<AppRole>()
-               .HasMany(u => u.UserRoles)
-               .WithOne(ur => ur.Role)
-               .HasForeignKey(ur => ur.RoleId)
-               .IsRequired();
-            modelBuilder.Entity<Match>()
-            .HasKey(m => new { m.UserId, m.MatchedId });
-            modelBuilder.Entity<Like>()
-            .HasKey(l => new { l.LikedId, l.LikerId });
-            modelBuilder.Entity<Message>()
-                .HasOne(m => m.Sender)
-                .WithMany(u => u.MessagesSent)
-                .OnDelete(DeleteBehavior.Restrict);
-            modelBuilder.Entity<Message>()
-                .HasOne(m => m.Recipient)
-                .WithMany(u => u.MessagesReceived)
-                .OnDelete(DeleteBehavior.Restrict);
+            // Apply configurations
+            modelBuilder.ApplyConfiguration(new PictureConfigurations());
+            modelBuilder.ApplyConfiguration(new MessageConfigurations());
+            modelBuilder.ApplyConfiguration(new GroupConfigurations());
+            modelBuilder.ApplyConfiguration(new FriendRequestConfigurations());
+            modelBuilder.ApplyConfiguration(new FriendConfigurations());
+            modelBuilder.ApplyConfiguration(new AppUserConfigurations());
+            modelBuilder.ApplyConfiguration(new AppUserRoleConfigurations());
 
         }
     }

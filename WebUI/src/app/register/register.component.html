@@ -68,7 +68,7 @@
     <mat-form-field class="col" appearance="fill">
       <mat-label>Country</mat-label>
       <mat-select formControlName="country">
-        <mat-option *ngFor="let country of countryList" value="{{country}}">{{country}}</mat-option>
+        <mat-option *ngFor="let country of staticDataService.getAllCountries()" value="{{country}}">{{country}}</mat-option>
       </mat-select>
       <mat-error>
         Invalid Country

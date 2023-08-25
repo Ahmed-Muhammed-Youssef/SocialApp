@@ -32,8 +32,7 @@ import { UserEditComponent } from './users/user-edit/user-edit.component';
 import { PreventUnsavedChangesGuard } from './_guards/prevent-unsaved-changes.guard';
 import { NgxSpinnerModule } from "ngx-spinner";
 import { LoadingInterceptor } from './_interceptors/loading.interceptor';
-import { PhotoEditorComponent } from './users/photo-editor/photo-editor.component';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { PictureEditorComponent } from './users/picture-editor/picture-editor.component';
 import { UserDetailedResolver } from './_resolvers/user-detailed.resolver';
 import { AdminPanelComponent } from './admin/admin-panel/admin-panel.component';
 import { AdminGuard } from './_guards/admin.guard';
@@ -42,6 +41,7 @@ import { UserManagementComponent } from './admin/user-management/user-management
 import { PhotoManagementComponent } from './admin/photo-management/photo-management.component';
 import { RoleEditDialogComponent } from './admin/role-edit-dialog/role-edit-dialog.component';
 import { InboxComponent } from './Inbox/inbox.component';
+import { GalleryComponent } from './users/gallery/gallery.component';
 
 
 const routes: Routes = [
@@ -73,43 +73,44 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    NavComponent,
-    FooterComponent,
-    HomeComponent,
-    RegisterComponent,
-    ExploreComponent,
-    UserDetailComponent,
-    FriendsListComponent,
-    ChatComponent,
-    LoginComponent,
-    TestErrorComponent,
-    NotFoundComponent,
-    ServerErrorComponent,
-    UserCardComponent,
-    UserEditComponent,
-    PhotoEditorComponent,
-    AdminPanelComponent,
-    HasRoleDirective,
-    UserManagementComponent,
-    PhotoManagementComponent,
-    RoleEditDialogComponent,
-    InboxComponent
-  ],
-  imports: [
-    BrowserModule, HttpClientModule,
-    BrowserAnimationsModule, FormsModule,
-    ReactiveFormsModule, RouterModule.forRoot(routes),
-    SharedModule, HttpClientModule, NgxSpinnerModule,
-    DragDropModule, FontAwesomeModule, LayoutModule,
-    MatSidenavModule, MatButtonToggleModule
-  ],
-  providers: [
-    {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
-    {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
-    {provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true}
-  ],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent,
+        NavComponent,
+        FooterComponent,
+        HomeComponent,
+        RegisterComponent,
+        ExploreComponent,
+        UserDetailComponent,
+        FriendsListComponent,
+        ChatComponent,
+        LoginComponent,
+        TestErrorComponent,
+        NotFoundComponent,
+        ServerErrorComponent,
+        UserCardComponent,
+        UserEditComponent,
+        PictureEditorComponent,
+        AdminPanelComponent,
+        HasRoleDirective,
+        UserManagementComponent,
+        PhotoManagementComponent,
+        RoleEditDialogComponent,
+        InboxComponent
+    ],
+    providers: [
+        { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+        { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+        { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true }
+    ],
+    bootstrap: [AppComponent],
+    imports: [
+        BrowserModule, HttpClientModule,
+        BrowserAnimationsModule, FormsModule,
+        ReactiveFormsModule, RouterModule.forRoot(routes),
+        SharedModule, HttpClientModule, NgxSpinnerModule,
+        DragDropModule, LayoutModule,
+        MatSidenavModule, MatButtonToggleModule,
+        GalleryComponent
+    ]
 })
 export class AppModule { }

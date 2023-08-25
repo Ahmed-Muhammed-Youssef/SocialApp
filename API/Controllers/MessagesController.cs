@@ -1,13 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using API.Entities;
 using API.Interfaces;
 using API.Extensions;
-using API.DTOs;
-using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
-using API.Helpers;
 
 namespace API.Controllers
 {
@@ -16,28 +11,32 @@ namespace API.Controllers
     [Authorize]
     public class MessagesController : ControllerBase
     {
-        private readonly IUnitOfWork unitOfWork;
-        private readonly IMapper mapper;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public MessagesController(IUnitOfWork unitOfWork ,IMapper mapper)
+        public MessagesController(IUnitOfWork unitOfWork)
         {
-            this.unitOfWork = unitOfWork;
-            this.mapper = mapper;
-
+            _unitOfWork = unitOfWork;
         }
-        // DELETE: api/Messages/5
+
+        // DELETE: api/Messages/{id}
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteMessage(int id)
         {
-            var message = await unitOfWork.MessageRepository.GetMessageAsync(id);
+            var message = await _unitOfWork.MessagesRepository.GetMessageAsync(id);
             if (message == null)
             {
                 return NotFound();
             }
             var issuerId = User.GetId();
-            unitOfWork.MessageRepository.DeleteMessage(message, issuerId);
+            
+            // Checks if the message is related to the issuer
+            if(message.SenderId != issuerId && message.RecipientId != issuerId) 
+            {
+                return BadRequest("Failed to delete the message");
+            }
+            _unitOfWork.MessagesRepository.DeleteMessage(message, issuerId);
 
-            if (await unitOfWork.Complete()) { 
+            if (await _unitOfWork.Complete()) { 
                 return NoContent();
             }
             return BadRequest("Failed to delete the message");

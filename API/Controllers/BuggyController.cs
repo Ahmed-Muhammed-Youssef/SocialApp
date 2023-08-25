@@ -13,35 +13,43 @@ namespace API.Controllers
 
     public class BuggyController : ControllerBase
     {
-        private readonly DataContext context;
+        private readonly DataContext _context;
 
         public BuggyController(DataContext context)
         {
-            this.context = context;
+            _context = context;
         }
+
+        // GET: api/buggy/auth
         [Authorize]
         [HttpGet("auth")]
         public ActionResult<string> GetSecret()
         {
             return "secret text";
         }
-        [HttpGet("not-foud")]
+
+        // GET: api/buggy/not-found
+        [HttpGet("not-found")]
         public ActionResult<AppUser> GetNotFound()
         {
-            var search = context.Users.Find(-1);
+            var search = _context.Users.Find(-1);
             if(search == null)
             {
                 return NotFound();
             }
             return Ok(search);
-        } 
+        }
+        
+        // GET: api/buggy/server-error
         [HttpGet("server-error")]
         public ActionResult<AppUser> GetServerError()
         {
-            var thing = context.Users.Find(-1);
+            var thing = _context.Users.Find(-1);
             var toPrint = thing.ToString();
             return Ok(toPrint);
         } 
+
+        // GET: api/buggy/bad-request
         [HttpGet("bad-request")]
         public  ActionResult<string> GetBadRequest()
         {

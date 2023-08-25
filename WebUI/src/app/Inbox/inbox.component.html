@@ -7,16 +7,17 @@
     <h1>Your friends list is empty...</h1>
     <a mat-flat-button color="primary" routerLink="/users"> Find new friends now</a>
 </div>
-<div class="row" style="width: 100%;" *ngIf="friends && friends.length > 0">
+<div class="row" style="width: 100%;" *ngIf="friends != null && friends.length > 0">
+
     <div class="col-md-3 friends-container pe-0 border-end">
         <div class="cards-container">
             <div class="friend-card" (click)="loadChat(friend)" *ngFor="let friend of friends">
-                <img class="friend-img-circle" [src]="friend.photos.length > 0 ? friend.photos[0].url : './assets/Pictures/profile-placeholder.png'" alt="avatar">
+                <img class="friend-img-circle" [src]="friend.pictures.length > 0 ? friend.pictures[0].url : './assets/Pictures/profile-placeholder.png'" alt="avatar">
                 <div class="about">
                     <div class="name">{{friend.firstName}} {{friend.lastName}}</div>
                     <div class="status" *ngIf="(presenceService.onlineUsers$ | async)?.includes(friend.username)"> <span class="online"></span> Active now</div>
                     
-                    <div class="status" *ngIf="!(presenceService.onlineUsers$ | async)?.includes(friend.username)">{{getDateTimeAgo(friend.lastActive)}}</div>
+                    <div class="status" *ngIf="!(presenceService.onlineUsers$ | async)?.includes(friend.username)">{{timeFormatterService.getDateTimeAgo(friend.lastActive)}}</div>
                 </div>
             </div>
         </div>

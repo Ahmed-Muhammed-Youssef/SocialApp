@@ -12,40 +12,50 @@ using System.Threading.Tasks;
 
 namespace API.Data
 {
-    public class UserRepository : IUserRepository // using the repository design pattern to isolate the contollers further more from the entity framework. (it may not be neccesary)
+    public class UserRepository : IUsersRepository // using the repository design pattern to isolate the contollers further more from the entity framework. (it may not be neccesary)
     {
-        private readonly DataContext dataContext;
-        private readonly IMapper mapper;
+        private readonly DataContext _dataContext;
+        private readonly IMapper _mapper;
 
         public UserRepository(DataContext dataContext, IMapper mapper)
         {
-            this.dataContext = dataContext;
-            this.mapper = mapper;
+            _dataContext = dataContext;
+            _mapper = mapper;
         }
 
         public void DeleteUser(AppUser user)
         {
-            dataContext.Remove(user);
+            _dataContext.Remove(user);
         }
         public async Task<bool> UserExistsAsync(int id)
         {
-            return await dataContext.Users.AnyAsync(e => e.Id == id);
+            return await _dataContext.Users
+                .AsNoTracking()
+                .AnyAsync(e => e.Id == id);
         }
         public void Update(AppUser appUser)
         {
-            dataContext.Entry(appUser).State = EntityState.Modified;
+            _dataContext.ChangeTracker.Clear();
+            _dataContext.Entry(appUser).State = EntityState.Modified;
         }
-        public void UpdatePhoto(Photo photo)
+        public void UpdatePicture(Picture picture)
         {
-            dataContext.Entry(photo).State = EntityState.Modified;
+            _dataContext.Entry(picture).State = EntityState.Modified;
         }
         public async Task<char> GetUserInterest(int userId)
         {
-            return await dataContext.Users.Where(u => u.Id == userId).Select(u => u.Interest).FirstOrDefaultAsync();
+            return await _dataContext.Users
+                .AsNoTracking()
+                .Where(u => u.Id == userId)
+                .Select(u => u.Interest)
+                .FirstOrDefaultAsync();
         }
         public async Task<PagedList<UserDTO>> GetUsersDTOAsync(string username, UserParams userParams, List<int> forbiddenIds)
         {
-            var query = dataContext.Users.AsQueryable().Where(u => u.UserName != username);
+            var query = _dataContext.Users
+                .AsNoTracking()
+                .AsQueryable()
+                .Where(u => u.UserName != username);
             if(userParams.Sex != "b")
             {
                 query = query.Where(u => u.Sex == userParams.Sex[0]);
@@ -60,7 +70,7 @@ namespace API.Data
                 var minDoB = DateTime.UtcNow.AddYears(-(int)userParams.MaxAge - 1);
                 query = query.Where(u => u.DateOfBirth >= minDoB);
             }
-            // removes any liked users
+            // removes any friend requested users
             if (forbiddenIds != null || forbiddenIds.Count != 0)
             {
                 query = query.Where(u => !forbiddenIds.Contains(u.Id));
@@ -72,97 +82,90 @@ namespace API.Data
                 _ => query.OrderByDescending(u => u.LastActive)
             };
             
-            var queryDto = query.ProjectTo<UserDTO>(mapper.ConfigurationProvider).AsNoTracking();
+            var queryDto = query.ProjectTo<UserDTO>(_mapper.ConfigurationProvider).AsNoTracking();
             var pagedResult = await PagedList<UserDTO>.CreatePageAsync(queryDto, userParams.PageNumber, userParams.ItemsPerPage);
             
-            // order the photos according to the order value.
-            pagedResult.ForEach(user =>
-            {
-                user.Photos = user.Photos.OrderBy(p => p.Order);
-            });
+            // @ToDo: order the pictures according to the upload time (Descending).
             return pagedResult;
         }
         public async Task<AppUser> GetUserByIdAsync(int id)
         {
-            var result = await dataContext.Users
-                .Where(u => u.Id == id).FirstOrDefaultAsync();
+            var result = await _dataContext.Users
+                .AsNoTracking()
+                .Where(u => u.Id == id)
+                .FirstOrDefaultAsync();
             return result;
         }
         public async Task<UserDTO> GetUserDTOByIdAsync(int id)
         {
-            var result = await dataContext.Users
+            var result = await _dataContext.Users
+                .AsNoTracking()
                 .Where(u => u.Id == id)
-                .ProjectTo<UserDTO>(mapper.ConfigurationProvider).FirstOrDefaultAsync();
-            result.Photos = result.Photos.OrderBy(p => p.Order);
+                .ProjectTo<UserDTO>(_mapper.ConfigurationProvider).FirstOrDefaultAsync();
+            // result.Pictures = result.Pictures.OrderBy(p => p.);
             return result;
         }
         public async Task<UserDTO> GetUserDTOByUsernameAsync(string username)
         {
-            var result =  await dataContext.Users
-               .Where(u => u.UserName == username)
-               .ProjectTo<UserDTO>(mapper.ConfigurationProvider).FirstOrDefaultAsync();
-            result.Photos = result.Photos.OrderBy(p => p.Order);
+            var result =  await _dataContext.Users
+                .AsNoTracking()
+                .Where(u => u.UserName == username)
+                .ProjectTo<UserDTO>(_mapper.ConfigurationProvider).FirstOrDefaultAsync();
+            // result.Pictures = result.Pictures.OrderBy(p => p.Order);
             return result;
         } 
         public async Task<AppUser> GetUserByUsernameAsync(string username)
         {
-            var result = await dataContext.Users
+            var result = await _dataContext.Users
+                .AsNoTracking()
                 .Where(u => u.UserName == username)
                 .FirstOrDefaultAsync();
             return result;
         }
         public async Task<AppUser> GetUserByEmailAsync(string email)
         {
-            var result =  await dataContext.Users
-              .Where(u => u.Email == email)
-              .FirstOrDefaultAsync();
-            result.Photos = (ICollection<Photo>)result.Photos.OrderBy(p => p.Order);
+            var result =  await _dataContext.Users
+                .AsNoTracking()
+                .Where(u => u.Email == email)
+                .FirstOrDefaultAsync();
+            result.Pictures = (ICollection<Picture>)result.Pictures.OrderBy(p => p.Created);
             return result;
         }
         public async Task<UserDTO> GetUserDTOByEmailAsync(string email)
         {
-            var user = await dataContext.Users
-              .Where(u => u.Email == email)
-              .ProjectTo<UserDTO>(mapper.ConfigurationProvider).FirstOrDefaultAsync();
-            user.Photos = user.Photos.OrderBy(p => p.Order);
+            var user = await _dataContext.Users
+                .AsNoTracking()
+                .Where(u => u.Email == email)
+                .ProjectTo<UserDTO>(_mapper.ConfigurationProvider).FirstOrDefaultAsync();
+            // user.Pictures = user.Pictures.OrderBy(p => p.Order);
             return user;
         }
-        public async Task<IEnumerable<PhotoDTO>> GetUserPhotoDTOsAsync(int id)
+        public async Task<IEnumerable<PictureDTO>> GetUserPictureDTOsAsync(int id)
         {
-            var result =  await dataContext.Photo
-              .Where(p => p.AppUserId == id)
-              .ProjectTo<PhotoDTO>(mapper.ConfigurationProvider)
-              .ToListAsync();
-            return result.OrderBy(p => p.Order);
+            var result =  await _dataContext.Pictures
+                .AsNoTracking()
+                .Where(p => p.AppUserId == id)
+                .ProjectTo<PictureDTO>(_mapper.ConfigurationProvider)
+                .ToListAsync();
+            // @ToDo: order pictures
+            return result;
         }
-        public async Task<IEnumerable<Photo>> GetUserPhotoAsync(int id)
+        public async Task<IEnumerable<Picture>> GetUserPictureAsync(int id)
         {
-            var result =  dataContext.Photo.Where(p => p.AppUserId == id).OrderBy(p => p.Order);
+            var result =  _dataContext.Pictures
+                .AsNoTracking()
+                .Where(p => p.AppUserId == id)
+                .OrderBy(p => p.Created);
             return await result.ToListAsync();
         }
-        public async Task<Photo> AddPhotoAsync(Photo photo)
+        public async Task<Picture> AddPictureAsync(Picture picture)
         {
-            var photos = await GetUserPhotoDTOsAsync(photo.AppUserId);
-            photo.Order = photos.Count();
-
-            await dataContext.Photo.AddAsync(photo);
-            return photo;
+            await _dataContext.Pictures.AddAsync(picture);
+            return picture;
         }
-        public void DeletePhoto(Photo photo)
+        public void DeletePicture(Picture picture)
         {
-            dataContext.Photo.Remove(photo);
-        }
-        public async Task<Photo> GetProfilePhotoAsync(int userId)
-        {
-            var user = await GetUserByIdAsync(userId);
-            if(user == null)
-            {
-                return null;
-            }
-            var result = await dataContext.Photo
-            .Where(p => p.AppUserId == userId)
-            .FirstOrDefaultAsync(p => p.Order == 0);
-            return result;
+            _dataContext.Pictures.Remove(picture);
         }
     }
 }

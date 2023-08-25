@@ -67,7 +67,7 @@ namespace API.Data
             await userManager.AddToRolesAsync(admin, new[] { RolesNameValues.User, RolesNameValues.Admin, RolesNameValues.Moderator });
             char[] sex = { 'm', 'f' };
             var tasks = new List<Task>();
-            for (int i = 0; i < 10000; i++)
+            for (int i = 0; i < 100; i++)
             {
                 var testUsers = new Faker<AppUser>()
                     .RuleFor(u => u.UserName, (f, u) => $"user{i}")
@@ -77,8 +77,8 @@ namespace API.Data
                     .RuleFor(u => u.Email, (f, u) => $"user{i}@test")
                     .RuleFor(u => u.Bio, f => f.Lorem.Paragraph())
                     .RuleFor(u => u.Interest, f => f.PickRandom(new List<char>() { 'f', 'm', 'b' }))
-                    .RuleFor(u => u.City, f => f.Address.City())
                     .RuleFor(u => u.Country, f => f.Address.Country())
+                    .RuleFor(u => u.City, f => f.Address.City())
                     .RuleFor(u => u.DateOfBirth, f => f.Date.Past(refDate: DateTime.UtcNow.AddYears(-18), yearsToGoBack: 70))
                     .RuleFor(u => u.LastActive, f => f.Date.Recent())
                     .RuleFor(u => u.Created, f => f.Date.Past(refDate: DateTime.UtcNow.AddMonths(-5), yearsToGoBack: 2));

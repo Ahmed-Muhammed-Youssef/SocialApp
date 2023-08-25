@@ -1,6 +1,4 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree } from '@angular/router';
-import { Observable } from 'rxjs';
 import { UserEditComponent } from '../users/user-edit/user-edit.component';
 
 @Injectable({

@@ -12,10 +12,12 @@ namespace API.Helpers
         {
             CreateMap<AppUser, UserDTO>()
                 .ForMember(dest => dest.Age, opt => opt.MapFrom(src => src.DateOfBirth.CalculateAge()));
-            CreateMap<Photo, PhotoDTO>();
+            CreateMap<Picture, PictureDTO>();
             CreateMap<UpdatedUserDTO, AppUser>();
             CreateMap<RegisterDTO, AppUser>();
-            CreateMap<Message, MessageDTO>().ForMember(m => m.SenderPhotoUrl, opt => opt.MapFrom(m => m.Sender.Photos.FirstOrDefault(p => p.Order == 0).Url));
+
+            // @TODO: add profile picture mapping here
+            CreateMap<Message, MessageDTO>().ForMember(m => m.SenderPhotoUrl, opt => opt.MapFrom(m => m.Sender.Pictures.FirstOrDefault().Url));
         }
 
     }

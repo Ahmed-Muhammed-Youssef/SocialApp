@@ -18,7 +18,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.Configure<CloudinarySettings>(builder.Configuration.GetSection("Cloudinary"));
 builder.Services.AddSingleton<PresenceTracker>();
-builder.Services.AddScoped<IPhotoService, PhotoService>();
+builder.Services.AddScoped<IPictureService, PictureService>();
 builder.Services.AddIdentityConfigurations(builder.Configuration);
 builder.Services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();

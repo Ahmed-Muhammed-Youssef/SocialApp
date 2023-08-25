@@ -1,11 +1,8 @@
-﻿using API.Data;
-using API.DTOs;
+﻿using API.DTOs;
 using API.Entities;
 using API.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Security.Cryptography;
-using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using API.Helpers;
@@ -18,20 +15,21 @@ namespace API.Controllers
     [ServiceFilter(typeof(LogUserActivity))]
     public class AccountController : ControllerBase
     {
-        private readonly UserManager<AppUser> userManager;
-        private readonly SignInManager<AppUser> signInManager;
-        private readonly ITokenService tokenService;
-        private readonly IMapper mapper;
-        private readonly IUnitOfWork unitOfWork;
+        private readonly UserManager<AppUser> _userManager;
+        private readonly SignInManager<AppUser> _signInManager;
+        private readonly ITokenService _tokenService;
+        private readonly IMapper _mapper;
+        private readonly IUnitOfWork _unitOfWork;
 
         public AccountController(IUnitOfWork unitOfWork, UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, ITokenService tokenService, IMapper mapper)
         {
-            this.userManager = userManager;
-            this.signInManager = signInManager;
-            this.tokenService = tokenService;
-            this.mapper = mapper;
-            this.unitOfWork = unitOfWork;
+            _userManager = userManager;
+            _signInManager = signInManager;
+            _tokenService = tokenService;
+            _mapper = mapper;
+            _unitOfWork = unitOfWork;
         }
+        // POST: api/account/register
         [HttpPost("register")]
         public async Task<ActionResult> Register(RegisterDTO accountDTO)
         {
@@ -48,15 +46,15 @@ namespace API.Controllers
                 return BadRequest("The Username is already taken.");
             }
             AppUser newUser = new AppUser();
-            mapper.Map(accountDTO, newUser);
+            _mapper.Map(accountDTO, newUser);
             newUser.UserName = newUser.UserName.ToLower();
-            var result = await userManager.CreateAsync(newUser, accountDTO.Password);
+            var result = await _userManager.CreateAsync(newUser, accountDTO.Password);
             if (!result.Succeeded)
             {
                 return BadRequest("Failed to register the user.");
             }
-            var userData = await unitOfWork.UserRepository.GetUserDTOByUsernameAsync(accountDTO.UserName);
-            var adddRoleresult = await userManager.AddToRoleAsync(newUser, "user");
+            var userData = await _unitOfWork.UsersRepository.GetUserDTOByUsernameAsync(accountDTO.UserName);
+            var adddRoleresult = await _userManager.AddToRoleAsync(newUser, "user");
             if (!adddRoleresult.Succeeded)
             {
                 return BadRequest();
@@ -65,9 +63,10 @@ namespace API.Controllers
                 new TokenDTO()
                 {
                     UserData = userData,
-                    Token = await tokenService.CreateTokenAsync(newUser)
+                    Token = await _tokenService.CreateTokenAsync(newUser)
                 });
         }
+        // POST: api/account/login
         [HttpPost("login")]
         public async Task<ActionResult<TokenDTO>> Login(LoginDTO loginCredentials)
         {
@@ -75,32 +74,34 @@ namespace API.Controllers
             {
                 return BadRequest(loginCredentials);
             }
-            var user = await userManager.Users.Include(u => u.Photos).FirstOrDefaultAsync(u => u.Email == loginCredentials.Email);           
+            var user = await _userManager.Users.Include(u => u.Pictures).FirstOrDefaultAsync(u => u.Email == loginCredentials.Email);           
             if(user == null)
             {
                 return Unauthorized();
             }
-            var signInResult = await signInManager
+            var signInResult = await _signInManager
                 .CheckPasswordSignInAsync(user, loginCredentials.Password, lockoutOnFailure: false);
             if (!signInResult.Succeeded)
             {
                 return Unauthorized();
             }
-            var userData = await unitOfWork.UserRepository.GetUserDTOByEmailAsync(loginCredentials.Email);
+            var userData = await _unitOfWork.UsersRepository.GetUserDTOByEmailAsync(loginCredentials.Email);
 
             return Ok(new TokenDTO()
             {
                 UserData = userData,
-                Token = await tokenService.CreateTokenAsync(user)
+                Token = await _tokenService.CreateTokenAsync(user)
             });
         }
+
+        // Utility Methods
         private async Task<bool> EmailExists(string email)
         {
-            return await userManager.Users.AnyAsync(u => u.Email == email);
+            return await _userManager.Users.AnyAsync(u => u.Email == email);
         }
         private async Task<bool> UsernameExists(string username)
         {
-            return await userManager.Users.AnyAsync(u => u.UserName == username);
+            return await _userManager.Users.AnyAsync(u => u.UserName == username);
         }
     }
 }

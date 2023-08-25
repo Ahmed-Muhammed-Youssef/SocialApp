@@ -3,12 +3,12 @@
       Friends List
     </h1>
 </div>
-<div class="users-grid" *ngIf="matches.length > 0">
-    <div class="user-card-res" *ngFor="let user of matches">
-        <app-user-card [isLiked]="true" [user]="user"></app-user-card>
+<div class="users-grid" *ngIf="friends.length > 0">
+    <div class="user-card-res" *ngFor="let friend of friends">
+        <app-user-card [isFriendRequested]="true" [user]="friend"></app-user-card>
     </div>
 </div>
-<div class="text-center mt-4" *ngIf="matches.length == 0">
+<div class="text-center mt-4" *ngIf="friends.length == 0">
     <h1>Your friends list is empty...</h1>
     <a mat-flat-button color="primary" routerLink="/users"> Find new friends now</a>
 </div>
