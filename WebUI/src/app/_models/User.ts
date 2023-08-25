@@ -1,4 +1,4 @@
-export interface Pictures {
+export interface Picture {
   id: number;
   url: string;
 }
@@ -16,7 +16,7 @@ export interface User {
   bio: string;
   city: string;
   country: string;
-  pictures: Pictures[];
+  pictures: Picture[];
   roles: string[];
 }
 

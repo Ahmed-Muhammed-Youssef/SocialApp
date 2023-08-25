@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Pictures, User } from '../../_models/User';
+import { Picture, User } from '../../_models/User';
 import { UserService } from '../../_services/user.service';
 
 import { ToastrService } from 'ngx-toastr';
@@ -15,7 +15,7 @@ import { TimeFormatterService } from 'src/app/_services/activityTimeForamtter.se
 })
 export class UserDetailComponent implements OnInit {
   isMobilePhone : boolean = false;
-  profilePicture : Pictures | undefined;
+  profilePicture : Picture | undefined;
   user: User = {
     id: 0,
     username: '',
