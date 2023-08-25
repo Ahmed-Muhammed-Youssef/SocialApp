@@ -33,7 +33,6 @@ import { PreventUnsavedChangesGuard } from './_guards/prevent-unsaved-changes.gu
 import { NgxSpinnerModule } from "ngx-spinner";
 import { LoadingInterceptor } from './_interceptors/loading.interceptor';
 import { PictureEditorComponent } from './users/picture-editor/picture-editor.component';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { UserDetailedResolver } from './_resolvers/user-detailed.resolver';
 import { AdminPanelComponent } from './admin/admin-panel/admin-panel.component';
 import { AdminGuard } from './_guards/admin.guard';
@@ -42,6 +41,7 @@ import { UserManagementComponent } from './admin/user-management/user-management
 import { PhotoManagementComponent } from './admin/photo-management/photo-management.component';
 import { RoleEditDialogComponent } from './admin/role-edit-dialog/role-edit-dialog.component';
 import { InboxComponent } from './Inbox/inbox.component';
+import { GalleryComponent } from './users/gallery/gallery.component';
 
 
 const routes: Routes = [
@@ -95,14 +95,15 @@ const routes: Routes = [
     UserManagementComponent,
     PhotoManagementComponent,
     RoleEditDialogComponent,
-    InboxComponent
+    InboxComponent,
+    GalleryComponent
   ],
   imports: [
     BrowserModule, HttpClientModule,
     BrowserAnimationsModule, FormsModule,
     ReactiveFormsModule, RouterModule.forRoot(routes),
     SharedModule, HttpClientModule, NgxSpinnerModule,
-    DragDropModule, FontAwesomeModule, LayoutModule,
+    DragDropModule, LayoutModule,
     MatSidenavModule, MatButtonToggleModule
   ],
   providers: [
