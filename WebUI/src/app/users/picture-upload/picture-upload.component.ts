@@ -4,11 +4,11 @@ import { ToastrService } from 'ngx-toastr';
 import { User } from 'src/app/_models/User';
 import { PictureService } from 'src/app/_services/picture.service';
 @Component({
-  selector: 'app-picture-editor',
-  templateUrl: './picture-editor.component.html',
-  styleUrls: ['./picture-editor.component.css']
+  selector: 'app-picture-upload',
+  templateUrl: './picture-upload.component.html',
+  styleUrls: ['./picture-upload.component.css']
 })
-export class PictureEditorComponent implements OnInit {
+export class PictureUploadComponent implements OnInit {
   @Input() user: User | undefined = undefined;
   imagePreviewUrl: string = "#";
   file: File | null = null;
