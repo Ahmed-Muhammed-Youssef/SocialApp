@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { map, Observable, of, take } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { PaginatedResult, Pagination } from '../_models/pagination';
-import { Pictures, UpdateUser, User } from '../_models/User';
+import { Picture, UpdateUser, User } from '../_models/User';
 import { UserParams } from '../_models/userParams';
 import { AccountService } from './account.service';
 
@@ -150,6 +150,6 @@ export class UserService {
     ));
   }
   getPictures() {
-    return this.http.get<Pictures[]>(this.baseUrl + "users/photos/all");
+    return this.http.get<Picture[]>(this.baseUrl + "users/photos/all");
   }
 }
