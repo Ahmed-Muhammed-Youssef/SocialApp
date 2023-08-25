@@ -73,44 +73,44 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    NavComponent,
-    FooterComponent,
-    HomeComponent,
-    RegisterComponent,
-    ExploreComponent,
-    UserDetailComponent,
-    FriendsListComponent,
-    ChatComponent,
-    LoginComponent,
-    TestErrorComponent,
-    NotFoundComponent,
-    ServerErrorComponent,
-    UserCardComponent,
-    UserEditComponent,
-    PictureEditorComponent,
-    AdminPanelComponent,
-    HasRoleDirective,
-    UserManagementComponent,
-    PhotoManagementComponent,
-    RoleEditDialogComponent,
-    InboxComponent,
-    GalleryComponent
-  ],
-  imports: [
-    BrowserModule, HttpClientModule,
-    BrowserAnimationsModule, FormsModule,
-    ReactiveFormsModule, RouterModule.forRoot(routes),
-    SharedModule, HttpClientModule, NgxSpinnerModule,
-    DragDropModule, LayoutModule,
-    MatSidenavModule, MatButtonToggleModule
-  ],
-  providers: [
-    {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
-    {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
-    {provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true}
-  ],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent,
+        NavComponent,
+        FooterComponent,
+        HomeComponent,
+        RegisterComponent,
+        ExploreComponent,
+        UserDetailComponent,
+        FriendsListComponent,
+        ChatComponent,
+        LoginComponent,
+        TestErrorComponent,
+        NotFoundComponent,
+        ServerErrorComponent,
+        UserCardComponent,
+        UserEditComponent,
+        PictureEditorComponent,
+        AdminPanelComponent,
+        HasRoleDirective,
+        UserManagementComponent,
+        PhotoManagementComponent,
+        RoleEditDialogComponent,
+        InboxComponent
+    ],
+    providers: [
+        { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+        { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+        { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true }
+    ],
+    bootstrap: [AppComponent],
+    imports: [
+        BrowserModule, HttpClientModule,
+        BrowserAnimationsModule, FormsModule,
+        ReactiveFormsModule, RouterModule.forRoot(routes),
+        SharedModule, HttpClientModule, NgxSpinnerModule,
+        DragDropModule, LayoutModule,
+        MatSidenavModule, MatButtonToggleModule,
+        GalleryComponent
+    ]
 })
 export class AppModule { }
