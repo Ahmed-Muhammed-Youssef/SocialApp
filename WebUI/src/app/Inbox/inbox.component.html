@@ -8,6 +8,7 @@
     <a mat-flat-button color="primary" routerLink="/users"> Find new friends now</a>
 </div>
 <div class="row" style="width: 100%;" *ngIf="friends != null && friends.length > 0">
+
     <div class="col-md-3 friends-container pe-0 border-end">
         <div class="cards-container">
             <div class="friend-card" (click)="loadChat(friend)" *ngFor="let friend of friends">
@@ -31,7 +32,7 @@
     <div *ngIf="currentUserSelection" class="col-md-9 chat-container">
         <app-chat [currentFriend]="currentUserSelection"></app-chat>
     </div>
-    <div *ngIf="!currentUserSelection" class="col-md-9 text-center p-0">
+    <div *ngIf="!currentUserSelection" class="col-md-9 text-center chat-container">
         <h1 class="mt-5">
             Choose a friend to chat with...
         </h1>

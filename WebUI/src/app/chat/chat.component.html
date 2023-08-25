@@ -9,30 +9,33 @@
                 <small *ngIf="!(presenceService.onlineUsers$ | async)?.includes(currentFriend.username)">{{timeFormatterService.getDateTimeAgo(currentFriend.lastActive)}}</small>
             </div>
         </div>
-        <div class="chat-history" *ngIf="(messageService.messageThread$ | async); let messages">
-            <div class="mt-4" *ngIf="messages.length === 0">
-                <h4 class="text-center">No messages yet, say hi in the message box below</h4>
-            </div>
-            <ul #scrollMe
-                [scrollTop]="scrollMe.scrollHeight"
-            *ngIf="messages.length > 0" class="m-b-0">
-                <li class="clearfix" *ngFor="let message of messages">
-                    <div *ngIf="message.senderId == currentFriend.id" class="message my-message">
-                        {{message.content}}
-                    </div>
-                    <div *ngIf="message.senderId != currentFriend.id" class="message other-message float-right">
-                        {{message.content}}
-                    </div>
-                </li>
-            </ul>
+    </div>
+    <div id="chat-history"  *ngIf="(messageService.messageThread$ | async); let messages">
+        <div class="mt-4" *ngIf="messages.length === 0">
+            <h4 class="text-center">No messages yet, say hi in the message box below</h4>
         </div>
-        <form #sendForm="ngForm" (ngSubmit)="sendMessage()" class="send-form">
-            <mat-form-field class="message-box">
-                <input matInput name="content" [(ngModel)]="newMessage" autocomplete="off">                                    
-            </mat-form-field>
-            <button mat-raised-button color="primary" type="submit" [disabled]="newMessage===''">
-                <mat-icon>send</mat-icon>
-            </button>
-        </form>
+        <ul id="chat-list-scroll" *ngIf="messages.length > 0" class="m-b-0">
+            <li *ngFor="let message of messages; s">
+                <p *ngIf="message.senderId == currentFriend.id" class="message my-message">
+                    {{message.content}}
+                </p>
+                <p *ngIf="message.senderId != currentFriend.id" class="message other-message float-right">
+                    {{message.content}}
+                </p>
+            </li>
+        </ul>
+    </div>
+    <form #sendForm="ngForm" (ngSubmit)="sendMessage()" class="send-form row text-center">
+        <mat-form-field class="col-10 mx-3" style="height: fit-content;">
+            <input matInput name="content" [(ngModel)]="newMessage" autocomplete="off">                                    
+        </mat-form-field>
+        <button mat-raised-button color="primary" class="send-button text-center col-1" type="submit" [disabled]="newMessage===''">
+            <mat-icon class="m-0">send</mat-icon>
+        </button>
+    </form>
+</div>
+<div *ngIf="!currentFriend">
+    <div class="text-center">
+        loading..
     </div>
 </div>
