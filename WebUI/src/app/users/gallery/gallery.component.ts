@@ -1,13 +1,14 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { User } from 'src/app/_models/User';
 import { GalleryModule, GalleryItem, ImageItem } from 'ng-gallery';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-gallery',
   templateUrl: './gallery.component.html',
   styleUrls: ['./gallery.component.css'],
   standalone: true,
-  imports: [GalleryModule]
+  imports: [GalleryModule, CommonModule]
 })
 export class GalleryComponent implements OnInit{
   @Input() user: User | undefined;
