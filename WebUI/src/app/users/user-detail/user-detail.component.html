@@ -3,8 +3,8 @@
     {{user.firstName}} {{user.lastName}}
   </h1>
 </div>
-<div class="profile" *ngIf="user.username">
-  <mat-card class="info-card" *ngIf="!isMobilePhone">
+<div class="profile row" *ngIf="user.username">
+  <mat-card class="info-card col-4" *ngIf="!isMobilePhone">
     <mat-card-header>
       <mat-card-title>{{user.firstName}} {{user.lastName}}</mat-card-title>
       <mat-card-subtitle *ngIf="(presenceService.onlineUsers$ | async)?.includes(user.username)"> <span class="online"></span> Active now</mat-card-subtitle>
@@ -29,26 +29,28 @@
 
     </mat-card-content>
     <mat-card-actions class="d-block text-center">
-      <button mat-flat-button color="accent" *ngIf="!isFriendRequested" (click)="addLike()">
-        <i class="material-icons me-1">person_add_alt_1</i> Add friend
+      <button mat-flat-button color="accent" class="me-1" *ngIf="(!isFriendRequested) && (!isFriend)" (click)="addLike()">
+        <i class="material-icons me-1">person_add_alt_1</i> Add
       </button>
       <button mat-flat-button color="primary" *ngIf="isFriend" routerLink="/chat" [state]="user">
         <mat-icon>chat</mat-icon> Message
       </button>
     </mat-card-actions>
   </mat-card>
-  <mat-tab-group mat-align-tabs="center" class="tabs">
-    <mat-tab label="About"> 
-      <div class="mt-4" *ngIf="user.bio">
-      <h2>Bio</h2>
-      <p>{{user.bio}}</p>
-    </div>
-    <div class="mt-4">
-      <h2>Interested in</h2>
-      <p>{{formatInterest(user.interest)}}</p>
-    </div></mat-tab>
-    <mat-tab class="gallery" label="Gallery">
-      <app-gallery [user]="user"></app-gallery>
-    </mat-tab>
-  </mat-tab-group>
+  <div class="col-8">
+    <mat-tab-group mat-align-tabs="center">
+      <mat-tab label="About"> 
+        <div class="mt-4" *ngIf="user.bio">
+        <h2>Bio</h2>
+        <p>{{user.bio}}</p>
+      </div>
+      <div class="mt-4">
+        <h2>Interested in</h2>
+        <p>{{formatInterest(user.interest)}}</p>
+      </div></mat-tab>
+      <mat-tab label="Gallery">
+        <app-gallery [user]="user"></app-gallery>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
 </div>
