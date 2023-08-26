@@ -53,9 +53,9 @@ export class UserDetailComponent implements OnInit {
     this.userService.sendFriendRequest(this.user.username).subscribe(
       r => {
           this.isFriendRequested = true;
-          this.toastr.success('You have liked ' + this.user.firstName);
+          this.toastr.success('You have sent frined request to ' + this.user.firstName);
           if(r == true){
-            this.toastr.success("You have a new match!")
+            this.toastr.success("You have a new friend!")
           }
       }
     );
