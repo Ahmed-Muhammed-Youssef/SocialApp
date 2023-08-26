@@ -1,6 +1,7 @@
 <div class="text-center p-2">
     <img class="image-preview rounded" [src]="imagePreviewUrl" *ngIf="imagePreviewUrl != '#'">
-    <input type="file" *ngIf="imagePreviewUrl == '#'" (change)="DisplayImage($event)"/>
+    <input type="file" class="d-none" (change)="DisplayImage($event)" #fileUpload/>
+    <button type="button" (click)="fileUpload.click()" mat-raised-button color="primary" *ngIf="imagePreviewUrl == '#'"> Upload Picture </button>
     <div>
         <button mat-raised-button color="primary" type="button"  (click)="UploadImage()" *ngIf="imagePreviewUrl != '#'">Upload</button>
         <button mat-raised-button *ngIf="imagePreviewUrl != '#'" (click)="CancelUpload()" class="ms-2">Cancel</button>
