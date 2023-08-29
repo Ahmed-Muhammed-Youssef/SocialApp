@@ -96,10 +96,9 @@ namespace API.Data
                 .FirstOrDefaultAsync(c => c.ConnectionId == connectionId);
         }
 
-        public async Task<Group> GetMessageGroup(string groupName)
+        public async Task<Group> GetGroupByName(string groupName)
         {
            return await _dataContext.Groups
-           .AsNoTracking()
            .Include(g => g.Connections)
            .FirstOrDefaultAsync(g => g.Name == groupName);
         }
