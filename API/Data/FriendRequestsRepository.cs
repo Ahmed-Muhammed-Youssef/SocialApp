@@ -86,12 +86,12 @@ namespace API.Data
             return await users.ToListAsync();
         }
 
-        public async Task<IEnumerable<int>> GetFriendRequestedUsersIdAsync(int senderId)
+        public async Task<IEnumerable<int>> GetFriendsIdsAsync(int senderId)
         {
-            var users = _dataContext.FriendRequests
+            var users = _dataContext.Friends
                 .AsNoTracking()
-                .Where(fr => fr.RequesterId == senderId)
-                .Select(fr => fr.RequestedId);
+                .Where(f => f.UserId == senderId)
+                .Select(f => f.FriendId);
             return await users.ToListAsync();
         }
     }
