@@ -95,7 +95,7 @@ const routes: Routes = [
         UserManagementComponent,
         PhotoManagementComponent,
         RoleEditDialogComponent,
-        InboxComponent
+        InboxComponent, GalleryComponent
     ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
@@ -109,8 +109,7 @@ const routes: Routes = [
         ReactiveFormsModule, RouterModule.forRoot(routes),
         SharedModule, HttpClientModule, NgxSpinnerModule,
         DragDropModule, LayoutModule,
-        MatSidenavModule, MatButtonToggleModule,
-        GalleryComponent
+        MatSidenavModule, MatButtonToggleModule
     ]
 })
 export class AppModule { }

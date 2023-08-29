@@ -1,23 +1,23 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { User } from 'src/app/_models/User';
-import { GalleryModule, GalleryItem, ImageItem } from 'ng-gallery';
-import { CommonModule } from '@angular/common';
+import { ChangeDetectorRef, Component, Input, OnInit, Renderer2 } from '@angular/core';
+import { Picture } from 'src/app/_models/User';
 
 @Component({
   selector: 'app-gallery',
   templateUrl: './gallery.component.html',
-  styleUrls: ['./gallery.component.css'],
-  standalone: true,
-  imports: [GalleryModule, CommonModule]
+  styleUrls: ['./gallery.component.css']
 })
 export class GalleryComponent implements OnInit{
-  @Input() user: User | undefined;
-  images: GalleryItem[] = [];
+  @Input() pictures: Picture[] = [];
+  activeIndex = 0;
+  constructor(private changeDetectorRef: ChangeDetectorRef){}
   ngOnInit(): void {
-    if(this.user && this.user.pictures.length > 0)
-    {
-      this.user.pictures.forEach(p => this.images.push(new ImageItem({ src: p.url, thumb: p.url })))
-    }
   }
-
+  prevImage() {
+    this.activeIndex = this.activeIndex > 0 ? this.activeIndex - 1 : this.pictures.length - 1;
+  }
+  
+  nextImage() {
+    this.activeIndex = (this.activeIndex + 1) % this.pictures.length;
+    
+  }
 }

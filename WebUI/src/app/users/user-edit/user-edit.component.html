@@ -3,8 +3,8 @@
     Edit your profile
   </h1>
 </div>
-<div class="row" *ngIf="user">
-  <mat-card *ngIf="!isMobilePhone" class="col-4">
+<div class="row w-100" *ngIf="user">
+  <mat-card *ngIf="!isMobilePhone" class="col-md-4">
     <mat-card-header>
       <mat-card-title>{{user.firstName}} {{user.lastName}}</mat-card-title>
     </mat-card-header>
@@ -25,7 +25,7 @@
         </div>
     </mat-card-content>
   </mat-card>
-  <div class="col-8">
+  <div class="col-md-8">
     <!-- <div class="alert alert-info" *ngIf=" checkIfUserChanged()">
       <strong>Information: </strong> You have made changes. Any unsaved changes will be lost.
     </div> -->
@@ -82,7 +82,7 @@
         </form>
       </mat-tab>
         <mat-tab label="Edit Pictures">
-          <app-gallery [user]="user"></app-gallery>
+          <app-gallery *ngIf="user.pictures.length > 0" [pictures]="user.pictures"></app-gallery>
           <app-picture-upload [user]="user"></app-picture-upload>
         </mat-tab>
       </mat-tab-group>
