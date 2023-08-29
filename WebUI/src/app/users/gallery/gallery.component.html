@@ -1,4 +1,4 @@
-<div class="gallery col-12">
+<div class="gallery">
   <img *ngFor="let picture of pictures; let i = index" id="{{'picture' + i}}" [src]="picture.url"
     [ngClass]="{'active': i === activeIndex}" [ngClass]="{'in-active': i != activeIndex}">
   <span class="indicator rounded">{{activeIndex + 1}}/{{this.pictures.length}}</span>
