@@ -11,8 +11,27 @@ using System.Threading.Tasks;
 
 namespace API.Data
 {
-    public class Seed
+    public class Database
     {
+        public static async Task MigrateDatabaseAsync(IServiceProvider serviceProvider)
+        {
+            using (var scope = serviceProvider.CreateScope())
+            {
+                var services = scope.ServiceProvider;
+                try
+                {
+                    var context = services.GetRequiredService<DataContext>();
+                    await context.Database.MigrateAsync();
+                }
+                catch (Exception ex)
+                {
+                    var logger = services.GetRequiredService<ILogger<Program>>();
+                    logger.LogError(ex, "An error occurred during migration");
+                }
+            }
+
+
+        }
         public static async Task SeedUsersAsync(IServiceProvider serviceProvider)
         {
             using (var scope = serviceProvider.CreateScope())
@@ -24,16 +43,13 @@ namespace API.Data
                     var userManager = services.GetRequiredService<UserManager<AppUser>>();
                     var roleManager = services.GetRequiredService<RoleManager<AppRole>>();
                     await AddData(userManager, roleManager);
-                    await context.Database.MigrateAsync();
                 }
                 catch (Exception ex)
                 {
                     var logger = services.GetRequiredService<ILogger<Program>>();
-                    logger.LogError(ex, "An error occurred during migration");
+                    logger.LogError(ex, "An error occurred during seeding");
                 }
             }
-
-
         }
         private static async Task AddData(UserManager<AppUser> userManager, RoleManager<AppRole> roleManager)
         {
