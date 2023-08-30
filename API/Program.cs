@@ -37,6 +37,9 @@ builder.Services.AddDbContext<DataContext>(options =>
     else
     {
         // production configurations
+        // use sqlite database for now
+
+        options.UseSqlite(builder.Configuration.GetConnectionString("ProductionConnection"));
     }
 });
 builder.Services.AddControllers();
