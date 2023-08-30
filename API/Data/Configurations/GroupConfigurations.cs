@@ -1,10 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
+﻿using API.Entities;
 using Microsoft.EntityFrameworkCore;
-using API.Entities;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace API.Data.Configurations
 {
-    public class GroupConfigurations: IEntityTypeConfiguration<Group>
+    public class GroupConfigurations : IEntityTypeConfiguration<Group>
     {
         public void Configure(EntityTypeBuilder<Group> builder)
         {

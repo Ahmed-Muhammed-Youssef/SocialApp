@@ -1,6 +1,6 @@
-using System.Threading.Tasks;
 using API.Interfaces;
 using AutoMapper;
+using System.Threading.Tasks;
 
 namespace API.Data
 {

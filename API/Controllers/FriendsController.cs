@@ -25,10 +25,10 @@ namespace API.Controllers
 
         // GET: api/friends
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<UserDTO>>> GetAll([FromQuery]PaginationParams paginationParams)
+        public async Task<ActionResult<IEnumerable<UserDTO>>> GetAll([FromQuery] PaginationParams paginationParams)
         {
             var user = await _unitOfWork.UsersRepository.GetUserByUsernameAsync(User.GetUsername());
-            if(user == null)
+            if (user == null)
             {
                 return Unauthorized();
             }
@@ -44,7 +44,7 @@ namespace API.Controllers
         {
             var user = await _unitOfWork.UsersRepository.GetUserByUsernameAsync(User.GetUsername());
             var target = await _unitOfWork.UsersRepository.GetUserByUsernameAsync(username);
-            if(target == null)
+            if (target == null)
             {
                 return NotFound();
             }

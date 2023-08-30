@@ -1,12 +1,12 @@
 ﻿using API.DTOs;
 using API.Entities;
+using API.Helpers;
 using API.Interfaces;
+using AutoMapper;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
-using AutoMapper;
-using API.Helpers;
-using Microsoft.AspNetCore.Identity;
 
 namespace API.Controllers
 {
@@ -37,11 +37,11 @@ namespace API.Controllers
             {
                 return BadRequest(ModelState);
             }
-            if(await EmailExists(accountDTO.Email))
+            if (await EmailExists(accountDTO.Email))
             {
                 return BadRequest("The Email is already taken.");
             }
-            if(await UsernameExists(accountDTO.UserName))
+            if (await UsernameExists(accountDTO.UserName))
             {
                 return BadRequest("The Username is already taken.");
             }
@@ -59,7 +59,7 @@ namespace API.Controllers
             {
                 return BadRequest();
             }
-            return CreatedAtAction("Register", new {email = accountDTO.Email }, 
+            return CreatedAtAction("Register", new { email = accountDTO.Email },
                 new TokenDTO()
                 {
                     UserData = userData,
@@ -74,8 +74,8 @@ namespace API.Controllers
             {
                 return BadRequest(loginCredentials);
             }
-            var user = await _userManager.Users.Include(u => u.Pictures).FirstOrDefaultAsync(u => u.Email == loginCredentials.Email);           
-            if(user == null)
+            var user = await _userManager.Users.Include(u => u.Pictures).FirstOrDefaultAsync(u => u.Email == loginCredentials.Email);
+            if (user == null)
             {
                 return Unauthorized();
             }

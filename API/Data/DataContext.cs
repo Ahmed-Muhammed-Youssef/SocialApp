@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace API.Data
 {
-    public class DataContext : IdentityDbContext <AppUser, AppRole, int,
+    public class DataContext : IdentityDbContext<AppUser, AppRole, int,
         IdentityUserClaim<int>, AppUserRole, IdentityUserLogin<int>
         , IdentityRoleClaim<int>, IdentityUserToken<int>>
     {

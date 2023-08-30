@@ -1,5 +1,4 @@
-﻿using API.Entities;
-using System;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace API.DTOs

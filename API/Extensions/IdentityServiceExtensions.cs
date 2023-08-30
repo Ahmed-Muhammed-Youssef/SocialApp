@@ -15,8 +15,9 @@ namespace API.Extensions
 
         public static IServiceCollection AddIdentityConfigurations(this IServiceCollection services, IConfiguration config)
         {
-            services.AddIdentityCore<AppUser>(opt => {
-                opt.Password.RequireNonAlphanumeric = false; 
+            services.AddIdentityCore<AppUser>(opt =>
+            {
+                opt.Password.RequireNonAlphanumeric = false;
             })
                 .AddRoles<AppRole>()
                 .AddRoleManager<RoleManager<AppRole>>()
@@ -27,7 +28,7 @@ namespace API.Extensions
             {
                 opt.AddPolicy("RequireAdminRole", policy => policy.RequireRole("admin"));
                 opt.AddPolicy("RequireModeratorOrAdmin", policy => policy.RequireRole("admin", "moderator"));
-            } );
+            });
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options =>
             {
@@ -40,11 +41,14 @@ namespace API.Extensions
                     ValidAudience = config["Jwt:Issuer"],
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["Jwt:Key"]))
                 };
-                options.Events = new JwtBearerEvents {
-                    OnMessageReceived = context => {
+                options.Events = new JwtBearerEvents
+                {
+                    OnMessageReceived = context =>
+                    {
                         var accessToken = context.Request.Query["access_token"];
                         var path = context.HttpContext.Request.Path;
-                        if(!string.IsNullOrEmpty(accessToken) && path.StartsWithSegments("/hubs")){
+                        if (!string.IsNullOrEmpty(accessToken) && path.StartsWithSegments("/hubs"))
+                        {
                             context.Token = accessToken;
                         }
                         return Task.CompletedTask;

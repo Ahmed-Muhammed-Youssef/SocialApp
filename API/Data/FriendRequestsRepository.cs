@@ -24,7 +24,8 @@ namespace API.Data
 
         public async Task<bool> SendFriendRequest(int senderId, int targetId)
         {
-            await _dataContext.FriendRequests.AddAsync(new FriendRequest() { 
+            await _dataContext.FriendRequests.AddAsync(new FriendRequest()
+            {
                 RequesterId = senderId,
                 RequestedId = targetId
             });
@@ -86,12 +87,12 @@ namespace API.Data
             return await users.ToListAsync();
         }
 
-        public async Task<IEnumerable<int>> GetFriendsIdsAsync(int senderId)
+        public async Task<IEnumerable<int>> GetFriendRequestedUsersIdAsync(int senderId)
         {
-            var users = _dataContext.Friends
+            var users = _dataContext.FriendRequests
                 .AsNoTracking()
-                .Where(f => f.UserId == senderId)
-                .Select(f => f.FriendId);
+                .Where(fr => fr.RequesterId == senderId)
+                .Select(fr => fr.RequestedId);
             return await users.ToListAsync();
         }
     }

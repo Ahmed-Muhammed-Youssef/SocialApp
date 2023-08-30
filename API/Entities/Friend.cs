@@ -3,7 +3,7 @@
 namespace API.Entities
 {
     // dependent entity on AppUser entity
-    public class Friend 
+    public class Friend
     {
         public DateTime Created { get; set; } = DateTime.UtcNow;
 

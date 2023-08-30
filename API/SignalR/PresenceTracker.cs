@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -7,45 +6,57 @@ namespace API.SignalR
 {
     public class PresenceTracker
     {
-        private static readonly Dictionary<string, List<string>> OnlineUsers = 
+        private static readonly Dictionary<string, List<string>> OnlineUsers =
             new Dictionary<string, List<string>>();
-        public Task<bool> UserConnected(string username, string connectionId){
+        public Task<bool> UserConnected(string username, string connectionId)
+        {
             var firstConnection = false;
-            lock(OnlineUsers){
-                if(!OnlineUsers.ContainsKey(username)){
-                    OnlineUsers[username] = new List<string>(){connectionId}; 
+            lock (OnlineUsers)
+            {
+                if (!OnlineUsers.ContainsKey(username))
+                {
+                    OnlineUsers[username] = new List<string>() { connectionId };
                     firstConnection = true;
                 }
-                else {
-                    OnlineUsers[username].Add(connectionId); 
+                else
+                {
+                    OnlineUsers[username].Add(connectionId);
                 }
             }
             return Task.FromResult(firstConnection);
         }
-        public Task<bool> UserDisconnected(string username, string connectionId){
+        public Task<bool> UserDisconnected(string username, string connectionId)
+        {
             bool isOffline = false;
-            lock(OnlineUsers){
-                if(!OnlineUsers.ContainsKey(username)){
+            lock (OnlineUsers)
+            {
+                if (!OnlineUsers.ContainsKey(username))
+                {
                     return Task.FromResult(isOffline);
                 }
                 OnlineUsers[username].Remove(connectionId);
-                if(OnlineUsers[username].Count() == 0){
+                if (OnlineUsers[username].Count() == 0)
+                {
                     OnlineUsers.Remove(username);
                     isOffline = true;
                 }
             }
             return Task.FromResult(isOffline);
         }
-        public Task<string[]> GetOnlineUsers(){
-            string[] onlineUsers = {};
-            lock(OnlineUsers){
+        public Task<string[]> GetOnlineUsers()
+        {
+            string[] onlineUsers = { };
+            lock (OnlineUsers)
+            {
                 onlineUsers = OnlineUsers.OrderBy(u => u.Key).Select(u => u.Key).ToArray();
             }
             return Task.FromResult(onlineUsers);
         }
-        public Task<List<string>> GetConnectionForUser(string username){
+        public Task<List<string>> GetConnectionForUser(string username)
+        {
             List<string> connectionIds;
-            lock(OnlineUsers){
+            lock (OnlineUsers)
+            {
                 connectionIds = OnlineUsers.GetValueOrDefault(username);
             }
 

@@ -20,7 +20,7 @@ namespace API.Services
         public async Task<ImageUploadResult> AddPictureAsync(IFormFile file)
         {
             var uploadResult = new ImageUploadResult();
-            if(file.Length > 0)
+            if (file.Length > 0)
             {
                 using var stream = file.OpenReadStream();
                 var uploadParams = new ImageUploadParams()
