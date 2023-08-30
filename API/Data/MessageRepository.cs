@@ -83,7 +83,6 @@ namespace API.Data
         {
             await _dataContext.Groups.AddAsync(group);
         }
-
         public void RemoveConnection(Connection connection)
         {
             _dataContext.Connections.Remove(connection);
@@ -95,11 +94,9 @@ namespace API.Data
                 .AsNoTracking()
                 .FirstOrDefaultAsync(c => c.ConnectionId == connectionId);
         }
-
-        public async Task<Group> GetMessageGroup(string groupName)
+        public async Task<Group> GetGroupByName(string groupName)
         {
             return await _dataContext.Groups
-            .AsNoTracking()
             .Include(g => g.Connections)
             .FirstOrDefaultAsync(g => g.Name == groupName);
         }

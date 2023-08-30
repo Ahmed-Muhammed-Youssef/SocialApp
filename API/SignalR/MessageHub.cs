@@ -65,8 +65,6 @@ namespace API.SignalR
             {
                 SenderId = sender.Id,
                 RecipientId = recipient.Id,
-                Sender = sender,
-                Recipient = recipient,
                 Content = message.Content,
                 SenderDeleted = false,
                 RecipientDeleted = false,
@@ -77,7 +75,7 @@ namespace API.SignalR
             // @ToDo: Add Profile Picture Here
             // msgDTO.SenderPhotoUrl = null;
             var groupName = GetGroupName(sender.Id, recipient.Id);
-            var group = await _unitOfWork.MessagesRepository.GetMessageGroup(groupName);
+            var group = await _unitOfWork.MessagesRepository.GetGroupByName(groupName);
             if (group.Connections.Any(c => c.UserId == recipient.Id))
             {
                 createdMessage.ReadDate = DateTime.UtcNow;
@@ -107,7 +105,7 @@ namespace API.SignalR
         // utility methods
         private async Task<Group> AddToGroup(string groupName)
         {
-            var group = await _unitOfWork.MessagesRepository.GetMessageGroup(groupName);
+            var group = await _unitOfWork.MessagesRepository.GetGroupByName(groupName);
             var connection = new Connection(Context.ConnectionId, Context.User.GetId());
 
             if (group == null)
@@ -116,11 +114,12 @@ namespace API.SignalR
                 await _unitOfWork.MessagesRepository.AddGroupAsync(group);
             }
             group.Connections.Add(connection);
+
             if (await _unitOfWork.Complete())
             {
                 return group;
             }
-            throw new HubException("Failed to craete group");
+            throw new HubException("Failed to create group");
         }
         private async Task<Group> RemoveFromMessageGroup()
         {
