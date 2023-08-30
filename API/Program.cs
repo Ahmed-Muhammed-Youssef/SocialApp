@@ -65,10 +65,12 @@ await Database.SeedUsersAsync(app.Services);
 
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "API v1"));
     app.UseCors("AllowSpecificOrigin");
 }
+
+app.UseSwagger();
+
+app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "API v1"));
 
 app.UseMiddleware<ExceptionMiddleware>();
 
