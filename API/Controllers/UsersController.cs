@@ -1,13 +1,13 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using API.DTOs;
-using System.Linq;
-using Microsoft.AspNetCore.Authorization;
-using API.Interfaces;
-using AutoMapper;
+﻿using API.DTOs;
 using API.Extensions;
 using API.Helpers;
+using API.Interfaces;
+using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace API.Controllers
 {
@@ -30,13 +30,13 @@ namespace API.Controllers
         [HttpGet("all")]
         public async Task<ActionResult<IEnumerable<UserDTO>>> GetUsers([FromQuery] UserParams userParams)
         {
-            if(string.IsNullOrEmpty(userParams.Sex))
+            if (string.IsNullOrEmpty(userParams.Sex))
             {
                 var interest = await _unitOfWork.UsersRepository.GetUserInterest(User.GetId());
                 userParams.Sex = interest.ToString();
             }
             var forbiddenIds = await _unitOfWork.FriendRequestsRepository.GetFriendsIdsAsync(User.GetId());
-            var users = await _unitOfWork.UsersRepository.GetUsersDTOAsync(User.GetUsername() ,userParams, forbiddenIds.ToList());
+            var users = await _unitOfWork.UsersRepository.GetUsersDTOAsync(User.GetUsername(), userParams, forbiddenIds.ToList());
             var newPaginationHeader = new PaginationHeader(users.CurrentPage, users.ItemsPerPage, users.TotalCount, users.TotalPages);
             Response.AddPaginationHeader(newPaginationHeader);
             return Ok(users);
@@ -72,7 +72,7 @@ namespace API.Controllers
             _mapper.Map(userDTO, appUser);
             _unitOfWork.UsersRepository.Update(appUser);
 
-            if(await _unitOfWork.Complete())
+            if (await _unitOfWork.Complete())
             {
                 return Ok(userDTO);
             }

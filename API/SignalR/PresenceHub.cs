@@ -1,10 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using API.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
+using System;
+using System.Threading.Tasks;
 
 namespace API.SignalR
 {
@@ -20,7 +18,8 @@ namespace API.SignalR
         public override async Task OnConnectedAsync()
         {
             var isFirstConnection = await _presenceTracker.UserConnected(Context.User.GetUsername(), Context.ConnectionId);
-            if(isFirstConnection){
+            if (isFirstConnection)
+            {
                 await Clients.Others.SendAsync("UserIsOnline", Context.User.GetUsername());
             }
             var currentUsers = await _presenceTracker.GetOnlineUsers();
@@ -29,7 +28,8 @@ namespace API.SignalR
         public override async Task OnDisconnectedAsync(Exception exception)
         {
             var isJustDisconnected = await _presenceTracker.UserDisconnected(Context.User.GetUsername(), Context.ConnectionId);
-            if(isJustDisconnected){
+            if (isJustDisconnected)
+            {
                 await Clients.Others.SendAsync("UserIsOffline", Context.User.GetUsername());
             }
             await base.OnDisconnectedAsync(exception);

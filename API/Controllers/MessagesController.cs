@@ -1,8 +1,8 @@
-﻿using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using API.Extensions;
 using API.Interfaces;
-using API.Extensions;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace API.Controllers
 {
@@ -28,15 +28,16 @@ namespace API.Controllers
                 return NotFound();
             }
             var issuerId = User.GetId();
-            
+
             // Checks if the message is related to the issuer
-            if(message.SenderId != issuerId && message.RecipientId != issuerId) 
+            if (message.SenderId != issuerId && message.RecipientId != issuerId)
             {
                 return BadRequest("Failed to delete the message");
             }
             _unitOfWork.MessagesRepository.DeleteMessage(message, issuerId);
 
-            if (await _unitOfWork.Complete()) { 
+            if (await _unitOfWork.Complete())
+            {
                 return NoContent();
             }
             return BadRequest("Failed to delete the message");

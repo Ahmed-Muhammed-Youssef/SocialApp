@@ -3,7 +3,7 @@ namespace API.Entities
     public class Connection
     {
         public Connection() { }
-        public Connection(string connectionId, int userId) 
+        public Connection(string connectionId, int userId)
         {
             ConnectionId = connectionId;
             UserId = userId;

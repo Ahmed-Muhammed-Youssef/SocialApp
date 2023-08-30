@@ -27,7 +27,7 @@ namespace API.Controllers
         public async Task<ActionResult<IEnumerable<UserDTO>>> GetFriendRequestedUsers()
         {
             var sender = await _unitOfWork.UsersRepository.GetUserByIdAsync(User.GetId());
-            if(sender == null)
+            if (sender == null)
             {
                 return BadRequest();
             }
@@ -37,7 +37,7 @@ namespace API.Controllers
 
         // GET: api/friendrequests/isSent/{username}
         [HttpGet("issent/{username}")]
-        public async Task<ActionResult<bool>> IsFriendRequested (string username)
+        public async Task<ActionResult<bool>> IsFriendRequested(string username)
         {
             var sender = await _unitOfWork.UsersRepository.GetUserByIdAsync(User.GetId());
             var target = await _unitOfWork.UsersRepository.GetUserByUsernameAsync(username);
@@ -61,26 +61,26 @@ namespace API.Controllers
         public async Task<ActionResult> SendFriendRequest(string username)
         {
             // retuns true if the user is now a frined
-            if(username == null)
+            if (username == null)
             {
                 return BadRequest();
             }
             var sender = await _unitOfWork.UsersRepository.GetUserByIdAsync(User.GetId());
             var target = await _unitOfWork.UsersRepository.GetUserByUsernameAsync(username);
-            if(sender == null || target == null)
+            if (sender == null || target == null)
             {
                 return NotFound();
             }
-            if(sender.Id == target.Id)
+            if (sender.Id == target.Id)
             {
                 return BadRequest("You can't send friend requests to yourself.");
             }
-            if(await _unitOfWork.FriendRequestsRepository.GetFriendRequestAsync(sender.Id, target.Id) != null)
+            if (await _unitOfWork.FriendRequestsRepository.GetFriendRequestAsync(sender.Id, target.Id) != null)
             {
                 return BadRequest("You already sent a frient request to this user.");
             }
             bool isFriend = await _unitOfWork.FriendRequestsRepository.SendFriendRequest(sender.Id, target.Id);
-            if( await _unitOfWork.Complete())
+            if (await _unitOfWork.Complete())
             {
                 return Ok(isFriend);
             }

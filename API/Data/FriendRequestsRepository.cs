@@ -24,7 +24,8 @@ namespace API.Data
 
         public async Task<bool> SendFriendRequest(int senderId, int targetId)
         {
-            await _dataContext.FriendRequests.AddAsync(new FriendRequest() { 
+            await _dataContext.FriendRequests.AddAsync(new FriendRequest()
+            {
                 RequesterId = senderId,
                 RequestedId = targetId
             });

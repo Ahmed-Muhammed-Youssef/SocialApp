@@ -1,10 +1,10 @@
 ﻿using API.Entities;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace API.Data.Configurations
 {
-    public class MessageConfigurations: IEntityTypeConfiguration<Message>
+    public class MessageConfigurations : IEntityTypeConfiguration<Message>
     {
         public void Configure(EntityTypeBuilder<Message> builder)
         {

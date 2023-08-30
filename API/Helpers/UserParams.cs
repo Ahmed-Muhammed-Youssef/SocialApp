@@ -2,13 +2,13 @@
 
 namespace API.Helpers
 {
-    public class UserParams: PaginationParams
+    public class UserParams : PaginationParams
     {
-       
+
         private int? minAge = null;
         private int? maxAge = null;
         private string orderBy = "lastActive";
-        
+
         public string Sex { get; set; } // to get the default value we need to make a query which is the interest field. 
         public int? MinAge
         {
@@ -18,27 +18,30 @@ namespace API.Helpers
             }
             set
             {
-                if(value >= 18)
+                if (value >= 18)
                 {
                     minAge = value;
                 }
             }
         }
-        public int? MaxAge { 
-            get { 
-                return maxAge; 
+        public int? MaxAge
+        {
+            get
+            {
+                return maxAge;
             }
-            set {
-                if(minAge != null)
+            set
+            {
+                if (minAge != null)
                 {
-                    if(value >= minAge)
+                    if (value >= minAge)
                     {
                         maxAge = value;
                     }
                 }
                 else if (value >= 18)
                 {
-                    maxAge=value;
+                    maxAge = value;
                 }
             }
         }
@@ -51,7 +54,7 @@ namespace API.Helpers
             }
             set
             {
-                if( !string.IsNullOrEmpty(value) || orderOptions.Contains(value))
+                if (!string.IsNullOrEmpty(value) || orderOptions.Contains(value))
                 {
                     orderBy = value;
                 }

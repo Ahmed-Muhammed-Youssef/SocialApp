@@ -30,21 +30,21 @@ namespace API.Data
         {
 
             // Delete the message when it's deleted from both sender and recipient
-            if(message.SenderId == issuerId)
+            if (message.SenderId == issuerId)
             {
-                if(message.SenderDeleted == false)
+                if (message.SenderDeleted == false)
                 {
                     message.SenderDeleted = true;
                 }
             }
-            else if(message.RecipientId == issuerId)
+            else if (message.RecipientId == issuerId)
             {
                 if (message.RecipientDeleted == false)
                 {
                     message.RecipientDeleted = true;
                 }
             }
-            if(message.RecipientDeleted && message.SenderDeleted)
+            if (message.RecipientDeleted && message.SenderDeleted)
             {
                 _dataContext.Messages.Remove(message);
             }
@@ -76,14 +76,13 @@ namespace API.Data
                     message.ReadDate = DateTime.UtcNow;
                 }
             }
-            return await query.ToListAsync();;
+            return await query.ToListAsync(); ;
         }
 
         public async Task AddGroupAsync(Group group)
         {
             await _dataContext.Groups.AddAsync(group);
         }
-
         public void RemoveConnection(Connection connection)
         {
             _dataContext.Connections.Remove(connection);
@@ -95,12 +94,12 @@ namespace API.Data
                 .AsNoTracking()
                 .FirstOrDefaultAsync(c => c.ConnectionId == connectionId);
         }
-
+        
         public async Task<Group> GetGroupByName(string groupName)
         {
-           return await _dataContext.Groups
-           .Include(g => g.Connections)
-           .FirstOrDefaultAsync(g => g.Name == groupName);
+            return await _dataContext.Groups
+            .Include(g => g.Connections)
+            .FirstOrDefaultAsync(g => g.Name == groupName);
         }
 
         public async Task<Group> GetGroupForConnection(string connectionId)

@@ -56,16 +56,16 @@ namespace API.Data
                 .AsNoTracking()
                 .AsQueryable()
                 .Where(u => u.UserName != username);
-            if(userParams.Sex != "b")
+            if (userParams.Sex != "b")
             {
                 query = query.Where(u => u.Sex == userParams.Sex[0]);
             }
-            if(userParams.MinAge != null)
+            if (userParams.MinAge != null)
             {
                 var maxDoB = DateTime.UtcNow.AddYears(-(int)userParams.MinAge);
                 query = query.Where(u => u.DateOfBirth <= maxDoB);
             }
-            if(userParams.MaxAge != null)
+            if (userParams.MaxAge != null)
             {
                 var minDoB = DateTime.UtcNow.AddYears(-(int)userParams.MaxAge - 1);
                 query = query.Where(u => u.DateOfBirth >= minDoB);
@@ -81,10 +81,10 @@ namespace API.Data
                 "age" => query.OrderByDescending(u => u.DateOfBirth),
                 _ => query.OrderByDescending(u => u.LastActive)
             };
-            
+
             var queryDto = query.ProjectTo<UserDTO>(_mapper.ConfigurationProvider).AsNoTracking();
             var pagedResult = await PagedList<UserDTO>.CreatePageAsync(queryDto, userParams.PageNumber, userParams.ItemsPerPage);
-            
+
             // @ToDo: order the pictures according to the upload time (Descending).
             return pagedResult;
         }
@@ -107,13 +107,13 @@ namespace API.Data
         }
         public async Task<UserDTO> GetUserDTOByUsernameAsync(string username)
         {
-            var result =  await _dataContext.Users
+            var result = await _dataContext.Users
                 .AsNoTracking()
                 .Where(u => u.UserName == username)
                 .ProjectTo<UserDTO>(_mapper.ConfigurationProvider).FirstOrDefaultAsync();
             // result.Pictures = result.Pictures.OrderBy(p => p.Order);
             return result;
-        } 
+        }
         public async Task<AppUser> GetUserByUsernameAsync(string username)
         {
             var result = await _dataContext.Users
@@ -124,7 +124,7 @@ namespace API.Data
         }
         public async Task<AppUser> GetUserByEmailAsync(string email)
         {
-            var result =  await _dataContext.Users
+            var result = await _dataContext.Users
                 .AsNoTracking()
                 .Where(u => u.Email == email)
                 .FirstOrDefaultAsync();
@@ -142,7 +142,7 @@ namespace API.Data
         }
         public async Task<IEnumerable<PictureDTO>> GetUserPictureDTOsAsync(int id)
         {
-            var result =  await _dataContext.Pictures
+            var result = await _dataContext.Pictures
                 .AsNoTracking()
                 .Where(p => p.AppUserId == id)
                 .ProjectTo<PictureDTO>(_mapper.ConfigurationProvider)
@@ -152,7 +152,7 @@ namespace API.Data
         }
         public async Task<IEnumerable<Picture>> GetUserPictureAsync(int id)
         {
-            var result =  _dataContext.Pictures
+            var result = _dataContext.Pictures
                 .AsNoTracking()
                 .Where(p => p.AppUserId == id)
                 .OrderBy(p => p.Created);

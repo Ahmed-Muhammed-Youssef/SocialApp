@@ -25,7 +25,7 @@ namespace API.Controllers
         }
 
         // GET: roles/all
-        [Authorize(Policy="RequireAdminRole")]
+        [Authorize(Policy = "RequireAdminRole")]
         [HttpGet("all")]
         public async Task<ActionResult<IEnumerable<string>>> GetRoles()
         {
@@ -42,11 +42,12 @@ namespace API.Controllers
             var result = await _userManager.Users
                 .Include(u => u.UserRoles)
                 .ThenInclude(ur => ur.Role)
-                .Select(u => 
-                new {
-                u.Id,
-                Username = u.UserName,
-                Roles = u.UserRoles.Select(r => r.Role.Name).ToList()
+                .Select(u =>
+                new
+                {
+                    u.Id,
+                    Username = u.UserName,
+                    Roles = u.UserRoles.Select(r => r.Role.Name).ToList()
                 })
                 .ToListAsync();
             return Ok(result);
@@ -63,7 +64,7 @@ namespace API.Controllers
                 return NotFound("User not found");
             }
             var result = await _userManager.GetRolesAsync(user);
-           
+
             return Ok(result);
         }
 
@@ -79,9 +80,9 @@ namespace API.Controllers
         // POST: roles/create/{role}
         [Authorize(Policy = "RequireAdminRole")]
         [HttpPost("create/{role}")]
-        public async Task<IActionResult>  CreateRole(string role)
+        public async Task<IActionResult> CreateRole(string role)
         {
-            var newRole = new AppRole() { Name = role};
+            var newRole = new AppRole() { Name = role };
             var result = await _roleManager.CreateAsync(newRole);
             if (!result.Succeeded)
             {
@@ -96,12 +97,12 @@ namespace API.Controllers
         public async Task<IActionResult> AddRoleToUser(RoleUserDTO roleUser)
         {
             var user = await _userManager.FindByNameAsync(roleUser.Username);
-            if(user == null)
+            if (user == null)
             {
                 return NotFound("User not found");
             }
             var Role = await _roleManager.FindByNameAsync(roleUser.Role);
-            if(Role == null)
+            if (Role == null)
             {
                 return NotFound("Role not found");
             }

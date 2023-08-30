@@ -33,7 +33,7 @@ namespace API.Data
                 }
             }
 
-           
+
         }
         private static async Task AddData(UserManager<AppUser> userManager, RoleManager<AppRole> roleManager)
         {
