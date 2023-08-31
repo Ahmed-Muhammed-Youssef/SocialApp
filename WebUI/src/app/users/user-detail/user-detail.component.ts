@@ -7,6 +7,7 @@ import { ToastrService } from 'ngx-toastr';
 import { PresenceService } from 'src/app/_services/presence.service';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { TimeFormatterService } from 'src/app/_services/activityTimeForamtter.service';
+import { FriendRequestsService } from 'src/app/_services/friend-requests.service';
 
 @Component({
   selector: 'app-user-detail',
@@ -35,7 +36,7 @@ export class UserDetailComponent implements OnInit {
   isFriendRequested : boolean = true;
   isFriend: boolean = false;
   
-  constructor(private userService: UserService, private route: ActivatedRoute,
+  constructor(private friendRequestsService: FriendRequestsService,private userService: UserService ,private route: ActivatedRoute,
      private toastr: ToastrService, public presenceService: PresenceService,
       private breakpointObserver: BreakpointObserver, public timeFormatterService:TimeFormatterService) {
       breakpointObserver.observe(["(max-width: 750px)"])
@@ -50,7 +51,7 @@ export class UserDetailComponent implements OnInit {
     
   }
   addLike(){
-    this.userService.sendFriendRequest(this.user.username).subscribe(
+    this.friendRequestsService.sendFriendRequest(this.user.username).subscribe(
       r => {
           this.isFriendRequested = true;
           this.toastr.success('You have sent frined request to ' + this.user.firstName);
@@ -66,7 +67,7 @@ export class UserDetailComponent implements OnInit {
         this.user = data.user;
         this.profilePicture = this.user.pictures[0];
         this.setImages();
-        this.userService.isFriendRequested(this.user.username).subscribe(r => {
+        this.friendRequestsService.isFriendRequested(this.user.username).subscribe(r => {
           this.isFriendRequested = r;
         });
       this.userService.isFriend(this.user.username).subscribe(r => this.isFriend = r);
