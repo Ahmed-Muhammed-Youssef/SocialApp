@@ -91,19 +91,7 @@ export class UserService {
   public deletePicture(pictureId: number) {
     return this.http.delete(this.baseUrl + 'users/photo/delete/' + String(pictureId));
   }
-  sendFriendRequest(username: string): Observable<boolean> {
-    return this.http.post<boolean>(this.baseUrl + 'friendrequests/send/' + username, {}).pipe(map(r => {
-      //the correct answer will need a more complex caching system so we will only delete all the cashed data for now
-      this.usersChache = new Map();
-      return r;
-    }));
-  }
-  getSentFriendRequests(): Observable<User[]> {
-    return this.http.get<User[]>(this.baseUrl + 'friendrequests/sent');
-  }
-  isFriendRequested(username: string): Observable<boolean> {
-    return this.http.get<boolean>(this.baseUrl + 'friendrequests/isSent/' + username);
-  }
+
   isFriend(username: string): Observable<boolean> {
     return this.http.get<boolean>(this.baseUrl + 'friends/isfriend/' + username);
   }
@@ -130,7 +118,6 @@ export class UserService {
           this.paginationInfo = paginatedResult.pagination;
           return paginatedResult;
         }));
-
   }
   updateUser(user: User): Observable<UpdateUser> {
     const userTosend: UpdateUser = {

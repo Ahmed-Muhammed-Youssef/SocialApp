@@ -5,6 +5,7 @@ import { UserService } from 'src/app/_services/user.service';
 import { User } from '../../_models/User';
 import { Router } from '@angular/router';
 import { TimeFormatterService } from 'src/app/_services/activityTimeForamtter.service';
+import { FriendRequestsService } from 'src/app/_services/friend-requests.service';
 
 @Component({
   selector: 'app-user-card',
@@ -30,7 +31,7 @@ export class UserCardComponent implements OnInit {
     pictures: [],
     roles: []
   };
-  constructor(private userService: UserService, private toastr: ToastrService,
+  constructor(private friendRequestsService: FriendRequestsService, private toastr: ToastrService,
      public presenceService: PresenceService, private router: Router,
       public timeFormatterService:TimeFormatterService) { }
   ngOnInit(): void {
@@ -40,7 +41,7 @@ export class UserCardComponent implements OnInit {
     this.router.navigateByUrl('users/username/' + this.user.username);
   }
   sendFriendRequest(user: User) {
-    this.userService.sendFriendRequest(user.username).subscribe(
+    this.friendRequestsService.sendFriendRequest(user.username).subscribe(
       r => {
         this.toastr.success('You have sent frined request to ' + user.firstName);
         if (r == true) {
