@@ -52,20 +52,10 @@ const routes: Routes = [
   { path: 'users', component: ExploreComponent, canActivate:[AuthGuard] },
   { path: 'users/username/:username', component: UserDetailComponent, canActivate:[AuthGuard], resolve: {user: UserDetailedResolver} },
   { path: 'lists', component: FriendsListComponent, canActivate:[AuthGuard] },
+  { path: 'friendrequests', component: FriendRequestsComponent, canActivate:[AuthGuard] },
   { path: 'messages', component: InboxComponent, canActivate: [AuthGuard] },
   { path: 'admin', component: AdminPanelComponent, canActivate: [AuthGuard, AdminGuard]},
   { path: 'users/edit', component: UserEditComponent, canActivate: [AuthGuard], canDeactivate: [PreventUnsavedChangesGuard] },
-  /*{
-    path: '',
-    runGuardsAndResolvers: 'always',
-    canActivate: [AuthGuard],
-    children: [
-      { path: 'users', component: UserListComponent },
-      { path: 'users/username/:username', component: UserDetailComponent },
-      { path: 'lists', component: ListsComponent },
-      { path: 'messages', component: MessagesComponent }
-    ]
-  },*/
   { path: 'errors', component: TestErrorComponent },
   { path: 'not-found', component: NotFoundComponent },
   { path: 'server-error', component: ServerErrorComponent },
