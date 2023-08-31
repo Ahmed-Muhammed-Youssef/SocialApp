@@ -20,7 +20,17 @@ namespace API.Controllers
         {
             _unitOfWork = unitOfWork;
         }
-
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<UserDTO>>> GetFriendRequests()
+        {
+            var sender = await _unitOfWork.UsersRepository.GetUserByIdAsync(User.GetId());
+            if (sender == null)
+            {
+                return BadRequest();
+            }
+            var friendRequests = await _unitOfWork.FriendRequestsRepository.GetRecievedFriendRequestsAsync(sender.Id);
+            return Ok(friendRequests);
+        }
         // @ToDo: add pagination for scaling
         // GET: api/friendrequests/sent
         [HttpGet("sent")]
