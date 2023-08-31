@@ -23,4 +23,7 @@ export class FriendRequestsService {
   isFriendRequested(username: string): Observable<boolean> {
     return this.http.get<boolean>(this.baseUrl + 'friendrequests/isSent/' + username);
   }
+  getFriendRequests(): Observable<User[]> {
+    return this.http.get<User[]>(this.baseUrl + 'friendrequests');
+  }
 }
