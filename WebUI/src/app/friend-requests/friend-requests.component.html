@@ -1,1 +1,22 @@
-<p>friend-requests works!</p>
+<div [ngClass]="(isMobilePhone)? 'mobile-subtitle-margin': 'normal-subtitle-margin'" class="subtitle-container">
+    <h1 class="subtitle">
+      Friend Requests
+    </h1>
+  </div>
+<div class="col-12 col-md-8 offset-md-2 mt-3">
+    <div *ngFor="let user of friendRequests; let i = index" class="row py-2">
+        <div class="col-4 col-md-3">
+            <img class="rounded-circle w-100" routerLink="/users/username/{{user.username}}" mat-card-image src="{{user.pictures.length > 0 ? user.pictures[0].url : './assets/Pictures/profile-placeholder.png'}}" alt="Profile picture">  
+        </div>
+        <div class="col-3 col-md-4 d-flex text-center">
+            <h3 class="align-self-center mb-0">{{user.firstName}} {{user.lastName}}</h3>
+        </div>
+        <div class="col-5 col-md-5 d-flex text-center">
+            <div class="align-self-center w-100">
+                <button mat-raised-button color="primary" class="text-center mx-1 my-1">Confirm</button>
+                <button mat-raised-button color="warn" class="text-center mx-1 my-1">Delete</button>
+            </div>
+        </div>
+    </div>
+    <hr>
+</div>
