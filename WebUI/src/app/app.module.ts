@@ -42,6 +42,7 @@ import { PhotoManagementComponent } from './admin/photo-management/photo-managem
 import { RoleEditDialogComponent } from './admin/role-edit-dialog/role-edit-dialog.component';
 import { InboxComponent } from './Inbox/inbox.component';
 import { GalleryComponent } from './users/gallery/gallery.component';
+import { FriendRequestsComponent } from './friend-requests/friend-requests.component';
 
 
 const routes: Routes = [
@@ -95,7 +96,7 @@ const routes: Routes = [
         UserManagementComponent,
         PhotoManagementComponent,
         RoleEditDialogComponent,
-        InboxComponent, GalleryComponent
+        InboxComponent, GalleryComponent, FriendRequestsComponent
     ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
