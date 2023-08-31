@@ -32,7 +32,7 @@
       <button mat-flat-button color="accent" class="me-1" *ngIf="(!isFriendRequested) && (!isFriend)" (click)="addLike()">
         <i class="material-icons me-1">person_add_alt_1</i> Add
       </button>
-      <button mat-flat-button color="primary" *ngIf="isFriend" routerLink="/chat" [state]="user">
+      <button mat-flat-button color="primary" *ngIf="isFriend" [routerLink]="['/messages', {username: user.username}]">
         <mat-icon>chat</mat-icon> Message
       </button>
     </mat-card-actions>
