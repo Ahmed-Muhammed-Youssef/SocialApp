@@ -76,7 +76,16 @@ namespace API.Data
                 .Where(fr => fr.RequestedId == targetId && fr.RequesterId == senderId)
                 .FirstOrDefaultAsync();
         }
-
+        public async Task<List<UserDTO>> GetRecievedFriendRequestsAsync(int targetId)
+        {
+            return await _dataContext.FriendRequests
+                .AsNoTracking()
+                .Include(fr => fr.Requester)
+                .Where(fr => fr.RequestedId == targetId)
+                .Select(fr => fr.Requester)
+                .ProjectTo<UserDTO>(_mapper.ConfigurationProvider)
+                .ToListAsync();
+        }
         public async Task<IEnumerable<UserDTO>> GetFriendRequestedUsersDTOAsync(int senderId)
         {
             var users = _dataContext.FriendRequests
