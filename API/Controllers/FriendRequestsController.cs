@@ -70,7 +70,7 @@ namespace API.Controllers
         [HttpPost("send/{username}")]
         public async Task<ActionResult> SendFriendRequest(string username)
         {
-            // retuns true if the user is now a frined
+            // retuns true if the user has become a frined
             if (username == null)
             {
                 return BadRequest();
@@ -88,6 +88,10 @@ namespace API.Controllers
             if (await _unitOfWork.FriendRequestsRepository.GetFriendRequestAsync(sender.Id, target.Id) != null)
             {
                 return BadRequest("You already sent a frient request to this user.");
+            }
+            if (await _unitOfWork.FriendRequestsRepository.IsFriend(sender.Id, target.Id) == true)
+            {
+                return BadRequest("You already are friends.");
             }
             bool isFriend = await _unitOfWork.FriendRequestsRepository.SendFriendRequest(sender.Id, target.Id);
             if (await _unitOfWork.Complete())
