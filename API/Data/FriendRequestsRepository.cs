@@ -104,5 +104,10 @@ namespace API.Data
                 .Select(f => f.FriendId);
             return await users.ToListAsync();
         }
+
+        public void DeleteFriendRequest(FriendRequest friendRequest)
+        {
+            _dataContext.FriendRequests.Entry(friendRequest).State = EntityState.Deleted;
+        }
     }
 }
