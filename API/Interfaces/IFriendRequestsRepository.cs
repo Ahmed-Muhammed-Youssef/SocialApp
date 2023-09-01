@@ -15,5 +15,6 @@ namespace API.Interfaces
         public Task<IEnumerable<int>> GetFriendsIdsAsync(int senderId);
         public Task<bool> IsFriend(int userId, int targetId);
         public Task<PagedList<UserDTO>> GetFriendsAsync(int id, PaginationParams paginationParams);
+        public void DeleteFriendRequest(FriendRequest friendRequest);
     }
 }
