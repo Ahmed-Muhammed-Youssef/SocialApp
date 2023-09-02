@@ -31,6 +31,46 @@ namespace API.Controllers
             var friendRequests = await _unitOfWork.FriendRequestsRepository.GetRecievedFriendRequestsAsync(sender.Id);
             return Ok(friendRequests);
         }
+
+        [HttpPost("cancel/{username}")]
+        public async Task<IActionResult> CancelFriendRequests(string username)
+        {
+            if (username is null)
+            {
+                return BadRequest("invalid username");
+            }
+            var sender = await _unitOfWork.UsersRepository.GetUserByIdAsync(User.GetId());
+            var target = await _unitOfWork.UsersRepository.GetUserByUsernameAsync(username);
+            if (sender == null || target == null)
+            {
+                return NotFound();
+            }
+            if (sender.Id == target.Id)
+            {
+                return BadRequest("You can't send friend requests to yourself.");
+            }
+            if (await _unitOfWork.FriendRequestsRepository.IsFriend(sender.Id, target.Id) == true)
+            {
+                return BadRequest("You already are friends.");
+            }
+            // check if the api issuer is the freind request sender first.
+            var fr = await _unitOfWork.FriendRequestsRepository.GetFriendRequestAsync(sender.Id, target.Id);
+            if (fr is null)
+            {
+                // check if the api issuer is the freind requested user
+                fr = await _unitOfWork.FriendRequestsRepository.GetFriendRequestAsync(target.Id, sender.Id);
+            }
+            if (fr is null)
+            {
+                return BadRequest("You didn't sent a friend request.");
+            }
+            _unitOfWork.FriendRequestsRepository.DeleteFriendRequest(fr);
+            if(await _unitOfWork.Complete())
+            {
+                return Ok();
+            }
+            return BadRequest("Failed to cancel friend request.");
+        }
         // @ToDo: add pagination for scaling
         // GET: api/friendrequests/sent
         [HttpGet("sent")]
