@@ -38,7 +38,18 @@ export class FriendRequestsComponent implements OnInit {
     this.friendRequestsService.sendFriendRequest(user.username).subscribe(
       r => {
         if (r == true) {
-          this.toastr.success(user.firstName + " is added to your friends list successfully.")
+          this.toastr.success(user.firstName + " is added to your friends list successfully.");
+          this.loadFriendRequests();
+        }
+      }
+    );
+  }
+  cancelFriendRequest(username: string) {
+    this.friendRequestsService.cancelFriendRequest(username).subscribe(
+      r => {
+        if (r) {
+          this.toastr.success("Friend request is canelled successfully.");
+          this.loadFriendRequests();
         }
       }
     );
