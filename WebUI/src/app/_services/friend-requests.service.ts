@@ -26,4 +26,7 @@ export class FriendRequestsService {
   getFriendRequests(): Observable<User[]> {
     return this.http.get<User[]>(this.baseUrl + 'friendrequests');
   }
+  cancelFriendRequest(username: string): Observable<any>{
+    return this.http.post<any>(this.baseUrl + 'friendrequests/cancel/' + username, {});
+  }
 }
