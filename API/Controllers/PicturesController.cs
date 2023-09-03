@@ -52,6 +52,29 @@ namespace API.Controllers
             return BadRequest();
         }
 
+        // POST: api/pictures/profilepicture
+        [HttpPost("profilepicture")]
+        public async Task<ActionResult<PictureDTO>> SetProfilePicture(int pictureId)
+        {
+            var user = await _unitOfWork.UsersRepository.GetUserByUsernameAsync(User.GetUsername());
+            var pictures = await _unitOfWork.UsersRepository.GetUserPictureAsync(user.Id);
+            var picture = pictures.FirstOrDefault(p => p.Id == pictureId);
+            if (picture == null)
+            {
+                return BadRequest($"{pictureId} doesn't exist.");
+            }
+            if (picture.AppUserId != user.Id)
+            {
+                return Unauthorized();
+            }
+            user.ProfilePictureUrl = picture.Url;
+            _unitOfWork.UsersRepository.Update(user);
+            if (await _unitOfWork.Complete())
+            {
+                return Ok();
+            }
+            return BadRequest("failed to set the profile picture.");
+        }
         // DELETE: api/pictures/delete/{pictureId}
         [HttpDelete("delete/{pictureId}")]
         public async Task<ActionResult<PictureDTO>> DeletePhoto(int pictureId)
