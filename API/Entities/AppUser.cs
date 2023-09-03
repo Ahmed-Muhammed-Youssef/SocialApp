@@ -8,6 +8,7 @@ namespace API.Entities
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        public string ProfilePictureUrl { get; set; } = null;
         public char Sex { get; set; }
         public char Interest { get; set; } // can be f (female), m (male) or b (both)
         public DateTime DateOfBirth { get; set; }
