@@ -62,6 +62,15 @@ export class UserDetailComponent implements OnInit {
       }
     );
   }
+  unsendFriendRequest(){
+    this.friendRequestsService.cancelFriendRequest(this.user.username).subscribe(
+      r => {
+        if (r) {
+          this.toastr.success("Friend request is canelled successfully.");
+        }
+      }
+    );
+  }
   ngOnInit(): void {
     this.route.data.subscribe(
       data => {
