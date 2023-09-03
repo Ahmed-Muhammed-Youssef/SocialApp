@@ -14,7 +14,7 @@ import { FriendRequestsService } from 'src/app/_services/friend-requests.service
 })
 export class UserCardComponent implements OnInit {
   @Input() isFriendRequested = false;
-  @Output() liked = new EventEmitter();
+  @Output() friendRequested = new EventEmitter();
   @Input() user: User = {
     id: 0,
     username: '',
@@ -47,7 +47,7 @@ export class UserCardComponent implements OnInit {
         if (r == true) {
           this.toastr.success("You have a new friend!")
         }
-        this.liked.emit();
+        this.friendRequested.emit();
       }
     );
   }

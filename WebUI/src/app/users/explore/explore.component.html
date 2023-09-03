@@ -42,7 +42,7 @@
 
 <div class="users-grid">
   <div *ngFor="let user of users">
-    <app-user-card class="user-card-res" (liked)="loadUsers()" [user]="user"></app-user-card>
+    <app-user-card class="user-card-res" (friendRequested)="friendRequestSent()" [user]="user"></app-user-card>
   </div>
 </div>
 <div class="d-flex justify-content-center" *ngIf="users.length > 0 && userParams && pagination && pagination.totalPages > 1">
