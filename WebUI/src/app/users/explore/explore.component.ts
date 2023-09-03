@@ -43,6 +43,11 @@ export class ExploreComponent implements OnInit {
       }
     );
   }
+  friendRequestSent()
+  {
+    this.userService.deleteCachedValues();
+    this.loadUsers();
+  }
   resetFilters() {
     this.userParams = this.userService.resetUserParams();
     this.loadUsers();
