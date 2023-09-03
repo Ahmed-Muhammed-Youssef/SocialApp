@@ -88,9 +88,7 @@ export class UserService {
     }
     return this.http.get<User>(this.baseUrl + 'users/' + username);
   }
-  public deletePicture(pictureId: number) {
-    return this.http.delete(this.baseUrl + 'users/photo/delete/' + String(pictureId));
-  }
+ 
 
   isFriend(username: string): Observable<boolean> {
     return this.http.get<boolean>(this.baseUrl + 'friends/isfriend/' + username);
@@ -135,8 +133,5 @@ export class UserService {
         return user;
       }
     ));
-  }
-  getPictures() {
-    return this.http.get<Picture[]>(this.baseUrl + "users/photos/all");
   }
 }

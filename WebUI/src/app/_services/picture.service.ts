@@ -15,4 +15,7 @@ export class PictureService {
     formData.append("file", image, image.name);
     return this.http.post(this.baseUrl, formData, {reportProgress: true, observe: 'events'});
   }
+  public deletePicture(pictureId: number) {
+    return this.http.delete(this.baseUrl + 'pictures/' + String(pictureId));
+  }
 }
