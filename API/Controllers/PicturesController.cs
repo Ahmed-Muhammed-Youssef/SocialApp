@@ -26,8 +26,8 @@ namespace API.Controllers
             _pictureService = pictureService;
             _mapper = mapper;
         }
-        // POST: api/pictures/upload
-        [HttpPost("upload")]
+        // POST: api/pictures
+        [HttpPost]
         public async Task<ActionResult<PictureDTO>> UploadPicture(IFormFile file)
         {
             var user = await _unitOfWork.UsersRepository.GetUserByUsernameAsync(User.GetUsername());
@@ -36,24 +36,24 @@ namespace API.Controllers
             {
                 return BadRequest(result.Error.Message);
             }
-            var photo = new Picture
+            var picture = new Picture
             {
                 AppUserId = user.Id,
                 Url = result.SecureUrl.AbsoluteUri,
                 PublicId = result.PublicId
             };
 
-            photo = await _unitOfWork.UsersRepository.AddPictureAsync(photo);
+            picture = await _unitOfWork.UsersRepository.AddPictureAsync(picture);
 
             if (await _unitOfWork.Complete())
             {
-                return Ok(_mapper.Map<PictureDTO>(photo));
+                return Ok(_mapper.Map<PictureDTO>(picture));
             }
             return BadRequest();
         }
 
         // POST: api/pictures/profilepicture
-        [HttpPost("profilepicture")]
+        [HttpPost("profilepicture/{pictureId}")]
         public async Task<ActionResult<PictureDTO>> SetProfilePicture(int pictureId)
         {
             var user = await _unitOfWork.UsersRepository.GetUserByUsernameAsync(User.GetUsername());
@@ -75,8 +75,8 @@ namespace API.Controllers
             }
             return BadRequest("failed to set the profile picture.");
         }
-        // DELETE: api/pictures/delete/{pictureId}
-        [HttpDelete("delete/{pictureId}")]
+        // DELETE: api/pictures/{pictureId}
+        [HttpDelete("{pictureId}")]
         public async Task<ActionResult<PictureDTO>> DeletePhoto(int pictureId)
         {
             var user = await _unitOfWork.UsersRepository.GetUserByUsernameAsync(User.GetUsername());
