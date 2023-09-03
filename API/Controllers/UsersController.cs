@@ -26,8 +26,8 @@ namespace API.Controllers
             _mapper = mapper;
         }
 
-        // GET: api/users/all
-        [HttpGet("all")]
+        // GET: api/users
+        [HttpGet]
         public async Task<ActionResult<IEnumerable<UserDTO>>> GetUsers([FromQuery] UserParams userParams)
         {
             if (string.IsNullOrEmpty(userParams.Sex))
@@ -44,8 +44,8 @@ namespace API.Controllers
             return Ok(users);
         }
 
-        // GET: api/users/info/{username}
-        [HttpGet("info/{username}")]
+        // GET: api/users/{username}
+        [HttpGet("{username}")]
         public async Task<ActionResult<UserDTO>> GetUser(string username)
         {
             var user = await _unitOfWork.UsersRepository.GetUserDTOByUsernameAsync(username);
@@ -58,7 +58,7 @@ namespace API.Controllers
         }
 
         // PUT: api/users/update
-        [HttpPut("update")]
+        [HttpPut]
         public async Task<ActionResult<UpdatedUserDTO>> PutUser(UpdatedUserDTO userDTO)
         {
             if (!ModelState.IsValid)

@@ -66,7 +66,7 @@ export class UserService {
       paginatedResult = cache;
       return of(paginatedResult);
     }
-    return this.http.get<User[]>(this.baseUrl + 'users/all', { observe: 'response', params: this.getPaginationParams(userParams) })
+    return this.http.get<User[]>(this.baseUrl + 'users', { observe: 'response', params: this.getPaginationParams(userParams) })
       .pipe(
         map(response => {
           if (response?.body) {
@@ -86,7 +86,7 @@ export class UserService {
     if (user) {
       return of(user);
     }
-    return this.http.get<User>(this.baseUrl + 'users/info/' + username);
+    return this.http.get<User>(this.baseUrl + 'users/' + username);
   }
   public deletePicture(pictureId: number) {
     return this.http.delete(this.baseUrl + 'users/photo/delete/' + String(pictureId));
@@ -128,7 +128,7 @@ export class UserService {
       city: user.city,
       country: user.country
     };
-    return this.http.put<UpdateUser>(this.baseUrl + 'users/update', userTosend).pipe(map(
+    return this.http.put<UpdateUser>(this.baseUrl + 'users', userTosend).pipe(map(
       () => {
         const index = this.users.indexOf(user);
         this.users[index] = user;
