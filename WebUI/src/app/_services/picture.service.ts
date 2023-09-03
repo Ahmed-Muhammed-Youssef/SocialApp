@@ -18,4 +18,7 @@ export class PictureService {
   public deletePicture(pictureId: number) {
     return this.http.delete(this.baseUrl + 'pictures/' + String(pictureId));
   }
+  public setProfilePicture(pictureId: number) {
+    return this.http.post(this.baseUrl + 'pictures/profilepicture' + String(pictureId), {});
+  }
 }
