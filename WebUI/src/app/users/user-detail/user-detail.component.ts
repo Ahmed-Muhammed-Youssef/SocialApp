@@ -50,13 +50,14 @@ export class UserDetailComponent implements OnInit {
         );
     
   }
-  addLike(){
+  sendFriendRequest(){
+    this.userService.deleteCachedValues();
     this.friendRequestsService.sendFriendRequest(this.user.username).subscribe(
       r => {
           this.isFriendRequested = true;
           this.toastr.success('You have sent frined request to ' + this.user.firstName);
           if(r == true){
-            this.toastr.success("You have a new friend!")
+            this.toastr.success("You have a new friend!");
           }
       }
     );
