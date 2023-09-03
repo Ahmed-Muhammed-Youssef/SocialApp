@@ -35,7 +35,9 @@ namespace API.Controllers
                 var interest = await _unitOfWork.UsersRepository.GetUserInterest(User.GetId());
                 userParams.Sex = interest.ToString();
             }
+            var friendrequested = await _unitOfWork.FriendRequestsRepository.GetFriendRequestedUsersDTOAsync(User.GetId());
             var forbiddenIds = await _unitOfWork.FriendRequestsRepository.GetFriendsIdsAsync(User.GetId());
+            forbiddenIds = forbiddenIds.Concat(friendrequested.Select(u => u.Id));
             var users = await _unitOfWork.UsersRepository.GetUsersDTOAsync(User.GetUsername(), userParams, forbiddenIds.ToList());
             var newPaginationHeader = new PaginationHeader(users.CurrentPage, users.ItemsPerPage, users.TotalCount, users.TotalPages);
             Response.AddPaginationHeader(newPaginationHeader);
