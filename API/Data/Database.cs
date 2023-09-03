@@ -96,8 +96,8 @@ namespace API.Data
                     .RuleFor(u => u.Country, f => f.Address.Country())
                     .RuleFor(u => u.City, f => f.Address.City())
                     .RuleFor(u => u.DateOfBirth, f => f.Date.Past(refDate: DateTime.UtcNow.AddYears(-18), yearsToGoBack: 70))
-                    .RuleFor(u => u.LastActive, f => f.Date.Recent())
-                    .RuleFor(u => u.Created, f => f.Date.Past(refDate: DateTime.UtcNow.AddMonths(-5), yearsToGoBack: 2));
+                    .RuleFor(u => u.LastActive, f => f.Date.BetweenOffset(DateTimeOffset.UtcNow, DateTimeOffset.UtcNow.AddDays(-30)).DateTime)
+                    .RuleFor(u => u.Created, f => f.Date.Past(refDate: DateTime.UtcNow.AddMonths(-7), yearsToGoBack: 2));
 
                 var user = testUsers.Generate();
                 tasks.Add(userManager.CreateAsync(user, "Pwd12345"));

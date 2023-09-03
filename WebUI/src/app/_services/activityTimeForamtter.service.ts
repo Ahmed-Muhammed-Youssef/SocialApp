@@ -35,7 +35,7 @@ export class TimeFormatterService {
       return minuteDiff + ' minute'+ (minuteDiff> 1? 's':'') + ' ago';
     }
     else {
-      return 'online';
+      return '';
     }
   }
 }
