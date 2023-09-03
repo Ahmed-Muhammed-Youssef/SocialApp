@@ -24,13 +24,8 @@ namespace API.Data
 
         public async Task<bool> SendFriendRequest(int senderId, int targetId)
         {
-            await _dataContext.FriendRequests.AddAsync(new FriendRequest()
-            {
-                RequesterId = senderId,
-                RequestedId = targetId
-            });
 
-            // check if the taret id sent him a request already or not if it does, add him to friends
+            // check if the target id sent him a request already or not if it does, add him to friends
 
             var frFromTarget = await _dataContext.FriendRequests
                 .AsNoTracking()
@@ -40,6 +35,14 @@ namespace API.Data
                 await _dataContext.Friends.AddAsync(new Friend { UserId = senderId, FriendId = targetId });
                 await _dataContext.Friends.AddAsync(new Friend { UserId = targetId, FriendId = senderId });
                 _dataContext.FriendRequests.Remove(frFromTarget);
+            }
+            else
+            {
+                await _dataContext.FriendRequests.AddAsync(new FriendRequest()
+                {
+                    RequesterId = senderId,
+                    RequestedId = targetId
+                });
             }
             return frFromTarget != null;
         }
