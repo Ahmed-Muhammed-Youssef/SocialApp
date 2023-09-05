@@ -16,12 +16,13 @@ import { FriendRequestsService } from 'src/app/_services/friend-requests.service
 })
 export class UserDetailComponent implements OnInit {
   isMobilePhone : boolean = false;
-  profilePicture : Picture | undefined;
+  profilePicture : string | undefined;
   user: User = {
     id: 0,
     username: '',
     firstName: '',
     lastName: '',
+    profilePictureUrl: '',
     sex: '',
     interest: '',
     age: 0,
@@ -75,7 +76,7 @@ export class UserDetailComponent implements OnInit {
     this.route.data.subscribe(
       data => {
         this.user = data.user;
-        this.profilePicture = this.user.pictures[0];
+        this.profilePicture = this.user.profilePictureUrl;
         this.setImages();
         this.friendRequestsService.isFriendRequested(this.user.username).subscribe(r => {
           this.isFriendRequested = r;
