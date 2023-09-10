@@ -1,6 +1,7 @@
 import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { Picture } from 'src/app/_models/User';
+import { AccountService } from 'src/app/_services/account.service';
 import { PictureService } from 'src/app/_services/picture.service';
 
 @Component({
@@ -11,7 +12,8 @@ import { PictureService } from 'src/app/_services/picture.service';
 export class GalleryComponent implements OnInit {
   @Input() pictures: Picture[] = [];
   activeIndex = 0;
-  constructor(private pictureSerive: PictureService, private toastr: ToastrService, private changeDetectorRef : ChangeDetectorRef) { }
+  constructor(private pictureSerive: PictureService, private toastr: ToastrService,
+     private changeDetectorRef : ChangeDetectorRef, private accountService: AccountService) { }
   ngOnInit(): void {
   }
   prevImage() {
@@ -33,6 +35,7 @@ export class GalleryComponent implements OnInit {
     this.pictureSerive.setProfilePicture(this.pictures[pictureIndex].id).subscribe(r => {
       this.toastr.success('Picture is set as profile picture successfully!');
       this.changeDetectorRef.detectChanges();
+      this.accountService.updateCachedProfilePicture(this.pictures[pictureIndex].url);
     });
   }
 }

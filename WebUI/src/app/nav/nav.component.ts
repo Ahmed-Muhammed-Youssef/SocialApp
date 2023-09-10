@@ -1,23 +1,20 @@
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
 import { LoginResponse } from '../_models/AccountModels';
 import { AccountService } from '../_services/account.service';
 import { take } from 'rxjs';
-import { Picture } from '../_models/User';
 
 @Component({
   selector: 'app-nav',
   templateUrl: './nav.component.html',
   styleUrls: ['./nav.component.css']
 })
-export class NavComponent implements OnInit {
+export class NavComponent {
   isMobilePhone : boolean = false;
   public userProfilePicture: string | undefined;
   constructor(public accountService: AccountService,
-     private router: Router, private toastr: ToastrService,
-     breakpointObserver: BreakpointObserver) {
+     private router: Router, breakpointObserver: BreakpointObserver) {
       breakpointObserver.observe(["(max-width: 750px)"])
       .subscribe(
         result => 
@@ -35,10 +32,10 @@ export class NavComponent implements OnInit {
         }
       });
   }
-  ngOnInit(): void {  }
   logout(): void {
     this.accountService.logout();
     this.router.navigateByUrl('/home');
+    this.userProfilePicture = undefined;
   }
   route(){
     let userString = localStorage.getItem('user');

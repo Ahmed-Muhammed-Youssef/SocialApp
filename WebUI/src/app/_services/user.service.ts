@@ -28,9 +28,6 @@ export class UserService {
   public getUserParams() {
     return this.userParams;
   }
-  // public setUserParams(params: UserParams) {
-  //   this.userParams = params;
-  // }
   public resetUserParams() {
     this.accountService.currentUser$.pipe(take(1)).subscribe(response => {
       if (response) {
@@ -39,7 +36,6 @@ export class UserService {
     });
     return this.userParams;
   }
-
   // helper method
   private getPaginationParams(userParams: UserParams) {
     let httpParams: HttpParams = new HttpParams()
