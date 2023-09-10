@@ -87,6 +87,7 @@ namespace API.Data
             {
                 var testUsers = new Faker<AppUser>()
                     .RuleFor(u => u.UserName, (f, u) => $"user{i}")
+                    .RuleFor(u => u.ProfilePictureUrl, f => f.Internet.Avatar())
                     .RuleFor(u => u.Sex, f => f.PickRandom(new List<char>() { 'f', 'm' }))
                     .RuleFor(u => u.FirstName, (f, u) => f.Name.FirstName((u.Sex == 'm') ? Bogus.DataSets.Name.Gender.Male : Bogus.DataSets.Name.Gender.Female))
                     .RuleFor(u => u.LastName, (f, u) => f.Name.LastName(Bogus.DataSets.Name.Gender.Male))
