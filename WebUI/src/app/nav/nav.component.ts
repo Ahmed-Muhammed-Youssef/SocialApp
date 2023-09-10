@@ -34,8 +34,7 @@ export class NavComponent {
   }
   logout(): void {
     this.accountService.logout();
-    this.router.navigateByUrl('/home');
-    this.userProfilePicture = undefined;
+    this.router.navigateByUrl('/login');
   }
   route(){
     let userString = localStorage.getItem('user');
