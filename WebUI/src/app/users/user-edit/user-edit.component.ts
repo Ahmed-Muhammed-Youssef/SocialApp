@@ -16,6 +16,7 @@ import { StaticDataService } from 'src/app/_services/staticData.service';
 })
 export class UserEditComponent implements OnInit {
   public user: User | undefined;
+  public userProfilePicture : string | undefined;
   public isMobilePhone : boolean = false;
   public oldUser: User | undefined;
   public account: LoginResponse | undefined;
@@ -26,7 +27,7 @@ export class UserEditComponent implements OnInit {
     }
   }
   constructor(private toastr: ToastrService, private userService: UserService, 
-    private accountService: AccountService, private breakpointObserver: BreakpointObserver,
+    private accountService: AccountService, breakpointObserver: BreakpointObserver,
     public staticDataService : StaticDataService) {
     breakpointObserver.observe(["(max-width: 750px)"])
       .subscribe(
@@ -51,6 +52,7 @@ export class UserEditComponent implements OnInit {
     if (this.account?.userData) {
       this.userService.getUserByUsername(this.account?.userData.username).subscribe(user => {
         this.user = user;
+        this.userProfilePicture = this.user.profilePictureUrl;
         this.oldUser = Object.assign({}, this.user);
       });
     }

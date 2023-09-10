@@ -8,7 +8,7 @@
     <mat-card-header>
       <mat-card-title>{{user.firstName}} {{user.lastName}}</mat-card-title>
     </mat-card-header>
-    <img mat-card-image src="{{user.profilePictureUrl.length > 0 ? user.profilePictureUrl : './assets/Pictures/profile-placeholder.png'}}" 
+    <img mat-card-image src="{{user.profilePictureUrl ? user.profilePictureUrl : './assets/Pictures/profile-placeholder.png'}}" 
       alt="profile picture">
     <mat-card-content>
         <div>
