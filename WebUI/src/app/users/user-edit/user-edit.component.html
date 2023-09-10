@@ -83,7 +83,7 @@
       </mat-tab>
         <mat-tab label="Edit Pictures">
           <app-gallery *ngIf="user.pictures.length > 0" [pictures]="user.pictures"></app-gallery>
-          <app-picture-upload [user]="user"></app-picture-upload>
+          <app-picture-upload (pictureUploaded)="pictureUploaded($event)" [user]="user"></app-picture-upload>
         </mat-tab>
       </mat-tab-group>
   </div>

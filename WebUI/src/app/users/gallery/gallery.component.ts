@@ -26,7 +26,6 @@ export class GalleryComponent implements OnInit {
       this.toastr.success('Picture deleted successfully!');
       this.pictures.splice(pictureIndex, 1);
       this.changeDetectorRef.detectChanges();
-      console.log(this.pictures);
     });
   }
 }

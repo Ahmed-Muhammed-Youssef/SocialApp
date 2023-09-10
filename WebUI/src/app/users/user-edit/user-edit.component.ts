@@ -4,7 +4,7 @@ import { NgForm } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { take } from 'rxjs';
 import { LoginResponse } from '../../_models/AccountModels';
-import { User } from '../../_models/User';
+import { Picture, User } from '../../_models/User';
 import { AccountService } from '../../_services/account.service';
 import { UserService } from '../../_services/user.service';
 import { StaticDataService } from 'src/app/_services/staticData.service';
@@ -69,6 +69,9 @@ export class UserEditComponent implements OnInit {
   public getLoacaleDateTime(d: Date) : Date{
     var localDate  = new Date(d.toString() + 'Z');
     return localDate;
+  }
+  pictureUploaded(newPicture: Picture){
+    this.loadUser();
   }
   updateUser() {
     if (this.user) {

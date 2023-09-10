@@ -1,7 +1,7 @@
 import { HttpEventType } from '@angular/common/http';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
-import { User } from 'src/app/_models/User';
+import { Picture, User } from 'src/app/_models/User';
 import { PictureService } from 'src/app/_services/picture.service';
 @Component({
   selector: 'app-picture-upload',
@@ -10,6 +10,7 @@ import { PictureService } from 'src/app/_services/picture.service';
 })
 export class PictureUploadComponent implements OnInit {
   @Input() user: User | undefined = undefined;
+  @Output() pictureUploaded = new EventEmitter<Picture>();
   imagePreviewUrl: string = "#";
   file: File | null = null;
   imageUploadProgress: number = 0;
@@ -25,6 +26,7 @@ export class PictureUploadComponent implements OnInit {
         else if(event.type === HttpEventType.Response){
           this.toastr.success('Image uploaded successfully');
           this.imagePreviewUrl = "#";
+          this.pictureUploaded.emit(event.body);
         }
       });
     }
