@@ -50,9 +50,9 @@
 .next-button {
     right: 0px;
 }
-.delete-button{
+.controll-buttons{
     bottom: 32px;
-    left: 50%;
+    left: 40%;
     position: absolute;
     width: fit-content;
 }

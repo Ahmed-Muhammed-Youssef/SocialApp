@@ -26,6 +26,15 @@ export class GalleryComponent implements OnInit {
       this.toastr.success('Picture deleted successfully!');
       this.pictures.splice(pictureIndex, 1);
       this.changeDetectorRef.detectChanges();
+
+    });
+  }
+  setProfilePicture(pictureIndex: number) {
+    this.pictureSerive.setProfilePicture(this.pictures[pictureIndex].id).subscribe(r => {
+      this.toastr.success('Picture is set as profile picture successfully!');
+      this.pictures.splice(pictureIndex, 1);
+      this.changeDetectorRef.detectChanges();
+
     });
   }
 }
