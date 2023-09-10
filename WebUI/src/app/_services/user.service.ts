@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { map, Observable, of, take } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { PaginatedResult, Pagination } from '../_models/pagination';
-import { Picture, UpdateUser, User } from '../_models/User';
+import { UpdateUser, User } from '../_models/User';
 import { UserParams } from '../_models/userParams';
 import { AccountService } from './account.service';
 
@@ -88,8 +88,6 @@ export class UserService {
     }
     return this.http.get<User>(this.baseUrl + 'users/' + username);
   }
- 
-
   isFriend(username: string): Observable<boolean> {
     return this.http.get<boolean>(this.baseUrl + 'friends/isfriend/' + username);
   }
