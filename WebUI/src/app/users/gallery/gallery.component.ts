@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { Picture } from 'src/app/_models/User';
 import { PictureService } from 'src/app/_services/picture.service';
@@ -11,7 +11,7 @@ import { PictureService } from 'src/app/_services/picture.service';
 export class GalleryComponent implements OnInit {
   @Input() pictures: Picture[] = [];
   activeIndex = 0;
-  constructor(private pictureSerive: PictureService, private toastr: ToastrService) { }
+  constructor(private pictureSerive: PictureService, private toastr: ToastrService, private changeDetectorRef : ChangeDetectorRef) { }
   ngOnInit(): void {
   }
   prevImage() {
@@ -23,10 +23,10 @@ export class GalleryComponent implements OnInit {
   }
   deleteImage(pictureIndex: number) {
     this.pictureSerive.deletePicture(this.pictures[pictureIndex].id).subscribe(r => {
-      if (r) {
-        this.toastr.success('Picture deleted successfully!');
-        this.pictures.splice(pictureIndex, 1);
-      }
+      this.toastr.success('Picture deleted successfully!');
+      this.pictures.splice(pictureIndex, 1);
+      this.changeDetectorRef.detectChanges();
+      console.log(this.pictures);
     });
   }
 }
