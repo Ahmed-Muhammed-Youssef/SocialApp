@@ -50,7 +50,12 @@
 .next-button {
     right: 0px;
 }
-
+.delete-button{
+    bottom: 32px;
+    left: 50%;
+    position: absolute;
+    width: fit-content;
+}
 .image-button:hover {
     background-color: rgba(0, 0, 0, 20%);
 }
