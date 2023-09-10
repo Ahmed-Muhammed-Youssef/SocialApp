@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Picture, User } from '../../_models/User';
+import { User } from '../../_models/User';
 import { UserService } from '../../_services/user.service';
 
 import { ToastrService } from 'ngx-toastr';
@@ -39,7 +39,7 @@ export class UserDetailComponent implements OnInit {
   
   constructor(private friendRequestsService: FriendRequestsService,private userService: UserService ,private route: ActivatedRoute,
      private toastr: ToastrService, public presenceService: PresenceService,
-      private breakpointObserver: BreakpointObserver, public timeFormatterService:TimeFormatterService) {
+      breakpointObserver: BreakpointObserver, public timeFormatterService:TimeFormatterService) {
       breakpointObserver.observe(["(max-width: 750px)"])
         .subscribe(
           result => {
@@ -66,9 +66,8 @@ export class UserDetailComponent implements OnInit {
   unsendFriendRequest(){
     this.friendRequestsService.cancelFriendRequest(this.user.username).subscribe(
       r => {
-        if (r) {
-          this.toastr.success("Friend request is canelled successfully.");
-        }
+        this.toastr.success("Friend request is canelled successfully.");
+        this.isFriendRequested = false;
       }
     );
   }
@@ -77,7 +76,6 @@ export class UserDetailComponent implements OnInit {
       data => {
         this.user = data.user;
         this.profilePicture = this.user.profilePictureUrl;
-        this.setImages();
         this.friendRequestsService.isFriendRequested(this.user.username).subscribe(r => {
           this.isFriendRequested = r;
         });
@@ -95,10 +93,5 @@ export class UserDetailComponent implements OnInit {
     else {
       return 'Both females and males'
     }
-  }
-
-  // need to be replaced
-  public setImages() {
-   
   }
 }
