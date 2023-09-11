@@ -51,7 +51,7 @@ export class PresenceService {
         .onTap
         .pipe(take(1))
         .subscribe(() => {
-          this.router.navigateByUrl("/messages", {state: userMsg.senderDTO} );
+          this.router.navigate(["/messages",  {username: userMsg.senderDTO.username}]);
         });
       });
   }
