@@ -1,12 +1,10 @@
-<div *ngIf="currentFriend" class="row">
-    <div class="card">
-        <div class="chat-header">
-            <img [src]="currentFriend.pictures.length > 0? currentFriend.pictures[0].url : './assets/Pictures/profile-placeholder.png'" alt="avatar">
-            <div class="user-info">
-                <h3 class="mb-0">{{currentFriend.firstName}} {{currentFriend.lastName}}</h3>
-                <small *ngIf="(presenceService.onlineUsers$ | async)?.includes(currentFriend.username)"> <span class="online"></span> Active now</small>
-                <small *ngIf="!(presenceService.onlineUsers$ | async)?.includes(currentFriend.username)">{{timeFormatterService.getDateTimeAgo(currentFriend.lastActive)}}</small>
-            </div>
+<div *ngIf="currentFriend">
+    <div class="chat-header">
+        <img [src]="currentFriend.profilePictureUrl? currentFriend.profilePictureUrl : './assets/Pictures/profile-placeholder.png'" alt="avatar">
+        <div class="user-info">
+            <h3 class="mb-0">{{currentFriend.firstName}} {{currentFriend.lastName}}</h3>
+            <small *ngIf="(presenceService.onlineUsers$ | async)?.includes(currentFriend.username)"> <span class="online"></span> Active now</small>
+            <small *ngIf="!(presenceService.onlineUsers$ | async)?.includes(currentFriend.username)">{{timeFormatterService.getDateTimeAgo(currentFriend.lastActive)}}</small>
         </div>
     </div>
     <div id="chat-history"  *ngIf="(messageService.messageThread$ | async); let messages">
@@ -32,9 +30,4 @@
             <mat-icon class="m-0">send</mat-icon>
         </button>
     </form>
-</div>
-<div *ngIf="!currentFriend">
-    <div class="text-center">
-        loading...
-    </div>
 </div>

@@ -1,4 +1,4 @@
-<div class="text-center p-2">
+<div class="text-center p-2 mt-4">
     <img class="image-preview rounded" [src]="imagePreviewUrl" *ngIf="imagePreviewUrl != '#'">
     <input type="file" class="d-none" (change)="DisplayImage($event)" #fileUpload/>
     <button type="button" (click)="fileUpload.click()" mat-raised-button color="primary" *ngIf="imagePreviewUrl == '#'"> Upload Picture </button>

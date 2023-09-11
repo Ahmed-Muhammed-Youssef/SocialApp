@@ -50,7 +50,12 @@
 .next-button {
     right: 0px;
 }
-
+.controll-buttons{
+    bottom: 32px;
+    left: 40%;
+    position: absolute;
+    width: fit-content;
+}
 .image-button:hover {
     background-color: rgba(0, 0, 0, 20%);
 }

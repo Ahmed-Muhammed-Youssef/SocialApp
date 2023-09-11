@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { map, Observable, of, take } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { PaginatedResult, Pagination } from '../_models/pagination';
-import { Picture, UpdateUser, User } from '../_models/User';
+import { UpdateUser, User } from '../_models/User';
 import { UserParams } from '../_models/userParams';
 import { AccountService } from './account.service';
 
@@ -28,9 +28,6 @@ export class UserService {
   public getUserParams() {
     return this.userParams;
   }
-  // public setUserParams(params: UserParams) {
-  //   this.userParams = params;
-  // }
   public resetUserParams() {
     this.accountService.currentUser$.pipe(take(1)).subscribe(response => {
       if (response) {
@@ -39,7 +36,6 @@ export class UserService {
     });
     return this.userParams;
   }
-
   // helper method
   private getPaginationParams(userParams: UserParams) {
     let httpParams: HttpParams = new HttpParams()
@@ -88,10 +84,6 @@ export class UserService {
     }
     return this.http.get<User>(this.baseUrl + 'users/' + username);
   }
-  public deletePicture(pictureId: number) {
-    return this.http.delete(this.baseUrl + 'users/photo/delete/' + String(pictureId));
-  }
-
   isFriend(username: string): Observable<boolean> {
     return this.http.get<boolean>(this.baseUrl + 'friends/isfriend/' + username);
   }
@@ -135,8 +127,5 @@ export class UserService {
         return user;
       }
     ));
-  }
-  getPictures() {
-    return this.http.get<Picture[]>(this.baseUrl + "users/photos/all");
   }
 }

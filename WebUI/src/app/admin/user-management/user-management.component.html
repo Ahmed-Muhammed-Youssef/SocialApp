@@ -1,6 +1,6 @@
-<div class="row mx-1" >
-    <table *ngIf="usersRoles.length > 0" mat-table [dataSource]="usersRoles">
-        <ng-container style="width: 10px;"  matColumnDef="id">
+<div>
+    <table fixedLayout ngClass="w-100" *ngIf="usersRoles.length > 0" mat-table [dataSource]="usersRoles" class="w-100">
+        <ng-container  matColumnDef="id">
             <th mat-header-cell *matHeaderCellDef> Id </th>
             <td mat-cell *matCellDef="let item">{{item.id}}</td>
         </ng-container>

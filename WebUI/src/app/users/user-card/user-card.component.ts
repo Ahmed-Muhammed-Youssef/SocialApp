@@ -15,11 +15,13 @@ import { FriendRequestsService } from 'src/app/_services/friend-requests.service
 export class UserCardComponent implements OnInit {
   @Input() isFriendRequested = false;
   @Output() friendRequested = new EventEmitter();
+  public userProfilePicture: string | undefined;
   @Input() user: User = {
     id: 0,
     username: '',
     firstName: '',
     lastName: '',
+    profilePictureUrl: '',
     sex: '',
     interest: '',
     age: 0,
@@ -35,6 +37,7 @@ export class UserCardComponent implements OnInit {
      public presenceService: PresenceService, private router: Router,
       public timeFormatterService:TimeFormatterService) { }
   ngOnInit(): void {
+    this.userProfilePicture = this.user.profilePictureUrl;
   }
   goToUserDetails()
   {

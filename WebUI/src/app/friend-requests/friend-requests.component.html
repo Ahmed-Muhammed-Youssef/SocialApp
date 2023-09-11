@@ -6,7 +6,7 @@
 <div *ngIf="friendRequests.length > 0" class="col-12 col-md-8 offset-md-2 mt-3">
     <div *ngFor="let user of friendRequests" class="row py-2">
         <div class="col-4 col-md-3">
-            <img class="rounded-circle w-100" routerLink="/users/username/{{user.username}}" mat-card-image src="{{user.pictures.length > 0 ? user.pictures[0].url : './assets/Pictures/profile-placeholder.png'}}" alt="Profile picture">  
+            <img class="rounded-circle w-100" routerLink="/users/username/{{user.username}}" mat-card-image src="{{user.profilePictureUrl? user.profilePictureUrl : './assets/Pictures/profile-placeholder.png'}}" alt="Profile picture">  
         </div>
         <div class="col-3 col-md-4 d-flex text-center">
             <h3 class="align-self-center mb-0">{{user.firstName}} {{user.lastName}}</h3>

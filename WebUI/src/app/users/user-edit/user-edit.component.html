@@ -8,7 +8,7 @@
     <mat-card-header>
       <mat-card-title>{{user.firstName}} {{user.lastName}}</mat-card-title>
     </mat-card-header>
-    <img mat-card-image src="{{user.pictures.length > 0 ? user.pictures[0].url : './assets/Pictures/profile-placeholder.png'}}" 
+    <img mat-card-image src="{{user.profilePictureUrl ? user.profilePictureUrl : './assets/Pictures/profile-placeholder.png'}}" 
       alt="profile picture">
     <mat-card-content>
         <div>
@@ -26,9 +26,6 @@
     </mat-card-content>
   </mat-card>
   <div class="col-md-8">
-    <!-- <div class="alert alert-info" *ngIf=" checkIfUserChanged()">
-      <strong>Information: </strong> You have made changes. Any unsaved changes will be lost.
-    </div> -->
     <mat-tab-group dynamicHeight class="p-2" mat-align-tabs="center">
       <mat-tab label="About {{user.firstName}}">
         <form #editForm="ngForm" id="editForm" (ngSubmit)="updateUser()" >
@@ -83,7 +80,7 @@
       </mat-tab>
         <mat-tab label="Edit Pictures">
           <app-gallery *ngIf="user.pictures.length > 0" [pictures]="user.pictures"></app-gallery>
-          <app-picture-upload [user]="user"></app-picture-upload>
+          <app-picture-upload (pictureUploaded)="pictureUploaded($event)" [user]="user"></app-picture-upload>
         </mat-tab>
       </mat-tab-group>
   </div>

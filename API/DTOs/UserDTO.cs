@@ -14,6 +14,7 @@ namespace API.DTOs
         public string FirstName { get; set; }
         [Required, MaxLength(255)]
         public string LastName { get; set; }
+        public string ProfilePictureUrl { get; set; }
         [Required]
         public char Sex { get; set; }
         [Required]

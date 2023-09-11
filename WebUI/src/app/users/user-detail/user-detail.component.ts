@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Picture, User } from '../../_models/User';
+import { User } from '../../_models/User';
 import { UserService } from '../../_services/user.service';
 
 import { ToastrService } from 'ngx-toastr';
@@ -16,12 +16,13 @@ import { FriendRequestsService } from 'src/app/_services/friend-requests.service
 })
 export class UserDetailComponent implements OnInit {
   isMobilePhone : boolean = false;
-  profilePicture : Picture | undefined;
+  profilePicture : string | undefined;
   user: User = {
     id: 0,
     username: '',
     firstName: '',
     lastName: '',
+    profilePictureUrl: '',
     sex: '',
     interest: '',
     age: 0,
@@ -38,7 +39,7 @@ export class UserDetailComponent implements OnInit {
   
   constructor(private friendRequestsService: FriendRequestsService,private userService: UserService ,private route: ActivatedRoute,
      private toastr: ToastrService, public presenceService: PresenceService,
-      private breakpointObserver: BreakpointObserver, public timeFormatterService:TimeFormatterService) {
+      breakpointObserver: BreakpointObserver, public timeFormatterService:TimeFormatterService) {
       breakpointObserver.observe(["(max-width: 750px)"])
         .subscribe(
           result => {
@@ -62,12 +63,19 @@ export class UserDetailComponent implements OnInit {
       }
     );
   }
+  unsendFriendRequest(){
+    this.friendRequestsService.cancelFriendRequest(this.user.username).subscribe(
+      r => {
+        this.toastr.success("Friend request is canelled successfully.");
+        this.isFriendRequested = false;
+      }
+    );
+  }
   ngOnInit(): void {
     this.route.data.subscribe(
       data => {
         this.user = data.user;
-        this.profilePicture = this.user.pictures[0];
-        this.setImages();
+        this.profilePicture = this.user.profilePictureUrl;
         this.friendRequestsService.isFriendRequested(this.user.username).subscribe(r => {
           this.isFriendRequested = r;
         });
@@ -85,10 +93,5 @@ export class UserDetailComponent implements OnInit {
     else {
       return 'Both females and males'
     }
-  }
-
-  // need to be replaced
-  public setImages() {
-   
   }
 }

@@ -18,7 +18,7 @@
     <div style="flex-grow: 1;">
     </div>
     <div class="image-container" [matMenuTriggerFor]="menu" *ngIf="(accountService.currentUser$ | async) as user"> 
-      <img class="nav-img-circle" src="{{userProfilePicture?.url || './assets/Pictures/profile-placeholder.png'}}" alt="{{user.userData.firstName}}" >
+      <img class="nav-img-circle" src="{{userProfilePicture || './assets/Pictures/profile-placeholder.png'}}" alt="{{user.userData.firstName}}" >
     </div>  
     <mat-menu #menu="matMenu">
       <button mat-menu-item routerLink="friendrequests">
