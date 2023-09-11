@@ -1,6 +1,8 @@
 # Social App
 A Single Page Application (SPA) with an API built using ASP.NET Core. The frontend is built with Angular, Bootstrap v5, and Angular Material Design. Users can upload pictures, send friend requests, and chat with each other. Admins can assign or remove roles from users. I'm still working on additional features for admins.
 
+## Live Demo
+https://www.youtube.com/watch?v=omsDC4MSMSA
 ## Features
 * User registration and authentication using JWT tokens
 * Real-time messaging via SignalR
