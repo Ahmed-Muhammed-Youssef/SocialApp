@@ -33,4 +33,13 @@ The app is continuously being improved and upgraded:
 * Using design patterns like unit of work and repository pattern
 * JWT is used for authentication
 ## Getting Started
-Clone the repo, run `dotnet run` on the API folder to start the API, Run `ng serve` on the WebUI folder to start the frontend!
+* Clone the repo
+* Create a [Cloudnary](https://cloudinary.com/) account
+* Add your account information either in the project secrets file (recommended) or in appsettings in the following form:<br>
+  `"Cloudinary": 
+  "CloudName": "Add you cloudnary name",
+  "APIKey": "Add your API key",
+  "APISecret": "Add your API secret"
+}` 
+* Run `dotnet run` on the API folder to start the API
+* Run `ng serve` on the WebUI folder to start the frontend!
