@@ -1,5 +1,6 @@
 using API.Data.Repositories;
 using API.Interfaces;
+using API.Interfaces.Repositories;
 using AutoMapper;
 using System.Threading.Tasks;
 
