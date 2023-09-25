@@ -34,7 +34,7 @@ namespace API.SignalR
             await Groups.AddToGroupAsync(Context.ConnectionId, groupName);
             var group = await AddToGroup(groupName);
             await Clients.Group(groupName).SendAsync("UpdatedGroup", group);
-            var messages = await _unitOfWork.MessagesRepository.GetMessagesDTOThreadAsync(Context.User.GetId(), otherUserId);
+            var messages = await _unitOfWork.MessageRepository.GetMessagesDTOThreadAsync(Context.User.GetId(), otherUserId);
             if (_unitOfWork.HasChanges()) await _unitOfWork.Complete();
             await Clients.Caller.SendAsync("ReceiveMessages", messages);
         }
@@ -46,8 +46,8 @@ namespace API.SignalR
         }
         public async Task SendMessages(NewMessageDTO message)
         {
-            var sender = await _unitOfWork.UsersRepository.GetUserByIdAsync(Context.User.GetId());
-            var recipient = await _unitOfWork.UsersRepository.GetUserByUsernameAsync(message.RecipientUsername);
+            var sender = await _unitOfWork.UserRepository.GetUserByIdAsync(Context.User.GetId());
+            var recipient = await _unitOfWork.UserRepository.GetUserByUsernameAsync(message.RecipientUsername);
             if (recipient == null || sender == null)
             {
                 throw new HubException("User not found");
@@ -56,7 +56,7 @@ namespace API.SignalR
             {
                 throw new HubException("You can't send messages to yourself");
             }
-            if (!await _unitOfWork.FriendRequestsRepository.IsFriend(sender.Id, recipient.Id))
+            if (!await _unitOfWork.FriendRequestRepository.IsFriend(sender.Id, recipient.Id))
             {
                 throw new HubException("You can't send messages to an unmatch");
 
@@ -75,7 +75,7 @@ namespace API.SignalR
             // @ToDo: Add Profile Picture Here
             // msgDTO.SenderPhotoUrl = null;
             var groupName = GetGroupName(sender.Id, recipient.Id);
-            var group = await _unitOfWork.MessagesRepository.GetGroupByName(groupName);
+            var group = await _unitOfWork.MessageRepository.GetGroupByName(groupName);
             if (group.Connections.Any(c => c.UserId == recipient.Id))
             {
                 createdMessage.ReadDate = DateTime.UtcNow;
@@ -91,7 +91,7 @@ namespace API.SignalR
                     .SendAsync("NewMessage", new { senderDTO, msgDTO });
                 }
             }
-            await _unitOfWork.MessagesRepository.AddMessageAsync(createdMessage);
+            await _unitOfWork.MessageRepository.AddMessageAsync(createdMessage);
             if (await _unitOfWork.Complete())
             {
                 msgDTO.Id = createdMessage.Id;
@@ -106,13 +106,13 @@ namespace API.SignalR
         // utility methods
         private async Task<Group> AddToGroup(string groupName)
         {
-            var group = await _unitOfWork.MessagesRepository.GetGroupByName(groupName);
+            var group = await _unitOfWork.MessageRepository.GetGroupByName(groupName);
             var connection = new Connection(Context.ConnectionId, Context.User.GetId());
 
             if (group == null)
             {
                 group = new Group(name: groupName);
-                await _unitOfWork.MessagesRepository.AddGroupAsync(group);
+                await _unitOfWork.MessageRepository.AddGroupAsync(group);
             }
             group.Connections.Add(connection);
 
@@ -124,9 +124,9 @@ namespace API.SignalR
         }
         private async Task<Group> RemoveFromMessageGroup()
         {
-            var group = await _unitOfWork.MessagesRepository.GetGroupForConnection(Context.ConnectionId);
+            var group = await _unitOfWork.MessageRepository.GetGroupForConnection(Context.ConnectionId);
             var connection = group.Connections.FirstOrDefault(c => c.ConnectionId == Context.ConnectionId);
-            _unitOfWork.MessagesRepository.RemoveConnection(connection);
+            _unitOfWork.MessageRepository.RemoveConnection(connection);
             if (await _unitOfWork.Complete())
             {
                 return group;

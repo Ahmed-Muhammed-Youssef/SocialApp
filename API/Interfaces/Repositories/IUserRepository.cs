@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace API.Interfaces.Repositories
 {
-    public interface IUsersRepository
+    public interface IUserRepository
     {
         public Task<char> GetUserInterest(int userId);
         public void Update(AppUser appUser);

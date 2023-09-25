@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace API.Data.Repositories
 {
-    public class MessageRepository : IMessagesRepository
+    public class MessageRepository : IMessageRepository
     {
         private readonly DataContext _dataContext;
         private readonly IMapper _mapper;

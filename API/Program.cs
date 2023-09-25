@@ -1,7 +1,10 @@
 using API.Data;
+using API.Data.CachedRepositories;
+using API.Data.Repositories;
 using API.Extensions;
 using API.Helpers;
 using API.Interfaces;
+using API.Interfaces.Repositories;
 using API.Interfaces.Services;
 using API.Middleware;
 using API.Services;
@@ -18,12 +21,22 @@ using System;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.Configure<CloudinarySettings>(builder.Configuration.GetSection("Cloudinary"));
-builder.Services.AddSingleton<PresenceTracker>();
-builder.Services.AddScoped<IPictureService, PictureService>();
 builder.Services.AddIdentityConfigurations(builder.Configuration);
 builder.Services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
+
+// Repositories
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped<ICachedUserRepository, CachedUserRepository>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IPictureRepository, PictureRepository>();
+builder.Services.AddScoped<IMessageRepository, MessageRepository>();
+builder.Services.AddScoped<IFriendRequestRepository, FriendRequestsRepository>();
+
+// User-defined Services
+builder.Services.AddSingleton<PresenceTracker>();
+builder.Services.AddScoped<IPictureService, PictureService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
+
 builder.Services.AddScoped<LogUserActivity>();
 builder.Services.AddDbContext<DataContext>(options =>
 {
@@ -45,6 +58,7 @@ builder.Services.AddDbContext<DataContext>(options =>
 });
 builder.Services.AddControllers();
 builder.Services.AddSignalR();
+builder.Services.AddMemoryCache();
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "API", Version = "v1" });
