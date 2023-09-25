@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using API.Interfaces.Repositories;
 
 namespace API.Interfaces
 {

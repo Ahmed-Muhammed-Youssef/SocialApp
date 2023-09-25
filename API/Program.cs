@@ -2,6 +2,7 @@ using API.Data;
 using API.Extensions;
 using API.Helpers;
 using API.Interfaces;
+using API.Interfaces.Services;
 using API.Middleware;
 using API.Services;
 using API.SignalR;

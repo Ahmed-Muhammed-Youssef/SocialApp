@@ -2,6 +2,7 @@
 using API.Entities;
 using API.Helpers;
 using API.Interfaces;
+using API.Interfaces.Services;
 using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
