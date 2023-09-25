@@ -5,10 +5,10 @@ namespace API.Interfaces
 {
     public interface IUnitOfWork
     {
-        IUsersRepository UsersRepository { get; }
-        IPictureRepository PicturesRepository { get; }
-        IMessagesRepository MessagesRepository { get; }
-        IFriendRequestsRepository FriendRequestsRepository { get; }
+        ICachedUserRepository UserRepository { get; }
+        IPictureRepository PictureRepository { get; }
+        IMessageRepository MessageRepository { get; }
+        IFriendRequestRepository FriendRequestRepository { get; }
         Task<bool> Complete();
         bool HasChanges();
     }

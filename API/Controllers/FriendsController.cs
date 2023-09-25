@@ -27,12 +27,12 @@ namespace API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<UserDTO>>> GetAll([FromQuery] PaginationParams paginationParams)
         {
-            var user = await _unitOfWork.UsersRepository.GetUserByUsernameAsync(User.GetUsername());
+            var user = await _unitOfWork.UserRepository.GetUserByUsernameAsync(User.GetUsername());
             if (user == null)
             {
                 return Unauthorized();
             }
-            var friends = await _unitOfWork.FriendRequestsRepository.GetFriendsAsync(user.Id, paginationParams);
+            var friends = await _unitOfWork.FriendRequestRepository.GetFriendsAsync(user.Id, paginationParams);
             var newPaginationHeader = new PaginationHeader(friends.CurrentPage, friends.ItemsPerPage, friends.TotalCount, friends.TotalPages);
             Response.AddPaginationHeader(newPaginationHeader);
             return Ok(friends);
@@ -42,13 +42,13 @@ namespace API.Controllers
         [HttpGet("isFriend/{username}")]
         public async Task<ActionResult<bool>> IsFriend(string username)
         {
-            var user = await _unitOfWork.UsersRepository.GetUserByUsernameAsync(User.GetUsername());
-            var target = await _unitOfWork.UsersRepository.GetUserByUsernameAsync(username);
+            var user = await _unitOfWork.UserRepository.GetUserByUsernameAsync(User.GetUsername());
+            var target = await _unitOfWork.UserRepository.GetUserByUsernameAsync(username);
             if (target == null)
             {
                 return NotFound();
             }
-            return Ok(await _unitOfWork.FriendRequestsRepository.IsFriend(user.Id, target.Id));
+            return Ok(await _unitOfWork.FriendRequestRepository.IsFriend(user.Id, target.Id));
 
         }
     }

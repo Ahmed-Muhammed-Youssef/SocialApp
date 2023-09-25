@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace API.Interfaces.Repositories
 {
-    public interface IMessagesRepository
+    public interface IMessageRepository
     {
         Task AddGroupAsync(Group group);
         void RemoveConnection(Connection connection);
