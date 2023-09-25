@@ -65,7 +65,7 @@ namespace API.Controllers
                 return BadRequest("You didn't sent a friend request.");
             }
             _unitOfWork.FriendRequestsRepository.DeleteFriendRequest(fr);
-            if(await _unitOfWork.Complete())
+            if (await _unitOfWork.Complete())
             {
                 return Ok();
             }
