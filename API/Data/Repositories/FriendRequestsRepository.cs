@@ -79,6 +79,12 @@ namespace API.Data.Repositories
                 .Where(fr => fr.RequestedId == targetId && fr.RequesterId == senderId)
                 .FirstOrDefaultAsync();
         }
+        public async Task<bool> IsFriendRequestedAsync(int senderId, int targetId)
+        {
+            return await _dataContext.FriendRequests
+                .AsNoTracking()
+                .AnyAsync(fr => fr.RequestedId == targetId && fr.RequesterId == senderId);
+        }
         public async Task<List<UserDTO>> GetRecievedFriendRequestsAsync(int targetId)
         {
             return await _dataContext.FriendRequests

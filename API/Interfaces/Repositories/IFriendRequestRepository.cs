@@ -10,6 +10,7 @@ namespace API.Interfaces.Repositories
     {
         public Task<bool> SendFriendRequest(int senderId, int targetId);
         public Task<FriendRequest> GetFriendRequestAsync(int senderId, int targetId);
+        public Task<bool> IsFriendRequestedAsync(int senderId, int targetId);
         public Task<IEnumerable<UserDTO>> GetFriendRequestedUsersDTOAsync(int senderId);
         public Task<List<UserDTO>> GetRecievedFriendRequestsAsync(int targetId);
         public Task<IEnumerable<int>> GetFriendsIdsAsync(int senderId);
