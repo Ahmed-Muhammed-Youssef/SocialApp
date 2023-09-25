@@ -15,6 +15,8 @@ namespace API.Data
         }
         public IUsersRepository UsersRepository => new UserRepository(_dataContext, _mapper);
 
+        public IPictureRepository PicturesRepository => new PictureRepository(_dataContext, _mapper);
+
         public IMessagesRepository MessagesRepository => new MessageRepository(_dataContext, _mapper);
 
         public IFriendRequestsRepository FriendRequestsRepository => new FriendRequestsRepository(_dataContext, _mapper);
