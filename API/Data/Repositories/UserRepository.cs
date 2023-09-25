@@ -10,7 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace API.Data
+namespace API.Data.Repositories
 {
     public class UserRepository : IUsersRepository // using the repository design pattern to isolate the contollers further more from the entity framework. (it may not be neccesary)
     {
