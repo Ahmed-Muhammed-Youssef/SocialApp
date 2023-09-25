@@ -38,10 +38,6 @@ namespace API.Data
             _dataContext.ChangeTracker.Clear();
             _dataContext.Entry(appUser).State = EntityState.Modified;
         }
-        public void UpdatePicture(Picture picture)
-        {
-            _dataContext.Entry(picture).State = EntityState.Modified;
-        }
         public async Task<char> GetUserInterest(int userId)
         {
             return await _dataContext.Users
@@ -139,33 +135,6 @@ namespace API.Data
                 .ProjectTo<UserDTO>(_mapper.ConfigurationProvider).FirstOrDefaultAsync();
             // user.Pictures = user.Pictures.OrderBy(p => p.Order);
             return user;
-        }
-        public async Task<IEnumerable<PictureDTO>> GetUserPictureDTOsAsync(int id)
-        {
-            var result = await _dataContext.Pictures
-                .AsNoTracking()
-                .Where(p => p.AppUserId == id)
-                .ProjectTo<PictureDTO>(_mapper.ConfigurationProvider)
-                .ToListAsync();
-            // @ToDo: order pictures
-            return result;
-        }
-        public async Task<IEnumerable<Picture>> GetUserPictureAsync(int id)
-        {
-            var result = _dataContext.Pictures
-                .AsNoTracking()
-                .Where(p => p.AppUserId == id)
-                .OrderBy(p => p.Created);
-            return await result.ToListAsync();
-        }
-        public async Task<Picture> AddPictureAsync(Picture picture)
-        {
-            await _dataContext.Pictures.AddAsync(picture);
-            return picture;
-        }
-        public void DeletePicture(Picture picture)
-        {
-            _dataContext.Pictures.Remove(picture);
         }
     }
 }
