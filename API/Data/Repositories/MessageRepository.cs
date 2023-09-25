@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace API.Data
+namespace API.Data.Repositories
 {
     public class MessageRepository : IMessagesRepository
     {
@@ -63,7 +63,7 @@ namespace API.Data
         {
             var query = _dataContext.Messages
                 .AsNoTracking()
-                .Where(m => (m.SenderId == issuerId && m.RecipientId == theOtherUserId && !m.SenderDeleted) || (m.SenderId == theOtherUserId && m.RecipientId == issuerId && !m.RecipientDeleted))
+                .Where(m => m.SenderId == issuerId && m.RecipientId == theOtherUserId && !m.SenderDeleted || m.SenderId == theOtherUserId && m.RecipientId == issuerId && !m.RecipientDeleted)
                 .ProjectTo<MessageDTO>(_mapper.ConfigurationProvider)
                 .OrderBy(m => m.SentDate);
 
