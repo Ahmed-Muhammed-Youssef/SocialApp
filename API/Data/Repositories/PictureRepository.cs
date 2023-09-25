@@ -1,6 +1,6 @@
 ﻿using API.DTOs;
 using API.Entities;
-using API.Interfaces;
+using API.Interfaces.Repositories;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;

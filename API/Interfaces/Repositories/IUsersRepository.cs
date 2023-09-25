@@ -4,7 +4,7 @@ using API.Helpers;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace API.Interfaces
+namespace API.Interfaces.Repositories
 {
     public interface IUsersRepository
     {

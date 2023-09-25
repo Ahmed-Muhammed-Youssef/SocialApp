@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using System.Threading.Tasks;
 
-namespace API.Interfaces
+namespace API.Interfaces.Services
 {
     public interface IPictureService
     {
