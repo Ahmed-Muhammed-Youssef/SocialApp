@@ -102,7 +102,7 @@ namespace API.SignalR
                 throw new HubException("Couldn't Send the message");
             }
         }
-        
+
         // utility methods
         private async Task<Group> AddToGroup(string groupName)
         {

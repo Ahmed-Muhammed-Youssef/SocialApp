@@ -94,7 +94,7 @@ namespace API.Data
                 .AsNoTracking()
                 .FirstOrDefaultAsync(c => c.ConnectionId == connectionId);
         }
-        
+
         public async Task<Group> GetGroupByName(string groupName)
         {
             return await _dataContext.Groups
