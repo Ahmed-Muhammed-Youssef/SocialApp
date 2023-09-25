@@ -22,7 +22,7 @@ namespace API.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteMessage(int id)
         {
-            var message = await _unitOfWork.MessagesRepository.GetMessageAsync(id);
+            var message = await _unitOfWork.MessageRepository.GetMessageAsync(id);
             if (message == null)
             {
                 return NotFound();
@@ -34,7 +34,7 @@ namespace API.Controllers
             {
                 return BadRequest("Failed to delete the message");
             }
-            _unitOfWork.MessagesRepository.DeleteMessage(message, issuerId);
+            _unitOfWork.MessageRepository.DeleteMessage(message, issuerId);
 
             if (await _unitOfWork.Complete())
             {

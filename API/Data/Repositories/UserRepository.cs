@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace API.Data.Repositories
 {
-    public class UserRepository : IUsersRepository // using the repository design pattern to isolate the contollers further more from the entity framework. (it may not be neccesary)
+    public class UserRepository : IUserRepository // using the repository design pattern to isolate the contollers further more from the entity framework. (it may not be neccesary)
     {
         private readonly DataContext _dataContext;
         private readonly IMapper _mapper;

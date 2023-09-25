@@ -32,13 +32,13 @@ namespace API.Controllers
         {
             if (string.IsNullOrEmpty(userParams.Sex))
             {
-                var interest = await _unitOfWork.UsersRepository.GetUserInterest(User.GetId());
+                var interest = await _unitOfWork.UserRepository.GetUserInterest(User.GetId());
                 userParams.Sex = interest.ToString();
             }
-            var friendrequested = await _unitOfWork.FriendRequestsRepository.GetFriendRequestedUsersDTOAsync(User.GetId());
-            var forbiddenIds = await _unitOfWork.FriendRequestsRepository.GetFriendsIdsAsync(User.GetId());
+            var friendrequested = await _unitOfWork.FriendRequestRepository.GetFriendRequestedUsersDTOAsync(User.GetId());
+            var forbiddenIds = await _unitOfWork.FriendRequestRepository.GetFriendsIdsAsync(User.GetId());
             forbiddenIds = forbiddenIds.Concat(friendrequested.Select(u => u.Id));
-            var users = await _unitOfWork.UsersRepository.GetUsersDTOAsync(User.GetUsername(), userParams, forbiddenIds.ToList());
+            var users = await _unitOfWork.UserRepository.GetUsersDTOAsync(User.GetUsername(), userParams, forbiddenIds.ToList());
             var newPaginationHeader = new PaginationHeader(users.CurrentPage, users.ItemsPerPage, users.TotalCount, users.TotalPages);
             Response.AddPaginationHeader(newPaginationHeader);
             return Ok(users);
@@ -48,7 +48,7 @@ namespace API.Controllers
         [HttpGet("{username}")]
         public async Task<ActionResult<UserDTO>> GetUser(string username)
         {
-            var user = await _unitOfWork.UsersRepository.GetUserDTOByUsernameAsync(username);
+            var user = await _unitOfWork.UserRepository.GetUserDTOByUsernameAsync(username);
 
             if (user == null)
             {
@@ -65,14 +65,14 @@ namespace API.Controllers
             {
                 return BadRequest(userDTO);
             }
-            var appUser = await _unitOfWork.UsersRepository.GetUserByUsernameAsync(User.GetUsername());
+            var appUser = await _unitOfWork.UserRepository.GetUserByUsernameAsync(User.GetUsername());
 
             if (appUser == null)
             {
                 return BadRequest(userDTO);
             }
             _mapper.Map(userDTO, appUser);
-            _unitOfWork.UsersRepository.Update(appUser);
+            _unitOfWork.UserRepository.Update(appUser);
 
             if (await _unitOfWork.Complete())
             {

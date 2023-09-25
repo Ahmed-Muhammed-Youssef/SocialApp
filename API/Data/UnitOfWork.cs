@@ -1,7 +1,5 @@
-using API.Data.Repositories;
 using API.Interfaces;
 using API.Interfaces.Repositories;
-using AutoMapper;
 using System.Threading.Tasks;
 
 namespace API.Data
@@ -9,19 +7,19 @@ namespace API.Data
     public class UnitOfWork : IUnitOfWork
     {
         private readonly DataContext _dataContext;
-        private readonly IMapper _mapper;
-        public UnitOfWork(DataContext dataContext, IMapper mapper)
+        public UnitOfWork(DataContext dataContext, ICachedUserRepository userRepository, IPictureRepository pictureRepository,
+            IMessageRepository messageRepository, IFriendRequestRepository friendRequestRepository)
         {
-            _mapper = mapper;
             _dataContext = dataContext;
+            UserRepository = userRepository;
+            PictureRepository = pictureRepository;
+            MessageRepository = messageRepository;
+            FriendRequestRepository = friendRequestRepository;
         }
-        public IUsersRepository UsersRepository => new UserRepository(_dataContext, _mapper);
-
-        public IPictureRepository PicturesRepository => new PictureRepository(_dataContext, _mapper);
-
-        public IMessagesRepository MessagesRepository => new MessageRepository(_dataContext, _mapper);
-
-        public IFriendRequestsRepository FriendRequestsRepository => new FriendRequestsRepository(_dataContext, _mapper);
+        public ICachedUserRepository UserRepository { get; }
+        public IPictureRepository PictureRepository { get; }
+        public IMessageRepository MessageRepository { get; }
+        public IFriendRequestRepository FriendRequestRepository { get; }
 
         public async Task<bool> Complete()
         {

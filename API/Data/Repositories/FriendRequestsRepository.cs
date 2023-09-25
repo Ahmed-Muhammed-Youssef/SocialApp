@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace API.Data.Repositories
 {
-    public class FriendRequestsRepository : IFriendRequestsRepository
+    public class FriendRequestsRepository : IFriendRequestRepository
     {
         private readonly DataContext _dataContext;
         private readonly IMapper _mapper;

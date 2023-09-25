@@ -54,7 +54,7 @@ namespace API.Controllers
             {
                 return BadRequest("Failed to register the user.");
             }
-            var userData = await _unitOfWork.UsersRepository.GetUserDTOByUsernameAsync(accountDTO.UserName);
+            var userData = await _unitOfWork.UserRepository.GetUserDTOByUsernameAsync(accountDTO.UserName);
             var adddRoleresult = await _userManager.AddToRoleAsync(newUser, "user");
             if (!adddRoleresult.Succeeded)
             {
@@ -86,7 +86,7 @@ namespace API.Controllers
             {
                 return Unauthorized();
             }
-            var userData = await _unitOfWork.UsersRepository.GetUserDTOByEmailAsync(loginCredentials.Email);
+            var userData = await _unitOfWork.UserRepository.GetUserDTOByEmailAsync(loginCredentials.Email);
 
             return Ok(new TokenDTO()
             {

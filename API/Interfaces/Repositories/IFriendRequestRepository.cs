@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace API.Interfaces.Repositories
 {
-    public interface IFriendRequestsRepository
+    public interface IFriendRequestRepository
     {
         public Task<bool> SendFriendRequest(int senderId, int targetId);
         public Task<FriendRequest> GetFriendRequestAsync(int senderId, int targetId);
