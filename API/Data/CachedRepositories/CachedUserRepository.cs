@@ -5,23 +5,60 @@ using API.Interfaces;
 using API.Interfaces.Repositories;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Caching.Memory;
+using System;
 
 namespace API.Data.CachedRepositories
 {
     public class CachedUserRepository : ICachedUserRepository
     {
         private readonly IUserRepository _usersRepository;
+        private readonly IMemoryCache _memoryCache;
 
-        public CachedUserRepository(IUserRepository usersRepository)
+        public CachedUserRepository(IUserRepository usersRepository, IMemoryCache memoryCache)
         {
-            this._usersRepository = usersRepository;
+            _usersRepository = usersRepository;
+            this._memoryCache = memoryCache;
         }
         // Queries
-        public Task<AppUser> GetUserByEmailAsync(string email) => _usersRepository.GetUserByEmailAsync(email);
+        public async Task<AppUser> GetUserByEmailAsync(string email) 
+        {
+            object key = nameof(GetUserByEmailAsync) + email;
+            if (!_memoryCache.TryGetValue(key, out AppUser result))
+            {
+                result = await _usersRepository.GetUserByEmailAsync(email);
 
-        public Task<AppUser> GetUserByIdAsync(int id) => _usersRepository.GetUserByIdAsync(id);
+                // cache the value
+                _memoryCache.Set(key, result, TimeSpan.FromMinutes(1));
+            }
+            return result;
+        }
 
-        public Task<AppUser> GetUserByUsernameAsync(string username) => _usersRepository.GetUserByUsernameAsync(username);
+        public async Task<AppUser> GetUserByIdAsync(int id)
+        {
+            object key = nameof(GetUserByIdAsync) + id;
+            if (!_memoryCache.TryGetValue(key, out AppUser result))
+            {
+                result = await _usersRepository.GetUserByIdAsync(id);
+
+                // cache the value
+                _memoryCache.Set(key, result, TimeSpan.FromMinutes(1));
+            }
+            return result;
+        }
+
+        public async Task<AppUser> GetUserByUsernameAsync(string username)
+        {
+            object key = nameof(GetUserByUsernameAsync) + username;
+            if (!_memoryCache.TryGetValue(key, out AppUser result))
+            {
+                result = await _usersRepository.GetUserByUsernameAsync(username);
+
+                // cache the value
+                _memoryCache.Set(key, result, TimeSpan.FromMinutes(1));
+            }
+            return result;
+        }
 
         public Task<UserDTO> GetUserDTOByEmailAsync(string email) => _usersRepository.GetUserDTOByEmailAsync(email);
 
