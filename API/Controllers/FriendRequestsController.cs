@@ -89,20 +89,21 @@ namespace API.Controllers
         [HttpGet("issent/{username}")]
         public async Task<ActionResult<bool>> IsFriendRequested(string username)
         {
-            var sender = await _unitOfWork.UserRepository.GetUserByIdAsync(User.GetId());
+            var senderId = User.GetId();
             var target = await _unitOfWork.UserRepository.GetUserByUsernameAsync(username);
-            if (sender == null || target == null)
+            if (target == null)
             {
                 return NotFound();
             }
-            if (sender.Id == target.Id)
+            if (senderId == target.Id)
             {
                 return BadRequest("you can't check liking yourself.");
             }
-            if (await _unitOfWork.FriendRequestRepository.GetFriendRequestAsync(sender.Id, target.Id) != null)
+            if (await _unitOfWork.FriendRequestRepository.IsFriendRequestedAsync(senderId, target.Id))
             {
                 return Ok(true);
             }
+
             return Ok(false);
         }
 
