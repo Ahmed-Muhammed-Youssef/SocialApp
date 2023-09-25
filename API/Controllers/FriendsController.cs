@@ -42,13 +42,12 @@ namespace API.Controllers
         [HttpGet("isFriend/{username}")]
         public async Task<ActionResult<bool>> IsFriend(string username)
         {
-            var user = await _unitOfWork.UserRepository.GetUserByUsernameAsync(User.GetUsername());
             var target = await _unitOfWork.UserRepository.GetUserByUsernameAsync(username);
             if (target == null)
             {
                 return NotFound();
             }
-            return Ok(await _unitOfWork.FriendRequestRepository.IsFriend(user.Id, target.Id));
+            return Ok(await _unitOfWork.FriendRequestRepository.IsFriend(User.GetId(), target.Id));
 
         }
     }
