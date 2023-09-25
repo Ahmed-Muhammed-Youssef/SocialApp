@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace API.Data
+namespace API.Data.Repositories
 {
     public class PictureRepository : IPictureRepository
     {
@@ -18,7 +18,7 @@ namespace API.Data
         public PictureRepository(DataContext dataContext, IMapper mapper)
         {
             _dataContext = dataContext;
-            this._mapper = mapper;
+            _mapper = mapper;
         }
         public async Task<Picture> AddPictureAsync(Picture picture)
         {
@@ -47,7 +47,7 @@ namespace API.Data
                 .Where(p => p.AppUserId == id)
                 .ProjectTo<PictureDTO>(_mapper.ConfigurationProvider)
                 .ToListAsync();
-            
+
             return result;
         }
         public void UpdatePicture(Picture picture)
