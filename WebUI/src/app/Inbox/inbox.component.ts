@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild, numberAttribute } from '@angular/core';
 import { LoginResponse } from '../_models/AccountModels';
 import { Pagination } from '../_models/pagination';
 import { User } from '../_models/User';
@@ -28,12 +28,12 @@ export class InboxComponent implements OnInit {
 
   constructor(public messageService: MessageService, private userService: UserService,
     public presenceService: PresenceService, private changeDetectorRef: ChangeDetectorRef,
-    private breakpointObserver: BreakpointObserver, private route: ActivatedRoute, 
+    breakpointObserver: BreakpointObserver, private route: ActivatedRoute, 
     public timeFormatterService:TimeFormatterService) {
-    // Get username from url params
-    var username = this.route.snapshot.paramMap.get('username');
-    if (username) {
-      this.userService.getUserByUsername(username).subscribe(
+    // Get id from url params
+    var id : number | null = this.route.snapshot.paramMap.get('id') as number | null;
+    if (id) {
+      this.userService.getUserById(id).subscribe(
         response => {
           if (response) {
             this.currentUserSelection = response;

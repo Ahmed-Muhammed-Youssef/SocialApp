@@ -49,11 +49,10 @@ export class UserDetailComponent implements OnInit {
             }
           }
         );
-    
   }
   sendFriendRequest(){
     this.userService.deleteCachedValues();
-    this.friendRequestsService.sendFriendRequest(this.user.username).subscribe(
+    this.friendRequestsService.sendFriendRequest(this.user.id).subscribe(
       r => {
           this.isFriendRequested = true;
           this.toastr.success('You have sent frined request to ' + this.user.firstName);
@@ -64,7 +63,7 @@ export class UserDetailComponent implements OnInit {
     );
   }
   unsendFriendRequest(){
-    this.friendRequestsService.cancelFriendRequest(this.user.username).subscribe(
+    this.friendRequestsService.cancelFriendRequest(this.user.id).subscribe(
       r => {
         this.toastr.success("Friend request is canelled successfully.");
         this.isFriendRequested = false;
@@ -76,10 +75,10 @@ export class UserDetailComponent implements OnInit {
       data => {
         this.user = data.user;
         this.profilePicture = this.user.profilePictureUrl;
-        this.friendRequestsService.isFriendRequested(this.user.username).subscribe(r => {
+        this.friendRequestsService.isFriendRequested(this.user.id).subscribe(r => {
           this.isFriendRequested = r;
         });
-      this.userService.isFriend(this.user.username).subscribe(r => this.isFriend = r);
+      this.userService.isFriend(this.user.id).subscribe(r => this.isFriend = r);
       }
     );
   }

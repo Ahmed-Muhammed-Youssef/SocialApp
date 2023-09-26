@@ -16,8 +16,8 @@ export class MessageService {
   private messageThreadSource = new BehaviorSubject<Message[]>([]);
   messageThread$ = this.messageThreadSource.asObservable();
   constructor(private http: HttpClient) { }
-  async sendMessage(username: string, content: string){
-    return this.hubConnection?.invoke("SendMessages", {"recipientUsername": username, "content": content})
+  async sendMessage(id: number, content: string){
+    return this.hubConnection?.invoke("SendMessages", {"recipientId": id, "content": content})
     .catch(e => {});
   }
   createHubConnection(user: LoginResponse, otherUserId: number){

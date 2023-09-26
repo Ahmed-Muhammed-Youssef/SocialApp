@@ -31,16 +31,12 @@ namespace API.Controllers
             var friendRequests = await _unitOfWork.FriendRequestRepository.GetRecievedFriendRequestsAsync(sender.Id);
             return Ok(friendRequests);
         }
-
-        [HttpPost("cancel/{username}")]
-        public async Task<IActionResult> CancelFriendRequests(string username)
+        // POST: api/friendrequests/cancel/{id}
+        [HttpPost("cancel/{id}")]
+        public async Task<IActionResult> CancelFriendRequests(int id)
         {
-            if (username is null)
-            {
-                return BadRequest("invalid username");
-            }
             var sender = await _unitOfWork.UserRepository.GetUserByIdAsync(User.GetId());
-            var target = await _unitOfWork.UserRepository.GetUserByUsernameAsync(username);
+            var target = await _unitOfWork.UserRepository.GetUserByIdAsync(id);
             if (sender == null || target == null)
             {
                 return NotFound();
@@ -85,12 +81,12 @@ namespace API.Controllers
             return Ok(friendRequestedUsers);
         }
 
-        // GET: api/friendrequests/isSent/{username}
-        [HttpGet("issent/{username}")]
-        public async Task<ActionResult<bool>> IsFriendRequested(string username)
+        // GET: api/friendrequests/isSent/{id}
+        [HttpGet("issent/{id}")]
+        public async Task<ActionResult<bool>> IsFriendRequested(int id)
         {
             var senderId = User.GetId();
-            var target = await _unitOfWork.UserRepository.GetUserByUsernameAsync(username);
+            var target = await _unitOfWork.UserRepository.GetUserByIdAsync(id);
             if (target == null)
             {
                 return NotFound();
@@ -107,17 +103,13 @@ namespace API.Controllers
             return Ok(false);
         }
 
-        // POST: api/friendrequests/send/{username}
-        [HttpPost("send/{username}")]
-        public async Task<ActionResult> SendFriendRequest(string username)
+        // POST: api/friendrequests/send/{id}
+        [HttpPost("send/{id}")]
+        public async Task<ActionResult> SendFriendRequest(int id)
         {
             // retuns true if the user has become a frined
-            if (username == null)
-            {
-                return BadRequest();
-            }
             var sender = await _unitOfWork.UserRepository.GetUserByIdAsync(User.GetId());
-            var target = await _unitOfWork.UserRepository.GetUserByUsernameAsync(username);
+            var target = await _unitOfWork.UserRepository.GetUserByIdAsync(id);
             if (sender == null || target == null)
             {
                 return NotFound();

@@ -50,7 +50,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'users', component: ExploreComponent, canActivate:[AuthGuard] },
-  { path: 'users/username/:username', component: UserDetailComponent, canActivate:[AuthGuard], resolve: {user: UserDetailedResolver} },
+  { path: 'users/:id', component: UserDetailComponent, canActivate:[AuthGuard], resolve: {user: UserDetailedResolver} },
   { path: 'lists', component: FriendsListComponent, canActivate:[AuthGuard] },
   { path: 'friendrequests', component: FriendRequestsComponent, canActivate:[AuthGuard] },
   { path: 'messages', component: InboxComponent, canActivate: [AuthGuard] },
