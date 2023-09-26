@@ -31,7 +31,7 @@ namespace API.Controllers
         [HttpPost]
         public async Task<ActionResult<PictureDTO>> UploadPicture(IFormFile file)
         {
-            var user = await _unitOfWork.UserRepository.GetUserByUsernameAsync(User.GetUsername());
+            var user = await _unitOfWork.UserRepository.GetUserByIdAsync(User.GetId());
             var result = await _pictureService.AddPictureAsync(file);
             if (result.Error != null)
             {
@@ -57,7 +57,7 @@ namespace API.Controllers
         [HttpPost("profilepicture/{pictureId}")]
         public async Task<ActionResult<PictureDTO>> SetProfilePicture(int pictureId)
         {
-            var user = await _unitOfWork.UserRepository.GetUserByUsernameAsync(User.GetUsername());
+            var user = await _unitOfWork.UserRepository.GetUserByIdAsync(User.GetId());
             var pictures = await _unitOfWork.PictureRepository.GetUserPictureAsync(user.Id);
             var picture = pictures.FirstOrDefault(p => p.Id == pictureId);
             if (picture == null)
@@ -80,7 +80,7 @@ namespace API.Controllers
         [HttpDelete("{pictureId}")]
         public async Task<ActionResult<PictureDTO>> DeletePhoto(int pictureId)
         {
-            var user = await _unitOfWork.UserRepository.GetUserByUsernameAsync(User.GetUsername());
+            var user = await _unitOfWork.UserRepository.GetUserByIdAsync(User.GetId());
             var pictures = await _unitOfWork.PictureRepository.GetUserPictureAsync(user.Id);
             var picture = pictures.FirstOrDefault(p => p.Id == pictureId);
             if (picture == null)

@@ -34,7 +34,7 @@
       <button mat-flat-button color="warn" *ngIf="isFriendRequested" (click)="unsendFriendRequest()">
         Unsend Friend Request
       </button>
-      <button mat-flat-button color="primary" *ngIf="isFriend" [routerLink]="['/messages', {username: user.username}]">
+      <button mat-flat-button color="primary" *ngIf="isFriend" [routerLink]="['/messages', {id: user.id}]">
         <mat-icon>chat</mat-icon> Message
       </button>
     </mat-card-actions>

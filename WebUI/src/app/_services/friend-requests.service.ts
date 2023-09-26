@@ -11,8 +11,8 @@ export class FriendRequestsService {
 
   constructor(private http: HttpClient) { }
   baseUrl = environment.apiUrl;
-  sendFriendRequest(username: string): Observable<boolean> {
-    return this.http.post<boolean>(this.baseUrl + 'friendrequests/send/' + username, {}).pipe(map(r => {
+  sendFriendRequest(id: number): Observable<boolean> {
+    return this.http.post<boolean>(this.baseUrl + 'friendrequests/send/' + id, {}).pipe(map(r => {
       // this.usersChache = new Map();
       return r;
     }));
@@ -20,13 +20,13 @@ export class FriendRequestsService {
   getSentFriendRequests(): Observable<User[]> {
     return this.http.get<User[]>(this.baseUrl + 'friendrequests/sent');
   }
-  isFriendRequested(username: string): Observable<boolean> {
-    return this.http.get<boolean>(this.baseUrl + 'friendrequests/isSent/' + username);
+  isFriendRequested(id: number): Observable<boolean> {
+    return this.http.get<boolean>(this.baseUrl + 'friendrequests/isSent/' + id);
   }
   getFriendRequests(): Observable<User[]> {
     return this.http.get<User[]>(this.baseUrl + 'friendrequests');
   }
-  cancelFriendRequest(username: string): Observable<any>{
-    return this.http.post<any>(this.baseUrl + 'friendrequests/cancel/' + username, {});
+  cancelFriendRequest(id: number): Observable<any>{
+    return this.http.post<any>(this.baseUrl + 'friendrequests/cancel/' + id, {});
   }
 }

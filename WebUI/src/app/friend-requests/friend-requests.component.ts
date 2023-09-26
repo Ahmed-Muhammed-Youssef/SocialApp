@@ -35,7 +35,7 @@ export class FriendRequestsComponent implements OnInit {
       });
   }
   sendFriendRequest(user: User) {
-    this.friendRequestsService.sendFriendRequest(user.username).subscribe(
+    this.friendRequestsService.sendFriendRequest(user.id).subscribe(
       r => {
         if (r == true) {
           this.toastr.success(user.firstName + " is added to your friends list successfully.");
@@ -44,8 +44,8 @@ export class FriendRequestsComponent implements OnInit {
       }
     );
   }
-  cancelFriendRequest(username: string) {
-    this.friendRequestsService.cancelFriendRequest(username).subscribe(
+  cancelFriendRequest(id: number) {
+    this.friendRequestsService.cancelFriendRequest(id).subscribe(
       r => {
         if (r) {
           this.toastr.success("Friend request is canelled successfully.");

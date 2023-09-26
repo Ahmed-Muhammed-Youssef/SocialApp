@@ -6,7 +6,7 @@
 <div *ngIf="friendRequests.length > 0" class="col-12 col-md-8 offset-md-2 mt-3">
     <div *ngFor="let user of friendRequests" class="row py-2">
         <div class="col-4 col-md-3">
-            <img class="rounded-circle w-100" routerLink="/users/username/{{user.username}}" mat-card-image src="{{user.profilePictureUrl? user.profilePictureUrl : './assets/Pictures/profile-placeholder.png'}}" alt="Profile picture">  
+            <img class="rounded-circle w-100" routerLink="/users/{{user.id}}" mat-card-image src="{{user.profilePictureUrl? user.profilePictureUrl : './assets/Pictures/profile-placeholder.png'}}" alt="Profile picture">  
         </div>
         <div class="col-3 col-md-4 d-flex text-center">
             <h3 class="align-self-center mb-0">{{user.firstName}} {{user.lastName}}</h3>
@@ -14,7 +14,7 @@
         <div class="col-5 col-md-5 d-flex text-center">
             <div class="align-self-center w-100">
                 <button mat-raised-button color="primary" class="text-center mx-1 my-1" (click)="sendFriendRequest(user)">Confirm</button>
-                <button mat-raised-button color="warn" class="text-center mx-1 my-1" (click)="cancelFriendRequest(user.username)">Delete</button>
+                <button mat-raised-button color="warn" class="text-center mx-1 my-1" (click)="cancelFriendRequest(user.id)">Delete</button>
             </div>
         </div>
     </div>

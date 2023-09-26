@@ -12,6 +12,15 @@ export class UserDetailedResolver  {
 
   }
   resolve(route: ActivatedRouteSnapshot): Observable<User> {
-    return this.userService.getUserByUsername(route.paramMap.get("username") as string);
+    var val : string | null = route.paramMap.get("id");
+    if(val == null){
+      console.error("not valid id");
+      // I don't know what to do here
+      // @TODO: needs to be changed
+      return this.userService.getUserById(1);
+    }
+    else{
+      return this.userService.getUserById(+val);
+    }
   }
 }

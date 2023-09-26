@@ -44,11 +44,11 @@ namespace API.Controllers
             return Ok(users);
         }
 
-        // GET: api/users/{username}
-        [HttpGet("{username}")]
-        public async Task<ActionResult<UserDTO>> GetUser(string username)
+        // GET: api/users/{id}
+        [HttpGet("{id}")]
+        public async Task<ActionResult<UserDTO>> GetUser(int id)
         {
-            var user = await _unitOfWork.UserRepository.GetUserDTOByUsernameAsync(username);
+            var user = await _unitOfWork.UserRepository.GetUserDTOByIdAsync(id);
 
             if (user == null)
             {
@@ -65,7 +65,7 @@ namespace API.Controllers
             {
                 return BadRequest(userDTO);
             }
-            var appUser = await _unitOfWork.UserRepository.GetUserByUsernameAsync(User.GetUsername());
+            var appUser = await _unitOfWork.UserRepository.GetUserByIdAsync(User.GetId());
 
             if (appUser == null)
             {

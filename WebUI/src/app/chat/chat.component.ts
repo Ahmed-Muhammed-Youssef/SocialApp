@@ -35,7 +35,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
   }
   sendMessage() {
     if (this.currentFriend) {
-      this.messageService.sendMessage(this.currentFriend?.username, this.newMessage).then(
+      this.messageService.sendMessage(this.currentFriend?.id, this.newMessage).then(
         () => { }
       );
       this.newMessage = '';

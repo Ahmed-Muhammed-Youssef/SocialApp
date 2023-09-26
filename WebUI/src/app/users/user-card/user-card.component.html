@@ -1,16 +1,16 @@
 <mat-card class="user-card" >
-  <mat-card-header routerLink="/users/username/{{user.username}}">
+  <mat-card-header routerLink="/users/{{user.id}}">
     <mat-card-title>{{user.firstName}} {{user.lastName}}</mat-card-title>
     <mat-card-subtitle *ngIf="(presenceService.onlineUsers$ | async)?.includes(user.username)"> <span class="online"></span> Active now</mat-card-subtitle>
     <mat-card-subtitle *ngIf="!(presenceService.onlineUsers$ | async)?.includes(user.username)">{{timeFormatterService.getDateTimeAgo(user.lastActive)}}</mat-card-subtitle>
   </mat-card-header>
-  <img routerLink="/users/username/{{user.username}}" mat-card-image src="{{userProfilePicture? userProfilePicture : './assets/Pictures/profile-placeholder.png'}}" alt="Profile picture">
+  <img routerLink="/users/{{user.id}}" mat-card-image src="{{userProfilePicture? userProfilePicture : './assets/Pictures/profile-placeholder.png'}}" alt="Profile picture">
   
   <mat-card-actions class="text-center d-block">
     <button mat-flat-button color="accent" *ngIf="!isFriendRequested" (click)="sendFriendRequest(user)">
       <i class="material-icons me-1">person_add_alt_1</i> Add friend
     </button>
-    <button mat-flat-button color="primary" *ngIf="isFriendRequested" [routerLink]="['/messages', {username: user.username}]">
+    <button mat-flat-button color="primary" *ngIf="isFriendRequested" [routerLink]="['/messages', {id: user.id}]">
       <mat-icon>chat</mat-icon> Message
     </button>
   </mat-card-actions>
