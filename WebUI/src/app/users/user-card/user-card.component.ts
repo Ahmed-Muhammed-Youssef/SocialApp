@@ -41,7 +41,7 @@ export class UserCardComponent implements OnInit {
   }
   goToUserDetails()
   {
-    this.router.navigateByUrl('users/username/' + this.user.username);
+    this.router.navigateByUrl('users/' + this.user.id);
   }
   sendFriendRequest(user: User) {
     this.friendRequestsService.sendFriendRequest(user.username).subscribe(

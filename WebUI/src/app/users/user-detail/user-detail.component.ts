@@ -49,7 +49,6 @@ export class UserDetailComponent implements OnInit {
             }
           }
         );
-    
   }
   sendFriendRequest(){
     this.userService.deleteCachedValues();

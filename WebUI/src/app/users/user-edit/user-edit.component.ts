@@ -50,7 +50,7 @@ export class UserEditComponent implements OnInit {
   }
   loadUser() {
     if (this.account?.userData) {
-      this.userService.getUserByUsername(this.account?.userData.username).subscribe(user => {
+      this.userService.getUserById(this.account?.userData.id).subscribe(user => {
         this.user = user;
         this.userProfilePicture = this.user.profilePictureUrl;
         this.oldUser = Object.assign({}, this.user);

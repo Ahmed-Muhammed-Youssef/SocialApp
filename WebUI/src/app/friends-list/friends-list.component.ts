@@ -20,7 +20,7 @@ export class FriendsListComponent implements OnInit {
   isMobilePhone: boolean = false;
 
   friends: User[] = [];
-  constructor(private userService: UserService, private breakpointObserver: BreakpointObserver) {
+  constructor(private userService: UserService, breakpointObserver: BreakpointObserver) {
     breakpointObserver.observe(["(max-width: 750px)"])
       .subscribe(
         result => {

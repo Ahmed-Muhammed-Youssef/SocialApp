@@ -77,12 +77,12 @@ export class UserService {
         })
       );
   }
-  public getUserByUsername(username: string): Observable<User> {
-    const user = this.users.find(u => u.username === username);
+  public getUserById(id: number): Observable<User> {
+    const user = this.users.find(u => u.id === id);
     if (user) {
       return of(user);
     }
-    return this.http.get<User>(this.baseUrl + 'users/' + username);
+    return this.http.get<User>(this.baseUrl + 'users/' + id);
   }
   isFriend(username: string): Observable<boolean> {
     return this.http.get<boolean>(this.baseUrl + 'friends/isfriend/' + username);
