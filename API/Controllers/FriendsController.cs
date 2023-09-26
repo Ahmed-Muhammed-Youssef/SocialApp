@@ -27,7 +27,7 @@ namespace API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<UserDTO>>> GetAll([FromQuery] PaginationParams paginationParams)
         {
-            var user = await _unitOfWork.UserRepository.GetUserByUsernameAsync(User.GetUsername());
+            var user = await _unitOfWork.UserRepository.GetUserByIdAsync(User.GetId());
             if (user == null)
             {
                 return Unauthorized();
@@ -38,17 +38,11 @@ namespace API.Controllers
             return Ok(friends);
         }
 
-        // GET: api/friends/isfriend/{username}
-        [HttpGet("isFriend/{username}")]
-        public async Task<ActionResult<bool>> IsFriend(string username)
+        // GET: api/friends/isfriend/{id}
+        [HttpGet("isFriend/{id}")]
+        public async Task<ActionResult<bool>> IsFriend(int id)
         {
-            var target = await _unitOfWork.UserRepository.GetUserByUsernameAsync(username);
-            if (target == null)
-            {
-                return NotFound();
-            }
-            return Ok(await _unitOfWork.FriendRequestRepository.IsFriend(User.GetId(), target.Id));
-
+            return Ok(await _unitOfWork.FriendRequestRepository.IsFriend(User.GetId(), id));
         }
     }
 }

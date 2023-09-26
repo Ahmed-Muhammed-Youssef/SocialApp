@@ -47,7 +47,7 @@ namespace API.SignalR
         public async Task SendMessages(NewMessageDTO message)
         {
             var sender = await _unitOfWork.UserRepository.GetUserByIdAsync(Context.User.GetId());
-            var recipient = await _unitOfWork.UserRepository.GetUserByUsernameAsync(message.RecipientUsername);
+            var recipient = await _unitOfWork.UserRepository.GetUserByIdAsync(message.RecipientId);
             if (recipient == null || sender == null)
             {
                 throw new HubException("User not found");

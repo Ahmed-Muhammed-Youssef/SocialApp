@@ -21,18 +21,6 @@ namespace API.Data.CachedRepositories
             this._memoryCache = memoryCache;
         }
         // Queries
-        public async Task<AppUser> GetUserByEmailAsync(string email) 
-        {
-            object key = nameof(GetUserByEmailAsync) + email;
-            if (!_memoryCache.TryGetValue(key, out AppUser result))
-            {
-                result = await _usersRepository.GetUserByEmailAsync(email);
-
-                // cache the value
-                _memoryCache.Set(key, result, TimeSpan.FromMinutes(1));
-            }
-            return result;
-        }
 
         public async Task<AppUser> GetUserByIdAsync(int id)
         {
@@ -47,51 +35,12 @@ namespace API.Data.CachedRepositories
             return result;
         }
 
-        public async Task<AppUser> GetUserByUsernameAsync(string username)
-        {
-            object key = nameof(GetUserByUsernameAsync) + username;
-            if (!_memoryCache.TryGetValue(key, out AppUser result))
-            {
-                result = await _usersRepository.GetUserByUsernameAsync(username);
-
-                // cache the value
-                _memoryCache.Set(key, result, TimeSpan.FromMinutes(1));
-            }
-            return result;
-        }
-
-        public async Task<UserDTO> GetUserDTOByEmailAsync(string email)
-        {
-            object key = nameof(GetUserDTOByEmailAsync) + email;
-            if (!_memoryCache.TryGetValue(key, out UserDTO result))
-            {
-                result = await _usersRepository.GetUserDTOByEmailAsync(email);
-
-                // cache the value
-                _memoryCache.Set(key, result, TimeSpan.FromMinutes(1));
-            }
-            return result;
-        }
-
         public async Task<UserDTO> GetUserDTOByIdAsync(int id)
         {
             object key = nameof(GetUserDTOByIdAsync) + id;
             if (!_memoryCache.TryGetValue(key, out UserDTO result))
             {
                 result = await _usersRepository.GetUserDTOByIdAsync(id);
-
-                // cache the value
-                _memoryCache.Set(key, result, TimeSpan.FromMinutes(1));
-            }
-            return result;
-        }
-
-        public async Task<UserDTO> GetUserDTOByUsernameAsync(string username)
-        {
-            object key = nameof(GetUserDTOByUsernameAsync) + username;
-            if (!_memoryCache.TryGetValue(key, out UserDTO result))
-            {
-                result = await _usersRepository.GetUserDTOByUsernameAsync(username);
 
                 // cache the value
                 _memoryCache.Set(key, result, TimeSpan.FromMinutes(1));

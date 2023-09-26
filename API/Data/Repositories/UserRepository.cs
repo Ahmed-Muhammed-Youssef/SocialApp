@@ -101,40 +101,5 @@ namespace API.Data.Repositories
             // result.Pictures = result.Pictures.OrderBy(p => p.);
             return result;
         }
-        public async Task<UserDTO> GetUserDTOByUsernameAsync(string username)
-        {
-            var result = await _dataContext.Users
-                .AsNoTracking()
-                .Where(u => u.UserName == username)
-                .ProjectTo<UserDTO>(_mapper.ConfigurationProvider).FirstOrDefaultAsync();
-            // result.Pictures = result.Pictures.OrderBy(p => p.Order);
-            return result;
-        }
-        public async Task<AppUser> GetUserByUsernameAsync(string username)
-        {
-            var result = await _dataContext.Users
-                .AsNoTracking()
-                .Where(u => u.UserName == username)
-                .FirstOrDefaultAsync();
-            return result;
-        }
-        public async Task<AppUser> GetUserByEmailAsync(string email)
-        {
-            var result = await _dataContext.Users
-                .AsNoTracking()
-                .Where(u => u.Email == email)
-                .FirstOrDefaultAsync();
-            result.Pictures = (ICollection<Picture>)result.Pictures.OrderBy(p => p.Created);
-            return result;
-        }
-        public async Task<UserDTO> GetUserDTOByEmailAsync(string email)
-        {
-            var user = await _dataContext.Users
-                .AsNoTracking()
-                .Where(u => u.Email == email)
-                .ProjectTo<UserDTO>(_mapper.ConfigurationProvider).FirstOrDefaultAsync();
-            // user.Pictures = user.Pictures.OrderBy(p => p.Order);
-            return user;
-        }
     }
 }
