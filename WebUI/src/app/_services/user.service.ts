@@ -84,8 +84,8 @@ export class UserService {
     }
     return this.http.get<User>(this.baseUrl + 'users/' + id);
   }
-  isFriend(username: string): Observable<boolean> {
-    return this.http.get<boolean>(this.baseUrl + 'friends/isfriend/' + username);
+  isFriend(id: number): Observable<boolean> {
+    return this.http.get<boolean>(this.baseUrl + 'friends/isfriend/' + id);
   }
   getFriends(pageNumber: number = 1, itemsPerPage: number = 2): Observable<PaginatedResult<User[]>> {
     let paginatedResult: PaginatedResult<User[]> = { result: [], pagination: this.paginationInfo };
