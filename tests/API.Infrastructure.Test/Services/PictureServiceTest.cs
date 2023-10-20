@@ -1,9 +1,9 @@
-using API.Helpers;
-using API.Services;
+using API.Domain.Configuration;
+using API.Infrastructure.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 
-namespace API.Test.Models
+namespace API.Infrastructure.Test.Services
 {
     public class PictureServiceTest
     {
@@ -11,7 +11,7 @@ namespace API.Test.Models
         public PictureServiceTest()
         {
             var configuration = new ConfigurationBuilder()
-            .AddUserSecrets<PictureService>()
+            .AddUserSecrets<PictureServiceTest>()
             .Build();
             CloudinarySettings cloudinarySettings = new CloudinarySettings() { 
                 CloudName = configuration["Cloudinary:CloudName"],
