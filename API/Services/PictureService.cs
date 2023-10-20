@@ -1,5 +1,5 @@
-﻿using API.Helpers;
-using API.Interfaces.Services;
+﻿using API.Application.Interfaces.Services;
+using API.Helpers;
 using CloudinaryDotNet;
 using CloudinaryDotNet.Actions;
 using Microsoft.AspNetCore.Http;

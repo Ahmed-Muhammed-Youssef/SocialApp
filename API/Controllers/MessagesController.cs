@@ -1,5 +1,5 @@
-﻿using API.Extensions;
-using API.Interfaces;
+﻿using API.Application.Interfaces;
+using API.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;

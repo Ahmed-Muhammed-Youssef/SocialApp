@@ -1,7 +1,7 @@
-using System.Threading.Tasks;
-using API.Interfaces.Repositories;
 
-namespace API.Interfaces
+using API.Application.Interfaces.Repositories;
+
+namespace API.Application.Interfaces
 {
     public interface IUnitOfWork
     {

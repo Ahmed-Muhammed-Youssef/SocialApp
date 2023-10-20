@@ -1,7 +1,7 @@
 ﻿using API.Application.DTOs;
+using API.Application.Interfaces;
 using API.Extensions;
 using API.Filters;
-using API.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;

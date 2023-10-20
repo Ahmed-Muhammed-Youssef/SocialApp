@@ -1,9 +1,7 @@
 ﻿using API.Application.DTOs;
 using API.Domain.Entities;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
-namespace API.Interfaces.Repositories
+namespace API.Application.Interfaces.Repositories
 {
     public interface IMessageRepository
     {

@@ -1,13 +1,13 @@
 ﻿using API.Domain.Entities;
 using API.Application.DTOs;
 using API.Filters;
-using API.Interfaces;
-using API.Interfaces.Services;
 using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
+using API.Application.Interfaces.Services;
+using API.Application.Interfaces;
 
 namespace API.Controllers
 {

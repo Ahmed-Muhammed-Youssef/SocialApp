@@ -1,6 +1,5 @@
 ﻿using API.Application.DTOs;
 using API.Domain.Entities;
-using API.Interfaces.Repositories;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
@@ -9,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using API.Infrastructure.Data;
+using API.Application.Interfaces.Repositories;
 
 namespace API.Data.Repositories
 {
