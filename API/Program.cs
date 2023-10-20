@@ -6,7 +6,7 @@ using API.Data.CachedRepositories;
 using API.Data.Repositories;
 using API.Extensions;
 using API.Filters;
-using API.Helpers;
+using API.Domain.Configuration;
 using API.Infrastructure.Data;
 using API.Infrastructure.MappingProfiles;
 using API.Middleware;
@@ -20,6 +20,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using System;
+using API.Infrastructure.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
