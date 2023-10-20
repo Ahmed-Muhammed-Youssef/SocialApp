@@ -1,5 +1,5 @@
-﻿using API.Extensions;
-using API.Interfaces;
+﻿using API.Application.Interfaces;
+using API.Extensions;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.DependencyInjection;
 using System;

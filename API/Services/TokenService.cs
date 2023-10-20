@@ -1,5 +1,5 @@
-﻿using API.Domain.Entities;
-using API.Interfaces.Services;
+﻿using API.Application.Interfaces.Services;
+using API.Domain.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;

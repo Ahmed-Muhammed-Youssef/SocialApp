@@ -1,7 +1,7 @@
 using API.Application.DTOs;
+using API.Application.Interfaces;
 using API.Domain.Entities;
 using API.Extensions;
-using API.Interfaces;
 using AutoMapper;
 using Microsoft.AspNetCore.SignalR;
 using System;

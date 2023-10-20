@@ -1,14 +1,14 @@
 ﻿using API.Domain.Entities;
 using API.Application.DTOs;
 using API.Extensions;
-using API.Interfaces;
-using API.Interfaces.Services;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using System.Threading.Tasks;
+using API.Application.Interfaces;
+using API.Application.Interfaces.Services;
 
 namespace API.Controllers
 {

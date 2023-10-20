@@ -1,3 +1,6 @@
+using API.Application.Interfaces;
+using API.Application.Interfaces.Repositories;
+using API.Application.Interfaces.Services;
 using API.Data;
 using API.Data.CachedRepositories;
 using API.Data.Repositories;
@@ -6,9 +9,6 @@ using API.Filters;
 using API.Helpers;
 using API.Infrastructure.Data;
 using API.Infrastructure.MappingProfiles;
-using API.Interfaces;
-using API.Interfaces.Repositories;
-using API.Interfaces.Services;
 using API.Middleware;
 using API.Services;
 using API.SignalR;

@@ -1,12 +1,11 @@
 ﻿using API.Application.DTOs;
-using API.Helpers;
-using API.Interfaces;
-using API.Interfaces.Repositories;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Caching.Memory;
 using System;
 using API.Domain.Entities;
+using API.Application.Interfaces;
+using API.Application.Interfaces.Repositories;
 
 namespace API.Data.CachedRepositories
 {

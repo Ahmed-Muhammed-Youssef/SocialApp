@@ -1,6 +1,6 @@
+using API.Application.Interfaces;
+using API.Application.Interfaces.Repositories;
 using API.Infrastructure.Data;
-using API.Interfaces;
-using API.Interfaces.Repositories;
 using System.Threading.Tasks;
 
 namespace API.Data
