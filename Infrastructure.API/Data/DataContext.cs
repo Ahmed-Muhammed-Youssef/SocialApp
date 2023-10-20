@@ -1,10 +1,10 @@
-﻿using API.Data.Configurations;
+﻿using API.Infrastructure.Data.Configurations;
 using API.Domain.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace API.Data
+namespace API.Infrastructure.Data
 {
     public class DataContext : IdentityDbContext<AppUser, AppRole, int,
         IdentityUserClaim<int>, AppUserRole, IdentityUserLogin<int>

@@ -1,5 +1,6 @@
 ﻿using API.Domain.Constants;
 using API.Domain.Entities;
+using API.Infrastructure.Data;
 using Bogus;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;

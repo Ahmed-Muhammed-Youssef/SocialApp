@@ -1,9 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
-using System;
 
 #nullable disable
 
-namespace API.Data.Migrations
+namespace API.Infrastructure.Data.Migrations
 {
     /// <inheritdoc />
     public partial class RefactorDataBase : Migration

@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace API.Data.Configurations
+namespace API.Infrastructure.Data.Configurations
 {
     public class AppUserRoleConfigurations : IEntityTypeConfiguration<AppUserRole>
     {

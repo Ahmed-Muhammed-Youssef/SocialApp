@@ -3,6 +3,7 @@ using API.Data.CachedRepositories;
 using API.Data.Repositories;
 using API.Extensions;
 using API.Helpers;
+using API.Infrastructure.Data;
 using API.Interfaces;
 using API.Interfaces.Repositories;
 using API.Interfaces.Services;
