@@ -1,9 +1,6 @@
 using API.Application.Interfaces;
 using API.Application.Interfaces.Repositories;
 using API.Application.Interfaces.Services;
-using API.Data;
-using API.Data.CachedRepositories;
-using API.Data.Repositories;
 using API.Extensions;
 using API.Filters;
 using API.Domain.Configuration;
@@ -21,6 +18,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using System;
 using API.Infrastructure.Services;
+using API.Infrastructure.Repositories.CachedRepositories;
+using API.Infrastructure.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -77,9 +76,9 @@ builder.Services.AddCors(options =>
 var app = builder.Build();
 
 // Migrate Database
-await Database.MigrateDatabaseAsync(app.Services);
+await DatabaseSeeding.MigrateDatabaseAsync(app.Services);
 // Seeding the application
-await Database.SeedUsersAsync(app.Services);
+await DatabaseSeeding.SeedUsersAsync(app.Services);
 
 
 if (app.Environment.IsDevelopment())
