@@ -3,14 +3,10 @@ using API.Domain.Entities;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using API.Infrastructure.Data;
 using API.Application.Interfaces.Repositories;
 
-namespace API.Data.Repositories
+namespace API.Infrastructure.Repositories
 {
     public class UserRepository : IUserRepository // using the repository design pattern to isolate the contollers further more from the entity framework. (it may not be neccesary)
     {

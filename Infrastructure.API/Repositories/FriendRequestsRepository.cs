@@ -4,12 +4,9 @@ using API.Infrastructure.Data;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using API.Application.Interfaces.Repositories;
 
-namespace API.Data.Repositories
+namespace API.Infrastructure.Repositories
 {
     public class FriendRequestsRepository : IFriendRequestRepository
     {

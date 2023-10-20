@@ -1,18 +1,14 @@
 ﻿using API.Domain.Constants;
 using API.Domain.Entities;
-using API.Infrastructure.Data;
 using Bogus;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
-namespace API.Data
+namespace API.Infrastructure.Data
 {
-    public class Database
+    public class DatabaseSeeding
     {
         public static async Task MigrateDatabaseAsync(IServiceProvider serviceProvider)
         {
@@ -26,7 +22,7 @@ namespace API.Data
                 }
                 catch (Exception ex)
                 {
-                    var logger = services.GetRequiredService<ILogger<Program>>();
+                    var logger = services.GetRequiredService<ILogger<DatabaseSeeding>>();
                     logger.LogError(ex, "An error occurred during migration");
                 }
             }
@@ -47,7 +43,7 @@ namespace API.Data
                 }
                 catch (Exception ex)
                 {
-                    var logger = services.GetRequiredService<ILogger<Program>>();
+                    var logger = services.GetRequiredService<ILogger<DatabaseSeeding>>();
                     logger.LogError(ex, "An error occurred during seeding");
                 }
             }

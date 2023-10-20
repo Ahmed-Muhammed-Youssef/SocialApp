@@ -1,9 +1,7 @@
 using API.Application.Interfaces;
 using API.Application.Interfaces.Repositories;
-using API.Infrastructure.Data;
-using System.Threading.Tasks;
 
-namespace API.Data
+namespace API.Infrastructure.Data
 {
     public class UnitOfWork : IUnitOfWork
     {
