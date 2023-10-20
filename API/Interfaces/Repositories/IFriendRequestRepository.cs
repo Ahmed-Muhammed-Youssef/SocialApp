@@ -1,5 +1,5 @@
 ﻿using API.DTOs;
-using API.Entities;
+using API.Domain.Entities;
 using API.Helpers;
 using System.Collections.Generic;
 using System.Threading.Tasks;

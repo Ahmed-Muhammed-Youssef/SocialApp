@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using System;
-using System.Collections.Generic;
 
-namespace API.Entities
+namespace API.Domain.Entities
 {
     public class AppUser : IdentityUser<int>
     {

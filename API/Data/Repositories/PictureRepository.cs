@@ -1,5 +1,5 @@
 ﻿using API.DTOs;
-using API.Entities;
+using API.Domain.Entities;
 using API.Interfaces.Repositories;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;

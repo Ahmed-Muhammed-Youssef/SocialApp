@@ -1,4 +1,4 @@
-﻿namespace API.Data.Static_Values
+﻿namespace API.Domain.Constants
 {
     public static class RolesNameValues
     {

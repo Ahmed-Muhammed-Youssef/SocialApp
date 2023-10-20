@@ -1,5 +1,5 @@
-﻿using API.DTOs;
-using API.Entities;
+﻿using API.Domain.Entities;
+using API.DTOs;
 using API.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
