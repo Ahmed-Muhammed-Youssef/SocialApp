@@ -1,6 +1,7 @@
 ﻿using API.Domain.Entities;
 using API.DTOs;
 using API.Helpers;
+using API.Infrastructure.Data;
 using API.Interfaces.Repositories;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
