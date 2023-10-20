@@ -1,6 +1,6 @@
-﻿using API.DTOs;
+﻿using API.Application.DTOs;
 using API.Extensions;
-using API.Helpers;
+using API.Filters;
 using API.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

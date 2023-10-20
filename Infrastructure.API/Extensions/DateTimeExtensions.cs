@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace API.Extensions
+﻿namespace API.Infrastructure.Extensions
 {
     public static class DateTimeExtensions
     {
