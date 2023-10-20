@@ -1,4 +1,4 @@
-﻿namespace API.Helpers
+﻿namespace API.Application.DTOs
 {
     public class PaginationHeader
     {

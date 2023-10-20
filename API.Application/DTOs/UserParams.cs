@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace API.Helpers
+﻿namespace API.Application.DTOs
 {
     public class UserParams : PaginationParams
     {
