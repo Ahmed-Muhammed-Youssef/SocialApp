@@ -1,12 +1,11 @@
 ﻿using API.Application.Interfaces.Services;
-using API.Helpers;
+using API.Domain.Configuration;
 using CloudinaryDotNet;
 using CloudinaryDotNet.Actions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
-using System.Threading.Tasks;
 
-namespace API.Services
+namespace API.Infrastructure.Services
 {
     public class PictureService : IPictureService
     {
