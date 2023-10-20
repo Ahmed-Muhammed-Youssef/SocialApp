@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace API.Entities
+﻿namespace API.Domain.Entities
 {
     // dependent entity on AppUser entity
     public class Friend

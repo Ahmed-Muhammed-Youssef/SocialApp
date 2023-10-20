@@ -1,5 +1,4 @@
 ﻿using API.DTOs;
-using API.Entities;
 using API.Helpers;
 using API.Interfaces;
 using API.Interfaces.Repositories;
@@ -7,6 +6,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Caching.Memory;
 using System;
+using API.Domain.Entities;
 
 namespace API.Data.CachedRepositories
 {

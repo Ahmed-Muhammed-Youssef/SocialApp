@@ -1,4 +1,4 @@
-﻿using API.Entities;
+﻿using API.Domain.Entities;
 using System.Threading.Tasks;
 
 namespace API.Interfaces.Services
