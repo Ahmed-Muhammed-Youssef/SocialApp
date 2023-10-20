@@ -1,4 +1,4 @@
-﻿namespace API.Helpers
+﻿namespace API.Domain.Enums
 {
     public enum ReceiveMessagesOptions
     {

@@ -1,5 +1,5 @@
 ﻿using API.Domain.Entities;
-using API.DTOs;
+using API.Application.DTOs;
 using API.Helpers;
 using API.Infrastructure.Data;
 using API.Interfaces.Repositories;

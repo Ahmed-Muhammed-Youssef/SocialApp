@@ -1,5 +1,6 @@
-﻿using API.DTOs;
+﻿using API.Application.DTOs;
 using API.Extensions;
+using API.Filters;
 using API.Helpers;
 using API.Interfaces;
 using AutoMapper;

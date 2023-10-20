@@ -1,4 +1,4 @@
-﻿using API.DTOs;
+﻿using API.Application.DTOs;
 using API.Domain.Entities;
 using System.Collections.Generic;
 using System.Threading.Tasks;

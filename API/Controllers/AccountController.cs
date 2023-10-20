@@ -1,6 +1,6 @@
 ﻿using API.Domain.Entities;
-using API.DTOs;
-using API.Helpers;
+using API.Application.DTOs;
+using API.Filters;
 using API.Interfaces;
 using API.Interfaces.Services;
 using AutoMapper;

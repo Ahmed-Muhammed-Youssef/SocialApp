@@ -1,10 +1,10 @@
-﻿using API.DTOs;
+﻿using API.Application.DTOs;
 using API.Domain.Entities;
-using API.Extensions;
+using API.Infrastructure.Extensions;
 using AutoMapper;
 using System.Linq;
 
-namespace API.Helpers
+namespace API.Infrastructure.MappingProfiles
 {
     public class AutoMapperProfiles : Profile
     {

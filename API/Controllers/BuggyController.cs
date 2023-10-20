@@ -1,5 +1,5 @@
 ﻿using API.Domain.Entities;
-using API.Helpers;
+using API.Filters;
 using API.Infrastructure.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
