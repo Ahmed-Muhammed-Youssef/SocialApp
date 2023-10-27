@@ -79,7 +79,6 @@ namespace API.Infrastructure.Data
             await userManager.CreateAsync(admin, "Pwd12345");
             await userManager.AddToRolesAsync(admin, new[] { RolesNameValues.User, RolesNameValues.Admin, RolesNameValues.Moderator });
             char[] sex = { 'm', 'f' };
-            var tasks = new List<Task>();
             for (int i = 0; i < 100; i++)
             {
                 var testUsers = new Faker<AppUser>()
@@ -98,10 +97,9 @@ namespace API.Infrastructure.Data
                     .RuleFor(u => u.Created, f => f.Date.Past(refDate: DateTime.UtcNow.AddMonths(-7), yearsToGoBack: 2));
 
                 var user = testUsers.Generate();
-                tasks.Add(userManager.CreateAsync(user, "Pwd12345"));
-                tasks.Add(userManager.AddToRolesAsync(user, new[] { RolesNameValues.User }));
+                await userManager.CreateAsync(user, "Pwd12345");
+                await userManager.AddToRolesAsync(user, new[] { RolesNameValues.User });
             }
-            await Task.WhenAll(tasks);
         }
     }
 }
