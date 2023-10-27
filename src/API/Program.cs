@@ -49,14 +49,14 @@ builder.Services.AddDbContext<DataContext>(options =>
     if (env == "Development")
     {
         // Use connection string from file.
-        options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));
+        options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
     }
     else
     {
         // production configurations
         // use sqlite database for now
 
-        options.UseSqlite(builder.Configuration.GetConnectionString("ProductionConnection"));
+        options.UseSqlServer(builder.Configuration.GetConnectionString("ProductionConnection"));
     }
 });
 builder.Services.AddControllers();
