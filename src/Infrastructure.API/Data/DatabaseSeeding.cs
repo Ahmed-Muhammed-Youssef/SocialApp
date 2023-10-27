@@ -95,8 +95,6 @@ namespace API.Infrastructure.Data
                     .RuleFor(u => u.DateOfBirth, f => f.Date.Past(refDate: DateTime.UtcNow.AddYears(-18), yearsToGoBack: 70))
                     .RuleFor(u => u.LastActive, f => f.Date.BetweenOffset(DateTimeOffset.UtcNow, DateTimeOffset.UtcNow.AddDays(-30)).DateTime)
                     .RuleFor(u => u.Created, f => f.Date.Past(refDate: DateTime.UtcNow.AddMonths(-7), yearsToGoBack: 2));
-
-                var user = testUsers.Generate();
                 await userManager.CreateAsync(user, "Pwd12345");
                 await userManager.AddToRolesAsync(user, new[] { RolesNameValues.User });
             }
