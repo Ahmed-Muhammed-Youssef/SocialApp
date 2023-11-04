@@ -22,7 +22,7 @@ https://www.youtube.com/watch?v=omsDC4MSMSA
 * SignalR - Real-time communications
 * Docker - Containerization
 ### Database
-* SQLite - Used for development
+* SQL Server 
 ## Development
 The app is continuously being improved and upgraded:
 
@@ -32,8 +32,9 @@ The app is continuously being improved and upgraded:
 * Bogus is used to seed the database with fake test data
 * Using design patterns like unit of work and repository pattern
 * JWT is used for authentication
+* Migrated to Clean Architecture
 ## Getting Started
-* Clone the repo
+* Clone the repository
 * Create a [Cloudnary](https://cloudinary.com/) account
 * Add your account information either in the project secrets file (recommended) or in appsettings in the following form:<br>
   `"Cloudinary": 
