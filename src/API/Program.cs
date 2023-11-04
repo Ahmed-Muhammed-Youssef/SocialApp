@@ -54,8 +54,6 @@ builder.Services.AddDbContext<DataContext>(options =>
     else
     {
         // production configurations
-        // use sqlite database for now
-
         options.UseSqlServer(builder.Configuration.GetConnectionString("ProductionConnection"));
     }
 });
@@ -106,6 +104,8 @@ app.UseStaticFiles();
 
 
 app.MapControllers();
+
+// SignalR Endpooints
 app.MapHub<PresenceHub>("hubs/presence");
 app.MapHub<MessageHub>("hubs/message");
 app.MapFallbackToController("Index", "FallBack");
