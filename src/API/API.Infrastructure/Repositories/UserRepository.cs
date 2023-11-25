@@ -82,20 +82,22 @@ namespace API.Infrastructure.Repositories
         }
         public async Task<AppUser> GetUserByIdAsync(int id)
         {
-            var result = await _dataContext.Users
+           /* var result = await _dataContext.Users
                 .AsNoTracking()
                 .Where(u => u.Id == id)
-                .FirstOrDefaultAsync();
-            return result;
-        }
-        public async Task<UserDTO> GetUserDTOByIdAsync(int id)
-        {
+                .FirstOrDefaultAsync();*/
             var result = await _dataContext.Users
+                .FromSqlInterpolated($"EXECUTE GetUserById {id};")
+                .ToListAsync();
+
+            return result.FirstOrDefault();
+        }
+        public async Task<UserDTO> GetUserDTOByIdAsync(int id) => _mapper.Map<UserDTO>(await GetUserByIdAsync(id)); 
+            /*var result = await _dataContext.Users
                 .AsNoTracking()
                 .Where(u => u.Id == id)
-                .ProjectTo<UserDTO>(_mapper.ConfigurationProvider).FirstOrDefaultAsync();
-            // result.Pictures = result.Pictures.OrderBy(p => p.);
-            return result;
-        }
+                .ProjectTo<UserDTO>(_mapper.ConfigurationProvider).FirstOrDefaultAsync();*/
+            
+
     }
 }
