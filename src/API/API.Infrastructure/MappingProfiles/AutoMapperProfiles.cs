@@ -2,7 +2,6 @@
 using API.Domain.Entities;
 using API.Infrastructure.Extensions;
 using AutoMapper;
-using System.Linq;
 
 namespace API.Infrastructure.MappingProfiles
 {
