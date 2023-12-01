@@ -5,6 +5,9 @@ using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 using API.Infrastructure.Data;
 using API.Application.Interfaces.Repositories;
+using Microsoft.Data.SqlClient;
+using System.Data;
+using Dapper;
 
 namespace API.Infrastructure.Repositories
 {
@@ -82,15 +85,14 @@ namespace API.Infrastructure.Repositories
         }
         public async Task<AppUser> GetUserByIdAsync(int id)
         {
-           /* var result = await _dataContext.Users
-                .AsNoTracking()
-                .Where(u => u.Id == id)
-                .FirstOrDefaultAsync();*/
-            var result = await _dataContext.Users
-                .FromSqlInterpolated($"EXECUTE GetUserById {id};")
-                .ToListAsync();
-
-            return result.FirstOrDefault();
+            var connectionString = _dataContext.Database.GetConnectionString();
+            using (IDbConnection db = new SqlConnection(connectionString))
+            {
+                // Execute the stored procedure using Dapper
+                var result = await db.QueryAsync<AppUser>("GetUserById", new { Id = id },
+                                        commandType: CommandType.StoredProcedure);
+                return result.FirstOrDefault();
+            }
         }
         public async Task<UserDTO> GetUserDTOByIdAsync(int id) => _mapper.Map<UserDTO>(await GetUserByIdAsync(id)); 
             /*var result = await _dataContext.Users
