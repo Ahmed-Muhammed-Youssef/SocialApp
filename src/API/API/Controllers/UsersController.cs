@@ -30,18 +30,10 @@ namespace API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<UserDTO>>> GetUsers([FromQuery] UserParams userParams)
         {
-            if (string.IsNullOrEmpty(userParams.Sex))
-            {
-                var interest = await _unitOfWork.UserRepository.GetUserInterest(User.GetId());
-                userParams.Sex = interest.ToString();
-            }
-            var friendrequested = await _unitOfWork.FriendRequestRepository.GetFriendRequestedUsersDTOAsync(User.GetId());
-            var forbiddenIds = await _unitOfWork.FriendRequestRepository.GetFriendsIdsAsync(User.GetId());
-            forbiddenIds = forbiddenIds.Concat(friendrequested.Select(u => u.Id));
-            var users = await _unitOfWork.UserRepository.GetUsersDTOAsync(User.GetUsername(), userParams, forbiddenIds.ToList());
-            var newPaginationHeader = new PaginationHeader(users.CurrentPage, users.ItemsPerPage, users.TotalCount, users.TotalPages);
+            var users = await _unitOfWork.UserRepository.GetUsersDTOAsync(User.GetId(), userParams);
+            var newPaginationHeader = new PaginationHeader(users.CurrentPage, users.ItemsPerPage, users.Count, users.TotalPages);
             Response.AddPaginationHeader(newPaginationHeader);
-            return Ok(users);
+            return Ok(users.Items);
         }
 
         // GET: api/users/{id}

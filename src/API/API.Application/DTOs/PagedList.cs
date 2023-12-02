@@ -2,28 +2,30 @@
 
 namespace API.Application.DTOs
 {
-    public class PagedList<T> : List<T>
+
+    public class PagedList<T>
     {
-        public PagedList(IEnumerable<T> items, int count, int pageNumber, int itemsPerPage)
+        public List<T> Items;
+        public PagedList(List<T> items, int count, int pageNumber, int itemsPerPage)
         {
             CurrentPage = pageNumber; // note that: it begins with 1 
             ItemsPerPage = itemsPerPage;
             TotalPages = (int)Math.Ceiling(count / (double)itemsPerPage);
-            TotalCount = count;
-            AddRange(items);
+            Count = count;
+            if(items is not null)
+            {
+                Items = items;
+            }
+            else
+            {
+                Items = new List<T>();
+            }
+            // AddRange(items);
         }
 
         public int CurrentPage { get; set; }
         public int TotalPages { get; set; }
         public int ItemsPerPage { get; set; }
-        public int TotalCount { get; set; } // total number of items
-
-        public static async Task<PagedList<T>> CreatePageAsync(IQueryable<T> source, int pageNumber, int itemsPerPage)
-        {
-            int count = await source.CountAsync();
-            var items = await source.Skip((pageNumber - 1) * itemsPerPage).Take(itemsPerPage).ToListAsync();
-            return new PagedList<T>(items, count, pageNumber, itemsPerPage);
-        }
-
+        public int Count { get; set; } // total number of items
     }
 }
