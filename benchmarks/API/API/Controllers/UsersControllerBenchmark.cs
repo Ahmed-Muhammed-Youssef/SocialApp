@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc;
 namespace API.Benchmark.Controllers
 {
     [MemoryDiagnoser]
-    [Config(typeof(MyBenchmarkConfig))]
     public class UsersControllerBenchmark
     {
         private UsersController _userController;
@@ -29,8 +28,8 @@ namespace API.Benchmark.Controllers
             return _userController;
         }
 
-        // | StdDev    | Mean     | Max      | Min      | Median   | Op/s  |
-        // | 0.0492 ms | 4.076 ms | 4.146 ms | 3.973 ms | 4.088 ms | 245.4 |
+        // | StdDev    | Mean     | Max      | Min      | Median   | Op/s  | Memory  |
+        // | 0.0096 ms | 3.841 ms | 3.858 ms | 3.822 ms | 3.843 ms | 260.3 | 0.55 MB |
 
         [Benchmark]
         public async Task GetUsers()
@@ -42,8 +41,8 @@ namespace API.Benchmark.Controllers
             // To display the result of the endpoint in a json format
             // CommonLibrary.PrintActionResult(actionResult);
         }
-        // | StdDev    | Mean     | Max      | Min      | Median   | Op/s  |
-        // | 0.0197 ms | 4.216 ms | 4.253 ms | 4.181 ms | 4.217 ms | 237.2 |
+        // | StdDev    | Mean     | Max      | Min      | Median   | Op/s  | Memory  |
+        // | 0.0080 ms | 3.627 ms | 3.645 ms | 3.617 ms | 3.625 ms | 275.7 | 0.52 MB |
         [Benchmark]
         public async Task GetUser()
         {

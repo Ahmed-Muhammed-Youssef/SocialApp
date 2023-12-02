@@ -78,7 +78,7 @@ namespace API.Benchmark.Helpers
             };
             var identity = new ClaimsIdentity(claims);
             httpContext.User = new ClaimsPrincipal(identity);
-            httpContext.Request.Headers.Add("Authorization", token);
+            httpContext.Request.Headers.Append("Authorization", token);
             return httpContext;
         }
     }
