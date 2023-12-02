@@ -107,6 +107,7 @@ namespace API.Infrastructure.Repositories
                 users = await connection.QueryAsync<UserDTO>("GetFriendRequestedUsersDTO", parameters, commandType: CommandType.StoredProcedure);
             }
             return users;
+        }
 
         public void DeleteFriendRequest(FriendRequest friendRequest)
         {
