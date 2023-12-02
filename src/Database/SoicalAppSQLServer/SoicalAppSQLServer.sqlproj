@@ -78,5 +78,8 @@
     <Build Include="dbo\Tables\Pictures.sql" />
     <Build Include="dbo\Tables\Connections.sql" />
     <Build Include="dbo\Stored Procedures\GetUserById.sql" />
+    <Build Include="dbo\Stored Procedures\GetUsersDtos.sql" />
+    <Build Include="dbo\Stored Procedures\GetUserDtoById.sql" />
+    <Build Include="dbo\Stored Procedures\GetFriendRequestedUsersDTO.sql" />
   </ItemGroup>
 </Project>
