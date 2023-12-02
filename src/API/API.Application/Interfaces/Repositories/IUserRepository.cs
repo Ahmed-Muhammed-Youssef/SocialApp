@@ -5,6 +5,7 @@ namespace API.Application.Interfaces.Repositories
 {
     public interface IUserRepository
     {
+
         public void Update(AppUser appUser);
         public Task<PagedList<UserDTO>> GetUsersDTOAsync(int userId, UserParams userParams);
         public Task<AppUser> GetUserByIdAsync(int id);

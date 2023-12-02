@@ -2,6 +2,7 @@
 
 namespace API.Application.DTOs
 {
+
     public class PagedList<T>
     {
         public List<T> Items;

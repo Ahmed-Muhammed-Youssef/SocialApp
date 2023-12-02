@@ -5,6 +5,7 @@ using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 using API.Application.Interfaces.Repositories;
+
 using Dapper;
 using Microsoft.Data.SqlClient;
 using System.Data;
@@ -58,11 +59,11 @@ namespace API.Infrastructure.Repositories
                 .ProjectTo<UserDTO>(_mapper.ConfigurationProvider).AsNoTracking();
 
             queryDto = queryDto.OrderByDescending(u => u.LastActive);
+
             int count = queryDto.Count();
             var items = queryDto.Skip((paginationParams.PageNumber - 1) * paginationParams.ItemsPerPage).Take(paginationParams.ItemsPerPage);
             var listDto = await queryDto.ToListAsync();
             var pagedResult = new PagedList<UserDTO>(listDto, listDto.Count, paginationParams.PageNumber, paginationParams.ItemsPerPage);
-
             return pagedResult;
         }
         public async Task<bool> IsFriend(int userId, int targetId)
@@ -106,7 +107,6 @@ namespace API.Infrastructure.Repositories
                 users = await connection.QueryAsync<UserDTO>("GetFriendRequestedUsersDTO", parameters, commandType: CommandType.StoredProcedure);
             }
             return users;
-        }
 
         public void DeleteFriendRequest(FriendRequest friendRequest)
         {

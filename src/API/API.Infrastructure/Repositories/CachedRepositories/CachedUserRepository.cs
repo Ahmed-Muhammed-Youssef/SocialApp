@@ -46,13 +46,11 @@ namespace API.Infrastructure.Repositories.CachedRepositories
 
         // Caching this mehtod will need a complex implemention
         public Task<PagedList<UserDTO>> GetUsersDTOAsync(int userId, UserParams userParams) => _usersRepository.GetUsersDTOAsync(userId, userParams);
-
         public Task<bool> UserExistsAsync(int id) => _usersRepository.UserExistsAsync(id);
 
         // Commands
         public void DeleteUser(AppUser user) => _usersRepository.DeleteUser(user);
 
         public void Update(AppUser appUser) => _usersRepository.Update(appUser);
-
     }
 }
