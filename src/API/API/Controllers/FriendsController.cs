@@ -33,7 +33,7 @@ namespace API.Controllers
                 return Unauthorized();
             }
             var friends = await _unitOfWork.FriendRequestRepository.GetFriendsAsync(user.Id, paginationParams);
-            var newPaginationHeader = new PaginationHeader(friends.CurrentPage, friends.ItemsPerPage, friends.TotalCount, friends.TotalPages);
+            var newPaginationHeader = new PaginationHeader(friends.CurrentPage, friends.ItemsPerPage, friends.Count, friends.TotalPages);
             Response.AddPaginationHeader(newPaginationHeader);
             return Ok(friends);
         }

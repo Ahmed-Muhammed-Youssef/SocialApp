@@ -44,23 +44,8 @@ namespace API.Infrastructure.Repositories.CachedRepositories
             return result;
         }
 
-        public async Task<char> GetUserInterest(int userId)
-        {
-            object key = nameof(GetUserInterest) + userId;
-            if (!_memoryCache.TryGetValue(key, out char result))
-            {
-                result = await _usersRepository.GetUserInterest(userId);
-
-                // cache the value
-                _memoryCache.Set(key, result, TimeSpan.FromMinutes(1));
-            }
-            return result;
-        }
-        
-
         // Caching this mehtod will need a complex implemention
-        public Task<PagedList<UserDTO>> GetUsersDTOAsync(string username, UserParams userParams, List<int> ForbiddenIds) =>
-            _usersRepository.GetUsersDTOAsync(username, userParams, ForbiddenIds);
+        public Task<PagedList<UserDTO>> GetUsersDTOAsync(int userId, UserParams userParams) => _usersRepository.GetUsersDTOAsync(userId, userParams);
 
         public Task<bool> UserExistsAsync(int id) => _usersRepository.UserExistsAsync(id);
 
@@ -68,5 +53,6 @@ namespace API.Infrastructure.Repositories.CachedRepositories
         public void DeleteUser(AppUser user) => _usersRepository.DeleteUser(user);
 
         public void Update(AppUser appUser) => _usersRepository.Update(appUser);
+
     }
 }

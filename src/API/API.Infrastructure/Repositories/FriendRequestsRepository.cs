@@ -5,6 +5,9 @@ using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 using API.Application.Interfaces.Repositories;
+using Dapper;
+using Microsoft.Data.SqlClient;
+using System.Data;
 
 namespace API.Infrastructure.Repositories
 {
@@ -55,11 +58,10 @@ namespace API.Infrastructure.Repositories
                 .ProjectTo<UserDTO>(_mapper.ConfigurationProvider).AsNoTracking();
 
             queryDto = queryDto.OrderByDescending(u => u.LastActive);
-
-            var pagedResult = await PagedList<UserDTO>
-                .CreatePageAsync(queryDto, paginationParams.PageNumber, paginationParams.ItemsPerPage);
-
-            // pagedResult.ForEach(u => u.Pictures.OrderBy(p => p.Order));
+            int count = queryDto.Count();
+            var items = queryDto.Skip((paginationParams.PageNumber - 1) * paginationParams.ItemsPerPage).Take(paginationParams.ItemsPerPage);
+            var listDto = await queryDto.ToListAsync();
+            var pagedResult = new PagedList<UserDTO>(listDto, listDto.Count, paginationParams.PageNumber, paginationParams.ItemsPerPage);
 
             return pagedResult;
         }
@@ -94,21 +96,16 @@ namespace API.Infrastructure.Repositories
         }
         public async Task<IEnumerable<UserDTO>> GetFriendRequestedUsersDTOAsync(int senderId)
         {
-            var users = _dataContext.FriendRequests
-                .AsNoTracking()
-                .Where(fr => fr.RequesterId == senderId)
-                .Select(fr => fr.Requested)
-                .ProjectTo<UserDTO>(_mapper.ConfigurationProvider);
-            return await users.ToListAsync();
-        }
+            IEnumerable<UserDTO> users = new List<UserDTO>();
 
-        public async Task<IEnumerable<int>> GetFriendsIdsAsync(int senderId)
-        {
-            var users = _dataContext.Friends
-                .AsNoTracking()
-                .Where(f => f.UserId == senderId)
-                .Select(f => f.FriendId);
-            return await users.ToListAsync();
+            using (var connection = new SqlConnection(_dataContext.Database.GetDbConnection().ConnectionString))
+            {
+                var parameters = new DynamicParameters();
+                parameters.Add("@senderId", senderId);
+
+                users = await connection.QueryAsync<UserDTO>("GetFriendRequestedUsersDTO", parameters, commandType: CommandType.StoredProcedure);
+            }
+            return users;
         }
 
         public void DeleteFriendRequest(FriendRequest friendRequest)

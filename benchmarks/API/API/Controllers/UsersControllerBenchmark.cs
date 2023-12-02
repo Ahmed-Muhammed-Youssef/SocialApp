@@ -29,7 +29,7 @@ namespace API.Benchmark.Controllers
         }
 
         // | StdDev    | Mean     | Max      | Min      | Median   | Op/s  | Memory  |
-        // | 0.0096 ms | 3.841 ms | 3.858 ms | 3.822 ms | 3.843 ms | 260.3 | 0.55 MB |
+        // | 0.0238 ms | 2.224 ms | 2.253 ms | 2.178 ms | 2.227 ms | 449.6 | 0.44 MB |
 
         [Benchmark]
         public async Task GetUsers()
@@ -42,7 +42,7 @@ namespace API.Benchmark.Controllers
             // CommonLibrary.PrintActionResult(actionResult);
         }
         // | StdDev    | Mean     | Max      | Min      | Median   | Op/s  | Memory  |
-        // | 0.0080 ms | 3.627 ms | 3.645 ms | 3.617 ms | 3.625 ms | 275.7 | 0.52 MB |
+        // | 0.0462 ms | 1.743 ms | 1.850 ms | 1.681 ms | 1.742 ms | 573.9 | 0.42 MB |
         [Benchmark]
         public async Task GetUser()
         {

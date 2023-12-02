@@ -55,7 +55,7 @@ namespace API.Benchmark.Helpers
             var dbContext = CreateDbContext();
             var mapper = CreateAutoMapper();
             var emptyCache = new MemoryCache(new MemoryCacheOptions());
-            var userRepository = new CachedUserRepository(new UserRepository(dbContext, mapper), emptyCache);
+            var userRepository = new CachedUserRepository(new UserRepository(dbContext), emptyCache);
             var pictureRepository = new PictureRepository(dbContext, mapper);
             var messageRepository = new MessageRepository(dbContext, mapper);
             var friendRequestsRepository = new FriendRequestsRepository(dbContext, mapper);
