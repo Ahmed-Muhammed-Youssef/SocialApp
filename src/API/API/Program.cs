@@ -34,6 +34,7 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IPictureRepository, PictureRepository>();
 builder.Services.AddScoped<IMessageRepository, MessageRepository>();
 builder.Services.AddScoped<IFriendRequestRepository, FriendRequestsRepository>();
+builder.Services.AddScoped<IPostRepository, PostRepository>();
 
 // User-defined Services
 builder.Services.AddSingleton<PresenceTracker>();
