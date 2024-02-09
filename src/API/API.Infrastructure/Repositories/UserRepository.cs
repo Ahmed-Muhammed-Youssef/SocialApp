@@ -1,7 +1,5 @@
 ﻿using API.Application.DTOs;
 using API.Domain.Entities;
-using AutoMapper;
-using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 using API.Infrastructure.Data;
 using API.Application.Interfaces.Repositories;
