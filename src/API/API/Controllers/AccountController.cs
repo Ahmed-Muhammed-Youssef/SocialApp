@@ -14,22 +14,8 @@ namespace API.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [ServiceFilter(typeof(LogUserActivity))]
-    public class AccountController : ControllerBase
+    public class AccountController(IUnitOfWork unitOfWork, UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, ITokenService tokenService, IMapper mapper) : ControllerBase
     {
-        private readonly UserManager<AppUser> _userManager;
-        private readonly SignInManager<AppUser> _signInManager;
-        private readonly ITokenService _tokenService;
-        private readonly IMapper _mapper;
-        private readonly IUnitOfWork _unitOfWork;
-
-        public AccountController(IUnitOfWork unitOfWork, UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, ITokenService tokenService, IMapper mapper)
-        {
-            _userManager = userManager;
-            _signInManager = signInManager;
-            _tokenService = tokenService;
-            _mapper = mapper;
-            _unitOfWork = unitOfWork;
-        }
         // POST: api/account/register
         [HttpPost("register")]
         public async Task<ActionResult> Register(RegisterDTO accountDTO)
@@ -47,24 +33,24 @@ namespace API.Controllers
                 return BadRequest("The Username is already taken.");
             }
             AppUser newUser = new AppUser();
-            _mapper.Map(accountDTO, newUser);
+            mapper.Map(accountDTO, newUser);
             newUser.UserName = newUser.UserName.ToLower();
-            var result = await _userManager.CreateAsync(newUser, accountDTO.Password);
+            var result = await userManager.CreateAsync(newUser, accountDTO.Password);
             if (!result.Succeeded)
             {
                 return BadRequest("Failed to register the user.");
             }
-            var adddRoleresult = await _userManager.AddToRoleAsync(newUser, "user");
+            var adddRoleresult = await userManager.AddToRoleAsync(newUser, "user");
             if (!adddRoleresult.Succeeded)
             {
                 return BadRequest();
             }
-            var userData = await _unitOfWork.UserRepository.GetUserDTOByIdAsync(newUser.Id);
+            var userData = await unitOfWork.UserRepository.GetUserDTOByIdAsync(newUser.Id);
             return CreatedAtAction("Register", new { email = accountDTO.Email },
                 new TokenDTO()
                 {
                     UserData = userData,
-                    Token = await _tokenService.CreateTokenAsync(newUser)
+                    Token = await tokenService.CreateTokenAsync(newUser)
                 });
         }
         // POST: api/account/login
@@ -75,12 +61,12 @@ namespace API.Controllers
             {
                 return BadRequest(loginCredentials);
             }
-            var user = await _userManager.Users.Include(u => u.Pictures).FirstOrDefaultAsync(u => u.Email == loginCredentials.Email);
+            var user = await userManager.Users.Include(u => u.Pictures).FirstOrDefaultAsync(u => u.Email == loginCredentials.Email);
             if (user == null)
             {
                 return Unauthorized();
             }
-            var signInResult = await _signInManager
+            var signInResult = await signInManager
                 .CheckPasswordSignInAsync(user, loginCredentials.Password, lockoutOnFailure: false);
             if (!signInResult.Succeeded)
             {
@@ -90,19 +76,19 @@ namespace API.Controllers
 
             return Ok(new TokenDTO()
             {
-                UserData = _mapper.Map<AppUser, UserDTO>(user),
-                Token = await _tokenService.CreateTokenAsync(user)
+                UserData = mapper.Map<AppUser, UserDTO>(user),
+                Token = await tokenService.CreateTokenAsync(user)
             });
         }
 
         // Utility Methods
         private async Task<bool> EmailExists(string email)
         {
-            return await _userManager.Users.AnyAsync(u => u.Email == email);
+            return await userManager.Users.AnyAsync(u => u.Email == email);
         }
         private async Task<bool> UsernameExists(string username)
         {
-            return await _userManager.Users.AnyAsync(u => u.UserName == username);
+            return await userManager.Users.AnyAsync(u => u.UserName == username);
         }
     }
 }

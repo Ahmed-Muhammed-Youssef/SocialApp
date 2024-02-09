@@ -1,14 +1,15 @@
-﻿namespace API.Application.DTOs
+﻿using API.Domain.Constants;
+using API.Domain.Enums;
+
+namespace API.Application.DTOs
 {
     public class UserParams : PaginationParams
     {
-
-        private int? minAge = null;
+        private int minAge = SystemPolicy.UsersMinimumAge;
         private int? maxAge = null;
-        private string orderBy = "lastActive";
-
-        public string Sex { get; set; } // to get the default value we need to make a query which is the interest field. 
-        public int? MinAge
+        public SexOptions Sex { get; set; } = SexOptions.None; // to get the default value we need to make a query which is the interest field. 
+        public OrderByOptions OrderBy { get; set; } = OrderByOptions.LastActive;
+        public int MinAge
         {
             get
             {
@@ -16,7 +17,7 @@
             }
             set
             {
-                if (value >= 18)
+                if (value >= SystemPolicy.UsersMinimumAge)
                 {
                     minAge = value;
                 }
@@ -30,33 +31,13 @@
             }
             set
             {
-                if (minAge != null)
-                {
-                    if (value >= minAge)
-                    {
-                        maxAge = value;
-                    }
-                }
-                else if (value >= 18)
+                if (value >= minAge)
                 {
                     maxAge = value;
                 }
             }
         }
-        private List<string> orderOptions = new List<string>() { "lastActive", "age", "creationTime" };
-        public string OrderBy
-        {
-            get
-            {
-                return orderBy;
-            }
-            set
-            {
-                if (!string.IsNullOrEmpty(value) || orderOptions.Contains(value))
-                {
-                    orderBy = value;
-                }
-            }
-        }
     }
+
+    
 }
