@@ -13,6 +13,7 @@ namespace API.Infrastructure.Data
         public DataContext(DbContextOptions options) : base(options)
         {
         }
+        public DbSet<Post> Posts { get; set; }
         public DbSet<FriendRequest> FriendRequests { get; set; }
         public DbSet<Friend> Friends { get; set; }
         public DbSet<Picture> Pictures { get; set; }
@@ -30,7 +31,7 @@ namespace API.Infrastructure.Data
             modelBuilder.ApplyConfiguration(new FriendConfigurations());
             modelBuilder.ApplyConfiguration(new AppUserConfigurations());
             modelBuilder.ApplyConfiguration(new AppUserRoleConfigurations());
-
+            modelBuilder.ApplyConfiguration(new PostConfigurations());
         }
     }
 }
