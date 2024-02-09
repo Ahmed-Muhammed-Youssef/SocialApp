@@ -1,6 +1,7 @@
 ﻿using API.Application.DTOs;
 using API.Benchmark.Helpers;
 using API.Controllers;
+using API.Domain.Enums;
 using BenchmarkDotNet.Attributes;
 using Microsoft.AspNetCore.Mvc;
 
@@ -35,7 +36,7 @@ namespace API.Benchmark.Controllers
         public async Task GetUsers()
         {
             _userController = Initialize();
-            var userParams = new UserParams() { ItemsPerPage = 10, MaxAge = 25, MinAge = 20, OrderBy = "lastActive", PageNumber = 1, Sex = "b" };
+            var userParams = new UserParams() { ItemsPerPage = 10, MaxAge = 25, MinAge = 20, OrderBy = OrderByOptions.LastActive, PageNumber = 1, Sex = SexOptions.Both };
             var actionResult = await _userController.GetUsers(userParams);
 
             // To display the result of the endpoint in a json format
