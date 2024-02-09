@@ -1,5 +1,5 @@
 ﻿CREATE PROCEDURE [dbo].[GetUsersDtos] 
-    @userId NVARCHAR(50),
+    @userId INT,
     @sex SMALLINT,
     @minAge INT,
     @maxAge INT,
@@ -55,12 +55,12 @@ BEGIN
     DECLARE @maxDoB AS DATETIME;
     DECLARE @minDoB AS DATETIME;
 
-    IF @maxAge <> NULL
+    IF NOT (@maxAge IS NULL)
     BEGIN
         SET @minDoB = DATEADD(YEAR, -@maxAge - 1, GETUTCDATE());
     END
 
-    IF @minAge <> NULL
+    IF NOT (@minAge IS NULL)
     BEGIN
         SET @maxDoB = DATEADD(YEAR, -@minAge, GETUTCDATE());
     END
@@ -70,7 +70,7 @@ BEGIN
 
     -- Build the query
     SELECT U.Id,
-		U.Username,
+		U.UserName,
 		U.FirstName,
 		U.LastName,
 		U.ProfilePictureUrl,
