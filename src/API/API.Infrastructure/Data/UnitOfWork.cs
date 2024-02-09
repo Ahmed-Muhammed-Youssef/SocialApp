@@ -7,14 +7,16 @@ namespace API.Infrastructure.Data
     {
         private readonly DataContext _dataContext;
         public UnitOfWork(DataContext dataContext, ICachedUserRepository userRepository, IPictureRepository pictureRepository,
-            IMessageRepository messageRepository, IFriendRequestRepository friendRequestRepository)
+            IMessageRepository messageRepository, IFriendRequestRepository friendRequestRepository, IPostRepository postRepository)
         {
             _dataContext = dataContext;
             UserRepository = userRepository;
             PictureRepository = pictureRepository;
             MessageRepository = messageRepository;
             FriendRequestRepository = friendRequestRepository;
+            PostRepository = postRepository;
         }
+        public IPostRepository PostRepository { get; }
         public ICachedUserRepository UserRepository { get; }
         public IPictureRepository PictureRepository { get; }
         public IMessageRepository MessageRepository { get; }
