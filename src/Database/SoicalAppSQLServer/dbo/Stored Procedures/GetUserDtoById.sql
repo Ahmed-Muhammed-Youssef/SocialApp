@@ -4,7 +4,7 @@ AS
 BEGIN
 	SET NOCOUNT ON;
 	SELECT U.Id,
-		U.Username,
+		U.UserName,
 		U.FirstName,
 		U.LastName,
 		U.ProfilePictureUrl,
