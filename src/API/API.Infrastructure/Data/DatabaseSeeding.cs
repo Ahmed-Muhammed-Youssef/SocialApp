@@ -12,57 +12,51 @@ namespace API.Infrastructure.Data
     {
         public static async Task MigrateDatabaseAsync(IServiceProvider serviceProvider)
         {
-            using (var scope = serviceProvider.CreateScope())
+            using var scope = serviceProvider.CreateScope();
+            var services = scope.ServiceProvider;
+            try
             {
-                var services = scope.ServiceProvider;
-                try
-                {
-                    var context = services.GetRequiredService<DataContext>();
-                    await context.Database.MigrateAsync();
-                }
-                catch (Exception ex)
-                {
-                    var logger = services.GetRequiredService<ILogger<DatabaseSeeding>>();
-                    logger.LogError(ex, "An error occurred during migration");
-                }
+                var context = services.GetRequiredService<DataContext>();
+                await context.Database.MigrateAsync();
             }
-
-
+            catch (Exception ex)
+            {
+                var logger = services.GetRequiredService<ILogger<DatabaseSeeding>>();
+                logger.LogError(ex, "An error occurred during migration");
+            }
         }
         public static async Task SeedUsersAsync(IServiceProvider serviceProvider)
         {
-            using (var scope = serviceProvider.CreateScope())
+            using var scope = serviceProvider.CreateScope();
+            var services = scope.ServiceProvider;
+            try
             {
-                var services = scope.ServiceProvider;
-                try
-                {
-                    var context = services.GetRequiredService<DataContext>();
-                    var userManager = services.GetRequiredService<UserManager<AppUser>>();
-                    var roleManager = services.GetRequiredService<RoleManager<AppRole>>();
-                    await AddData(userManager, roleManager);
-                }
-                catch (Exception ex)
-                {
-                    var logger = services.GetRequiredService<ILogger<DatabaseSeeding>>();
-                    logger.LogError(ex, "An error occurred during seeding");
-                }
+                DataContext context = services.GetRequiredService<DataContext>();
+                var userManager = services.GetRequiredService<UserManager<AppUser>>();
+                var roleManager = services.GetRequiredService<RoleManager<AppRole>>();
+                await AddData(userManager, roleManager, context);
+            }
+            catch (Exception ex)
+            {
+                var logger = services.GetRequiredService<ILogger<DatabaseSeeding>>();
+                logger.LogError(ex, "An error occurred during seeding");
             }
         }
-        private static async Task AddData(UserManager<AppUser> userManager, RoleManager<AppRole> roleManager)
+        private static async Task AddData(UserManager<AppUser> userManager, RoleManager<AppRole> roleManager, DataContext dataContext)
         {
             // add admin
             if (await userManager.Users.AnyAsync()) return;
             var roles = new List<AppRole>
             {
-                new AppRole{Name = RolesNameValues.Admin},
-                new AppRole{Name = RolesNameValues.Moderator},
-                new AppRole{Name = RolesNameValues.User}
+                new() {Name = RolesNameValues.Admin},
+                new() {Name = RolesNameValues.Moderator},
+                new() {Name = RolesNameValues.User}
             };
             foreach (var role in roles)
             {
                 await roleManager.CreateAsync(role);
             }
-            var admin = new AppUser
+            AppUser admin = new()
             {
                 UserName = "admin",
                 FirstName = "admin",
@@ -78,7 +72,9 @@ namespace API.Infrastructure.Data
             };
             await userManager.CreateAsync(admin, "Pwd12345");
             await userManager.AddToRolesAsync(admin, new[] { RolesNameValues.User, RolesNameValues.Admin, RolesNameValues.Moderator });
-            char[] sex = { 'm', 'f' };
+            char[] sex = ['m', 'f'];
+
+            Random random = new();
             for (int i = 0; i < 100; i++)
             {
                 var testUsers = new Faker<AppUser>()
@@ -99,6 +95,23 @@ namespace API.Infrastructure.Data
                 var user = testUsers.Generate();
                 await userManager.CreateAsync(user, "Pwd12345");
                 await userManager.AddToRolesAsync(user, new[] { RolesNameValues.User });
+
+                // Add some posts to that user
+
+                Faker<Post> postsFaker = new Faker<Post>()
+                    .RuleFor(p => p.Content, f => f.Lorem.Paragraph())
+                    .RuleFor(p => p.DatePosted, f => f.Date.Past(3))
+                    .RuleFor(p =>p.DateEdited, f => f.Date.Recent(30));
+                
+                int randomNumber = random.Next(0, 101);
+                List<Post> fakePosts = postsFaker.Generate(randomNumber);
+
+                foreach (var post in fakePosts)
+                {
+                    post.UserId = user.Id;
+                    dataContext.Posts.Add(post);
+                    dataContext.SaveChanges();
+                }
             }
         }
     }
