@@ -1,11 +1,12 @@
-﻿using API.Application.DTOs;
-using API.Domain.Entities;
+﻿using API.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using API.Infrastructure.Data;
 using API.Application.Interfaces.Repositories;
 using Microsoft.Data.SqlClient;
 using System.Data;
 using Dapper;
+using API.Application.DTOs.User;
+using API.Application.DTOs.Pagination;
 
 namespace API.Infrastructure.Repositories
 {

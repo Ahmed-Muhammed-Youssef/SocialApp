@@ -1,4 +1,4 @@
-﻿using API.Application.DTOs;
+﻿using API.Application.DTOs.Pagination;
 using Microsoft.AspNetCore.Http;
 using System.Text.Json;
 

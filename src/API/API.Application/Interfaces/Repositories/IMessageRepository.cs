@@ -1,4 +1,4 @@
-﻿using API.Application.DTOs;
+﻿using API.Application.DTOs.Message;
 using API.Domain.Entities;
 
 namespace API.Application.Interfaces.Repositories

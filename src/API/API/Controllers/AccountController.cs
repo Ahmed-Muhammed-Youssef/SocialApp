@@ -1,5 +1,4 @@
 ﻿using API.Domain.Entities;
-using API.Application.DTOs;
 using API.Filters;
 using AutoMapper;
 using Microsoft.AspNetCore.Identity;
@@ -8,6 +7,8 @@ using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 using API.Application.Interfaces.Services;
 using API.Application.Interfaces;
+using API.Application.DTOs.User;
+using API.Application.DTOs.Registeration;
 
 namespace API.Controllers
 {

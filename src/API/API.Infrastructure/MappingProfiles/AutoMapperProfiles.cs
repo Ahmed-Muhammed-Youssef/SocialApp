@@ -1,4 +1,8 @@
-﻿using API.Application.DTOs;
+﻿using API.Application.DTOs.Message;
+using API.Application.DTOs.Picture;
+using API.Application.DTOs.Post;
+using API.Application.DTOs.Registeration;
+using API.Application.DTOs.User;
 using API.Domain.Entities;
 using API.Infrastructure.Extensions;
 using AutoMapper;

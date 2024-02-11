@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace API.Application.DTOs
+namespace API.Application.DTOs.Pagination
 {
 
     public class PagedList<T>
@@ -12,7 +12,7 @@ namespace API.Application.DTOs
             ItemsPerPage = itemsPerPage;
             TotalPages = (int)Math.Ceiling(count / (double)itemsPerPage);
             Count = count;
-            if(items is not null)
+            if (items is not null)
             {
                 Items = items;
             }

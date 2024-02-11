@@ -1,5 +1,4 @@
 ﻿using API.Domain.Entities;
-using API.Application.DTOs;
 using API.Infrastructure.Data;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
@@ -9,6 +8,8 @@ using API.Application.Interfaces.Repositories;
 using Dapper;
 using Microsoft.Data.SqlClient;
 using System.Data;
+using API.Application.DTOs.User;
+using API.Application.DTOs.Pagination;
 
 namespace API.Infrastructure.Repositories
 {

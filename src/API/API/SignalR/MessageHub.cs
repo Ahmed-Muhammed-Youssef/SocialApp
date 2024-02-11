@@ -1,4 +1,5 @@
-using API.Application.DTOs;
+using API.Application.DTOs.Message;
+using API.Application.DTOs.User;
 using API.Application.Interfaces;
 using API.Domain.Entities;
 using API.Extensions;

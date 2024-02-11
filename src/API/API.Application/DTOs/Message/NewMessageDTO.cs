@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace API.Application.DTOs
+namespace API.Application.DTOs.Message
 {
     public class NewMessageDTO
     {

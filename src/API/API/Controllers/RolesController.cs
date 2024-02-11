@@ -1,5 +1,4 @@
 ﻿using API.Domain.Entities;
-using API.Application.DTOs;
 using API.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -8,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using API.Application.DTOs.User;
 
 namespace API.Controllers
 {
