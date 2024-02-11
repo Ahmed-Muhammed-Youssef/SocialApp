@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using API.Application.DTOs.User;
 
-namespace API.Application.DTOs
+namespace API.Application.DTOs.Registeration
 {
     public class TokenDTO
     {

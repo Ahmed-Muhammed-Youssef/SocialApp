@@ -1,8 +1,9 @@
-﻿using API.Application.DTOs;
-using Microsoft.Extensions.Caching.Memory;
+﻿using Microsoft.Extensions.Caching.Memory;
 using API.Domain.Entities;
 using API.Application.Interfaces;
 using API.Application.Interfaces.Repositories;
+using API.Application.DTOs.User;
+using API.Application.DTOs.Pagination;
 
 namespace API.Infrastructure.Repositories.CachedRepositories
 {

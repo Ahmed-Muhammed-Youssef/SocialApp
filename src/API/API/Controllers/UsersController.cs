@@ -1,4 +1,5 @@
-﻿using API.Application.DTOs;
+﻿using API.Application.DTOs.Pagination;
+using API.Application.DTOs.User;
 using API.Application.Interfaces;
 using API.Extensions;
 using API.Filters;

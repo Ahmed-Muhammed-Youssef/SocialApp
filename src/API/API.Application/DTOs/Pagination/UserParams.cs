@@ -1,7 +1,7 @@
 ﻿using API.Domain.Constants;
 using API.Domain.Enums;
 
-namespace API.Application.DTOs
+namespace API.Application.DTOs.Pagination
 {
     public class UserParams : PaginationParams
     {
@@ -39,5 +39,5 @@ namespace API.Application.DTOs
         }
     }
 
-    
+
 }

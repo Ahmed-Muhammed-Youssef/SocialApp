@@ -1,10 +1,10 @@
-﻿using API.Application.DTOs;
-using API.Domain.Entities;
+﻿using API.Domain.Entities;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 using API.Infrastructure.Data;
 using API.Application.Interfaces.Repositories;
+using API.Application.DTOs.Message;
 
 namespace API.Infrastructure.Repositories
 {

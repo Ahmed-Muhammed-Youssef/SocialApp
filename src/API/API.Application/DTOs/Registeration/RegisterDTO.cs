@@ -1,35 +1,29 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace API.Application.DTOs
+namespace API.Application.DTOs.Registeration
 {
-    public class UserDTO
+    public class RegisterDTO
     {
-        [Required]
-        public int Id { get; set; }
         [Required, MaxLength(255)]
-        public string Username { get; set; }
+        public string UserName { get; set; }
         [Required, MaxLength(255)]
         public string FirstName { get; set; }
         [Required, MaxLength(255)]
         public string LastName { get; set; }
-        public string ProfilePictureUrl { get; set; }
         [Required]
         public char Sex { get; set; }
         [Required]
         public char Interest { get; set; }
+        [EmailAddress, Required]
+        public string Email { get; set; }
         [Required]
-        public int Age { get; set; }
+        [MinLength(6)]
+        public string Password { get; set; }
         [Required]
-        public DateTime Created { get; set; }
-        [Required]
-        public DateTime LastActive { get; set; }
-        [Required]
-        public string Bio { get; set; }
+        public DateTime DateOfBirth { get; set; }
         [Required]
         public string City { get; set; }
         [Required]
         public string Country { get; set; }
-
-        public IEnumerable<PictureDTO> Pictures { get; set; }
     }
 }
