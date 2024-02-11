@@ -11,7 +11,7 @@
     <ProjectReference Include="..\..\..\src\API\API\API.csproj" />
   </ItemGroup>
 	<ItemGroup>
-		<PackageReference Include="BenchmarkDotNet" Version="0.13.10" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="8.0.0" />
+		<PackageReference Include="BenchmarkDotNet" Version="0.13.12" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="8.0.1" />
 	</ItemGroup>
 </Project>
