@@ -22,7 +22,8 @@ namespace API.Infrastructure.MappingProfiles
             // @TODO: add profile picture mapping here
             CreateMap<Message, MessageDTO>().ForMember(m => m.SenderPhotoUrl, opt => opt.MapFrom(m => m.Sender.Pictures.FirstOrDefault().Url));
             
-            CreateMap<PostDTO, Post>();
+            CreateMap<Post, PostDTO>();
+            CreateMap<AddPostDTO, Post>();
         }
 
     }

@@ -31,16 +31,18 @@ namespace API.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<PostDTO>> AddPost([FromBody]PostDTO newPostDTO)
+        public async Task<ActionResult<PostDTO>> AddPost([FromBody]AddPostDTO newPostDTO)
         {
-            var newPost = _mapper.Map<Post>(newPostDTO);
-            newPost.UserId = User.GetId();
+            Post post = _mapper.Map<Post>(newPostDTO);
+            post.UserId = User.GetId();
 
-            await _unitOfWork.PostRepository.AddPostAsync(newPost);
+            await _unitOfWork.PostRepository.AddPostAsync(post);
             await _unitOfWork.Complete();
 
-            newPostDTO.Id = newPost.Id;
-            return Ok(newPostDTO);
+            PostDTO returnPostDTO = _mapper.Map<PostDTO>(post);
+            returnPostDTO.Id = post.Id;
+
+            return Ok(returnPostDTO);
         }
     }
 }
