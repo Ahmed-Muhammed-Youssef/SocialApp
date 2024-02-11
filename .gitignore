@@ -457,3 +457,4 @@ API/dataingapp.db
 *.db-shm
 /API/socialapp.db
 /API/socialapp.db
+/src/API/API/appsettings.Development.json
