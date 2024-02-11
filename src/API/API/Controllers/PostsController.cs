@@ -1,7 +1,8 @@
-﻿using API.Application.Interfaces;
+﻿using API.Application.DTOs.Post;
+using API.Application.Interfaces;
 using API.Domain.Entities;
 using API.Extensions;
-using API.Filters;
+using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -13,9 +14,8 @@ namespace API.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
-    public class PostsController(IUnitOfWork _unitOfWork) : ControllerBase
+    public class PostsController(IUnitOfWork _unitOfWork, IMapper _mapper) : ControllerBase
     {
-        
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Post>>> GetUserPostsAsync([FromQuery]int userId)
         {
@@ -28,6 +28,19 @@ namespace API.Controllers
         {
             var posts = await _unitOfWork.PostRepository.GetPostByIdAsync(postId, User.GetId());
             return Ok(posts);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<PostDTO>> AddPost([FromBody]PostDTO newPostDTO)
+        {
+            var newPost = _mapper.Map<Post>(newPostDTO);
+            newPost.UserId = User.GetId();
+
+            await _unitOfWork.PostRepository.AddPostAsync(newPost);
+            await _unitOfWork.Complete();
+
+            newPostDTO.Id = newPost.Id;
+            return Ok(newPostDTO);
         }
     }
 }
