@@ -3,24 +3,14 @@ using API.Application.Interfaces.Repositories;
 
 namespace API.Infrastructure.Data
 {
-    public class UnitOfWork : IUnitOfWork
+    public class UnitOfWork(DataContext _dataContext, ICachedUserRepository _userRepository, IPictureRepository _pictureRepository,
+        IMessageRepository _messageRepository, IFriendRequestRepository _friendRequestRepository, IPostRepository _postRepository) : IUnitOfWork
     {
-        private readonly DataContext _dataContext;
-        public UnitOfWork(DataContext dataContext, ICachedUserRepository userRepository, IPictureRepository pictureRepository,
-            IMessageRepository messageRepository, IFriendRequestRepository friendRequestRepository, IPostRepository postRepository)
-        {
-            _dataContext = dataContext;
-            UserRepository = userRepository;
-            PictureRepository = pictureRepository;
-            MessageRepository = messageRepository;
-            FriendRequestRepository = friendRequestRepository;
-            PostRepository = postRepository;
-        }
-        public IPostRepository PostRepository { get; }
-        public ICachedUserRepository UserRepository { get; }
-        public IPictureRepository PictureRepository { get; }
-        public IMessageRepository MessageRepository { get; }
-        public IFriendRequestRepository FriendRequestRepository { get; }
+        public IPostRepository PostRepository { get; } = _postRepository;
+        public ICachedUserRepository UserRepository { get; } = _userRepository;
+        public IPictureRepository PictureRepository { get; } = _pictureRepository;
+        public IMessageRepository MessageRepository { get; } = _messageRepository;
+        public IFriendRequestRepository FriendRequestRepository { get; } = _friendRequestRepository;
 
         public async Task<bool> Complete()
         {

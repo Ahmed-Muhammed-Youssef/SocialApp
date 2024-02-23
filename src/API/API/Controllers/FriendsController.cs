@@ -15,15 +15,8 @@ namespace API.Controllers
     [Authorize]
     [ServiceFilter(typeof(LogUserActivity))]
 
-    public class FriendsController : ControllerBase
+    public class FriendsController(IUnitOfWork _unitOfWork) : ControllerBase
     {
-        private readonly IUnitOfWork _unitOfWork;
-
-        public FriendsController(IUnitOfWork unitOfWork)
-        {
-            _unitOfWork = unitOfWork;
-        }
-
         // GET: api/friends
         [HttpGet]
         public async Task<ActionResult<IEnumerable<UserDTO>>> GetAll([FromQuery] PaginationParams paginationParams)

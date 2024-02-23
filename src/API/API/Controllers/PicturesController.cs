@@ -15,18 +15,8 @@ namespace API.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
-    public class PicturesController : ControllerBase
+    public class PicturesController(IUnitOfWork _unitOfWork, IPictureService _pictureService, IMapper _mapper) : ControllerBase
     {
-        private readonly IUnitOfWork _unitOfWork;
-        private readonly IPictureService _pictureService;
-        private readonly IMapper _mapper;
-
-        public PicturesController(IUnitOfWork unitOfWork, IPictureService pictureService, IMapper mapper)
-        {
-            _unitOfWork = unitOfWork;
-            _pictureService = pictureService;
-            _mapper = mapper;
-        }
         // POST: api/pictures
         [HttpPost]
         public async Task<ActionResult<PictureDTO>> UploadPicture(IFormFile file)

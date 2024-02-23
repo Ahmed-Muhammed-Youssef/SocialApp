@@ -15,16 +15,8 @@ namespace API.Controllers
     [ApiController]
     [Authorize]
     [ServiceFilter(typeof(LogUserActivity))]
-    public class UsersController : ControllerBase
+    public class UsersController(IUnitOfWork _unitOfWork, IMapper _mapper) : ControllerBase
     {
-        private readonly IUnitOfWork _unitOfWork;
-        private readonly IMapper _mapper;
-
-        public UsersController(IUnitOfWork unitOfWork, IMapper mapper)
-        {
-            _unitOfWork = unitOfWork;
-            _mapper = mapper;
-        }
 
         // GET: api/users
         [HttpGet]

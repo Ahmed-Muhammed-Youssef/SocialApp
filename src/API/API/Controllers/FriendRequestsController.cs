@@ -13,13 +13,8 @@ namespace API.Controllers
     [Authorize]
     [Route("api/[controller]")]
     [ServiceFilter(typeof(LogUserActivity))]
-    public class FriendRequestsController : ControllerBase
+    public class FriendRequestsController(IUnitOfWork _unitOfWork) : ControllerBase
     {
-        private readonly IUnitOfWork _unitOfWork;
-        public FriendRequestsController(IUnitOfWork unitOfWork)
-        {
-            _unitOfWork = unitOfWork;
-        }
         [HttpGet]
         public async Task<ActionResult<IEnumerable<UserDTO>>> GetFriendRequests()
         {

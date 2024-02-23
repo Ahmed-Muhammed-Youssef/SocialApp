@@ -7,14 +7,8 @@ using System.Threading.Tasks;
 namespace API.SignalR
 {
     [Authorize]
-    public class PresenceHub : Hub
+    public class PresenceHub(PresenceTracker _presenceTracker) : Hub
     {
-        private readonly PresenceTracker _presenceTracker;
-
-        public PresenceHub(PresenceTracker presenceTracker)
-        {
-            _presenceTracker = presenceTracker;
-        }
         public override async Task OnConnectedAsync()
         {
             var isFirstConnection = await _presenceTracker.UserConnected(Context.User.GetUsername(), Context.ConnectionId);

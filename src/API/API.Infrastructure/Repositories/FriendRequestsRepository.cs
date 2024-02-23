@@ -13,17 +13,8 @@ using API.Application.DTOs.Pagination;
 
 namespace API.Infrastructure.Repositories
 {
-    public class FriendRequestsRepository : IFriendRequestRepository
+    public class FriendRequestsRepository(DataContext _dataContext, IMapper _mapper) : IFriendRequestRepository
     {
-        private readonly DataContext _dataContext;
-        private readonly IMapper _mapper;
-
-        public FriendRequestsRepository(DataContext dataContext, IMapper mapper)
-        {
-            _dataContext = dataContext;
-            _mapper = mapper;
-        }
-
         public async Task<bool> SendFriendRequest(int senderId, int targetId)
         {
 
@@ -98,7 +89,7 @@ namespace API.Infrastructure.Repositories
         }
         public async Task<IEnumerable<UserDTO>> GetFriendRequestedUsersDTOAsync(int senderId)
         {
-            IEnumerable<UserDTO> users = new List<UserDTO>();
+            IEnumerable<UserDTO> users = [];
 
             using (var connection = new SqlConnection(_dataContext.Database.GetDbConnection().ConnectionString))
             {

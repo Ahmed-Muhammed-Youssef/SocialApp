@@ -14,16 +14,8 @@ namespace API.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
-    public class RolesController : ControllerBase
+    public class RolesController(RoleManager<AppRole> _roleManager, UserManager<AppUser> _userManager) : ControllerBase
     {
-        private readonly RoleManager<AppRole> _roleManager;
-        private readonly UserManager<AppUser> _userManager;
-        public RolesController(RoleManager<AppRole> roleManager, UserManager<AppUser> userManager)
-        {
-            _roleManager = roleManager;
-            _userManager = userManager;
-        }
-
         // GET: roles/all
         [Authorize(Policy = "RequireAdminRole")]
         [HttpGet("all")]

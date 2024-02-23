@@ -10,15 +10,8 @@ using API.Application.DTOs.Pagination;
 
 namespace API.Infrastructure.Repositories
 {
-    public class UserRepository : IUserRepository // using the repository design pattern to isolate the contollers further more from the entity framework. (it may not be neccesary)
+    public class UserRepository(DataContext _dataContext) : IUserRepository // using the repository design pattern to isolate the contollers further more from the entity framework. (it may not be neccesary)
     {
-        private readonly DataContext _dataContext;
-
-        public UserRepository(DataContext dataContext)
-        {
-            _dataContext = dataContext;
-        }
-
         public void DeleteUser(AppUser user)
         {
             _dataContext.Remove(user);
@@ -36,7 +29,7 @@ namespace API.Infrastructure.Repositories
         }
         public async Task<PagedList<UserDTO>> GetUsersDTOAsync(int userId, UserParams userParams)
         {
-            IEnumerable<UserDTO> users = new List<UserDTO>();
+            IEnumerable<UserDTO> users = [];
 
             using (var connection = new SqlConnection(_dataContext.Database.GetDbConnection().ConnectionString))
             {
@@ -56,18 +49,14 @@ namespace API.Infrastructure.Repositories
         public async Task<AppUser> GetUserByIdAsync(int id)
         {
             var connectionString = _dataContext.Database.GetConnectionString();
-            using (IDbConnection db = new SqlConnection(connectionString))
-            {
-                return (await db.QueryAsync<AppUser>("GetUserById", new { Id = id }, commandType: CommandType.StoredProcedure)).FirstOrDefault();
-            }
+            using IDbConnection db = new SqlConnection(connectionString);
+            return (await db.QueryAsync<AppUser>("GetUserById", new { Id = id }, commandType: CommandType.StoredProcedure)).FirstOrDefault();
         }
         public async Task<UserDTO> GetUserDTOByIdAsync(int id)
         {
             var connectionString = _dataContext.Database.GetConnectionString();
-            using (IDbConnection db = new SqlConnection(connectionString))
-            {
-                return (await db.QueryAsync<UserDTO>("GetUserDtoById", new { Id = id }, commandType: CommandType.StoredProcedure)).FirstOrDefault();
-            }
+            using IDbConnection db = new SqlConnection(connectionString);
+            return (await db.QueryAsync<UserDTO>("GetUserDtoById", new { Id = id }, commandType: CommandType.StoredProcedure)).FirstOrDefault();
         }
     }
 }

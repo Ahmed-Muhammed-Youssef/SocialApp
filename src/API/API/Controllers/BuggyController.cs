@@ -11,15 +11,8 @@ namespace API.Controllers
     [ServiceFilter(typeof(LogUserActivity))]
 
 
-    public class BuggyController : ControllerBase
+    public class BuggyController(DataContext _context) : ControllerBase
     {
-        private readonly DataContext _context;
-
-        public BuggyController(DataContext context)
-        {
-            _context = context;
-        }
-
         // GET: api/buggy/auth
         [Authorize]
         [HttpGet("auth")]

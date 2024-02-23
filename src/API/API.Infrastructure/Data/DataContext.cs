@@ -6,13 +6,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace API.Infrastructure.Data
 {
-    public class DataContext : IdentityDbContext<AppUser, AppRole, int,
+    public class DataContext(DbContextOptions options) : IdentityDbContext<AppUser, AppRole, int,
         IdentityUserClaim<int>, AppUserRole, IdentityUserLogin<int>
-        , IdentityRoleClaim<int>, IdentityUserToken<int>>
+        , IdentityRoleClaim<int>, IdentityUserToken<int>>(options)
     {
-        public DataContext(DbContextOptions options) : base(options)
-        {
-        }
         public DbSet<Post> Posts { get; set; }
         public DbSet<FriendRequest> FriendRequests { get; set; }
         public DbSet<Friend> Friends { get; set; }
