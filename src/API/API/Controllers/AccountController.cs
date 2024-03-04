@@ -25,15 +25,17 @@ namespace API.Controllers
             {
                 return BadRequest(ModelState);
             }
-            if (await EmailExists(accountDTO.Email))
+            bool emailExists = await userManager.Users.AnyAsync(u => u.Email == accountDTO.Email);
+            bool userNameExists = await userManager.Users.AnyAsync(u => u.UserName == accountDTO.UserName);
+            if (emailExists)
             {
                 return BadRequest("The Email is already taken.");
             }
-            if (await UsernameExists(accountDTO.UserName))
+            if (userNameExists)
             {
                 return BadRequest("The Username is already taken.");
             }
-            AppUser newUser = new AppUser();
+            AppUser newUser = new();
             mapper.Map(accountDTO, newUser);
             newUser.UserName = newUser.UserName.ToLower();
             var result = await userManager.CreateAsync(newUser, accountDTO.Password);
@@ -54,6 +56,7 @@ namespace API.Controllers
                     Token = await tokenService.CreateTokenAsync(newUser)
                 });
         }
+
         // POST: api/account/login
         [HttpPost("login")]
         public async Task<ActionResult<TokenDTO>> Login(LoginDTO loginCredentials)
@@ -80,16 +83,6 @@ namespace API.Controllers
                 UserData = mapper.Map<AppUser, UserDTO>(user),
                 Token = await tokenService.CreateTokenAsync(user)
             });
-        }
-
-        // Utility Methods
-        private async Task<bool> EmailExists(string email)
-        {
-            return await userManager.Users.AnyAsync(u => u.Email == email);
-        }
-        private async Task<bool> UsernameExists(string username)
-        {
-            return await userManager.Users.AnyAsync(u => u.UserName == username);
         }
     }
 }
