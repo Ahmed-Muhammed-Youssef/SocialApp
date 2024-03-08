@@ -22,6 +22,7 @@ using API.Infrastructure.Repositories.CachedRepositories;
 using API.Infrastructure.Repositories;
 using API.Application.Authentication.Google;
 using API.Infrastructure.ExternalServices.Google;
+using API.Infrastructure.ExternalServices.Cloudinary;
 
 var builder = WebApplication.CreateBuilder(args);
 
