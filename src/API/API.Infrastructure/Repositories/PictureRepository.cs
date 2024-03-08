@@ -8,16 +8,8 @@ using API.Application.DTOs.Picture;
 
 namespace API.Infrastructure.Repositories
 {
-    public class PictureRepository : IPictureRepository
+    public class PictureRepository(DataContext _dataContext, IMapper _mapper) : IPictureRepository
     {
-        private readonly DataContext _dataContext;
-        private readonly IMapper _mapper;
-
-        public PictureRepository(DataContext dataContext, IMapper mapper)
-        {
-            _dataContext = dataContext;
-            _mapper = mapper;
-        }
         public async Task<Picture> AddPictureAsync(Picture picture)
         {
             await _dataContext.Pictures.AddAsync(picture);

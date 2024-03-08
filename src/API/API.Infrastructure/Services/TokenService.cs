@@ -9,24 +9,18 @@ using System.Text;
 
 namespace API.Services
 {
-    public class TokenService : ITokenService
+    public class TokenService(IConfiguration _config, UserManager<AppUser> _userManager) : ITokenService
     {
-        private readonly SymmetricSecurityKey _key;
-        private readonly UserManager<AppUser> _userManager;
+        private readonly SymmetricSecurityKey _key = new(Encoding.UTF8.GetBytes(_config["JWT:Key"]));
 
-        public TokenService(IConfiguration config, UserManager<AppUser> userManager)
-        {
-            _key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["JWT:Key"]));
-            _userManager = userManager;
-        }
         public async Task<string> CreateTokenAsync(AppUser user)
         {
             var roles = await _userManager.GetRolesAsync(user);
             var claims = new List<Claim>()
             {
-                new Claim(JwtRegisteredClaimNames.Email, user.Email),
-                new Claim(JwtRegisteredClaimNames.NameId, user.Id.ToString()),
-                new Claim(JwtRegisteredClaimNames.UniqueName, user.UserName)
+                new(JwtRegisteredClaimNames.Email, user.Email),
+                new(JwtRegisteredClaimNames.NameId, user.Id.ToString()),
+                new(JwtRegisteredClaimNames.UniqueName, user.UserName)
             };
             foreach (var role in roles)
             {

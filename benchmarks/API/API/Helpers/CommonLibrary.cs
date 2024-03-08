@@ -54,12 +54,13 @@ namespace API.Benchmark.Helpers
         {
             var dbContext = CreateDbContext();
             var mapper = CreateAutoMapper();
-            var emptyCache = new MemoryCache(new MemoryCacheOptions());
-            var userRepository = new CachedUserRepository(new UserRepository(dbContext), emptyCache);
-            var pictureRepository = new PictureRepository(dbContext, mapper);
-            var messageRepository = new MessageRepository(dbContext, mapper);
-            var friendRequestsRepository = new FriendRequestsRepository(dbContext, mapper);
-            return new UnitOfWork(dbContext, userRepository, pictureRepository, messageRepository, friendRequestsRepository);
+            MemoryCache emptyCache = new(new MemoryCacheOptions());
+            CachedUserRepository userRepository = new(new UserRepository(dbContext), emptyCache);
+            PictureRepository pictureRepository = new(dbContext, mapper);
+            MessageRepository messageRepository = new(dbContext, mapper);
+            FriendRequestsRepository friendRequestsRepository = new(dbContext, mapper);
+            PostRepository postRepository = new(dbContext);
+            return new UnitOfWork(dbContext, userRepository, pictureRepository, messageRepository, friendRequestsRepository, postRepository);
         }
         public static DefaultHttpContext CreateControllerContext()
         {

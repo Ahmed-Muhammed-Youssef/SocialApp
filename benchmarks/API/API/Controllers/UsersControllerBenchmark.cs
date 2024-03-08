@@ -1,4 +1,5 @@
 ﻿using API.Application.DTOs;
+using API.Application.DTOs.Pagination;
 using API.Benchmark.Helpers;
 using API.Controllers;
 using API.Domain.Enums;

@@ -9,6 +9,7 @@ using API.Application.Interfaces.Services;
 using API.Application.Interfaces;
 using API.Application.DTOs.User;
 using API.Application.DTOs.Registeration;
+using API.Domain.Constants;
 
 namespace API.Controllers
 {
@@ -25,23 +26,19 @@ namespace API.Controllers
             {
                 return BadRequest(ModelState);
             }
-            if (await EmailExists(accountDTO.Email))
+            bool emailExists = await userManager.Users.AnyAsync(u => u.Email == accountDTO.Email);
+            if (emailExists)
             {
                 return BadRequest("The Email is already taken.");
             }
-            if (await UsernameExists(accountDTO.UserName))
-            {
-                return BadRequest("The Username is already taken.");
-            }
-            AppUser newUser = new AppUser();
+            AppUser newUser = new();
             mapper.Map(accountDTO, newUser);
-            newUser.UserName = newUser.UserName.ToLower();
             var result = await userManager.CreateAsync(newUser, accountDTO.Password);
             if (!result.Succeeded)
             {
                 return BadRequest("Failed to register the user.");
             }
-            var adddRoleresult = await userManager.AddToRoleAsync(newUser, "user");
+            var adddRoleresult = await userManager.AddToRoleAsync(newUser, RolesNameValues.User);
             if (!adddRoleresult.Succeeded)
             {
                 return BadRequest();
@@ -54,6 +51,7 @@ namespace API.Controllers
                     Token = await tokenService.CreateTokenAsync(newUser)
                 });
         }
+
         // POST: api/account/login
         [HttpPost("login")]
         public async Task<ActionResult<TokenDTO>> Login(LoginDTO loginCredentials)
@@ -80,16 +78,6 @@ namespace API.Controllers
                 UserData = mapper.Map<AppUser, UserDTO>(user),
                 Token = await tokenService.CreateTokenAsync(user)
             });
-        }
-
-        // Utility Methods
-        private async Task<bool> EmailExists(string email)
-        {
-            return await userManager.Users.AnyAsync(u => u.Email == email);
-        }
-        private async Task<bool> UsernameExists(string username)
-        {
-            return await userManager.Users.AnyAsync(u => u.UserName == username);
         }
     }
 }

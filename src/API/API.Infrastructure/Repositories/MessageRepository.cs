@@ -8,16 +8,8 @@ using API.Application.DTOs.Message;
 
 namespace API.Infrastructure.Repositories
 {
-    public class MessageRepository : IMessageRepository
+    public class MessageRepository(DataContext _dataContext, IMapper _mapper) : IMessageRepository
     {
-        private readonly DataContext _dataContext;
-        private readonly IMapper _mapper;
-
-        public MessageRepository(DataContext dataContext, IMapper mapper)
-        {
-            _dataContext = dataContext;
-            _mapper = mapper;
-        }
         public async Task AddMessageAsync(Message message)
         {
             await _dataContext.Messages.AddAsync(message);

@@ -7,7 +7,7 @@ namespace API.Domain.Entities
         public string Name { get; set; }
 
         // navigation properties
-        public ICollection<Connection> Connections { get; set; } = new List<Connection>();
+        public ICollection<Connection> Connections { get; set; } = [];
 
     }
 }

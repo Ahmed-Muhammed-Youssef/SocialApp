@@ -5,16 +5,16 @@ using CloudinaryDotNet.Actions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 
-namespace API.Infrastructure.Services
+namespace API.Infrastructure.ExternalServices.Cloudinary
 {
     public class PictureService : IPictureService
     {
-        private readonly Cloudinary _cloudinary;
+        private readonly CloudinaryDotNet.Cloudinary _cloudinary;
 
         public PictureService(IOptions<CloudinarySettings> config)
         {
             var account = new Account(config.Value.CloudName, config.Value.APIKey, config.Value.APISecret);
-            _cloudinary = new Cloudinary(account);
+            _cloudinary = new CloudinaryDotNet.Cloudinary(account);
         }
         public async Task<ImageUploadResult> AddPictureAsync(IFormFile file)
         {

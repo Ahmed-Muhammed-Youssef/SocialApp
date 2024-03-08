@@ -11,22 +11,9 @@ using System.Threading.Tasks;
 
 namespace API.SignalR
 {
-    public class MessageHub : Hub
+    public class MessageHub(IUnitOfWork _unitOfWork, IMapper _mapper,
+        IHubContext<PresenceHub> _presenceHubContext, PresenceTracker _presenceTracker) : Hub
     {
-        private readonly IUnitOfWork _unitOfWork;
-        private readonly IMapper _mapper;
-
-        private readonly IHubContext<PresenceHub> _presenceHubContext;
-        private readonly PresenceTracker _presenceTracker;
-
-        public MessageHub(IUnitOfWork unitOfWork, IMapper mapper,
-            IHubContext<PresenceHub> presenceHubContext, PresenceTracker presenceTracker)
-        {
-            _unitOfWork = unitOfWork;
-            _mapper = mapper;
-            _presenceHubContext = presenceHubContext;
-            _presenceTracker = presenceTracker;
-        }
         public override async Task OnConnectedAsync()
         {
             var httpContext = Context.GetHttpContext();

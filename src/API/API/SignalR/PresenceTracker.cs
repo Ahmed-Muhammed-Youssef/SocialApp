@@ -6,21 +6,20 @@ namespace API.SignalR
 {
     public class PresenceTracker
     {
-        private static readonly Dictionary<string, List<string>> OnlineUsers =
-            new Dictionary<string, List<string>>();
+        private static readonly Dictionary<string, List<string>> OnlineUsers = [];
         public Task<bool> UserConnected(string username, string connectionId)
         {
             var firstConnection = false;
             lock (OnlineUsers)
             {
-                if (!OnlineUsers.ContainsKey(username))
+                if (!OnlineUsers.TryGetValue(username, out List<string> userConnections))
                 {
-                    OnlineUsers[username] = new List<string>() { connectionId };
+                    OnlineUsers[username] = [connectionId];
                     firstConnection = true;
                 }
                 else
                 {
-                    OnlineUsers[username].Add(connectionId);
+                    userConnections.Add(connectionId);
                 }
             }
             return Task.FromResult(firstConnection);
@@ -30,12 +29,13 @@ namespace API.SignalR
             bool isOffline = false;
             lock (OnlineUsers)
             {
-                if (!OnlineUsers.ContainsKey(username))
+                if (!OnlineUsers.TryGetValue(username, out List<string> userConnections))
                 {
                     return Task.FromResult(isOffline);
                 }
-                OnlineUsers[username].Remove(connectionId);
-                if (OnlineUsers[username].Count() == 0)
+
+                userConnections.Remove(connectionId);
+                if (userConnections.Count == 0)
                 {
                     OnlineUsers.Remove(username);
                     isOffline = true;
@@ -45,7 +45,7 @@ namespace API.SignalR
         }
         public Task<string[]> GetOnlineUsers()
         {
-            string[] onlineUsers = { };
+            string[] onlineUsers = [];
             lock (OnlineUsers)
             {
                 onlineUsers = OnlineUsers.OrderBy(u => u.Key).Select(u => u.Key).ToArray();

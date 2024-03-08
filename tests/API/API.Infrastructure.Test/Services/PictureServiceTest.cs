@@ -1,5 +1,5 @@
 using API.Domain.Configuration;
-using API.Infrastructure.Services;
+using API.Infrastructure.ExternalServices.Cloudinary;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 

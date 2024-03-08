@@ -7,16 +7,8 @@ using API.Application.DTOs.Pagination;
 
 namespace API.Infrastructure.Repositories.CachedRepositories
 {
-    public class CachedUserRepository : ICachedUserRepository
+    public class CachedUserRepository(IUserRepository _usersRepository, IMemoryCache _memoryCache) : ICachedUserRepository
     {
-        private readonly IUserRepository _usersRepository;
-        private readonly IMemoryCache _memoryCache;
-
-        public CachedUserRepository(IUserRepository usersRepository, IMemoryCache memoryCache)
-        {
-            _usersRepository = usersRepository;
-            this._memoryCache = memoryCache;
-        }
         // Queries
 
         public async Task<AppUser> GetUserByIdAsync(int id)

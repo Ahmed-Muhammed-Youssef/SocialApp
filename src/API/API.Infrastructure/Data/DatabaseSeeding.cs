@@ -94,7 +94,7 @@ namespace API.Infrastructure.Data
 
                 var user = testUsers.Generate();
                 await userManager.CreateAsync(user, "Pwd12345");
-                await userManager.AddToRolesAsync(user, new[] { RolesNameValues.User });
+                await userManager.AddToRolesAsync(user, [RolesNameValues.User]);
 
                 // Add some posts to that user
 
