@@ -20,6 +20,8 @@ using System;
 using API.Infrastructure.Services;
 using API.Infrastructure.Repositories.CachedRepositories;
 using API.Infrastructure.Repositories;
+using API.Application.Authentication.Google;
+using API.Infrastructure.ExternalServices.Google;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -40,6 +42,7 @@ builder.Services.AddScoped<IPostRepository, PostRepository>();
 builder.Services.AddSingleton<PresenceTracker>();
 builder.Services.AddScoped<IPictureService, PictureService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
+builder.Services.AddScoped<IGoogleAuthService, GoogleAuthService>();
 
 builder.Services.AddScoped<LogUserActivity>();
 builder.Services.AddDbContext<DataContext>(options =>
