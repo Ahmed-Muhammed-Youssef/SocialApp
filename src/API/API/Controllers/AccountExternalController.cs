@@ -10,14 +10,16 @@ using System.Linq;
 using API.Application.DTOs.Registeration;
 using API.Application.DTOs.User;
 using AutoMapper;
-using System;
+using API.Infrastructure.Services;
+using API.Domain.Constants;
+using API.Infrastructure.Data;
 
 namespace API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
     [ServiceFilter(typeof(LogUserActivity))]
-    public class AccountExternalController(IGoogleAuthService _googleAuthService, UserManager<AppUser> userManager, ITokenService tokenService, IMapper _mapper) : ControllerBase
+    public class AccountExternalController(IGoogleAuthService _googleAuthService, UserManager<AppUser> userManager, ITokenService tokenService, IMapper _mapper, PasswordGenerationService _passwordGenerationService) : ControllerBase
     {
         // GET: api/AccountExternal/login-google
         [HttpGet("login-google")]
@@ -36,9 +38,30 @@ namespace API.Controllers
 
             if (databaseUser is null)
             {
-                // Create a new user
-                // But there is a problem with the unused username?
-                throw new NotImplementedException();
+               databaseUser = new() 
+               { 
+                    FirstName = userInfo.FirstName,
+                    LastName = userInfo.LastName ?? "",
+                    Email = userInfo.Email,
+                    UserName = userInfo.Email,
+                    EmailConfirmed = userInfo.EmailConfirmed,
+                    Sex = ' ',
+                    Interest = 'b',
+                    Country = "",
+                    City = ""
+                    
+               };
+                var password = _passwordGenerationService.GenerateRandomPassword();
+                var result = await userManager.CreateAsync(databaseUser, password);
+                if (!result.Succeeded)
+                {
+                    return BadRequest("Failed to register the user.");
+                }
+                var adddRoleresult = await userManager.AddToRoleAsync(databaseUser, RolesNameValues.User);
+                if (!adddRoleresult.Succeeded)
+                {
+                    return BadRequest();
+                }
             }
 
             return Ok(new TokenDTO()

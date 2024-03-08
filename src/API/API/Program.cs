@@ -43,6 +43,7 @@ builder.Services.AddSingleton<PresenceTracker>();
 builder.Services.AddScoped<IPictureService, PictureService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IGoogleAuthService, GoogleAuthService>();
+builder.Services.AddScoped<PasswordGenerationService>();
 
 builder.Services.AddScoped<LogUserActivity>();
 builder.Services.AddDbContext<DataContext>(options =>
