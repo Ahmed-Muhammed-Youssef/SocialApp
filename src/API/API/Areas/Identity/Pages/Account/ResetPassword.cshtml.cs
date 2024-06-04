@@ -6,6 +6,7 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 using System.Threading.Tasks;
+using API.Domain.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -16,9 +17,9 @@ namespace API.Areas.Identity.Pages.Account
 {
     public class ResetPasswordModel : PageModel
     {
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<AppUser> _userManager;
 
-        public ResetPasswordModel(UserManager<IdentityUser> userManager)
+        public ResetPasswordModel(UserManager<AppUser> userManager)
         {
             _userManager = userManager;
         }
