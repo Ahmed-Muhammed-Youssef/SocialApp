@@ -19,7 +19,7 @@ namespace API.Extensions
             services.AddIdentityCore<AppUser>(opt =>
             {
                 opt.Password.RequireNonAlphanumeric = false;
-                // opt.SignIn.RequireConfirmedAccount = true;
+                opt.SignIn.RequireConfirmedAccount = false;
             })
                 .AddDefaultUI()
                 .AddRoles<AppRole>()
@@ -60,7 +60,9 @@ namespace API.Extensions
                         return Task.CompletedTask;
                     }
                 };
-            });
+            })
+            .AddCookie(IdentityConstants.ApplicationScheme)
+            .AddCookie(IdentityConstants.ExternalScheme);
             return services;
         }
     }
