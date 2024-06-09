@@ -23,6 +23,7 @@ using API.Infrastructure.Repositories;
 using API.Application.Authentication.Google;
 using API.Infrastructure.ExternalServices.Google;
 using API.Infrastructure.ExternalServices.Cloudinary;
+using System.Threading.Tasks;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -106,6 +107,11 @@ app.MapRazorPages();
 // SignalR Endpooints
 app.MapHub<PresenceHub>("hubs/presence");
 app.MapHub<MessageHub>("hubs/message");
-app.MapFallbackToController("Index", "FallBack");
+app.MapGet("/", context =>
+{
+    context.Response.Redirect("/newsfeed");
+    return Task.CompletedTask;
+});
+// app.MapFallbackToPage("/Newsfeed");
 
 await app.RunAsync();
