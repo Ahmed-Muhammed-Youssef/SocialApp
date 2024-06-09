@@ -63,6 +63,8 @@ namespace API.Extensions
             })
             .AddCookie(IdentityConstants.ApplicationScheme)
             .AddCookie(IdentityConstants.ExternalScheme);
+
+            services.Configure<PasswordHasherOptions>(options => options.IterationCount = 310_000);
             return services;
         }
     }
