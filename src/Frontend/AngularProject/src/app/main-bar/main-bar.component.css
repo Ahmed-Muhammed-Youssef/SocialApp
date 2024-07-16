@@ -1,0 +1,18 @@
+.main-nav-bar{
+    height: 70px;
+    width: 100%;
+    background-color: var(--primary-color);
+    display: flex;
+    align-items: center;
+    padding-left: 16px;
+    padding-right: 16px;
+}
+
+.logo {
+    color: var(--text-on-primary);
+    margin-left: 32px;
+    font-size: xx-large;
+    width: 100px;
+    text-align: center;
+
+}
