@@ -1,21 +1,31 @@
-.sidenav-container {
-  height: 100%;
-  
+.navigation-bar {
+  height: 70px;
+  background-color: var(--main-color);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
-.sidenav {
-  width: 200px;
-  border-radius: 0px;
-  background-color: #d7e3ff;
+.spacer{
+  flex-grow: 1;
 }
 
-.sidenav .mat-toolbar {
-  background: inherit;
+.title{
+  font-size: x-large;
+  color: var(--text-on-main);
+  margin-left: 32px;
+  padding: 10px;
 }
 
-.mat-toolbar.mat-primary {
-  position: sticky;
-  top: 0;
-  z-index: 1;
-  background-color: #d7e3ff;
+.clickable:hover{
+  background-color: var(--main-hover);
+}
+
+.clickable{
+  cursor: pointer;
+  border-radius: 9999px;
+}
+
+.sign-in{
+  margin-right: 32px;
 }

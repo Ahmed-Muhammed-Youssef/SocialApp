@@ -1,2 +1,10 @@
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+:root{
+    
+    --main-color: #d7e3ff;
+    --main-hover: rgba(0, 92, 187, 0.1);
+    --text-on-main: #005cbb;
+    --secondary-color: #2ecc71;   
+}
