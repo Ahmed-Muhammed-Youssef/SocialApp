@@ -1,0 +1,7 @@
+.post-card{
+    height: fit-content;
+    max-width: 600px;
+}
+.user-image{
+    background-size: cover;
+}
