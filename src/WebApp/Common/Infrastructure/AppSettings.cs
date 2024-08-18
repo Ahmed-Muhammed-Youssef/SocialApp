@@ -9,6 +9,5 @@ namespace Infrastructure
     internal static class AppSettings
     {
         public static string DefaultConnectionString { get; } = "add your connection string here";
-        public static string ProductionConnectionString { get; } = "add your connection string here";
     }
 }

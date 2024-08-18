@@ -458,3 +458,4 @@ API/dataingapp.db
 /API/socialapp.db
 /API/socialapp.db
 /src/API/API/appsettings.Development.json
+/src/WebApp/Common/Infrastructure/AppSettings.cs
