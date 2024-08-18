@@ -3,6 +3,8 @@ using Domain.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using System.Reflection;
 
 namespace Infrastructure.Data
 {
@@ -10,6 +12,14 @@ namespace Infrastructure.Data
         IdentityUserClaim<int>, AppUserRole, IdentityUserLogin<int>
         , IdentityRoleClaim<int>, IdentityUserToken<int>>(options)
     {
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (!optionsBuilder.IsConfigured)
+            {
+                var connectionString = AppSettings.DefaultConnectionString;
+                optionsBuilder.UseSqlServer(connectionString);
+            }
+        }
         public DbSet<Post> Posts { get; set; }
         public DbSet<FriendRequest> FriendRequests { get; set; }
         public DbSet<Friend> Friends { get; set; }

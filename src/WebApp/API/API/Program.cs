@@ -45,24 +45,10 @@ builder.Services.AddScoped<IPictureService, PictureService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IGoogleAuthService, GoogleAuthService>();
 builder.Services.AddScoped<PasswordGenerationService>();
-
 builder.Services.AddScoped<LogUserActivity>();
-builder.Services.AddDbContext<DataContext>(options =>
-{
-    var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
-    // Depending on if in development or production, use either Heroku-provided
-    // connection string, or development connection string from env var.
-    if (env == "Development")
-    {
-        // Use connection string from file.
-        options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
-    }
-    else
-    {
-        // production configurations
-        options.UseSqlServer(builder.Configuration.GetConnectionString("ProductionConnection"));
-    }
-});
+
+builder.Services.AddDbContext<DataContext>();
+
 builder.Services.AddControllers();
 builder.Services.AddSignalR();
 builder.Services.AddMemoryCache();
