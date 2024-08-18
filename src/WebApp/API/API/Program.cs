@@ -64,7 +64,6 @@ builder.Services.AddDbContext<DataContext>(options =>
     }
 });
 builder.Services.AddControllers();
-builder.Services.AddRazorPages();
 builder.Services.AddSignalR();
 builder.Services.AddMemoryCache();
 builder.Services.AddSwaggerGen(c =>
@@ -101,7 +100,6 @@ app.UseAuthorization();
 app.UseDefaultFiles();
 app.UseStaticFiles();
 app.MapControllers();
-app.MapRazorPages();
 
 // SignalR Endpooints
 app.MapHub<PresenceHub>("hubs/presence");
