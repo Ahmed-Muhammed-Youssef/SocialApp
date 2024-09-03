@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Infrastructure.Identity;
 
 namespace Infrastructure.Data
 {
@@ -31,9 +32,9 @@ namespace Infrastructure.Data
             var services = scope.ServiceProvider;
             try
             {
-                DataContext context = services.GetRequiredService<DataContext>();
-                var userManager = services.GetRequiredService<UserManager<AppUser>>();
-                var roleManager = services.GetRequiredService<RoleManager<AppRole>>();
+                IdentityDatabaseContext context = services.GetRequiredService<IdentityDatabaseContext>();
+                var userManager = services.GetRequiredService<UserManager<IdentityUser>>();
+                var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
                 await AddData(userManager, roleManager, context);
             }
             catch (Exception ex)
@@ -42,11 +43,11 @@ namespace Infrastructure.Data
                 logger.LogError(ex, "An error occurred during seeding");
             }
         }
-        private static async Task AddData(UserManager<AppUser> userManager, RoleManager<AppRole> roleManager, DataContext dataContext)
+        private static async Task AddData(UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager, IdentityDatabaseContext identityContext)
         {
             // add admin
             if (await userManager.Users.AnyAsync()) return;
-            var roles = new List<AppRole>
+            var roles = new List<IdentityRole>
             {
                 new() {Name = RolesNameValues.Admin},
                 new() {Name = RolesNameValues.Moderator},
@@ -56,41 +57,34 @@ namespace Infrastructure.Data
             {
                 await roleManager.CreateAsync(role);
             }
-            AppUser admin = new()
+
+            IdentityUser admin = new()
             {
-                UserName = "admin",
-                FirstName = "admin",
-                LastName = "admin",
-                Interest = 'f',
-                DateOfBirth = DateTime.UtcNow,
-                LastActive = DateTime.UtcNow,
+                UserName = "admin@test",
                 Email = "admin@test",
-                City = "admin",
-                Country = "admin",
-                Created = DateTime.UtcNow,
-                Sex = 'm'
+                SecurityStamp = Guid.NewGuid().ToString()
             };
             await userManager.CreateAsync(admin, "Pwd12345");
-            await userManager.AddToRolesAsync(admin, new[] { RolesNameValues.User, RolesNameValues.Admin, RolesNameValues.Moderator });
-            char[] sex = ['m', 'f'];
+            //await userManager.AddToRolesAsync(admin, [RolesNameValues.Admin]);
 
             Random random = new();
             for (int i = 0; i < 100; i++)
             {
-                var testUsers = new Faker<AppUser>()
-                    .RuleFor(u => u.UserName, (f, u) => $"user{i}")
-                    .RuleFor(u => u.ProfilePictureUrl, f => f.Internet.Avatar())
-                    .RuleFor(u => u.Sex, f => f.PickRandom(new List<char>() { 'f', 'm' }))
-                    .RuleFor(u => u.FirstName, (f, u) => f.Name.FirstName((u.Sex == 'm') ? Bogus.DataSets.Name.Gender.Male : Bogus.DataSets.Name.Gender.Female))
-                    .RuleFor(u => u.LastName, (f, u) => f.Name.LastName(Bogus.DataSets.Name.Gender.Male))
+                var testUsers = new Faker<IdentityUser>()
+                    .RuleFor(u => u.UserName, (f, u) => $"user{i}@test")
+                    //.RuleFor(u => u.ProfilePictureUrl, f => f.Internet.Avatar())
+                    //.RuleFor(u => u.Sex, f => f.PickRandom(new List<char>() { 'f', 'm' }))
+                    //.RuleFor(u => u.FirstName, (f, u) => f.Name.FirstName((u.Sex == 'm') ? Bogus.DataSets.Name.Gender.Male : Bogus.DataSets.Name.Gender.Female))
+                    //.RuleFor(u => u.LastName, (f, u) => f.Name.LastName(Bogus.DataSets.Name.Gender.Male))
                     .RuleFor(u => u.Email, (f, u) => $"user{i}@test")
-                    .RuleFor(u => u.Bio, f => f.Lorem.Paragraph())
-                    .RuleFor(u => u.Interest, f => f.PickRandom(new List<char>() { 'f', 'm', 'b' }))
-                    .RuleFor(u => u.Country, f => f.Address.Country())
-                    .RuleFor(u => u.City, f => f.Address.City())
-                    .RuleFor(u => u.DateOfBirth, f => f.Date.Past(refDate: DateTime.UtcNow.AddYears(-18), yearsToGoBack: 70))
-                    .RuleFor(u => u.LastActive, f => f.Date.BetweenOffset(DateTimeOffset.UtcNow, DateTimeOffset.UtcNow.AddDays(-30)).DateTime)
-                    .RuleFor(u => u.Created, f => f.Date.Past(refDate: DateTime.UtcNow.AddMonths(-7), yearsToGoBack: 2));
+                    //.RuleFor(u => u.Bio, f => f.Lorem.Paragraph())
+                    //.RuleFor(u => u.Interest, f => f.PickRandom(new List<char>() { 'f', 'm', 'b' }))
+                    //.RuleFor(u => u.Country, f => f.Address.Country())
+                    //.RuleFor(u => u.City, f => f.Address.City())
+                    //.RuleFor(u => u.DateOfBirth, f => f.Date.Past(refDate: DateTime.UtcNow.AddYears(-18), yearsToGoBack: 70))
+                    //.RuleFor(u => u.LastActive, f => f.Date.BetweenOffset(DateTimeOffset.UtcNow, DateTimeOffset.UtcNow.AddDays(-30)).DateTime)
+                    //.RuleFor(u => u.Created, f => f.Date.Past(refDate: DateTime.UtcNow.AddMonths(-7), yearsToGoBack: 2))
+                    .RuleFor(u => u.SecurityStamp, (f, u) => Guid.NewGuid().ToString());
 
                 var user = testUsers.Generate();
                 await userManager.CreateAsync(user, "Pwd12345");
@@ -106,12 +100,12 @@ namespace Infrastructure.Data
                 int randomNumber = random.Next(0, 101);
                 List<Post> fakePosts = postsFaker.Generate(randomNumber);
 
-                foreach (var post in fakePosts)
-                {
-                    post.UserId = user.Id;
-                    dataContext.Posts.Add(post);
-                    dataContext.SaveChanges();
-                }
+                //foreach (var post in fakePosts)
+                //{
+                //    post.UserId = user.Id;
+                //    identityContext.Posts.Add(post);
+                //    identityContext.SaveChanges();
+                //}
             }
         }
     }

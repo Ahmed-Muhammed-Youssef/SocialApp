@@ -68,7 +68,7 @@ var app = builder.Build();
 // Migrate Database
 await DatabaseSeeding.MigrateDatabaseAsync(app.Services);
 // Seeding the application
-await DatabaseSeeding.SeedUsersAsync(app.Services);
+// await DatabaseSeeding.SeedUsersAsync(app.Services);
 
 
 if (app.Environment.IsDevelopment())

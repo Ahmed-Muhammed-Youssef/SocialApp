@@ -14,7 +14,7 @@ namespace API.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
-    public class RolesController(RoleManager<AppRole> _roleManager, UserManager<AppUser> _userManager) : ControllerBase
+    public class RolesController(RoleManager<IdentityRole> _roleManager, UserManager<IdentityUser> _userManager) : ControllerBase
     {
         // GET: roles/all
         [Authorize(Policy = "RequireAdminRole")]
@@ -29,21 +29,21 @@ namespace API.Controllers
         // GET: roles/users-roles/all
         [Authorize(Policy = "RequireAdminRole")]
         [HttpGet("users-roles/all")]
-        public async Task<ActionResult> GetUsersRoles()
-        {
-            var result = await _userManager.Users
-                .Include(u => u.UserRoles)
-                .ThenInclude(ur => ur.Role)
-                .Select(u =>
-                new
-                {
-                    u.Id,
-                    Username = u.UserName,
-                    Roles = u.UserRoles.Select(r => r.Role.Name).ToList()
-                })
-                .ToListAsync();
-            return Ok(result);
-        }
+        //public async Task<ActionResult> GetUsersRoles()
+        //{
+        //    var result = await _userManager.Users
+        //        .Include(u => u.UserRoles)
+        //        .ThenInclude(ur => ur.Role)
+        //        .Select(u =>
+        //        new
+        //        {
+        //            u.Id,
+        //            Username = u.UserName,
+        //            Roles = u.UserRoles.Select(r => r.Role.Name).ToList()
+        //        })
+        //        .ToListAsync();
+        //    return Ok(result);
+        //}
 
         // GET: roles/user/{username}
         [Authorize(Policy = "RequireAdminRole")]
@@ -74,7 +74,7 @@ namespace API.Controllers
         [HttpPost("create/{role}")]
         public async Task<IActionResult> CreateRole(string role)
         {
-            var newRole = new AppRole() { Name = role };
+            var newRole = new IdentityRole() { Name = role };
             var result = await _roleManager.CreateAsync(newRole);
             if (!result.Succeeded)
             {

@@ -17,9 +17,11 @@ namespace Infrastructure.MappingProfiles
                 .ForMember(dest => dest.Age, opt => opt.MapFrom(src => src.DateOfBirth.CalculateAge()));
             CreateMap<Picture, PictureDTO>();
             CreateMap<UpdatedUserDTO, AppUser>();
-            CreateMap<RegisterDTO, AppUser>()
-                .ForMember(au => au.UserName, opt => opt.MapFrom(src => src.Email))
-                .ForMember(au => au.Email, opt => opt.MapFrom(src => src.Email));
+
+            // @ToDo: Needs planning again
+            //CreateMap<RegisterDTO, AppUser>()
+            //    .ForMember(au => au.UserName, opt => opt.MapFrom(src => src.Email))
+            //    .ForMember(au => au.Email, opt => opt.MapFrom(src => src.Email));
 
             // @TODO: add profile picture mapping here
             CreateMap<Message, MessageDTO>().ForMember(m => m.SenderPhotoUrl, opt => opt.MapFrom(m => m.Sender.Pictures.FirstOrDefault().Url));

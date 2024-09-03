@@ -1,10 +1,9 @@
-﻿using Domain.Entities;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Identity;
 
 namespace Application.Interfaces.Services
 {
     public interface ITokenService
     {
-        public Task<string> CreateTokenAsync(AppUser user);
+        public Task<string> CreateTokenAsync(IdentityUser user);
     }
 }

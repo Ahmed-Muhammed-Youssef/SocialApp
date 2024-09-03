@@ -3,14 +3,10 @@ using Domain.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using System.Reflection;
 
 namespace Infrastructure.Data
 {
-    public class DataContext(DbContextOptions options) : IdentityDbContext<AppUser, AppRole, int,
-        IdentityUserClaim<int>, AppUserRole, IdentityUserLogin<int>
-        , IdentityRoleClaim<int>, IdentityUserToken<int>>(options)
+    public class DataContext(DbContextOptions options) : DbContext(options)
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -20,6 +16,7 @@ namespace Infrastructure.Data
                 optionsBuilder.UseSqlServer(connectionString);
             }
         }
+        public DbSet<AppUser> Users { get; set; }
         public DbSet<Post> Posts { get; set; }
         public DbSet<FriendRequest> FriendRequests { get; set; }
         public DbSet<Friend> Friends { get; set; }
@@ -37,7 +34,6 @@ namespace Infrastructure.Data
             modelBuilder.ApplyConfiguration(new FriendRequestConfigurations());
             modelBuilder.ApplyConfiguration(new FriendConfigurations());
             modelBuilder.ApplyConfiguration(new AppUserConfigurations());
-            modelBuilder.ApplyConfiguration(new AppUserRoleConfigurations());
             modelBuilder.ApplyConfiguration(new PostConfigurations());
         }
     }

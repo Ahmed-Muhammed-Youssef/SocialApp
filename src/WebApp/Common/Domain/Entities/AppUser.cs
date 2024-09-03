@@ -1,9 +1,8 @@
-﻿using Microsoft.AspNetCore.Identity;
-
-namespace Domain.Entities
+﻿namespace Domain.Entities
 {
-    public class AppUser : IdentityUser<int>
+    public class AppUser
     {
+        public int Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string ProfilePictureUrl { get; set; } = null;
@@ -23,6 +22,5 @@ namespace Domain.Entities
         public ICollection<Message> MessagesReceived { get; set; }
         public ICollection<Friend> Friends { get; set; }
         public ICollection<Picture> Pictures { get; set; }
-        public virtual ICollection<AppUserRole> UserRoles { get; set; }
     }
 }

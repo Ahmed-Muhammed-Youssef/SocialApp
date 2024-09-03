@@ -16,7 +16,7 @@ namespace API.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [ServiceFilter(typeof(LogUserActivity))]
-    public class AccountController(IUnitOfWork unitOfWork, UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, ITokenService tokenService, IMapper mapper) : ControllerBase
+    public class AccountController(IUnitOfWork unitOfWork, UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, ITokenService tokenService, IMapper mapper) : ControllerBase
     {
         // POST: api/account/register
         [HttpPost("register")]
@@ -31,7 +31,7 @@ namespace API.Controllers
             {
                 return BadRequest("The Email is already taken.");
             }
-            AppUser newUser = new();
+            IdentityUser newUser = new();
             mapper.Map(accountDTO, newUser);
             var result = await userManager.CreateAsync(newUser, accountDTO.Password);
             if (!result.Succeeded)

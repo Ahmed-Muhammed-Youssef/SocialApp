@@ -1,17 +1,39 @@
+using Infrastructure.Data;
+using Infrastructure.Identity;
+using Microsoft.AspNetCore.Identity;
+
 namespace MVC
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            builder.Services.AddDbContext<DataContext>();
+
+            builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                .AddRoles<IdentityRole>()
+                .AddRoleManager<RoleManager<IdentityRole>>()
+                .AddSignInManager<SignInManager<IdentityUser>>()
+                .AddRoleValidator<RoleValidator<IdentityRole>>()
+                .AddEntityFrameworkStores<IdentityDatabaseContext>();
+
+            builder.Services.AddAuthorizationBuilder()
+            .AddPolicy("RequireAdminRole", policy => policy.RequireRole("admin"))
+            .AddPolicy("RequireModeratorOrAdmin", policy => policy.RequireRole("admin", "moderator"));
+            
             // Add services to the container.
             builder.Services.AddControllersWithViews();
 
             builder.Services.AddRazorPages();
 
             var app = builder.Build();
+
+            // Migrate Database
+            await DatabaseSeeding.MigrateDatabaseAsync(app.Services);
+            // Seeding the application
+            await DatabaseSeeding.SeedUsersAsync(app.Services);
 
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())

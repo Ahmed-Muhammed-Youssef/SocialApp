@@ -1,5 +1,6 @@
 ﻿using Application.Authentication.Google;
 using Domain.Entities;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 
@@ -27,7 +28,7 @@ namespace Infrastructure.ExternalServices.Google
             return builder.ToString();
         }
 
-        public async Task<AppUser> GetUserFromGoogleAsync(string code)
+        public async Task<IdentityUser> GetUserFromGoogleAsync(string code)
         {
             using var client = new HttpClient();
             const string userInfoEndpoint = "https://www.googleapis.com/userinfo/v2/me";
@@ -50,9 +51,9 @@ namespace Infrastructure.ExternalServices.Google
             var userInfo = JsonConvert.DeserializeObject<Dictionary<string, string>>(userInfoJson);
 
             // Create new user out of the data returned
-            AppUser newUser = new()
+            IdentityUser newUser = new()
             {
-                FirstName = userInfo["name"],
+                // FirstName = userInfo["name"],
                 Email = userInfo["email"],
                 EmailConfirmed = bool.Parse(userInfo["verified_email"])
             };
