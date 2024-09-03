@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Infrastructure
+﻿namespace Infrastructure
 {
     internal static class AppSettings
     {
-        public static string DefaultConnectionString { get; } = "add your connection string here";
+        public static string DefaultConnectionString { get; } = "Server=AHMED-YOUSSEF;Database=SocialApp;Trusted_Connection=True;TrustServerCertificate=True";
+        public static string IdentityConnectionString { get; } = "Server=AHMED-YOUSSEF;Database=SocialAppIdentity;Trusted_Connection=True;TrustServerCertificate=True";
     }
 }

@@ -9,11 +9,11 @@ using System.Text;
 
 namespace API.Services
 {
-    public class TokenService(IConfiguration _config, UserManager<AppUser> _userManager) : ITokenService
+    public class TokenService(IConfiguration _config, UserManager<IdentityUser> _userManager) : ITokenService
     {
         private readonly SymmetricSecurityKey _key = new(Encoding.UTF8.GetBytes(_config["JWT:Key"]));
 
-        public async Task<string> CreateTokenAsync(AppUser user)
+        public async Task<string> CreateTokenAsync(IdentityUser user)
         {
             var roles = await _userManager.GetRolesAsync(user);
             var claims = new List<Claim>()

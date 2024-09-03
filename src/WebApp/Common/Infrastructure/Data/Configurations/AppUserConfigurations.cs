@@ -22,13 +22,6 @@ namespace Infrastructure.Data.Configurations
             builder.Property(u => u.LastActive).IsRequired();
             builder.Property(u => u.City).IsRequired();
             builder.Property(u => u.Country).IsRequired();
-
-            // relationships
-            // with user roles
-            builder.HasMany(u => u.UserRoles)
-               .WithOne(ur => ur.User)
-               .HasForeignKey(ur => ur.UserId)
-               .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }
