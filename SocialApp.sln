@@ -33,7 +33,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{DECD88
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MVC", "MVC", "{655C4861-AC8D-489D-9162-C47E6203CD84}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MVC", "src\WebApp\MVC\MVC\MVC.csproj", "{876F892E-1C81-444A-B699-C7A7B45F4155}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MVC", "src\WebApp\MVC\MVC\MVC.csproj", "{876F892E-1C81-444A-B699-C7A7B45F4155}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

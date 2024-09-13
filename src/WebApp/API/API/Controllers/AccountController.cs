@@ -10,6 +10,7 @@ using Application.Interfaces;
 using Application.DTOs.User;
 using Application.DTOs.Registeration;
 using Domain.Constants;
+using System;
 
 namespace API.Controllers
 {
@@ -22,62 +23,65 @@ namespace API.Controllers
         [HttpPost("register")]
         public async Task<ActionResult> Register(RegisterDTO accountDTO)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-            bool emailExists = await userManager.Users.AnyAsync(u => u.Email == accountDTO.Email);
-            if (emailExists)
-            {
-                return BadRequest("The Email is already taken.");
-            }
-            IdentityUser newUser = new();
-            mapper.Map(accountDTO, newUser);
-            var result = await userManager.CreateAsync(newUser, accountDTO.Password);
-            if (!result.Succeeded)
-            {
-                return BadRequest("Failed to register the user.");
-            }
-            var adddRoleresult = await userManager.AddToRoleAsync(newUser, RolesNameValues.User);
-            if (!adddRoleresult.Succeeded)
-            {
-                return BadRequest();
-            }
-            var userData = await unitOfWork.UserRepository.GetUserDTOByIdAsync(newUser.Id);
-            return CreatedAtAction("Register", new { email = accountDTO.Email },
-                new TokenDTO()
-                {
-                    UserData = userData,
-                    Token = await tokenService.CreateTokenAsync(newUser)
-                });
+
+            throw new NotImplementedException(); 
+            //if (!ModelState.IsValid)
+            //{
+            //    return BadRequest(ModelState);
+            //}
+            //bool emailExists = await userManager.Users.AnyAsync(u => u.Email == accountDTO.Email);
+            //if (emailExists)
+            //{
+            //    return BadRequest("The Email is already taken.");
+            //}
+            //IdentityUser newUser = new();
+            //mapper.Map(accountDTO, newUser);
+            //var result = await userManager.CreateAsync(newUser, accountDTO.Password);
+            //if (!result.Succeeded)
+            //{
+            //    return BadRequest("Failed to register the user.");
+            //}
+            //var adddRoleresult = await userManager.AddToRoleAsync(newUser, RolesNameValues.User);
+            //if (!adddRoleresult.Succeeded)
+            //{
+            //    return BadRequest();
+            //}
+            //var userData = await unitOfWork.UserRepository.GetUserDTOByIdAsync(newUser.Id);
+            //return CreatedAtAction("Register", new { email = accountDTO.Email },
+            //    new TokenDTO()
+            //    {
+            //        UserData = userData,
+            //        Token = await tokenService.CreateTokenAsync(newUser)
+            //    });
         }
 
         // POST: api/account/login
         [HttpPost("login")]
         public async Task<ActionResult<TokenDTO>> Login(LoginDTO loginCredentials)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(loginCredentials);
-            }
-            var user = await userManager.Users.Include(u => u.Pictures).FirstOrDefaultAsync(u => u.Email == loginCredentials.Email);
-            if (user == null)
-            {
-                return Unauthorized();
-            }
-            var signInResult = await signInManager
-                .CheckPasswordSignInAsync(user, loginCredentials.Password, lockoutOnFailure: false);
-            if (!signInResult.Succeeded)
-            {
-                return Unauthorized();
-            }
-            // var userData = await _unitOfWork.UserRepository.GetUserDTOByEmailAsync(loginCredentials.Email);
+            throw new NotImplementedException();
+            //if (!ModelState.IsValid)
+            //{
+            //    return BadRequest(loginCredentials);
+            //}
+            //var user = await userManager.Users.Include(u => u.Pictures).FirstOrDefaultAsync(u => u.Email == loginCredentials.Email);
+            //if (user == null)
+            //{
+            //    return Unauthorized();
+            //}
+            //var signInResult = await signInManager
+            //    .CheckPasswordSignInAsync(user, loginCredentials.Password, lockoutOnFailure: false);
+            //if (!signInResult.Succeeded)
+            //{
+            //    return Unauthorized();
+            //}
+            //// var userData = await _unitOfWork.UserRepository.GetUserDTOByEmailAsync(loginCredentials.Email);
 
-            return Ok(new TokenDTO()
-            {
-                UserData = mapper.Map<AppUser, UserDTO>(user),
-                Token = await tokenService.CreateTokenAsync(user)
-            });
+            //return Ok(new TokenDTO()
+            //{
+            //    UserData = mapper.Map<AppUser, UserDTO>(user),
+            //    Token = await tokenService.CreateTokenAsync(user)
+            //});
         }
     }
 }

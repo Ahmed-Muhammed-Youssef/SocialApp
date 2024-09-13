@@ -10,6 +10,6 @@
 
 
         // Navigation Properties
-        public AppUser AppUser { get; set; }
+        public ApplicationUser ApplicationUser { get; set; }
     }
 }

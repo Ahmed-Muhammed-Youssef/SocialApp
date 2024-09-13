@@ -1,7 +1,6 @@
 ﻿using Application.DTOs.Message;
 using Application.DTOs.Picture;
 using Application.DTOs.Post;
-using Application.DTOs.Registeration;
 using Application.DTOs.User;
 using Domain.Entities;
 using Infrastructure.Extensions;
@@ -13,10 +12,10 @@ namespace Infrastructure.MappingProfiles
     {
         public AutoMapperProfiles()
         {
-            CreateMap<AppUser, UserDTO>()
+            CreateMap<ApplicationUser, UserDTO>()
                 .ForMember(dest => dest.Age, opt => opt.MapFrom(src => src.DateOfBirth.CalculateAge()));
             CreateMap<Picture, PictureDTO>();
-            CreateMap<UpdatedUserDTO, AppUser>();
+            CreateMap<UpdatedUserDTO, ApplicationUser>();
 
             // @ToDo: Needs planning again
             //CreateMap<RegisterDTO, AppUser>()

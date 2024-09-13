@@ -12,17 +12,17 @@ namespace Infrastructure.Repositories
 {
     public class UserRepository(DataContext _dataContext) : IUserRepository // using the repository design pattern to isolate the contollers further more from the entity framework. (it may not be neccesary)
     {
-        public void DeleteUser(AppUser user)
+        public void DeleteUser(ApplicationUser user)
         {
             _dataContext.Remove(user);
         }
         public async Task<bool> UserExistsAsync(int id)
         {
-            return await _dataContext.Users
+            return await _dataContext.ApplicationUsers
                 .AsNoTracking()
                 .AnyAsync(e => e.Id == id);
         }
-        public void Update(AppUser appUser)
+        public void Update(ApplicationUser appUser)
         {
             _dataContext.ChangeTracker.Clear();
             _dataContext.Entry(appUser).State = EntityState.Modified;
@@ -46,11 +46,11 @@ namespace Infrastructure.Repositories
             }
             return new PagedList<UserDTO>(users.ToList(), users.Count(), userParams.PageNumber, userParams.ItemsPerPage);
         }
-        public async Task<AppUser> GetUserByIdAsync(int id)
+        public async Task<ApplicationUser> GetUserByIdAsync(int id)
         {
             var connectionString = _dataContext.Database.GetConnectionString();
             using IDbConnection db = new SqlConnection(connectionString);
-            return (await db.QueryAsync<AppUser>("GetUserById", new { Id = id }, commandType: CommandType.StoredProcedure)).FirstOrDefault();
+            return (await db.QueryAsync<ApplicationUser>("GetUserById", new { Id = id }, commandType: CommandType.StoredProcedure)).FirstOrDefault();
         }
         public async Task<UserDTO> GetUserDTOByIdAsync(int id)
         {

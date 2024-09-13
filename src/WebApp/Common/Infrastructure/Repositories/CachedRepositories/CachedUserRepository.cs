@@ -11,10 +11,10 @@ namespace Infrastructure.Repositories.CachedRepositories
     {
         // Queries
 
-        public async Task<AppUser> GetUserByIdAsync(int id)
+        public async Task<ApplicationUser> GetUserByIdAsync(int id)
         {
             object key = nameof(GetUserByIdAsync) + id;
-            if (!_memoryCache.TryGetValue(key, out AppUser result))
+            if (!_memoryCache.TryGetValue(key, out ApplicationUser result))
             {
                 result = await _usersRepository.GetUserByIdAsync(id);
 
@@ -42,8 +42,8 @@ namespace Infrastructure.Repositories.CachedRepositories
         public Task<bool> UserExistsAsync(int id) => _usersRepository.UserExistsAsync(id);
 
         // Commands
-        public void DeleteUser(AppUser user) => _usersRepository.DeleteUser(user);
+        public void DeleteUser(ApplicationUser user) => _usersRepository.DeleteUser(user);
 
-        public void Update(AppUser appUser) => _usersRepository.Update(appUser);
+        public void Update(ApplicationUser appUser) => _usersRepository.Update(appUser);
     }
 }
