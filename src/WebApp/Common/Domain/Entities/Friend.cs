@@ -8,8 +8,9 @@
         // Foreign Keys (composite primary key)
         public int UserId { get; set; }
         public int FriendId { get; set; }
+
         // navigation properties
-        public AppUser User { get; set; }
-        public AppUser FriendUser { get; set; }
+        public ApplicationUser User { get; set; }
+        public ApplicationUser FriendUser { get; set; }
     }
 }

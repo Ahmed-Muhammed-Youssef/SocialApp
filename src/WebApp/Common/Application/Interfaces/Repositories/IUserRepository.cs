@@ -7,11 +7,11 @@ namespace Application.Interfaces.Repositories
     public interface IUserRepository
     {
 
-        public void Update(AppUser appUser);
+        public void Update(ApplicationUser appUser);
         public Task<PagedList<UserDTO>> GetUsersDTOAsync(int userId, UserParams userParams);
-        public Task<AppUser> GetUserByIdAsync(int id);
+        public Task<ApplicationUser> GetUserByIdAsync(int id);
         public Task<UserDTO> GetUserDTOByIdAsync(int id);
-        public void DeleteUser(AppUser user);
+        public void DeleteUser(ApplicationUser user);
         public Task<bool> UserExistsAsync(int id);
     }
 }

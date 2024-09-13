@@ -11,7 +11,7 @@
         public int AppUserId { get; set; }
 
         // navigation properties
-        public AppUser AppUser { get; set; }
+        public ApplicationUser AppUser { get; set; }
 
     }
 }

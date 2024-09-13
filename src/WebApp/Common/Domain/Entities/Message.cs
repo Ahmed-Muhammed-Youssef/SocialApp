@@ -16,7 +16,7 @@
         public int RecipientId { get; set; }
 
         //navigation preoperties
-        public AppUser Sender { get; set; }
-        public AppUser Recipient { get; set; }
+        public ApplicationUser Sender { get; set; }
+        public ApplicationUser Recipient { get; set; }
     }
 }

@@ -46,7 +46,7 @@ namespace Infrastructure.Repositories
                 .Where(u => u.UserId == id)
                 .Select(u => u.FriendId).ToListAsync();
 
-            var queryDto = _dataContext.Users
+            var queryDto = _dataContext.ApplicationUsers
                 .Where(user => friendsIds.Contains(user.Id))
                 .ProjectTo<UserDTO>(_mapper.ConfigurationProvider).AsNoTracking();
 

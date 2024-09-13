@@ -10,7 +10,7 @@
         public int RequestedId { get; set; }
 
         // navigation properties
-        public AppUser Requester { get; set; }
-        public AppUser Requested { get; set; }
+        public ApplicationUser Requester { get; set; }
+        public ApplicationUser Requested { get; set; }
     }
 }

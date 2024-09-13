@@ -18,7 +18,7 @@ namespace Infrastructure.Data.Configurations
             builder.Property(p => p.DateEdited).IsRequired(false);
 
             // relationships
-            builder.HasOne(p => p.AppUser)
+            builder.HasOne(p => p.ApplicationUser)
                 .WithMany()
                 .IsRequired()
                 .HasForeignKey(p => p.UserId)

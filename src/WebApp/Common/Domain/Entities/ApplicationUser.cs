@@ -1,8 +1,9 @@
 ﻿namespace Domain.Entities
 {
-    public class AppUser
+    public class ApplicationUser
     {
         public int Id { get; set; }
+        public string IdentityId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string ProfilePictureUrl { get; set; } = null;
@@ -12,8 +13,8 @@
         public DateTime Created { get; set; } = DateTime.UtcNow;
         public DateTime LastActive { get; set; } = DateTime.UtcNow;
         public string Bio { get; set; }
-        public string City { get; set; }
-        public string Country { get; set; }
+        public int CityId { get; set; }
+        public int CountryId { get; set; }
 
         // navigation properties
         public ICollection<FriendRequest> FriendRequestsSent { get; set; }
