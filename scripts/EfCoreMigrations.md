@@ -21,13 +21,15 @@ cd SoicalApp\src\WebApp\Common\Infrastructure
 Then run:
 
 ```
-dotnet ef migrations add MigrationName
+dotnet ef migrations add MigrationName -o Data/Migrations -c DataContext
+dotnet ef migrations add IdentityMigrationName -o Identity/Migrations -c IdentityDatabaseContext
 ```
 
 Replace `MigrationName` with a descriptive name for your migration. For example:
 
 ```
 dotnet ef migrations add InitialCreate -o Data/Migrations -c DataContext
+dotnet ef migrations add InitialIdentityCreate -o Identity/Migrations -c IdentityDatabaseContext
 ```
 
 ## Applying Migrations
@@ -42,6 +44,7 @@ Then run:
 
 ```
 dotnet ef database update -c DataContext
+dotnet ef database update -c IdentityDatabaseContext
 ```
 
 This command will apply any pending migrations to your database.
