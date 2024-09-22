@@ -19,7 +19,6 @@ namespace Infrastructure.Data.Configurations
             builder.Property(u => u.DateOfBirth).IsRequired();
             builder.Property(u => u.Created).IsRequired();
             builder.Property(u => u.LastActive).IsRequired();
-            builder.Property(u => u.CountryId).IsRequired();
             builder.Property(u => u.CityId).IsRequired();
 
             // Nullable Fields 

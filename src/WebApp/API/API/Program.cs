@@ -11,12 +11,9 @@ using API.Services;
 using API.SignalR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
-using System;
 using Domain;
 using Infrastructure.Repositories.CachedRepositories;
 using Infrastructure.Repositories;
@@ -61,7 +58,6 @@ builder.Services.AddCors(options =>
     options.AddPolicy("AllowSpecificOrigin", policy => policy.AllowAnyMethod()
     .AllowAnyHeader().WithOrigins("https://localhost:4200").AllowCredentials());
 });
-
 
 var app = builder.Build();
 
