@@ -43,6 +43,10 @@ namespace Infrastructure.Data
                 logger.LogError(ex, "An error occurred during seeding");
             }
         }
+        private static Task SeedCities(DataContext dataContext)
+        {
+            throw new NotImplementedException();
+        }
         private static async Task AddData(UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager, IdentityDatabaseContext identityContext)
         {
             // add admin

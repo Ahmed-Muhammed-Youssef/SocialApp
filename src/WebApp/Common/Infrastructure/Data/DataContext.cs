@@ -19,6 +19,7 @@ namespace Infrastructure.Data
         }
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
         public DbSet<Country> Countries { get; set; }
+        public DbSet<Region> Regions { get; set; }
         public DbSet<City> Cities { get; set; }
         public DbSet<Post> Posts { get; set; }
         public DbSet<FriendRequest> FriendRequests { get; set; }
@@ -40,6 +41,7 @@ namespace Infrastructure.Data
             modelBuilder.ApplyConfiguration(new ApplicationUserConfigurations());
             modelBuilder.ApplyConfiguration(new PostConfigurations());
             modelBuilder.ApplyConfiguration(new CountryConfigurations());
+            modelBuilder.ApplyConfiguration(new RegionConfigurations());
             modelBuilder.ApplyConfiguration(new CityConfigurations());
         }
     }

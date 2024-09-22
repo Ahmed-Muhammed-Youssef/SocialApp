@@ -9,11 +9,11 @@ namespace Infrastructure.Data.Configurations
         public void Configure(EntityTypeBuilder<Country> builder)
         {
             // Properties
-            builder.Property(country => country.Name).IsRequired();
-            builder.Property(country => country.AName).IsRequired();
+            builder.Property(country => country.Name).HasMaxLength(255).IsRequired();
+            builder.Property(country => country.Code).HasMaxLength(2).IsRequired();
+            builder.Property(country => country.Language).HasMaxLength(3).IsRequired();
 
-            builder.HasMany<ApplicationUser>().WithOne().HasForeignKey(u => u.CountryId).OnDelete(DeleteBehavior.NoAction);
-            builder.HasMany<City>().WithOne().HasForeignKey(city => city.CountryId).OnDelete(DeleteBehavior.Cascade);
+            builder.HasMany<Region>().WithOne().HasForeignKey(region => region.CountryId).OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

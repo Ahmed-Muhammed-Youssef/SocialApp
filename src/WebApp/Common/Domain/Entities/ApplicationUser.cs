@@ -14,7 +14,6 @@
         public DateTime LastActive { get; set; } = DateTime.UtcNow;
         public string Bio { get; set; }
         public int CityId { get; set; }
-        public int CountryId { get; set; }
 
         // navigation properties
         public ICollection<FriendRequest> FriendRequestsSent { get; set; }

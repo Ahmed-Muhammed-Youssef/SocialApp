@@ -9,8 +9,7 @@ namespace Infrastructure.Data.Configurations
         public void Configure(EntityTypeBuilder<City> builder)
         {
             // Properties
-            builder.Property(city => city.Name).IsRequired();
-            builder.Property(city => city.AName).IsRequired();
+            builder.Property(city => city.Name).HasMaxLength(255).IsRequired();
 
             builder.HasMany<ApplicationUser>().WithOne().HasForeignKey(u => u.CityId);
         }
