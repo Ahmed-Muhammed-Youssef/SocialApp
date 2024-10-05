@@ -1,5 +1,4 @@
-﻿using Domain.Entities;
-using Infrastructure.Data;
+﻿using Infrastructure.Identity;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
@@ -14,16 +13,16 @@ namespace API.Extensions
     {
         public static IServiceCollection AddIdentityConfigurations(this IServiceCollection services, IConfiguration config)
         {
-            services.AddIdentityCore<AppUser>(opt =>
+            services.AddIdentityCore<IdentityUser>(opt =>
             {
                 opt.Password.RequireNonAlphanumeric = false;
                 opt.SignIn.RequireConfirmedAccount = false;
             })
-            .AddRoles<AppRole>()
-            .AddRoleManager<RoleManager<AppRole>>()
-            .AddSignInManager<SignInManager<AppUser>>()
-            .AddRoleValidator<RoleValidator<AppRole>>()
-            .AddEntityFrameworkStores<DataContext>();
+            .AddRoles<IdentityRole>()
+            .AddRoleManager<RoleManager<IdentityRole>>()
+            .AddSignInManager<SignInManager<IdentityUser>>()
+            .AddRoleValidator<RoleValidator<IdentityRole>>()
+            .AddEntityFrameworkStores<IdentityDatabaseContext>();
 
             services.AddAuthorizationBuilder()
             .AddPolicy("RequireAdminRole", policy => policy.RequireRole("admin"))

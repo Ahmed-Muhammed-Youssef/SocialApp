@@ -6,15 +6,15 @@ namespace API.SignalR
 {
     public class PresenceTracker
     {
-        private static readonly Dictionary<string, List<string>> OnlineUsers = [];
-        public Task<bool> UserConnected(string username, string connectionId)
+        private static readonly Dictionary<int, List<string>> OnlineUsers = [];
+        public Task<bool> UserConnected(int userId, string connectionId)
         {
             var firstConnection = false;
             lock (OnlineUsers)
             {
-                if (!OnlineUsers.TryGetValue(username, out List<string> userConnections))
+                if (!OnlineUsers.TryGetValue(userId, out List<string> userConnections))
                 {
-                    OnlineUsers[username] = [connectionId];
+                    OnlineUsers[userId] = [connectionId];
                     firstConnection = true;
                 }
                 else
@@ -24,12 +24,12 @@ namespace API.SignalR
             }
             return Task.FromResult(firstConnection);
         }
-        public Task<bool> UserDisconnected(string username, string connectionId)
+        public Task<bool> UserDisconnected(int userId, string connectionId)
         {
             bool isOffline = false;
             lock (OnlineUsers)
             {
-                if (!OnlineUsers.TryGetValue(username, out List<string> userConnections))
+                if (!OnlineUsers.TryGetValue(userId, out List<string> userConnections))
                 {
                     return Task.FromResult(isOffline);
                 }
@@ -37,27 +37,27 @@ namespace API.SignalR
                 userConnections.Remove(connectionId);
                 if (userConnections.Count == 0)
                 {
-                    OnlineUsers.Remove(username);
+                    OnlineUsers.Remove(userId);
                     isOffline = true;
                 }
             }
             return Task.FromResult(isOffline);
         }
-        public Task<string[]> GetOnlineUsers()
+        public Task<int[]> GetOnlineUsers()
         {
-            string[] onlineUsers = [];
+            int[] onlineUsers = [];
             lock (OnlineUsers)
             {
                 onlineUsers = OnlineUsers.OrderBy(u => u.Key).Select(u => u.Key).ToArray();
             }
             return Task.FromResult(onlineUsers);
         }
-        public Task<List<string>> GetConnectionForUser(string username)
+        public Task<List<string>> GetConnectionForUser(int userId)
         {
             List<string> connectionIds;
             lock (OnlineUsers)
             {
-                connectionIds = OnlineUsers.GetValueOrDefault(username);
+                connectionIds = OnlineUsers.GetValueOrDefault(userId);
             }
 
             return Task.FromResult(connectionIds);

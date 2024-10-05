@@ -23,7 +23,7 @@ namespace API.Controllers
 
         // GET: api/buggy/not-found
         [HttpGet("not-found")]
-        public ActionResult<AppUser> GetNotFound()
+        public ActionResult<ApplicationUser> GetNotFound()
         {
             var search = _context.ApplicationUsers.Find(-1);
             if (search == null)
@@ -35,7 +35,7 @@ namespace API.Controllers
 
         // GET: api/buggy/server-error
         [HttpGet("server-error")]
-        public ActionResult<AppUser> GetServerError()
+        public ActionResult<ApplicationUser> GetServerError()
         {
             var thing = _context.ApplicationUsers.Find(-1);
             var toPrint = thing.ToString();

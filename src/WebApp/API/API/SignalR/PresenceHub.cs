@@ -11,7 +11,7 @@ namespace API.SignalR
     {
         public override async Task OnConnectedAsync()
         {
-            var isFirstConnection = await _presenceTracker.UserConnected(Context.User.GetUsername(), Context.ConnectionId);
+            var isFirstConnection = await _presenceTracker.UserConnected(Context.User.GetId(), Context.ConnectionId);
             if (isFirstConnection)
             {
                 await Clients.Others.SendAsync("UserIsOnline", Context.User.GetUsername());
@@ -21,7 +21,7 @@ namespace API.SignalR
         }
         public override async Task OnDisconnectedAsync(Exception exception)
         {
-            var isJustDisconnected = await _presenceTracker.UserDisconnected(Context.User.GetUsername(), Context.ConnectionId);
+            var isJustDisconnected = await _presenceTracker.UserDisconnected(Context.User.GetId(), Context.ConnectionId);
             if (isJustDisconnected)
             {
                 await Clients.Others.SendAsync("UserIsOffline", Context.User.GetUsername());
