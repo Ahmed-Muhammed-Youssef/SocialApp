@@ -20,6 +20,7 @@ using Infrastructure.Repositories;
 using Application.Authentication.Google;
 using Infrastructure.ExternalServices.Google;
 using Infrastructure.ExternalServices.Cloudinary;
+using Infrastructure.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -45,6 +46,7 @@ builder.Services.AddScoped<PasswordGenerationService>();
 builder.Services.AddScoped<LogUserActivity>();
 
 builder.Services.AddDbContext<DataContext>();
+builder.Services.AddDbContext<IdentityDatabaseContext>();
 
 builder.Services.AddControllers();
 builder.Services.AddSignalR();

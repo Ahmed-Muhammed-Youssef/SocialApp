@@ -6,7 +6,7 @@ namespace Infrastructure.Identity
     public class IdentityDatabaseContext : IdentityDbContext
     {
         public IdentityDatabaseContext() { }
-        public IdentityDatabaseContext(DbContextOptions options) : base(options)
+        public IdentityDatabaseContext(DbContextOptions<IdentityDatabaseContext> options) : base(options)
         {
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
