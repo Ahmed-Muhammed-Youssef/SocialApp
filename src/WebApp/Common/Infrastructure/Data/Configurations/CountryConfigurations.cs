@@ -8,7 +8,10 @@ namespace Infrastructure.Data.Configurations
     {
         public void Configure(EntityTypeBuilder<Country> builder)
         {
+            builder.HasKey(country => country.Id);
+
             // Properties
+            builder.Property(country => country.Id).IsRequired().ValueGeneratedNever();
             builder.Property(country => country.Name).HasMaxLength(255).IsRequired();
             builder.Property(country => country.Code).HasMaxLength(2).IsRequired();
             builder.Property(country => country.Language).HasMaxLength(3).IsRequired();

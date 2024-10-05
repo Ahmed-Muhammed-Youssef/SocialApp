@@ -11,13 +11,18 @@ namespace MVC
             var builder = WebApplication.CreateBuilder(args);
 
             builder.Services.AddDbContext<DataContext>();
+            builder.Services.AddDbContext<IdentityDatabaseContext>();
 
-            builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                .AddRoles<IdentityRole>()
-                .AddRoleManager<RoleManager<IdentityRole>>()
-                .AddSignInManager<SignInManager<IdentityUser>>()
-                .AddRoleValidator<RoleValidator<IdentityRole>>()
-                .AddEntityFrameworkStores<IdentityDatabaseContext>();
+            builder.Services.AddDefaultIdentity<IdentityUser>(opt => 
+            {
+                opt.Password.RequireNonAlphanumeric = false;
+                opt.SignIn.RequireConfirmedAccount = false;
+            })
+            .AddRoles<IdentityRole>()
+            .AddRoleManager<RoleManager<IdentityRole>>()
+            .AddSignInManager<SignInManager<IdentityUser>>()
+            .AddRoleValidator<RoleValidator<IdentityRole>>()
+            .AddEntityFrameworkStores<IdentityDatabaseContext>();
 
             builder.Services.AddAuthorizationBuilder()
             .AddPolicy("RequireAdminRole", policy => policy.RequireRole("admin"))
@@ -30,10 +35,8 @@ namespace MVC
 
             var app = builder.Build();
 
-            // Migrate Database
-            await DatabaseSeeding.MigrateDatabaseAsync(app.Services);
-            // Seeding the application
-            await DatabaseSeeding.SeedUsersAsync(app.Services);
+            // Prepare Database
+            await DatabaseInitializer.InitializeAsync(app.Services);
 
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())

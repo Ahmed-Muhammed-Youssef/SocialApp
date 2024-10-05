@@ -64,7 +64,7 @@ builder.Services.AddCors(options =>
 var app = builder.Build();
 
 // Migrate Database
-await DatabaseSeeding.MigrateDatabaseAsync(app.Services);
+await DatabaseInitializer.InitializeAsync(app.Services);
 // Seeding the application
 // await DatabaseSeeding.SeedUsersAsync(app.Services);
 

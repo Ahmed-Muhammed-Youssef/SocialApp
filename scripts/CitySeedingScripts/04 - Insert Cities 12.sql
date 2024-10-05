@@ -98,7 +98,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2762883, 3861, N'Nakate
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2762884, 3865, N'Nakatenge')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2762885, 3865, N'Nakatoia')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2762886, 3865, N'Nakato Kuta')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2762887, 3865, N'Nakato')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2762888, 3861, N'Nakatondo')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2762889, 3863, N'Nakatontoka')
@@ -199,7 +199,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2762983, 3865, N'Namany
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2762984, 3865, N'Namanyesi')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2762985, 3865, N'Namanyevu')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2762986, 3865, N'Namanza')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2762987, 3867, N'Namarambu')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2762988, 3867, N'Namashova')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2762989, 3865, N'Namasiku')
@@ -300,7 +300,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2763083, 3865, N'Namutu
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2763084, 3865, N'Namutwi')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2763085, 3865, N'Namuyamba')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2763086, 3865, N'Namuyowa')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2763087, 3865, N'Namuzingu Lumino')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2763088, 3867, N'Namwaba')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2763089, 3867, N'Namwala')
@@ -401,7 +401,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2763183, 3865, N'Nawatu
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2763184, 3865, N'Nawaya')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2763185, 3865, N'Nawiko')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2763186, 3865, N'Nawina')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2763187, 3865, N'Nawinda Kuta')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2763188, 3865, N'Nawinda')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2763189, 3865, N'Nayoya')
@@ -502,7 +502,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2763283, 3861, N'Nduwa'
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2763284, 3865, N'Nduye')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2763285, 3867, N'Nega Nega')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2763286, 3865, N'Nelomwe')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2763287, 3865, N'Neloya')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2763288, 3863, N'Nelson Chibuye')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2763289, 3862, N'Nelsoni')
@@ -603,7 +603,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2763383, 3865, N'Ngulwa
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2763384, 3862, N'Ngumbe')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2763385, 3865, N'Ngumbi')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2763386, 3865, N'Ngumbwe')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2763387, 3864, N'Ngunda')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2763388, 3864, N'Ngund')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2763389, 3865, N'Ngundu')
@@ -704,7 +704,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2763483, 3862, N'Nkanka
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2763484, 3868, N'Nkapato')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2763485, 3861, N'Nkashi')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2763486, 3863, N'Nkavila')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2763487, 3862, N'Nkhala')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2763488, 3862, N'Nkhambwa')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2763489, 3862, N'Nkhani')
@@ -805,7 +805,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2763583, 3865, N'Noyoo'
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2763584, 3861, N'Nrepelwa')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2763585, 3862, N'Nsadzu')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2763586, 3862, N'Nsaika')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2763587, 3866, N'Nsakaluba')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2763588, 3866, N'Nsakanya')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2763589, 3861, N'Nsama')
@@ -906,7 +906,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2763683, 3864, N'Ntoka'
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2763684, 3861, N'Ntokwa')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2763685, 3864, N'Ntombo')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2763686, 3862, N'Ntondo')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2763687, 3867, N'Ntondwe')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2763688, 3865, N'Ntongo')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2763689, 3865, N'Ntongwe')
@@ -1007,7 +1007,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2763783, 3862, N'Nyama'
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2763784, 3865, N'Nyamasumbwa')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2763785, 3865, N'Nyamatisinyanga')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2763786, 3862, N'Nyamaulo')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2763787, 3862, N'Nyamawende')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2763788, 3864, N'Nyambanza')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2763789, 3864, N'Nyambaza')
@@ -1108,7 +1108,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2763883, 3869, N'Nyukat
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2763884, 3863, N'Nyumba')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2763885, 3865, N'Nyumbu')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2763886, 3862, N'Nyumbu')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2763887, 3863, N'Nyumbwe')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2763888, 3862, N'Nyundo')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2763889, 3864, N'Nyundu')
@@ -1209,7 +1209,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2763983, 3862, N'Payani
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2763984, 3862, N'Payela')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2763985, 3863, N'Pekankopwa')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2763986, 3862, N'Pekete')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2763987, 3865, N'Pelama')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2763988, 3863, N'Peleka')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2763989, 3865, N'Pelekwa')
@@ -1310,7 +1310,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2764083, 3867, N'Popila
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2764084, 3861, N'Popomoshi')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2764085, 3861, N'Popomosi')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2764086, 3861, N'Popomozi')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2764087, 3861, N'Popoto')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2764088, 3867, N'Pora')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2764089, 3865, N'Poto')
@@ -1411,7 +1411,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2764183, 3865, N'Sachie
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2764184, 3865, N'Sachikasa')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2764185, 3864, N'Sachikinda')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2764186, 3864, N'Sachilambo')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2764187, 3864, N'Sachilomba')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2764188, 3864, N'Sachilombo')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2764189, 3865, N'Sachilunga')
@@ -1512,7 +1512,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2764283, 3865, N'Sakazu
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2764284, 3863, N'Sakeni Chipe')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2764285, 3863, N'Sakeni Chisaka')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2764286, 3863, N'Sakeyo Katandula')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2764287, 3863, N'Sakomoka')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2764288, 3863, N'Sako')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2764289, 3864, N'Sakowewe')
@@ -1613,7 +1613,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2764383, 3865, N'Samazi
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2764384, 3865, N'Sambaimbai')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2764385, 3865, N'Sambalakato')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2764386, 3864, N'Sambalama')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2764387, 3865, N'Sambala')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2764388, 3865, N'Sambambi')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2764389, 3864, N'Sambando')
@@ -1714,7 +1714,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2764483, 3863, N'Samu N
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2764484, 3865, N'Samuntamfu')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2764485, 3864, N'Samunyinga')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2764486, 3865, N'Samunyumbwe')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2764487, 3865, N'Samusalu')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2764488, 3863, N'Samu')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2764489, 3866, N'Samu')
@@ -1815,7 +1815,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2764583, 3865, N'Sapasa
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2764584, 3864, N'Sapeta')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2764585, 3861, N'Sapeti')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2764586, 3864, N'Sapezo')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2764587, 3865, N'Sapi')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2764588, 3867, N'Saragonde')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2764589, 3864, N'Sarapuka')
@@ -1916,7 +1916,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2764683, 3864, N'Sendam
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2764684, 3861, N'Senda')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2764685, 3865, N'Sende')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2764686, 3863, N'Sendwa')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2764687, 3863, N'Sendwe')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2764688, 3863, N'Senenji')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2764689, 3862, N'Senenzi')
@@ -2017,7 +2017,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2764783, 3863, N'Shamap
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2764784, 3867, N'Shamapula')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2764785, 3867, N'Shamatuli')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2764786, 3862, N'Shamawa')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2764787, 3865, N'Shamayanda')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2764788, 3862, N'Shamboko')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2764789, 3862, N'Shambole')
@@ -2118,7 +2118,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2764883, 3863, N'Shiela
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2764884, 3863, N'Shifonkula')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2764885, 3863, N'Shigariatombwe')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2764886, 3867, N'Shikabuwa')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2764887, 3861, N'Shikai')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2764888, 3864, N'Shikalenge')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2764889, 3863, N'Shikalima')
@@ -2219,7 +2219,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2764983, 3865, N'Shindi
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2764984, 3864, N'Shindola')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2764985, 3867, N'Shindo')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2764986, 3865, N'Shindulinga')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2764987, 3867, N'Shindu')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2764988, 3867, N'Shinfwamba')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2764989, 3865, N'Shingole')
@@ -2320,7 +2320,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2765083, 3867, N'Siadob
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2765084, 3867, N'Siadobelo')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2765085, 3867, N'Siadugula')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2765086, 3865, N'Siafwanza')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2765087, 3867, N'Siajisa')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2765088, 3867, N'Siajitema')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2765089, 3867, N'Siakabale')
@@ -2421,7 +2421,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2765183, 3867, N'Siamuk
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2765184, 3867, N'Siamukundu')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2765185, 3867, N'Siamulea')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2765186, 3867, N'Siamuleya')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2765187, 3867, N'Siamulumbu')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2765188, 3867, N'Siamulunda')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2765189, 3867, N'Siamuluwa')
@@ -2522,7 +2522,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2765283, 3867, N'Siasho
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2765284, 3865, N'Siasibilo')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2765285, 3867, N'Siasikabole')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2765286, 3867, N'Siasimufulila')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2765287, 3867, N'Siasipa')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2765288, 3867, N'Siasuntwe')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2765289, 3867, N'Siatalimi')
@@ -2623,7 +2623,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2765383, 3865, N'Sifuwe
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2765384, 3865, N'Sifwabantu')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2765385, 3865, N'Sifwaba')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2765386, 3865, N'Sifweti')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2765387, 3865, N'Sifwindili')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2765388, 3867, N'Sigongo')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2765389, 3865, N'Sihenya')
@@ -2724,7 +2724,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2765483, 3865, N'Sikuta
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2765484, 3867, N'Sikuteka')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2765485, 3867, N'Sikutenyana')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2765486, 3865, N'Sikuyu')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2765487, 3867, N'Sikwaba')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2765488, 3865, N'Sikwae')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2765489, 3865, N'Sikwaliungu')
@@ -2825,7 +2825,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2765583, 3867, N'Simang
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2765584, 3867, N'Simanyanga')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2765585, 3865, N'Simanyonga')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2765586, 3867, N'Simaobi')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2765587, 3867, N'Simapungula')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2765588, 3867, N'Simasengele')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2765589, 3865, N'Simasenti')
@@ -2926,7 +2926,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2765683, 3867, N'Simuly
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2765684, 3867, N'Simulyama')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2765685, 3865, N'Simulyankumba')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2765686, 3867, N'Simumpande')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2765687, 3865, N'Simuna')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2765688, 3865, N'Simunganda')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2765689, 3865, N'Simunja')
@@ -3027,7 +3027,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2765783, 3861, N'Singoy
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2765784, 3862, N'Singuluwe')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2765785, 3864, N'Singumbe')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2765786, 3865, N'Singumbe')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2765787, 3865, N'Singungwa')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2765788, 3865, N'Sinjabata')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2765789, 3865, N'Sinjala')
@@ -3128,7 +3128,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2765883, 3865, N'Sitaya
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2765884, 3865, N'Sitebula')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2765885, 3865, N'Siteleki')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2765886, 3862, N'Sitele')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2765887, 3864, N'Sitembe')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2765888, 3865, N'Sitenda')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2765889, 3865, N'Sitenge')
@@ -3229,7 +3229,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2765983, 3861, N'Sokwer
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2765984, 3865, N'Sola')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2765985, 3862, N'Sola')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2765986, 3861, N'Solesole')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2765987, 3863, N'Solo Maiani')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2765988, 3862, N'Solomon')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2765989, 3861, N'Solomon')
@@ -3330,7 +3330,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2766083, 3865, N'Swanak
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2766084, 3864, N'Swanakapalu')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2766085, 3864, N'Swanakawandula')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2766086, 3864, N'Swana-Mutondo')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2766087, 3863, N'Swanamuumi')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2766088, 3864, N'Swanamuyinda')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2766089, 3864, N'Swanamwanza')
@@ -3431,7 +3431,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2766183, 3865, N'Tepa')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2766184, 3862, N'Tepeka')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2766185, 3863, N'Tepu Mopeta')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2766186, 3863, N'Tepu Mumba')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2766187, 3862, N'Tereka')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2766188, 3865, N'Tetamashimba')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2766189, 3861, N'Teta')
@@ -3532,7 +3532,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2766283, 3867, N'Tundwi
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2766284, 3861, N'Tungati')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2766285, 3865, N'Tungisha')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2766286, 3865, N'Tungulu')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2766287, 3865, N'Tungunga')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2766288, 3864, N'Tungu')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2766289, 3861, N'Tungwele')
@@ -3633,7 +3633,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2766383, 3865, N'Wamund
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2766384, 3865, N'Wamunyima')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2766385, 3865, N'Wamwanu')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2766386, 3865, N'Wanananda')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2766387, 3868, N'Wanashimba')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2766388, 3865, N'Wanchikulo')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2766389, 3861, N'Wangala')
@@ -3734,7 +3734,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2766483, 3862, N'Yobe')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2766484, 3862, N'Yohane')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2766485, 3862, N'Yokonia')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2766486, 3863, N'Yolam Kapandila')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2766487, 3863, N'Yolam Nkomesha')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2766488, 3865, N'Yolamu')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2766489, 3863, N'Yolam')
@@ -3835,7 +3835,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2766583, 3862, N'Zuleni
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2766584, 3862, N'Zumaile')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2766585, 3862, N'Zumbe')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2766586, 3861, N'Zumbe')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2766587, 3862, N'Zumbi')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2766588, 3861, N'Zumbi')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2766589, 3862, N'Zumbwani')
@@ -3936,7 +3936,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2766683, 3872, N'Ahiro'
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2766684, 3871, N'Ainga')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2766685, 3873, N'Aisa')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2766686, 3872, N'Akabati')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2766687, 3872, N'Akambwa')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2766688, 3872, N'Akangai')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2766689, 3872, N'Akangula')
@@ -4037,7 +4037,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2766783, 3871, N'Ambo')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2766784, 3872, N'Amboma')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2766785, 3872, N'Ambonga')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2766786, 3872, N'Ambuma')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2766787, 3870, N'Ambuma')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2766788, 3870, N'Ambuma-Moke')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2766789, 3876, N'Ambura I')
@@ -4138,7 +4138,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2766883, 3872, N'Araba'
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2766884, 3871, N'Arabi')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2766885, 3871, N'Arama')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2766886, 3872, N'Arara')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2766887, 3872, N'Aria')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2766888, 3872, N'Aribado')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2766889, 3872, N'Arigako')
@@ -4239,7 +4239,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2766983, 3871, N'Babagu
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2766984, 3871, N'Babama')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2766985, 3871, N'Babamba')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2766986, 3871, N'Babango')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2766987, 3874, N'Babangwa')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2766988, 3878, N'Babanjila')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2766989, 3870, N'Babasongo')
@@ -4340,7 +4340,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2767083, 3871, N'Baeco'
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2767084, 3871, N'Baego')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2767085, 3871, N'Baema')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2767086, 3872, N'Baemba')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2767087, 3870, N'Baenga')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2767088, 3871, N'Baengu')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2767089, 3872, N'Bafaka')
@@ -4441,7 +4441,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2767183, 3871, N'Bafwan
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2767184, 3871, N'Bafwanzama')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2767185, 3871, N'Bafwanzebona')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2767186, 3871, N'Bafwanzegule')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2767187, 3872, N'Bafwanzoku')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2767188, 3871, N'Bafwapada')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2767189, 3871, N'Bafwapipoyo')
@@ -4542,7 +4542,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2767283, 3880, N'Baka')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2767284, 3872, N'Bakala')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2767285, 3878, N'Bakalanga-Tengo')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2767286, 3872, N'Bakalawa')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2767287, 3872, N'Bakalua-Bodugbu')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2767288, 3872, N'Bakalukudu')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2767289, 3877, N'Bakamaye')
@@ -4643,7 +4643,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2767383, 3881, N'Bakwa-
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2767384, 3881, N'Bakwa-Punga')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2767385, 3877, N'Bakwa-Samba')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2767386, 3877, N'Bakwa-Seka')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2767387, 3881, N'Bakwa-Sumpi')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2767388, 3877, N'Bakwa-Sungu')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2767389, 3877, N'Bakwa-Tombe')
@@ -4744,7 +4744,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2767483, 3872, N'Bambak
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2767484, 3880, N'Bamba Kopo')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2767485, 3872, N'Bambaku')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2767486, 3872, N'Bambala')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2767487, 3871, N'Bambala')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2767488, 3876, N'Bamba Madimba')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2767489, 3871, N'Bambandjo')
@@ -4845,7 +4845,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2767583, 3871, N'Bandin
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2767584, 3870, N'Bandi-Rive')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2767585, 3871, N'Bandjambo')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2767586, 3876, N'Bandjow-Moke')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2767587, 3871, N'Bandjwade-Babubuzi')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2767588, 3872, N'Bando')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2767589, 3872, N'Bandu')
@@ -4946,7 +4946,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2767683, 3871, N'Bangwa
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2767684, 3879, N'Bangwe')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2767685, 3876, N'Bangwu')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2767686, 3871, N'Bangzikwa')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2767687, 3872, N'Bania')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2767688, 3871, N'Banisoba')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2767689, 3871, N'Baniungu')
@@ -5047,7 +5047,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2767783, 3871, N'Bapele
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2767784, 3872, N'Bapia')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2767785, 3871, N'Bapo')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2767786, 3871, N'Bapundi')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2767787, 3870, N'Bapuruma')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2767788, 3872, N'Bara')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2767789, 3871, N'Bara')
@@ -5148,7 +5148,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2767883, 3872, N'Basili
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2767884, 3875, N'Basilumbu')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2767885, 3872, N'Basiri')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2767886, 3873, N'Basluka')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2767887, 3871, N'Basoa')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2767888, 3870, N'Baso')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2767889, 3871, N'Basoko')
@@ -5249,7 +5249,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2767983, 3871, N'Batiya
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2767984, 3872, N'Baton')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2767985, 3881, N'Batonga')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2767986, 3870, N'Batshamba')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2767987, 3871, N'Batshambuya')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2767988, 3870, N'Batshwa')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2767989, 3870, N'Batsina')
@@ -5350,7 +5350,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2768083, 3870, N'Bebong
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2768084, 3876, N'Bediki')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2768085, 3871, N'Bedzamagosa')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2768086, 3872, N'Beemba')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2768087, 3872, N'Befaki')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2768088, 3870, N'Befale')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2768089, 3872, N'Befeke')
@@ -5451,7 +5451,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2768183, 3871, N'Belu')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2768184, 3871, N'Belue')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2768185, 3875, N'Beluma')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2768186, 3881, N'Belunga')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2768187, 3872, N'Bema')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2768188, 3881, N'Bemane')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2768189, 3880, N'Bemba')
@@ -5552,7 +5552,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2768283, 3881, N'Bena M
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2768284, 3872, N'Bena-Mulumba')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2768285, 3877, N'Bena-Mulumba')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2768286, 3881, N'Bena-Mulumba')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2768287, 3881, N'Bena-Munganda')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2768288, 3881, N'Bena-Musampa')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2768289, 3881, N'Bena-Mushia')
@@ -5653,7 +5653,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2768383, 3872, N'Bensam
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2768384, 3882, N'Bensati')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2768385, 3872, N'Bensenge')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2768386, 3872, N'Bensombo')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2768387, 3872, N'Bentari')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2768388, 3876, N'Benye')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2768389, 3882, N'Benzale')
@@ -5707,7 +5707,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2768436, 3880, N'Bete')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2768437, 3872, N'Beteli')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2768438, 3872, N'Betenkoi')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2768439, 3872, N'Betenkoie')
-INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2768440, 3876, N'Béthanie')
+INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2768440, 3876, N'Bï¿½thanie')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2768441, 3877, N'Bethenze')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2768442, 3872, N'Betoko')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2768443, 3870, N'Betoko')
@@ -5754,7 +5754,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2768483, 3871, N'Biaro'
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2768484, 3871, N'Biasiko')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2768485, 3872, N'Biavu')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2768486, 3873, N'Biaya')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2768487, 3877, N'Biaye')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2768488, 3872, N'Biazingi')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2768489, 3873, N'Bibama III')
@@ -5855,7 +5855,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2768583, 3872, N'Biling
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2768584, 3871, N'Biliniama')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2768585, 3870, N'Bilio')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2768586, 3870, N'Biliona')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2768587, 3872, N'Biliza')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2768588, 3879, N'Biliza')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2768589, 3873, N'Bilobilo')
@@ -5956,7 +5956,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2768683, 3880, N'Biseke
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2768684, 3879, N'Bisembe')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2768685, 3879, N'Bisembo')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2768686, 3872, N'Bisenge')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2768687, 3870, N'Bisenge')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2768688, 3877, N'Bisesu')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2768689, 3876, N'Biseye')
@@ -6057,7 +6057,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2768783, 3876, N'Bobang
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2768784, 3870, N'Bobangi')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2768785, 3870, N'Bobani')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2768786, 3871, N'Bobate')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2768787, 3871, N'Bobati')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2768788, 3871, N'Bobati I')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2768789, 3871, N'Bobati II')
@@ -6158,7 +6158,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2768883, 3870, N'Bodjok
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2768884, 3882, N'Bodjoma')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2768885, 3882, N'Bodjuna')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2768886, 3872, N'Bodolanga')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2768887, 3870, N'Bodolowe')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2768888, 3871, N'Bodoma')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2768889, 3870, N'Bodomere')
@@ -6259,7 +6259,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2768983, 3870, N'Bogbwi
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2768984, 3871, N'Boge')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2768985, 3872, N'Bogelenza')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2768986, 3870, N'Bogene')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2768987, 3870, N'Bogeze')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2768988, 3872, N'Bogfafala')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2768989, 3870, N'Bogilazo')
@@ -6360,7 +6360,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2769083, 3871, N'Bokapu
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2769084, 3877, N'Bokasa')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2769085, 3872, N'Bokasele')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2769086, 3871, N'Bokasola')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2769087, 3871, N'Bokasula')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2769088, 3870, N'Bokata')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2769089, 3870, N'Bokatola')
@@ -6461,7 +6461,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2769183, 3872, N'Bokota
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2769184, 3872, N'Bokota-Kateka')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2769185, 3872, N'Bokote')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2769186, 3876, N'Bokote')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2769187, 3872, N'Bokoto')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2769188, 3876, N'Bokotokiri')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2769189, 3870, N'Bokotola')
@@ -6562,7 +6562,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2769283, 3872, N'Bolemb
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2769284, 3872, N'Bolemo')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2769285, 3872, N'Bolemo II')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2769286, 3870, N'Bolena-Boendjola')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2769287, 3872, N'Bolena')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2769288, 3870, N'Bolena-Ifoso')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2769289, 3872, N'Bolena-Loka')
@@ -6643,7 +6643,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2769363, 3872, N'Bolong
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2769364, 3870, N'Bolongo')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2769365, 3871, N'Bolongo')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2769366, 3870, N'Bolongoi')
-INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2769367, 3871, N'Bolongo Intérieur')
+INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2769367, 3871, N'Bolongo Intï¿½rieur')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2769368, 3872, N'Bolongokele')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2769369, 3872, N'Bolongombe')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2769370, 3872, N'Bolongonkele')
@@ -6663,7 +6663,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2769383, 3870, N'Bolumb
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2769384, 3870, N'Bolumbu')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2769385, 3872, N'Bolunda')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2769386, 3872, N'Bolundu')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2769387, 3872, N'Bolunga')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2769388, 3872, N'Boma')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2769389, 3876, N'Boma')
@@ -6764,7 +6764,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2769483, 3871, N'Bombom
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2769484, 3877, N'Bombo-Mukoma')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2769485, 3870, N'Bombongo')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2769486, 3871, N'Bombongo')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2769487, 3872, N'Bombotu')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2769488, 3871, N'Bombula')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2769489, 3870, N'Bombura')
@@ -6865,7 +6865,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2769583, 3872, N'Bongal
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2769584, 3870, N'Bongale-Wotolo')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2769585, 3870, N'Bongali')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2769586, 3870, N'Bongalua')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2769587, 3882, N'Bonga-Malembe')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2769588, 3876, N'Bonga-Masoko')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2769589, 3877, N'Bongamba')
@@ -6966,7 +6966,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2769683, 3871, N'Bongur
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2769684, 3871, N'Bongwale')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2769685, 3871, N'Bongwange')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2769686, 3882, N'Bongwe')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2769687, 3872, N'Bongwengende')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2769688, 3871, N'Bonjunju')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2769689, 3870, N'Bonkamba')
@@ -7067,7 +7067,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2769783, 3876, N'Bosand
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2769784, 3871, N'Bosanela')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2769785, 3872, N'Bosanga')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2769786, 3876, N'Bosanga')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2769787, 3870, N'Bosanga')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2769788, 3872, N'Bosango')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2769789, 3876, N'Bosango')
@@ -7168,7 +7168,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2769883, 3870, N'Boso-L
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2769884, 3872, N'Boso-Likutu')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2769885, 3870, N'Boso-Limbongo')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2769886, 3870, N'Bosolindo')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2769887, 3870, N'Bosoliongo')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2769888, 3872, N'Boso-Lite')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2769889, 3870, N'Bosolo')
@@ -7269,7 +7269,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2769983, 3872, N'Botong
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2769984, 3870, N'Botoro')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2769985, 3870, N'Botorofio')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2769986, 3870, N'Botoro II')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2769987, 3870, N'Bototongo')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2769988, 3876, N'Botshuni')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2769989, 3872, N'Botsima')
@@ -7370,7 +7370,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2770083, 3870, N'Boyand
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2770084, 3870, N'Boyandongweie')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2770085, 3876, N'Boyanga')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2770086, 3870, N'Boyanga')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2770087, 3870, N'Boyangawao')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2770088, 3872, N'Boyangbafu')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2770089, 3870, N'Boyange')
@@ -7471,7 +7471,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2770183, 3871, N'Buba')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2770184, 3870, N'Bubanda')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2770185, 3870, N'Bubasongo')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2770186, 3870, N'Bubayo')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2770187, 3876, N'Bu')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2770188, 3882, N'Bu')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2770189, 3880, N'Bu')
@@ -7572,7 +7572,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2770283, 3874, N'Bukumb
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2770284, 3874, N'Bukumbiri')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2770285, 3873, N'Bukumbirwa')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2770286, 3880, N'Buku Minanga')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2770287, 3878, N'Bukunga')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2770288, 3874, N'Bukutsha')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2770289, 3870, N'Bukutu')
@@ -7673,7 +7673,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2770383, 3872, N'Bumbar
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2770384, 3872, N'Bumba Shutinga')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2770385, 3872, N'Bumba-Tembo')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2770386, 3872, N'Bumbi')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2770387, 3873, N'Bumbi')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2770388, 3870, N'Bumbi Kumakete')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2770389, 3875, N'Bumbilungu')
@@ -7774,7 +7774,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2770483, 3872, N'Busemb
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2770484, 3870, N'Busempoto')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2770485, 3873, N'Busenene')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2770486, 3870, N'Busepoka')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2770487, 3873, N'Buseregenya')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2770488, 3873, N'Busese')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2770489, 3874, N'Busha')
@@ -7875,7 +7875,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2770583, 3872, N'Busu-M
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2770584, 3872, N'Busu-Mangandu')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2770585, 3870, N'Busu-Mangundu')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2770586, 3872, N'Busu Mani')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2770587, 3872, N'Busu Maso')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2770588, 3872, N'Busu-Masuka')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2770589, 3870, N'Busu Mayala')
@@ -7976,7 +7976,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2770683, 3876, N'Buzala
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2770684, 3871, N'Buzenzele')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2770685, 3879, N'Buziba')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2770686, 3874, N'Buzibu')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2770687, 3872, N'Buzi Nanbi')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2770688, 3873, N'Buzingo')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2770689, 3872, N'Buzira Monene')
@@ -8077,7 +8077,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2770783, 3871, N'Bwiken
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2770784, 3880, N'Bwila')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2770785, 3872, N'Bwinga')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2770786, 3873, N'Bwino')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2770787, 3872, N'Bwitshi')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2770788, 3872, N'Bwondo')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2770789, 3879, N'Bwuliki')
@@ -8100,7 +8100,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2770805, 3870, N'Cocqui
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2770806, 3870, N'Colon Koret')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2770807, 3880, N'Congdia Kadi')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2770808, 3880, N'Congo dia Kati')
-INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2770809, 3880, N'Congo-Lutète')
+INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2770809, 3880, N'Congo-Lutï¿½te')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2770810, 3875, N'Congomeka')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2770811, 3878, N'Congo Ster')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2770812, 3870, N'Coq')
@@ -8178,7 +8178,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2770883, 3870, N'Deko')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2770884, 3872, N'Dekula')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2770885, 3871, N'Dekwaba')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2770886, 3872, N'Dela-Bombwa')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2770887, 3872, N'Delebokonde')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2770888, 3871, N'Dele')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2770889, 3872, N'Dema')
@@ -8279,7 +8279,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2770983, 3872, N'Digili
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2770984, 3875, N'Dihake')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2770985, 3875, N'Dihaki')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2770986, 3877, N'Dihuka')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2770987, 3880, N'Dihulu')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2770988, 3881, N'Dihumba')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2770989, 3872, N'Dika')
@@ -8380,7 +8380,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2771083, 3877, N'Disaya
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2771084, 3878, N'Disele')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2771085, 3878, N'Disese')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2771086, 3877, N'Dishinda')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2771087, 3878, N'Disiloshi')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2771088, 3878, N'Ditanto')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2771089, 3878, N'Ditongwe')
@@ -8481,7 +8481,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2771183, 3877, N'Djinga
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2771184, 3871, N'Djitofu')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2771185, 3872, N'Djobe')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2771186, 3872, N'Djobo')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2771187, 3872, N'Djobolia')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2771188, 3872, N'Djodjimi')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2771189, 3875, N'Djofa')
@@ -8582,7 +8582,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2771283, 3872, N'Dome')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2771284, 3878, N'Dominique')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2771285, 3877, N'Domiongo')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2771286, 3878, N'Dona')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2771287, 3876, N'Donda')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2771288, 3880, N'Donda')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2771289, 3880, N'Donda II')
@@ -8683,7 +8683,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2771383, 3878, N'Dumba'
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2771384, 3880, N'Dumba')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2771385, 3875, N'Dumba')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2771386, 3877, N'Dumba-Kakese')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2771387, 3877, N'Dumba-Munene')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2771388, 3877, N'Dumbia Tshamea')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2771389, 3870, N'Dumbi')
@@ -8784,7 +8784,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2771483, 3881, N'Ebombo
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2771484, 3870, N'Ebonda-Alberta')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2771485, 3881, N'Ebondo')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2771486, 3870, N'Ebonge')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2771487, 3872, N'Ebongia')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2771488, 3876, N'Ebongo')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2771489, 3870, N'Ebongo')
@@ -8885,7 +8885,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2771583, 3872, N'Ekombe
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2771584, 3870, N'Ekombe')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2771585, 3875, N'Ekombe')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2771586, 3872, N'Ekomi')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2771587, 3877, N'Ekomu')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2771588, 3872, N'Ekona')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2771589, 3870, N'Ekonda')
@@ -8971,8 +8971,8 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2771668, 3870, N'Elinga
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2771669, 3870, N'Elingala')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2771670, 3872, N'Elingampangu')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2771671, 3872, N'Elinganpandu')
-INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2771672, 3871, N'Élisabetha')
-INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2771673, 3878, N'Élisabethville')
+INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2771672, 3871, N'ï¿½lisabetha')
+INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2771673, 3878, N'ï¿½lisabethville')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2771674, 3872, N'Elisa-Kiri')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2771675, 3872, N'Eliwa')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2771676, 3872, N'Eliwa Moke')
@@ -8986,7 +8986,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2771683, 3872, N'Elombe
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2771684, 3872, N'Elombembongo')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2771685, 3876, N'Elombe Moke')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2771686, 3872, N'Elome')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2771687, 3872, N'Elomi')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2771688, 3876, N'Elomo-Busongo')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2771689, 3876, N'Elomo')
@@ -9016,7 +9016,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2771712, 3872, N'Emboy 
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2771713, 3872, N'Embungulu')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2771714, 3872, N'Emeika')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2771715, 3872, N'Emengeye')
-INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2771716, 3876, N'Emmaüs')
+INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2771716, 3876, N'Emmaï¿½s')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2771717, 3876, N'Emolo')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2771718, 3876, N'Enan')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2771719, 3882, N'Endala')
@@ -9087,7 +9087,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2771783, 3872, N'Esanga
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2771784, 3872, N'Esanga')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2771785, 3870, N'Esanga')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2771786, 3872, N'Esangani')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2771787, 3870, N'Esangani')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2771788, 3876, N'Esangankusu')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2771789, 3875, N'Esange')
@@ -9135,8 +9135,8 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2771830, 3876, N'Etey')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2771831, 3872, N'Etie')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2771832, 3872, N'Etimani')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2771833, 3876, N'Eto')
-INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2771834, 3878, N'Étoile du Congo')
-INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2771835, 3878, N'Étoile')
+INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2771834, 3878, N'ï¿½toile du Congo')
+INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2771835, 3878, N'ï¿½toile')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2771836, 3881, N'Etombole')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2771837, 3878, N'Etondo')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2771838, 3872, N'Etongampulu')
@@ -9188,7 +9188,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2771883, 3882, N'Fambon
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2771884, 3876, N'Fambono')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2771885, 3876, N'Fampana')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2771886, 3882, N'Fangulu')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2771887, 3876, N'Fankana')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2771888, 3880, N'Fanquet')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2771889, 3871, N'Faradje')
@@ -9289,7 +9289,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2771983, 3872, N'Fwatsh
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2771984, 3882, N'Fwatundu')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2771985, 3878, N'Fwelete')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2771986, 3881, N'Fwila')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2771987, 3870, N'Gaba')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2771988, 3878, N'Gaba')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2771989, 3876, N'Gabenge')
@@ -9390,7 +9390,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2772083, 3872, N'Ganie-
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2772084, 3874, N'Ganjo')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2772085, 3882, N'Gankie')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2772086, 3876, N'Gantoko')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2772087, 3882, N'Gantoko')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2772088, 3872, N'Ganza')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2772089, 3872, N'Ganzi')
@@ -9491,7 +9491,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2772183, 3870, N'Gili')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2772184, 3871, N'Gilima')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2772185, 3872, N'Gilinga')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2772186, 3871, N'Gilinga')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2772187, 3870, N'Gilizi')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2772188, 3872, N'Gilson')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2772189, 3872, N'Gima')
@@ -9592,7 +9592,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2772283, 3878, N'Gombe-
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2772284, 3881, N'Gombe-Niama')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2772285, 3875, N'Gombeniama')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2772286, 3881, N'Gombe Nyama')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2772287, 3880, N'Gombe-Sud')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2772288, 3870, N'Gombi')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2772289, 3872, N'Gombo')
@@ -9693,7 +9693,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2772383, 3872, N'Gunde'
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2772384, 3872, N'Gundji')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2772385, 3870, N'Gundji')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2772386, 3870, N'Gundu')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2772387, 3870, N'Gundu-Kasangi')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2772388, 3870, N'Gundu-Kindamba')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2772389, 3872, N'Gunduruge')
@@ -9794,7 +9794,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2772483, 3872, N'Ibaka'
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2772484, 3877, N'Ibaka')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2772485, 3870, N'Ibala')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2772486, 3872, N'Ibali')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2772487, 3876, N'Ibali')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2772488, 3872, N'Ibalingongo')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2772489, 3872, N'Ibali-Sud')
@@ -9895,7 +9895,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2772583, 3874, N'Ihamba
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2772584, 3872, N'Ihambi')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2772585, 3872, N'Ihango')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2772586, 3874, N'Ihembe')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2772587, 3873, N'Ihula')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2772588, 3879, N'Ihusi')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2772589, 3876, N'Ijomo')
@@ -9996,7 +9996,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2772683, 3872, N'Ikundj
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2772684, 3872, N'Ikundju')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2772685, 3879, N'Ikunza')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2772686, 3875, N'Ikuruta')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2772687, 3872, N'Ikutu')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2772688, 3872, N'Ikutu Kunda')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2772689, 3870, N'Ikwa')
@@ -10097,7 +10097,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2772783, 3872, N'Imbe')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2772784, 3871, N'Imbi')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2772785, 3872, N'Imb Musese')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2772786, 3872, N'Imbo')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2772787, 3870, N'Imbo')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2772788, 3875, N'Imbo')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2772789, 3872, N'Imbombolongo')
@@ -10198,7 +10198,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2772883, 3872, N'Ino')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2772884, 3876, N'Inongo')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2772885, 3872, N'Insaw')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2772886, 3872, N'Intako')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2772887, 3872, N'Intana')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2772888, 3872, N'Intoko')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2772889, 3882, N'Into-Pombo')
@@ -10210,7 +10210,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2772894, 3870, N'Intshu
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2772895, 3876, N'Intshume-Ebaya')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2772896, 3876, N'Intshume Makondo')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2772897, 3876, N'Intshume-Mukongo')
-INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2772898, 3882, N'Intsie Intérieur')
+INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2772898, 3882, N'Intsie Intï¿½rieur')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2772899, 3882, N'Intsie')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2772900, 3876, N'Inunu')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2772901, 3881, N'Inya Kaponga')
@@ -10299,7 +10299,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2772983, 3873, N'Isango
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2772984, 3872, N'Isani')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2772985, 3872, N'Isansani')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2772986, 3872, N'Isanu')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2772987, 3877, N'Isanza')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2772988, 3872, N'Isanzani')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2772989, 3877, N'Isasa')
@@ -10400,7 +10400,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2773083, 3876, N'Ito-Ye
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2773084, 3872, N'Itua')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2773085, 3880, N'Itubu')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2773086, 3872, N'Ituka')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2773087, 3870, N'Itukuantaka')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2773088, 3872, N'Ituku')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2773089, 3872, N'Itula')
@@ -10501,7 +10501,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2773183, 3878, N'Kabamb
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2773184, 3872, N'Kabambale')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2773185, 3878, N'Kabambale')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2773186, 3881, N'Kabamba Milamba')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2773187, 3877, N'Kabamba-Mundodi')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2773188, 3872, N'Kabambare')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2773189, 3875, N'Kabambare')
@@ -10602,7 +10602,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2773283, 3870, N'Kabete
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2773284, 3872, N'Kabetela')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2773285, 3872, N'Kabeyabamba')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2773286, 3877, N'Kabeya-Buata')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2773287, 3872, N'Kabeya-Fundu')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2773288, 3880, N'Kabeya-Ilunga')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2773289, 3872, N'Kabeya')
@@ -10703,7 +10703,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2773383, 3878, N'Kabong
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2773384, 3872, N'Kabongo')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2773385, 3870, N'Kabongo')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2773386, 3881, N'Kabongo')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2773387, 3878, N'Kabongo')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2773388, 3882, N'Kabongo')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2773389, 3880, N'Kabongo')
@@ -10804,7 +10804,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2773483, 3878, N'Kabuyu
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2773484, 3878, N'Kabuzi')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2773485, 3877, N'Kabwabwa')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2773486, 3877, N'Kabwaie')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2773487, 3877, N'Kabwai')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2773488, 3877, N'Kabwa')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2773489, 3881, N'Kabwa')
@@ -10905,7 +10905,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2773583, 3881, N'Kafumb
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2773584, 3878, N'Kafumbwe')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2773585, 3878, N'Kafuna')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2773586, 3878, N'Kafungo-Bayo')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2773587, 3878, N'Kafungo-Dianda')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2773588, 3877, N'Kafungoie')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2773589, 3872, N'Kafungo')
@@ -11006,7 +11006,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2773683, 3872, N'Kahuni
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2773684, 3875, N'Kahuri')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2773685, 3878, N'Kahutu')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2773686, 3881, N'Kaiamba')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2773687, 3872, N'Kaibi')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2773688, 3878, N'Kaibo')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2773689, 3880, N'Kai Dunda')
@@ -11107,7 +11107,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2773783, 3878, N'Kakika
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2773784, 3878, N'Kakikangu')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2773785, 3872, N'Kakima')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2773786, 3877, N'Kakinda')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2773787, 3872, N'Kakinga')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2773788, 3878, N'Kakinga')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2773789, 3882, N'Kakinga')
@@ -11208,7 +11208,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2773883, 3872, N'Kalaba
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2773884, 3872, N'Kaladrizi')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2773885, 3872, N'Kaladziri')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2773886, 3872, N'Kalaka')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2773887, 3872, N'Kala')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2773888, 3876, N'Kala')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2773889, 3878, N'Kala')
@@ -11309,7 +11309,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2773983, 3878, N'Kalemi
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2773984, 3878, N'Kalemi')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2773985, 3872, N'Kalemwe')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2773986, 3872, N'Kalenda')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2773987, 3877, N'Kalenda')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2773988, 3878, N'Kalenda')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2773989, 3880, N'Kalenda')
@@ -11410,7 +11410,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2774083, 3878, N'Kalomo
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2774084, 3877, N'Kalomonyi')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2774085, 3875, N'Kalonda-Busindi')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2774086, 3881, N'Kalonda-Eshimba')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2774087, 3872, N'Kalonda')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2774088, 3876, N'Kalonda')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2774089, 3870, N'Kalonda')
@@ -11511,7 +11511,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2774183, 3877, N'Kalung
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2774184, 3881, N'Kalunga')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2774185, 3878, N'Kalunga')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2774186, 3882, N'Kalunga')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2774187, 3875, N'Kalunga')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2774188, 3878, N'Kalungambuzi')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2774189, 3878, N'Kalunga Mugabo')
@@ -11612,7 +11612,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2774283, 3880, N'Kamba'
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2774284, 3875, N'Kamba')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2774285, 3879, N'Kamba')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2774286, 3877, N'Kamba-Kaniama')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2774287, 3872, N'Kamba Kayinga')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2774288, 3872, N'Kambakese')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2774289, 3872, N'Kamba-Kibuta')
@@ -11713,7 +11713,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2774383, 3881, N'Kamien
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2774384, 3872, N'Kamienpongo')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2774385, 3877, N'Kamiji')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2774386, 3878, N'Kamikosa')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2774387, 3875, N'Kamili')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2774388, 3872, N'Kamilimba')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2774389, 3872, N'Kamima')
@@ -11814,7 +11814,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2774483, 3878, N'Kamuku
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2774484, 3872, N'Kamulamu')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2774485, 3872, N'Kamulemba')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2774486, 3872, N'Kamulete')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2774487, 3875, N'Kamulete')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2774488, 3872, N'Kamulindwa')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2774489, 3877, N'Kamulolo')
@@ -11915,7 +11915,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2774583, 3876, N'Kandja
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2774584, 3872, N'Kandji-Kandji')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2774585, 3871, N'Kandjoka')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2774586, 3870, N'Kandjoko')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2774587, 3870, N'Kandjumba')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2774588, 3872, N'Kandoi')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2774589, 3872, N'Kandole')
@@ -12016,7 +12016,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2774683, 3872, N'Kanien
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2774684, 3872, N'Kanienge')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2774685, 3872, N'Kaniepa')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2774686, 3872, N'Kanika')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2774687, 3870, N'Kanika')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2774688, 3872, N'Kaniki')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2774689, 3881, N'Kaniki')
@@ -12117,7 +12117,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2774783, 3877, N'Kanu')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2774784, 3878, N'Kanuki')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2774785, 3877, N'Kanuma')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2774786, 3873, N'Kanune')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2774787, 3872, N'Kanunga')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2774788, 3878, N'Kanunga')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2774789, 3874, N'Kanunge')
@@ -12218,7 +12218,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2774883, 3872, N'Kapend
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2774884, 3878, N'Kapenda')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2774885, 3880, N'Kapenda')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2774886, 3880, N'Kapende')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2774887, 3878, N'Kapenga')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2774888, 3872, N'Kapeo')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2774889, 3877, N'Kapepa')
@@ -12319,7 +12319,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2774983, 3871, N'Karera
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2774984, 3874, N'Karhundu')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2774985, 3873, N'Karibumba')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2774986, 3872, N'Kari')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2774987, 3872, N'Karisia')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2774988, 3875, N'Karomo')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2774989, 3875, N'Kartushi')
@@ -12420,7 +12420,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2775083, 3881, N'Kasanz
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2775084, 3870, N'Kasanza-Pondo')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2775085, 3878, N'Kasao')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2775086, 3878, N'Kasapa')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2775087, 3872, N'Kasari')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2775088, 3872, N'Kasasa')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2775089, 3881, N'Kasase')
@@ -12521,7 +12521,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2775183, 3873, N'Kashir
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2775184, 3872, N'Kashita')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2775185, 3870, N'Kashitu')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2775186, 3877, N'Kashitu')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2775187, 3872, N'Kashiukulu')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2775188, 3879, N'Kashoka')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2775189, 3874, N'Kashongerwe')
@@ -12622,7 +12622,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2775283, 3877, N'Kasong
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2775284, 3881, N'Kasongo-Mule')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2775285, 3872, N'Kasongomuna')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2775286, 3875, N'Kasongo-Murefa')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2775287, 3872, N'Kasongomwana')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2775288, 3882, N'Kasongo-Yungu')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2775289, 3872, N'Kasonguela')
@@ -12723,7 +12723,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2775383, 3878, N'Katang
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2775384, 3875, N'Katanga')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2775385, 3879, N'Katanga')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2775386, 3878, N'Katangala')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2775387, 3878, N'Katangela')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2775388, 3875, N'Katangila')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2775389, 3872, N'Katanki')
@@ -12824,7 +12824,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2775483, 3878, N'Katomb
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2775484, 3872, N'Katombi')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2775485, 3881, N'Katombole')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2775486, 3879, N'Katombwe')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2775487, 3881, N'Katomeshi')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2775488, 3872, N'Katomia')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2775489, 3872, N'Katompe')
@@ -12925,7 +12925,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2775583, 3878, N'Katwa'
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2775584, 3873, N'Katwa')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2775585, 3878, N'Katwa-Mokoi')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2775586, 3872, N'Katwawa')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2775587, 3878, N'Katwe')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2775588, 3872, N'Katwishi')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2775589, 3877, N'Kaula')
@@ -13026,7 +13026,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2775683, 3882, N'Kayeye
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2775684, 3875, N'Kayeye')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2775685, 3872, N'Kayeza')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2775686, 3877, N'Kayikula')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2775687, 3877, N'Kayikulu')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2775688, 3872, N'Kayinga')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2775689, 3878, N'Kayka')
@@ -13127,7 +13127,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2775783, 3876, N'Kebi')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2775784, 3876, N'Kebo')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2775785, 3870, N'Kedja')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2775786, 3879, N'Keisha')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2775787, 3875, N'Keitankondo')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2775788, 3871, N'Keka')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2775789, 3870, N'Keke')
@@ -13228,7 +13228,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2775883, 3876, N'Keseki
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2775884, 3872, N'Kesele')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2775885, 3876, N'Kesenge')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2775886, 3871, N'Keseny')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2775887, 3876, N'Kesesie')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2775888, 3874, N'Keshero')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2775889, 3872, N'Keshi')
@@ -13329,7 +13329,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2775983, 3875, N'Kianda
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2775984, 3879, N'Kianda')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2775985, 3875, N'Kiandaye-Kilubi')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2775986, 3881, N'Kiande')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2775987, 3879, N'Kiandjo')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2775988, 3870, N'Kiando')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2775989, 3880, N'Kiandu')
@@ -13430,7 +13430,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2776083, 3878, N'Kibele
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2776084, 3872, N'Kibelwe')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2776085, 3872, N'Kibemba')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2776086, 3870, N'Kibembele')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2776087, 3872, N'Kibenda')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2776088, 3872, N'Kibenga')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2776089, 3870, N'Kibenga')
@@ -13531,7 +13531,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2776183, 3880, N'Kibunz
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2776184, 3882, N'Kibunzila')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2776185, 3879, N'Kibusa')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2776186, 3878, N'Kibushi')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2776187, 3878, N'Kibuye')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2776188, 3875, N'Kibwana')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2776189, 3876, N'Kibwanga')
@@ -13632,7 +13632,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2776283, 3874, N'Kigogo
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2776284, 3873, N'Kigoma')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2776285, 3873, N'Kigomba')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2776286, 3879, N'Kigongo')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2776287, 3880, N'Kigudi')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2776288, 3875, N'Kigulu-Mabwe')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2776289, 3879, N'Kigulu-Ntengo')
@@ -13733,7 +13733,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2776383, 3872, N'Kikomb
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2776384, 3878, N'Kikomba')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2776385, 3880, N'Kikomba')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2776386, 3879, N'Kikomba')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2776387, 3874, N'Kikombe')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2776388, 3870, N'Kikombo')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2776389, 3880, N'Kikonda')
@@ -13834,7 +13834,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2776483, 3870, N'Kilala
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2776484, 3875, N'Kilala')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2776485, 3874, N'Kilalo')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2776486, 3880, N'Kilalu')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2776487, 3870, N'Kilamba')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2776488, 3878, N'Kilamba')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2776489, 3872, N'Kilambi')
@@ -13935,7 +13935,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2776583, 3871, N'Kilomi
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2776584, 3876, N'Kilomo Diata')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2776585, 3876, N'Kilomo')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2776586, 3876, N'Kilomuana')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2776587, 3878, N'Kilomwele')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2776588, 3870, N'Kilonda')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2776589, 3871, N'Kilongalonga')
@@ -14036,7 +14036,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2776683, 3872, N'Kimbal
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2776684, 3876, N'Kimbala')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2776685, 3880, N'Kimbala')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2776686, 3875, N'Kimbala')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2776687, 3872, N'Kimbalama')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2776688, 3880, N'Kimbala Muke')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2776689, 3872, N'Kimbalata')
@@ -14137,7 +14137,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2776783, 3880, N'Kimeng
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2776784, 3878, N'Kimenkinda')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2776785, 3870, N'Kimeso')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2776786, 3880, N'Kimfakata')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2776787, 3880, N'Kimfulu')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2776788, 3876, N'Kimfumu-Dana')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2776789, 3876, N'Kimfumu Ndana')
@@ -14238,7 +14238,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2776883, 3880, N'Kimwan
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2776884, 3876, N'Kimwanza')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2776885, 3882, N'Kimwari')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2776886, 3872, N'Kimwela')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2776887, 3876, N'Kimwela')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2776888, 3870, N'Kimwela-Kwai')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2776889, 3882, N'Kimwenza')
@@ -14339,7 +14339,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2776983, 3882, N'Kingat
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2776984, 3882, N'Kingawa')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2776985, 3872, N'Kingbara')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2776986, 3870, N'Kingelema')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2776987, 3870, N'Kingelem')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2776988, 3880, N'Kingemba-Kinga')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2776989, 3880, N'Kingemba')
@@ -14440,7 +14440,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2777083, 3876, N'Kinkam
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2777084, 3876, N'Kinkamo')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2777085, 3880, N'Kinkandu')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2777086, 3880, N'Kinkanga')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2777087, 3876, N'Kinkasa')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2777088, 3870, N'Kinkasa')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2777089, 3882, N'Kinkata')
@@ -14541,7 +14541,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2777183, 3880, N'Kintum
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2777184, 3880, N'Kintumba')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2777185, 3875, N'Kintumbuka')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2777186, 3880, N'Kintutila')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2777187, 3878, N'Kintwa')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2777188, 3876, N'Kintwala')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2777189, 3880, N'Kinua')
@@ -14642,7 +14642,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2777283, 3878, N'Kiovwe
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2777284, 3878, N'Kiowa')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2777285, 3872, N'Kiowe')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2777286, 3878, N'Kiowe')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2777287, 3872, N'Kipaila')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2777288, 3870, N'Kipaka')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2777289, 3875, N'Kipaka')
@@ -14743,7 +14743,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2777383, 3876, N'Kisake
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2777384, 3876, N'Kisa')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2777385, 3877, N'Kisako')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2777386, 3872, N'Kisakula')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2777387, 3880, N'Kisala-Kiama')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2777388, 3872, N'Kisala')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2777389, 3876, N'Kisala')
@@ -14844,7 +14844,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2777483, 3881, N'Kishib
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2777484, 3876, N'Kishie')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2777485, 3872, N'Kishi')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2777486, 3881, N'Kishi')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2777487, 3878, N'Kishi')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2777488, 3878, N'Kishiko')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2777489, 3872, N'Kishinda')
@@ -14945,7 +14945,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2777583, 3870, N'Kitala
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2777584, 3871, N'Kitalangulu')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2777585, 3872, N'Kitalwa')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2777586, 3872, N'Kitamba')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2777587, 3870, N'Kitamba')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2777588, 3881, N'Kitamba')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2777589, 3872, N'Kitambala')
@@ -15046,7 +15046,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2777683, 3875, N'Kitoko
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2777684, 3879, N'Kitoko')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2777685, 3881, N'Kitole')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2777686, 3871, N'Kitoma')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2777687, 3880, N'Kitombadio')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2777688, 3872, N'Kitomba')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2777689, 3870, N'Kitombe')
@@ -15147,7 +15147,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2777783, 3880, N'Kiula'
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2777784, 3874, N'Kiuli')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2777785, 3878, N'Kiulu')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2777786, 3878, N'Kiumba')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2777787, 3874, N'Kiumba')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2777788, 3878, N'Kiumbi')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2777789, 3878, N'Kiumbo')
@@ -15248,7 +15248,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2777883, 3870, N'Kogban
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2777884, 3870, N'Kogia')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2777885, 3870, N'Kogwa')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2777886, 3872, N'Koie')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2777887, 3870, N'Koie')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2777888, 3872, N'Koiekoie')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2777889, 3870, N'Kojakombo')
@@ -15349,7 +15349,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2777983, 3880, N'Konde-
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2777984, 3880, N'Konde-Bande')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2777985, 3880, N'Konde Buma')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2777986, 3880, N'Konde di Kasamvu')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2777987, 3880, N'Konde di Mbuma')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2777988, 3880, N'Konde di Mbumba')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2777989, 3880, N'Konde di Palanga')
@@ -15450,7 +15450,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2778083, 3876, N'Koshi'
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2778084, 3877, N'Koshi')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2778085, 3881, N'Koshi')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2778086, 3882, N'Koshi')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2778087, 3870, N'Koshimbanda')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2778088, 3876, N'Koshi-Mushingatalu')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2778089, 3872, N'Koshitu')
@@ -15551,7 +15551,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2778183, 3872, N'Kulind
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2778184, 3878, N'Kuliobwa')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2778185, 3872, N'Kulonda')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2778186, 3872, N'Kulua-Loka')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2778187, 3872, N'Kulua-Loko')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2778188, 3876, N'Kuluamanza')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2778189, 3872, N'Kulukando')
@@ -15652,7 +15652,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2778283, 3871, N'Kurukw
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2778284, 3878, N'Kusaba')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2778285, 3881, N'Kusa')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2778286, 3872, N'Kusala')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2778287, 3872, N'Kuse')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2778288, 3878, N'Kusimbiali')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2778289, 3881, N'Kuso')
@@ -15753,7 +15753,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2778383, 3880, N'Kyende
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2778384, 3873, N'Kyolo')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2778385, 3878, N'Kyoywa')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2778386, 3879, N'Kyugama')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2778387, 3872, N'Kzengi')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2778388, 3876, N'Laba-Koko')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2778389, 3876, N'Laba')
@@ -15854,7 +15854,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2778483, 3876, N'Lekei'
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2778484, 3872, N'Leko')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2778485, 3871, N'Lekolisa')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2778486, 3876, N'Lekwivu')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2778487, 3876, N'Lele')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2778488, 3880, N'Lele-Makenongo')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2778489, 3871, N'Lelema')
@@ -15899,13 +15899,13 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2778527, 3872, N'Lengwe
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2778528, 3878, N'Lengwe')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2778529, 3871, N'Lenju')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2778530, 3876, N'Lenko')
-INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2778531, 3882, N'Léo-Est')
-INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2778532, 3882, N'Léo-II')
-INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2778533, 3872, N'Léo-Matanga')
-INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2778534, 3882, N'Léo-Ouest')
+INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2778531, 3882, N'Lï¿½o-Est')
+INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2778532, 3882, N'Lï¿½o-II')
+INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2778533, 3872, N'Lï¿½o-Matanga')
+INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2778534, 3882, N'Lï¿½o-Ouest')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2778535, 3882, N'Leopoldstad')
-INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2778536, 3882, N'Léopoldville')
-INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2778537, 3882, N'Léopoldville-West')
+INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2778536, 3882, N'Lï¿½opoldville')
+INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2778537, 3882, N'Lï¿½opoldville-West')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2778538, 3870, N'Leotshi')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2778539, 3871, N'Leseresere')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2778540, 3871, N'Letale')
@@ -15955,7 +15955,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2778583, 3870, N'Libinz
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2778584, 3872, N'Libiri')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2778585, 3872, N'Libisi')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2778586, 3872, N'Libobi')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2778587, 3872, N'Libodi')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2778588, 3872, N'Libogo')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2778589, 3872, N'Libo I')
@@ -15982,8 +15982,8 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2778609, 3871, N'Licenc
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2778610, 3872, N'Lida')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2778611, 3871, N'Lidjo')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2778612, 3871, N'Lidyo')
-INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2778613, 3878, N'Liège Sacré-Coeur')
-INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2778614, 3879, N'Liége Saint Lambert')
+INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2778613, 3878, N'Liï¿½ge Sacrï¿½-Coeur')
+INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2778614, 3879, N'Liï¿½ge Saint Lambert')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2778615, 3871, N'Lieke-Asangu')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2778616, 3871, N'Lieke-Lesole')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2778617, 3871, N'Lieke')
@@ -15996,7 +15996,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2778623, 3870, N'Liemba
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2778624, 3871, N'Liembe')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2778625, 3872, N'Lienard')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2778626, 3872, N'Lienart')
-INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2778627, 3872, N'Liénartville')
+INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2778627, 3872, N'Liï¿½nartville')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2778628, 3870, N'Liesa')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2778629, 3870, N'Liese')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2778630, 3871, N'Liese')
@@ -16056,7 +16056,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2778683, 3872, N'Likole
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2778684, 3872, N'Liko')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2778685, 3870, N'Likoli')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2778686, 3876, N'Likolo')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2778687, 3871, N'Likolo')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2778688, 3876, N'Likolo Ngongo')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2778689, 3870, N'Likoloto')
@@ -16157,7 +16157,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2778783, 3871, N'Lingun
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2778784, 3871, N'Linyanya')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2778785, 3870, N'Linza')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2778786, 3872, N'Linzanza')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2778787, 3872, N'Linzelinze')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2778788, 3870, N'Lioko')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2778789, 3872, N'Liombo')
@@ -16258,7 +16258,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2778883, 3870, N'Lofili
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2778884, 3872, N'Lofima')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2778885, 3870, N'Lofima')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2778886, 3872, N'Lofoi')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2778887, 3870, N'Lofoku')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2778888, 3872, N'Lofoli')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2778889, 3870, N'Lofoloko')
@@ -16359,7 +16359,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2778983, 3870, N'Lokute
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2778984, 3876, N'Lokwa-Intshum')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2778985, 3876, N'Lokwa-Mbila')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2778986, 3872, N'Lola')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2778987, 3870, N'Lola')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2778988, 3871, N'Lola')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2778989, 3871, N'Lolango')
@@ -16460,7 +16460,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2779083, 3872, N'Longon
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2779084, 3877, N'Longonzo')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2779085, 3881, N'Longula')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2779086, 3882, N'Longuli')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2779087, 3872, N'Longulu')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2779088, 3871, N'Longwa')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2779089, 3872, N'Longwe')
@@ -16561,7 +16561,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2779183, 3878, N'Luakab
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2779184, 3878, N'Luakabongo')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2779185, 3878, N'Luakidi')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2779186, 3872, N'Luakila')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2779187, 3879, N'Luako')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2779188, 3881, N'Lualaba-Kasaba')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2779189, 3878, N'Lualaba Kraal')
@@ -16662,7 +16662,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2779283, 3873, N'Lubena
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2779284, 3878, N'Lubende')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2779285, 3872, N'Lubenga')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2779286, 3878, N'Lubeni')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2779287, 3878, N'Lubenza')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2779288, 3879, N'Luberezi')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2779289, 3879, N'Luberizi')
@@ -16763,7 +16763,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2779383, 3875, N'Ludja'
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2779384, 3879, N'Lueba')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2779385, 3877, N'Luebo')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2779386, 3881, N'Luedi')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2779387, 3878, N'Lueji II')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2779388, 3878, N'Lueji')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2779389, 3875, N'Lueki')
@@ -16864,7 +16864,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2779483, 3870, N'Luisa'
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2779484, 3877, N'Luisa')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2779485, 3878, N'Luishia')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2779486, 3877, N'Luituila')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2779487, 3877, N'Luiza')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2779488, 3878, N'Luizi')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2779489, 3879, N'Lukaba')
@@ -16965,7 +16965,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2779583, 3872, N'Lukond
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2779584, 3877, N'Lukonga')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2779585, 3875, N'Lukonge')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2779586, 3877, N'Lukono')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2779587, 3872, N'Lukonzolwa')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2779588, 3876, N'Lukoshi-Bambala')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2779589, 3878, N'Lukoshi')
@@ -17066,7 +17066,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2779683, 3878, N'Lumata
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2779684, 3878, N'Lumba-Goi')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2779685, 3877, N'Lumbaie')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2779686, 3870, N'Lumba II')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2779687, 3870, N'Lumba I')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2779688, 3878, N'Lumba-Kahenia')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2779689, 3877, N'Lumbala-Kalala')
@@ -17167,7 +17167,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2779783, 3881, N'Lungum
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2779784, 3881, N'Lungumbu')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2779785, 3875, N'Lungumu')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2779786, 3871, N'Lungundu')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2779787, 3879, N'Lungungu')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2779788, 3874, N'Lungutu')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2779789, 3879, N'Lungutu')
@@ -17268,7 +17268,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2779883, 3872, N'Luseke
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2779884, 3878, N'Luseke')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2779885, 3876, N'Luse')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2779886, 3870, N'Lusemvu')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2779887, 3872, N'Lusenga')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2779888, 3877, N'Lusenga')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2779889, 3878, N'Lusenga')
@@ -17369,7 +17369,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2779983, 3880, N'Luvitu
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2779984, 3878, N'Luvua Gare')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2779985, 3878, N'Luvua')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2779986, 3880, N'Luvukano')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2779987, 3880, N'Luvu')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2779988, 3872, N'Luvumbi')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2779989, 3874, N'Luvumvure')
@@ -17431,7 +17431,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2780044, 3872, N'Mabe')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2780045, 3872, N'Mabembe')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2780046, 3872, N'Mabendjaba')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2780047, 3876, N'Mabenga-Aval')
-INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2780048, 3876, N'Mabenga-Cité')
+INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2780048, 3876, N'Mabenga-Citï¿½')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2780049, 3876, N'Mabenga')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2780050, 3873, N'Mabenga')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2780051, 3872, N'Mabenge')
@@ -17470,7 +17470,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2780083, 3873, N'Maboyo
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2780084, 3872, N'Mabruki')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2780085, 3871, N'Mabruki')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2780086, 3880, N'Mabubu')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2780087, 3870, N'Mabu-Gboybo')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2780088, 3880, N'Mabuidi')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2780089, 3872, N'Mabuka')
@@ -17571,7 +17571,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2780183, 3872, N'Magbin
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2780184, 3871, N'Magbungulu')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2780185, 3879, N'Magembe')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2780186, 3879, N'Magene')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2780187, 3873, N'Mageria')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2780188, 3875, N'Magoie')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2780189, 3870, N'Magombe')
@@ -17672,7 +17672,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2780283, 3879, N'Makasi
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2780284, 3877, N'Makasu')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2780285, 3876, N'Makaw')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2780286, 3870, N'Makaw')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2780287, 3871, N'Makaw')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2780288, 3876, N'Makaya')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2780289, 3875, N'Makeawatu')
@@ -17773,7 +17773,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2780383, 3873, N'Makulu
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2780384, 3879, N'Maku')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2780385, 3876, N'Makumaku')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2780386, 3872, N'Makuma')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2780387, 3877, N'Makumbi')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2780388, 3878, N'Makumbi')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2780389, 3872, N'Makumbo')
@@ -17784,7 +17784,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2780393, 3881, N'Makuna
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2780394, 3877, N'Makuna-Nord')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2780395, 3875, N'Makundiu')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2780396, 3872, N'Makundu')
-INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2780397, 3879, N'Makunga Lémoki')
+INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2780397, 3879, N'Makunga Lï¿½moki')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2780398, 3870, N'Makunga')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2780399, 3880, N'Makunga')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2780400, 3880, N'Makungi-Mazi')
@@ -17874,7 +17874,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2780483, 3878, N'Malemb
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2780484, 3878, N'Malembeke')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2780485, 3877, N'Malembe-Lunga')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2780486, 3877, N'Malembe-Lungambo')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2780487, 3872, N'Malembe')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2780488, 3876, N'Malembe')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2780489, 3870, N'Malembe')
@@ -17975,7 +17975,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2780583, 3871, N'Mambai
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2780584, 3872, N'Mamba')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2780585, 3881, N'Mamba')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2780586, 3878, N'Mamba')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2780587, 3872, N'Mambanga')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2780588, 3870, N'Mambango')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2780589, 3873, N'Mambao')
@@ -18076,7 +18076,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2780683, 3881, N'Mandu'
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2780684, 3876, N'Mandundu')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2780685, 3882, N'Mandundu')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2780686, 3870, N'Mandungu')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2780687, 3881, N'Mandungu')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2780688, 3872, N'Mandzo')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2780689, 3872, N'Manene')
@@ -18177,7 +18177,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2780783, 3878, N'Mankob
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2780784, 3872, N'Mankonde')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2780785, 3880, N'Mankonde')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2780786, 3882, N'Mankondo')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2780787, 3879, N'Mankulu')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2780788, 3877, N'Manonkole')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2780789, 3872, N'Manono')
@@ -18278,7 +18278,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2780883, 3880, N'Masang
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2780884, 3874, N'Masango')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2780885, 3878, N'Masangu')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2780886, 3879, N'Masangu')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2780887, 3872, N'Masania')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2780888, 3872, N'Masanza')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2780889, 3872, N'Masapo')
@@ -18379,7 +18379,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2780983, 3880, N'Matadi
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2780984, 3878, N'Matafari')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2780985, 3877, N'Matafu')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2780986, 3878, N'Matafu')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2780987, 3871, N'Matagbende')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2780988, 3875, N'Matahama')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2780989, 3873, N'Mataka')
@@ -18480,7 +18480,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2781083, 3876, N'Matue'
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2781084, 3876, N'Matue-Tshimi')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2781085, 3872, N'Matuhubu')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2781086, 3880, N'Matuka')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2781087, 3876, N'Matuka-Matuka')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2781088, 3871, N'Matukulu')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2781089, 3878, N'Matuku')
@@ -18581,7 +18581,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2781183, 3872, N'Mayu')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2781184, 3872, N'Mayumba')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2781185, 3881, N'Mayumba')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2781186, 3878, N'Mayumba')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2781187, 3872, N'Mayumbe')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2781188, 3876, N'Mayumu')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2781189, 3876, N'Mayunga')
@@ -18682,7 +18682,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2781283, 3871, N'Mbati'
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2781284, 3872, N'Mbau')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2781285, 3871, N'Mbau')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2781286, 3871, N'Mbaw')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2781287, 3876, N'Mbaya-Antera')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2781288, 3875, N'Mbaya')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2781289, 3873, N'Mbaya')
@@ -18783,7 +18783,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2781383, 3880, N'Mbuku-
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2781384, 3880, N'Mbuku-Mbandu')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2781385, 3870, N'Mbuku')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2781386, 3880, N'Mbuku')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2781387, 3880, N'Mbuku Minanga')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2781388, 3873, N'Mbula')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2781389, 3877, N'Mbulambula')
@@ -18857,8 +18857,8 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2781456, 3876, N'Mentsa
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2781457, 3876, N'Mentsange')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2781458, 3874, N'Mera')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2781459, 3877, N'Merode')
-INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2781460, 3877, N'Mérode-Salvador')
-INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2781461, 3877, N'Mérode-Salvator')
+INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2781460, 3877, N'Mï¿½rode-Salvador')
+INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2781461, 3877, N'Mï¿½rode-Salvator')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2781462, 3878, N'Mertens')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2781463, 3875, N'Mesa')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2781464, 3875, N'Mesaraba')
@@ -18884,7 +18884,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2781483, 3880, N'Mfumu'
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2781484, 3877, N'Mfunga')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2781485, 3880, N'Mfuti')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2781486, 3877, N'Mgwema')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2781487, 3873, N'Mhulu')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2781488, 3881, N'Miabi')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2781489, 3880, N'Miabi')
@@ -18985,7 +18985,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2781583, 3882, N'Milong
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2781584, 3872, N'Milumbu')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2781585, 3878, N'Milumbu')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2781586, 3882, N'Milu')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2781587, 3876, N'Milundu')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2781588, 3870, N'Milundu')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2781589, 3875, N'Mimbi')
@@ -19086,7 +19086,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2781683, 3872, N'Mitomb
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2781684, 3872, N'Mitondo')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2781685, 3872, N'Mitonga')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2781686, 3878, N'Mitonge')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2781687, 3876, N'Mitshakila')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2781688, 3872, N'Mitshibu')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2781689, 3877, N'Mitshi-Mitshi')
@@ -19187,7 +19187,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2781783, 3870, N'Mogalo
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2781784, 3872, N'Moga')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2781785, 3875, N'Moga')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2781786, 3871, N'Mogandjo')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2781787, 3871, N'Moganjo')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2781788, 3870, N'Mogaraba')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2781789, 3872, N'Mogbai')
@@ -19288,7 +19288,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2781883, 3876, N'Mokolo
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2781884, 3870, N'Mokolovese')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2781885, 3871, N'Mokombe')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2781886, 3872, N'Mokombo')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2781887, 3870, N'Mokombo')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2781888, 3870, N'Mokombusu')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2781889, 3877, N'Mokomiymba')
@@ -19389,7 +19389,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2781983, 3877, N'Mombo-
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2781984, 3870, N'Mombole')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2781985, 3871, N'Momboloso')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2781986, 3872, N'Mombombo II')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2781987, 3872, N'Mombombo')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2781988, 3877, N'Mombo')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2781989, 3880, N'Mombo')
@@ -19413,8 +19413,8 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2782006, 3872, N'Momea'
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2782007, 3878, N'Momena')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2782008, 3870, N'Momenge')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2782009, 3872, N'Momi')
-INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2782010, 3876, N'Mô')
-INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2782011, 3876, N'Mô Molomo')
+INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2782010, 3876, N'Mï¿½')
+INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2782011, 3876, N'Mï¿½ Molomo')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2782012, 3872, N'Momongo')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2782013, 3872, N'Momoti')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2782014, 3872, N'Mompanga')
@@ -19490,7 +19490,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2782083, 3872, N'Mondzo
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2782084, 3872, N'Mondzuambi')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2782085, 3872, N'Monene-Panda')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2782086, 3872, N'Monenge')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2782087, 3871, N'Monetu')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2782088, 3873, N'Mongaha')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2782089, 3870, N'Mongaie')
@@ -19591,7 +19591,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2782183, 3870, N'Monong
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2782184, 3870, N'Monsefema')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2782185, 3872, N'Monsenge')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2782186, 3870, N'Montanga')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2782187, 3875, N'Montanga')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2782188, 3876, N'Monterensie')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2782189, 3876, N'Montiene')
@@ -19692,7 +19692,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2782283, 3870, N'Motsil
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2782284, 3872, N'Motuba')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2782285, 3870, N'Motulu')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2782286, 3870, N'Motwa')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2782287, 3870, N'Movanga')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2782288, 3872, N'Movangosa')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2782289, 3876, N'Moway-Pukulu')
@@ -19793,7 +19793,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2782383, 3872, N'Mpungi
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2782384, 3880, N'Mpungu')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2782385, 3876, N'Mpunyi')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2782386, 3878, N'Mputa')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2782387, 3872, N'Mpute')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2782388, 3880, N'Mputi')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2782389, 3880, N'Mputu')
@@ -19894,7 +19894,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2782483, 3881, N'Mudind
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2782484, 3881, N'Mudindwa-Sampu')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2782485, 3872, N'Mudinga')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2782486, 3881, N'Mudita')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2782487, 3870, N'Mudiwa')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2782488, 3870, N'Mudjimbila')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2782489, 3872, N'Mudjumbuli')
@@ -19995,7 +19995,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2782583, 3877, N'Mukala
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2782584, 3875, N'Mukalavita')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2782585, 3877, N'Mukalenge-Muana')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2782586, 3877, N'Mukalenge')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2782587, 3877, N'Mukalenge Mwana')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2782588, 3872, N'Mukalukiya')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2782589, 3879, N'Mukalu')
@@ -20096,7 +20096,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2782683, 3875, N'Mukoko
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2782684, 3879, N'Mukoko')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2782685, 3875, N'Mukolaka')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2782686, 3877, N'Mukole')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2782687, 3878, N'Mukol')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2782688, 3875, N'Mukoloka')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2782689, 3879, N'Mukoloka')
@@ -20197,7 +20197,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2782783, 3876, N'Mukuye
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2782784, 3875, N'Mukuyu')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2782785, 3877, N'Mukwandianga')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2782786, 3875, N'Mukwanga')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2782787, 3872, N'Mukwangeshi')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2782788, 3871, N'Mukwaniama')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2782789, 3878, N'Mukwanzuba')
@@ -20298,7 +20298,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2782883, 3878, N'Muliat
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2782884, 3876, N'Mulidi')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2782885, 3879, N'Muligata')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2782886, 3872, N'Mulikalungu')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2782887, 3870, N'Mulikayenge')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2782888, 3870, N'Mulikikamba')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2782889, 3872, N'Mulima')
@@ -20399,7 +20399,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2782983, 3872, N'Mulumb
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2782984, 3876, N'Mulumbu')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2782985, 3877, N'Mulumbu')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2782986, 3878, N'Mulumbu')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2782987, 3878, N'Mulumbu Mwanza')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2782988, 3878, N'Mulumbu Mwanze')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2782989, 3872, N'Mulunda')
@@ -20500,7 +20500,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2783083, 3872, N'Muniem
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2783084, 3881, N'Munienga')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2783085, 3881, N'Munienge')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2783086, 3875, N'Munie-Pembe')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2783087, 3880, N'Muni-Kanza')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2783088, 3872, N'Muni-Kasendji')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2783089, 3872, N'Munikongo')
@@ -20601,7 +20601,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2783183, 3872, N'Musang
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2783184, 3870, N'Musanga-Lubwe')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2783185, 3870, N'Musanga-Mukisi')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2783186, 3872, N'Musanga')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2783187, 3870, N'Musanga')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2783188, 3877, N'Musanga')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2783189, 3872, N'Musange')
@@ -20702,7 +20702,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2783283, 3872, N'Mushis
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2783284, 3878, N'Mushituka')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2783285, 3872, N'Mushitu')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2783286, 3877, N'Mushitu')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2783287, 3878, N'Mushuka')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2783288, 3876, N'Mushuni')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2783289, 3879, N'Mushuva')
@@ -20803,7 +20803,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2783383, 3880, N'Mutang
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2783384, 3870, N'Mutangiri')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2783385, 3870, N'Mutango')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2783386, 3870, N'Mutango-Zenga')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2783387, 3870, N'Mutangu')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2783388, 3870, N'Mutangu-Tari')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2783389, 3872, N'Mutapua')
@@ -20904,7 +20904,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2783483, 3872, N'Mutumb
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2783484, 3878, N'Mutumbe')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2783485, 3872, N'Mutumbia')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2783486, 3872, N'Mutumbike')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2783487, 3875, N'Mutumbi')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2783488, 3879, N'Mutumbi')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2783489, 3878, N'Mutumbula')
@@ -21005,7 +21005,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2783583, 3878, N'Mwabes
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2783584, 3881, N'Mwabi')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2783585, 3872, N'Mwabo')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2783586, 3872, N'Mwadia-Muteba')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2783587, 3872, N'Mwadi-Goie')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2783588, 3872, N'Mwadi-Kalumba')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2783589, 3872, N'Mwadi-Katoloka')
@@ -21106,7 +21106,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2783683, 3880, N'Mwana-
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2783684, 3875, N'Mwana-Muzungu')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2783685, 3872, N'Mwana-Mwambo')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2783686, 3872, N'Mwana')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2783687, 3874, N'Mwana')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2783688, 3879, N'Mwana')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2783689, 3875, N'Mwana-Mwazi')
@@ -21207,7 +21207,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2783783, 3875, N'Mweho'
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2783784, 3875, N'Mweho Pene Kilala')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2783785, 3881, N'Mwehu')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2783786, 3878, N'Mwehu')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2783787, 3878, N'Mweie')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2783788, 3877, N'Mweji-a-Kondi')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2783789, 3878, N'Mweji')
@@ -21308,7 +21308,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2783883, 3872, N'Mwene-
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2783884, 3872, N'Mwene-Ngungu')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2783885, 3877, N'Mwene Nianga')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2783886, 3877, N'Mwene-Nienga')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2783887, 3872, N'Mwene-Ntaye')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2783888, 3878, N'Mweneombe')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2783889, 3878, N'Mwene Putu')
@@ -21409,7 +21409,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2783983, 3878, N'Nakulu
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2783984, 3878, N'Nakulusu')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2783985, 3872, N'Nakusinga')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2783986, 3875, N'Nalalongwe')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2783987, 3872, N'Nala')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2783988, 3872, N'Nalemba')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2783989, 3872, N'Naligonza')
@@ -21510,7 +21510,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2784083, 3877, N'Ndeke'
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2784084, 3877, N'N''Dekesa')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2784085, 3877, N'Ndekesha')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2784086, 3873, N'Ndeko')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2784087, 3876, N'Ndele')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2784088, 3871, N'Ndele')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2784089, 3876, N'Ndeli')
@@ -21611,7 +21611,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2784183, 3874, N'Neri-M
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2784184, 3872, N'Neru')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2784185, 3872, N'Nesogo')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2784186, 3872, N'Nesolo')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2784187, 3872, N'Nesoro')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2784188, 3872, N'Netiti')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2784189, 3872, N'Netonga')
@@ -21712,7 +21712,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2784283, 3872, N'Ngelos
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2784284, 3875, N'Ngelu-Viundi')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2784285, 3875, N'Ngelu-Viundu')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2784286, 3870, N'Ngembe')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2784287, 3876, N'Ngemo')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2784288, 3876, N'Ngemu')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2784289, 3876, N'Ngendja')
@@ -21813,7 +21813,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2784383, 3870, N'Ngonzo
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2784384, 3870, N'Ngoolo')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2784385, 3870, N'Ngopa')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2784386, 3870, N'Ngopo')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2784387, 3873, N'Ngora')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2784388, 3878, N'Ngose')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2784389, 3876, N'Ngoso')
@@ -21914,7 +21914,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2784483, 3881, N'Niama-
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2784484, 3871, N'Niamavi')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2784485, 3872, N'Niambere')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2784486, 3872, N'Niambo')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2784487, 3873, N'Niamianda')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2784488, 3874, N'Niamimba')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2784489, 3872, N'Niampa')
@@ -22015,7 +22015,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2784583, 3870, N'Nkoi')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2784584, 3872, N'Nkoi-Sab')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2784585, 3876, N'Nkolebeloi')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2784586, 3881, N'Nkole-Mayombo')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2784587, 3877, N'Nkole-Muata-Yamvo')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2784588, 3876, N'Nkolenkema')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2784589, 3872, N'Nkole')
@@ -22116,7 +22116,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2784683, 3872, N'Nsaka'
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2784684, 3876, N'Nsaka')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2784685, 3877, N'Nsaka')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2784686, 3870, N'Nsalele')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2784687, 3878, N'Nsalumbu')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2784688, 3876, N'Nsalwo')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2784689, 3872, N'Nsama')
@@ -22217,7 +22217,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2784783, 3873, N'Nyabio
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2784784, 3874, N'Nyabitekere')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2784785, 3874, N'Nyabutiri')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2784786, 3879, N'Nya-Ghezi')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2784787, 3879, N'Nyagoma')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2784788, 3874, N'Nyakabere')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2784789, 3879, N'Nyakadudula')
@@ -22318,7 +22318,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2784883, 3880, N'Nzimba
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2784884, 3879, N'Nzingu')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2784885, 3872, N'Nzinzi')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2784886, 3872, N'Nziro')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2784887, 3880, N'Nzobe')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2784888, 3880, N'Nzobota')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2784889, 3870, N'Nzofu-Baholo')
@@ -22419,7 +22419,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2784983, 3872, N'Okita-
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2784984, 3872, N'Okita-Unia')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2784985, 3877, N'Okite Pania')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2784986, 3872, N'Okodiakoko Odika')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2784987, 3872, N'Okodongwe')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2784988, 3872, N'Okokaniombe')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2784989, 3872, N'Okoka Niumbi')
@@ -22520,7 +22520,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2785083, 3872, N'Omeso'
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2785084, 3872, N'Omeuku')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2785085, 3875, N'Omisende')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2785086, 3872, N'Omofumba')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2785087, 3872, N'Omondjo')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2785088, 3871, N'Omongo Lole')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2785089, 3871, N'Omongo')
@@ -22621,7 +22621,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2785183, 3875, N'Osokun
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2785184, 3875, N'Osokunda-Yunge')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2785185, 3871, N'Osomba')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2785186, 3871, N'Osombo')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2785187, 3872, N'Osonga-Djinga')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2785188, 3872, N'Osonge')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2785189, 3871, N'Osongi II')
@@ -22722,7 +22722,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2785283, 3872, N'Panbal
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2785284, 3871, N'Pandakali')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2785285, 3872, N'Panda-Kuboko')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2785286, 3872, N'Pandamwila')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2785287, 3877, N'Pandanjila')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2785288, 3872, N'Panda')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2785289, 3881, N'Panda')
@@ -22814,7 +22814,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2785374, 3880, N'Paza')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2785375, 3870, N'P.B. Kailanga')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2785376, 3872, N'Pebeangu')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2785377, 3877, N'Pebo')
-INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2785378, 3872, N'Pêcherie')
+INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2785378, 3872, N'Pï¿½cherie')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2785379, 3871, N'Pede')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2785380, 3871, N'Pegne')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2785381, 3872, N'Pekesu')
@@ -22823,7 +22823,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2785383, 3878, N'Pela')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2785384, 3871, N'Peleka')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2785385, 3872, N'Pelende')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2785386, 3880, N'Pelende')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2785387, 3872, N'Pelenga')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2785388, 3872, N'Pelenge')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2785389, 3870, N'Pelenge')
@@ -22924,7 +22924,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2785483, 3872, N'Pepa')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2785484, 3878, N'Pepe')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2785485, 3876, N'Perepere II')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2785486, 3876, N'Perepere I')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2785487, 3876, N'Perepere')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2785488, 3872, N'Peromangira I')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2785489, 3872, N'Pero-Mangira')
@@ -23025,7 +23025,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2785583, 3877, N'Polesh
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2785584, 3877, N'Poleshu')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2785585, 3872, N'Polia')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2785586, 3875, N'Polilingi')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2785587, 3877, N'Polishi')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2785588, 3880, N'Polongo')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2785589, 3877, N'Polo')
@@ -23126,7 +23126,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2785683, 3875, N'Punda'
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2785684, 3879, N'Pundo')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2785685, 3870, N'Pundungu')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2785686, 3878, N'Pundu')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2785687, 3878, N'Pundu Yange')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2785688, 3872, N'Pungu-Djuki')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2785689, 3872, N'Pungu Mudimbi')
@@ -23227,7 +23227,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2785783, 3872, N'Rumba'
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2785784, 3873, N'Rumengabo')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2785785, 3874, N'Rumonge')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2785786, 3872, N'Rumu')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2785787, 3872, N'Rungu')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2785788, 3879, N'Runigi')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2785789, 3874, N'Runingo')
@@ -23328,7 +23328,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2785883, 3872, N'Sakama
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2785884, 3876, N'Sakambanza')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2785885, 3872, N'Sakambundji')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2785886, 3872, N'Sakamwe')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2785887, 3878, N'Sakanange')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2785888, 3872, N'Sakaneka')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2785889, 3872, N'Sakanga')
@@ -23384,7 +23384,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2785938, 3872, N'Sala')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2785939, 3876, N'Sala')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2785940, 3880, N'Sala')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2785941, 3870, N'Salebo')
-INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2785942, 3878, N'Salèsienne')
+INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2785942, 3878, N'Salï¿½sienne')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2785943, 3872, N'Salia')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2785944, 3871, N'Saliboko')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2785945, 3878, N'Salimi')
@@ -23429,7 +23429,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2785983, 3872, N'Samasa
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2785984, 3872, N'Samatari')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2785985, 3878, N'Samatete')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2785986, 3878, N'Samawito')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2785987, 3872, N'Samayana')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2785988, 3872, N'Samazeze')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2785989, 3872, N'Sambala')
@@ -23530,7 +23530,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2786083, 3872, N'Sandum
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2786084, 3878, N'Sandumba')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2786085, 3872, N'Sandumoka')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2786086, 3882, N'Sandy-Beach')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2786087, 3878, N'Sanehena')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2786088, 3880, N'Sanga-Bamba')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2786089, 3872, N'Sangadjale')
@@ -23631,7 +23631,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2786183, 3870, N'Satats
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2786184, 3878, N'Satenga')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2786185, 3878, N'Satengo')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2786186, 3878, N'Satengu')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2786187, 3872, N'Satomo')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2786188, 3878, N'Satshamba')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2786189, 3872, N'Satshapwa')
@@ -23732,7 +23732,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2786283, 3876, N'Selesa
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2786284, 3872, N'Sele')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2786285, 3879, N'Sele')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2786286, 3876, N'Seletin')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2786287, 3876, N'Selo')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2786288, 3880, N'Selo')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2786289, 3876, N'Semabua')
@@ -23833,7 +23833,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2786383, 3879, N'Shabun
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2786384, 3881, N'Shadika')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2786385, 3872, N'Shadi')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2786386, 3872, N'Shafudi')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2786387, 3872, N'Shafuli')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2786388, 3872, N'Shafunda')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2786389, 3874, N'Shafu')
@@ -23934,7 +23934,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2786483, 3872, N'Shamon
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2786484, 3872, N'Sha-Mongamba')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2786485, 3872, N'Shamshete')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2786486, 3877, N'Shamubelete')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2786487, 3877, N'Shamubuabua')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2786488, 3872, N'Shamudimina')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2786489, 3872, N'Sha-Mudiongo')
@@ -24035,7 +24035,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2786583, 3870, N'Shatsh
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2786584, 3872, N'Sha Unga')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2786585, 3872, N'Shautale')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2786586, 3872, N'Shauta')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2786587, 3870, N'Shavuma')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2786588, 3877, N'Shawamba')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2786589, 3877, N'Shawanga')
@@ -24136,7 +24136,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2786683, 3871, N'Sikili
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2786684, 3872, N'Sikima')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2786685, 3880, N'Sikingi')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2786686, 3870, N'Sikoro')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2786687, 3875, N'Siku')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2786688, 3878, N'Siku-Ya-Kufa')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2786689, 3871, N'Sikwakira')
@@ -24237,7 +24237,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2786783, 3872, N'Somba'
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2786784, 3872, N'Sombe')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2786785, 3871, N'Sombe')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2786786, 3875, N'Sombe')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2786787, 3870, N'Sombolola')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2786788, 3872, N'Sombo')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2786789, 3877, N'Sombo')
@@ -24338,7 +24338,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2786883, 3871, N'Sumbus
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2786884, 3878, N'Sumpwa')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2786885, 3872, N'Sunda')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2786886, 3880, N'Sundi-Kimbonga')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2786887, 3880, N'Sundi-Kinganga')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2786888, 3877, N'Sundila')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2786889, 3880, N'Sundi-Lutete')
@@ -24439,7 +24439,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2786983, 3875, N'Tabora
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2786984, 3870, N'Tabu-Ngongo')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2786985, 3875, N'Tabu')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2786986, 3880, N'Tadi-Kinsona')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2786987, 3880, N'Tadi-Kisona')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2786988, 3880, N'Tadi-Kondi')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2786989, 3880, N'Tadi-Kumbi')
@@ -24540,7 +24540,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2787083, 3880, N'Tanda'
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2787084, 3876, N'Tandengomo')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2787085, 3872, N'Tandia')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2787086, 3872, N'Tandro')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2787087, 3880, N'Tandu-Anzadi')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2787088, 3882, N'Tanduli')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2787089, 3880, N'Tandu-Pete')
@@ -24641,7 +24641,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2787183, 3880, N'Teri')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2787184, 3877, N'Tete Banshe')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2787185, 3877, N'Tete Bantshe')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2787186, 3872, N'Tete')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2787187, 3877, N'Tete')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2787188, 3875, N'Tete')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2787189, 3871, N'Teturi')
@@ -24742,7 +24742,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2787283, 3872, N'Tombo'
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2787284, 3870, N'Tombo')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2787285, 3880, N'Tombo')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2787286, 3875, N'Tombwe')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2787287, 3876, N'Tome-Lombo')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2787288, 3876, N'Tomenkuye')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2787289, 3872, N'Tom Kasamba')
@@ -24843,7 +24843,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2787383, 3872, N'Tshaka
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2787384, 3871, N'Tshakala')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2787385, 3878, N'Tshakamalwa')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2787386, 3878, N'Tshakazumba')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2787387, 3874, N'Tshakindo')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2787388, 3878, N'Tshakula')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2787389, 3872, N'Tshalamokosa')
@@ -24944,7 +24944,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2787483, 3872, N'Tshiba
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2787484, 3877, N'Tshibangu')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2787485, 3877, N'Tshibankundji')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2787486, 3877, N'Tshibasu')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2787487, 3877, N'Tshibata')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2787488, 3881, N'Tshibata')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2787489, 3874, N'Tshibeke')
@@ -25045,7 +25045,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2787583, 3872, N'Tshika
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2787584, 3877, N'Tshikanga')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2787585, 3877, N'Tshikangu')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2787586, 3872, N'Tshikano')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2787587, 3877, N'Tshikapa')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2787588, 3878, N'Tshikapula')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2787589, 3878, N'Tshikashi')
@@ -25146,7 +25146,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2787683, 3876, N'Tshimb
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2787684, 3877, N'Tshimbangu')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2787685, 3877, N'Tshimbankundji')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2787686, 3877, N'Tshimbao')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2787687, 3877, N'Tshimba')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2787688, 3877, N'Tshimbawo')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2787689, 3872, N'Tshimbayeka')
@@ -25247,7 +25247,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2787783, 3881, N'Tshipa
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2787784, 3878, N'Tshipao')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2787785, 3878, N'Tshipasa')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2787786, 3877, N'Tshipataie')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2787787, 3872, N'Tshipaza')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2787788, 3878, N'Tshipaza')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2787789, 3877, N'Tshipoko')
@@ -25348,7 +25348,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2787883, 3875, N'Tshole
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2787884, 3878, N'Tshoma')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2787885, 3875, N'Tshomba-Likeri')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2787886, 3877, N'Tshombe-Bululu')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2787887, 3875, N'Tshombe-Lombe')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2787888, 3877, N'Tshombe')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2787889, 3871, N'Tshombe')
@@ -25449,7 +25449,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2787983, 3881, N'Tuke T
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2787984, 3875, N'Tukisu')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2787985, 3870, N'Tukope')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2787986, 3872, N'Tukpo')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2787987, 3872, N'Tukpwo')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2787988, 3872, N'Tukumbi')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2787989, 3879, N'Tukutuke')
@@ -25550,7 +25550,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2788083, 3872, N'Tuta')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2788084, 3878, N'Tuta')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2788085, 3872, N'Tutula')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2788086, 3872, N'Tutu')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2788087, 3877, N'Tuzule')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2788088, 3876, N'Tuzundu')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2788089, 3871, N'Twabinga')
@@ -25651,7 +25651,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2788183, 3875, N'Usingi
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2788184, 3872, N'Usniwa')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2788185, 3872, N'Usniwo')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2788186, 3871, N'Usukwamalia')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2788187, 3872, N'Usuma')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2788188, 3872, N'Usumbuka')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2788189, 3873, N'Usumbuka')
@@ -25752,7 +25752,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2788283, 3882, N'Vula-B
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2788284, 3882, N'Vulaboko')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2788285, 3871, N'Vula')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2788286, 3878, N'Vumba')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2788287, 3875, N'Vumba')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2788288, 3872, N'Vumbelu')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2788289, 3878, N'Vumbi')
@@ -25853,7 +25853,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2788383, 3875, N'Wapene
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2788384, 3872, N'Wapinda')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2788385, 3878, N'Wapitanga')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2788386, 3878, N'Wapitango')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2788387, 3872, N'Wasa')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2788388, 3870, N'Wasa')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2788389, 3882, N'Wasa')
@@ -25954,7 +25954,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2788483, 3872, N'Woka')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2788484, 3876, N'Woka')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2788485, 3874, N'Wolaneki')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2788486, 3874, N'Wolansky')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2788487, 3872, N'Wolenge')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2788488, 3870, N'Wolikombo I')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2788489, 3870, N'Wolikombo')
@@ -26055,7 +26055,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2788583, 3871, N'Yafala
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2788584, 3870, N'Yafea')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2788585, 3872, N'Yafere')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2788586, 3871, N'Yafeta')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2788587, 3872, N'Yafonge')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2788588, 3871, N'Yafuli')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2788589, 3871, N'Yafunga')
@@ -26156,7 +26156,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2788683, 3870, N'Yaliel
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2788684, 3870, N'Yaliemba')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2788685, 3872, N'Yalifafu')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2788686, 3870, N'Yalifafu')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2788687, 3872, N'Yalifake')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2788688, 3870, N'Yalifalu')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2788689, 3871, N'Yalifoka')
@@ -26257,7 +26257,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2788783, 3871, N'Yalule
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2788784, 3871, N'Yalulia')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2788785, 3870, N'Yaluli')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2788786, 3870, N'Yalumba')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2788787, 3875, N'Yalumba')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2788788, 3870, N'Yalumbuka')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2788789, 3871, N'Yalungu')
@@ -26358,7 +26358,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2788883, 3871, N'Yambwa
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2788884, 3870, N'Yameke')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2788885, 3870, N'Yamela')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2788886, 3872, N'Yameme')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2788887, 3871, N'Yamenga')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2788888, 3870, N'Yamengosi')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2788889, 3871, N'Yamengo')
@@ -26459,7 +26459,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2788983, 3870, N'Yandjo
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2788984, 3870, N'Yandjumba')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2788985, 3870, N'Yandjumbu')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2788986, 3870, N'Yandombo')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2788987, 3872, N'Yandondi')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2788988, 3872, N'Yandonge')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2788989, 3870, N'Yandonge')
@@ -26560,7 +26560,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2789083, 3872, N'Yaolid
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2789084, 3871, N'Yaolika')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2789085, 3871, N'Yaolila')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2789086, 3871, N'Yaolinda')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2789087, 3871, N'Yaolinga')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2789088, 3872, N'Yaolito')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2789089, 3871, N'Yaoloka')
@@ -26661,7 +26661,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2789183, 3871, N'Yatuku
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2789184, 3871, N'Yatumba')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2789185, 3871, N'Yatumbo')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2789186, 3870, N'Yatunda')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2789187, 3871, N'Yatutu')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2789188, 3871, N'Yatwange')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2789189, 3872, N'Yatwa')
@@ -26762,7 +26762,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2789283, 3872, N'Yeme')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2789284, 3872, N'Yenema')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2789285, 3872, N'Yenga-Lusundji')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2789286, 3872, N'Yengasewe')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2789287, 3872, N'Yenga')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2789288, 3870, N'Yenga')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2789289, 3878, N'Yenga')
@@ -26863,7 +26863,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2789383, 3872, N'Yonge'
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2789384, 3880, N'Yongo I')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2789385, 3870, N'Yongoli')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2789386, 3870, N'Yongolokonga')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2789387, 3872, N'Yongolumbu')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2789388, 3877, N'Yongo Matari')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2789389, 3872, N'Yongomo')
@@ -26964,7 +26964,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2789483, 3872, N'Zamboy
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2789484, 3870, N'Zambo')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2789485, 3872, N'Zambulindi')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2789486, 3872, N'Zamoi')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2789487, 3872, N'Zamoy')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2789488, 3876, N'Zandu-Kapumbu')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2789489, 3876, N'Zandu')
@@ -27065,7 +27065,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2789583, 3880, N'Zonzo'
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2789584, 3872, N'Zopia')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2789585, 3872, N'Zowa')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2789586, 3877, N'Zowo')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2789587, 3872, N'Zoza')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2789588, 3870, N'Zozo')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2789589, 3872, N'Zukombwa')
@@ -27166,7 +27166,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2789683, 3886, N'Birche
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2789684, 3886, N'Bivis')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2789685, 3883, N'Bizene')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2789686, 3883, N'Blew Bonny')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2789687, 3884, N'Bloomingdale')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2789688, 3887, N'Blue Gum')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2789689, 3884, N'Bluff Hill')
@@ -27267,7 +27267,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2789783, 3886, N'Chirim
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2789784, 3887, N'Chirunda')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2789785, 3887, N'Chirundo')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2789786, 3887, N'Chirundu')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2789787, 3887, N'Chirundu Township')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2789788, 3884, N'Chisipite')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2789789, 3886, N'Chiso')
@@ -27368,7 +27368,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2789883, 3883, N'Emates
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2789884, 3883, N'Ematetshaneni')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2789885, 3884, N'Emerald Hill')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2789886, 3886, N'Emfelabuso')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2789887, 3883, N'Emgolweni')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2789888, 3883, N'Emgomeni')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2789889, 3883, N'Emkayeni')
@@ -27469,7 +27469,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2789983, 3884, N'Greyst
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2789984, 3884, N'Grobbie Park')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2789985, 3884, N'Groombridge')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2789986, 3886, N'Guinea Fowl')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2789987, 3883, N'Gulakabili')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2789988, 3883, N'Gulakibili')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2789989, 3883, N'Gumtree')
@@ -27570,7 +27570,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2790083, 3883, N'Jacara
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2790084, 3883, N'Jakalasi')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2790085, 3883, N'Jalume')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2790086, 3887, N'James')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2790087, 3883, N'Janisa')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2790088, 3883, N'Janiza')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2790089, 3883, N'Jawunda')
@@ -27671,7 +27671,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2790183, 3883, N'Luhonj
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2790184, 3883, N'Luhotswa')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2790185, 3886, N'Luipaards Vlei')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2790186, 3884, N'Luna')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2790187, 3886, N'Lundi')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2790188, 3883, N'Lupando')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2790189, 3883, N'Lupane')
@@ -27772,7 +27772,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2790283, 3884, N'Mangwe
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2790284, 3883, N'Mangweni')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2790285, 3883, N'Manjelengwa')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2790286, 3883, N'Mankonekaze')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2790287, 3883, N'Mankonekazi')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2790288, 3883, N'Manningdale')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2790289, 3883, N'Manondweni')
@@ -27873,7 +27873,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2790383, 3885, N'Mhanda
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2790384, 3884, N'Mhangura')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2790385, 3884, N'Miami')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2790386, 3883, N'Miasi')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2790387, 3884, N'Midlands')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2790388, 3883, N'Miketwa')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2790389, 3884, N'Milan')
@@ -27974,7 +27974,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2790483, 3886, N'Mwanez
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2790484, 3886, N'Mwenezi')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2790485, 3888, N'Mwenezi')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2790486, 3883, N'Mzenzi')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2790487, 3883, N'Mzilikazi')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2790488, 3883, N'Nakabindana')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2790489, 3886, N'Nandi Mill')
@@ -28075,7 +28075,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2790583, 3884, N'Nyangw
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2790584, 3886, N'Nyanyadzi Business Center')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2790585, 3886, N'Nyanyadzi')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2790586, 3884, N'Nyariba')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2790587, 3884, N'Nyautare')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2790588, 3884, N'Nyazura')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2790589, 3884, N'Nyazure')
@@ -28176,7 +28176,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2790683, 3884, N'Saint 
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2790684, 3884, N'Sakubva')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2790685, 3887, N'Salagushle')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2790686, 3883, N'Salankomo')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2790687, 3884, N'Salisbury Park')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2790688, 3884, N'Salisbury')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2790689, 3886, N'Salukwe')
@@ -28277,7 +28277,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2790783, 3884, N'Stortf
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2790784, 3884, N'Strathaven')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2790785, 3884, N'Strathmore')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2790786, 3884, N'Stubbington Park')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2790787, 3883, N'Suburbs')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2790788, 3884, N'Sunningdale')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2790789, 3883, N'Sunninghill')
@@ -28378,7 +28378,7 @@ INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2790883, 3884, N'Venger
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2790884, 3884, N'Ventersburg')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2790885, 3885, N'Verona')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2790886, 3887, N'Victoria Falls')
-GO
+
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2790887, 3885, N'Villa Franca')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2790888, 3883, N'Vozheka')
 INSERT [dbo].[Cities] ([Id], [RegionId], [Name]) VALUES (2790889, 3883, N'Vozueka')
