@@ -23,7 +23,7 @@ namespace API.SignalR
             var group = await AddToGroup(groupName);
             await Clients.Group(groupName).SendAsync("UpdatedGroup", group);
             var messages = await _unitOfWork.MessageRepository.GetMessagesDTOThreadAsync(Context.User.GetId(), otherUserId);
-            if (_unitOfWork.HasChanges()) await _unitOfWork.Complete();
+            if (_unitOfWork.HasChanges()) await _unitOfWork.SaveChangesAsync();
             await Clients.Caller.SendAsync("ReceiveMessages", messages);
         }
         public override async Task OnDisconnectedAsync(Exception exception)
@@ -34,8 +34,8 @@ namespace API.SignalR
         }
         public async Task SendMessages(NewMessageDTO message)
         {
-            var sender = await _unitOfWork.UserRepository.GetUserByIdAsync(Context.User.GetId());
-            var recipient = await _unitOfWork.UserRepository.GetUserByIdAsync(message.RecipientId);
+            var sender = await _unitOfWork.ApplicationUserRepository.GetUserByIdAsync(Context.User.GetId());
+            var recipient = await _unitOfWork.ApplicationUserRepository.GetUserByIdAsync(message.RecipientId);
             if (recipient == null || sender == null)
             {
                 throw new HubException("User not found");
@@ -80,7 +80,7 @@ namespace API.SignalR
                 }
             }
             await _unitOfWork.MessageRepository.AddMessageAsync(createdMessage);
-            if (await _unitOfWork.Complete())
+            if (await _unitOfWork.SaveChangesAsync())
             {
                 msgDTO.Id = createdMessage.Id;
                 await Clients.Group(groupName).SendAsync("NewMessage", msgDTO);
@@ -104,7 +104,7 @@ namespace API.SignalR
             }
             group.Connections.Add(connection);
 
-            if (await _unitOfWork.Complete())
+            if (await _unitOfWork.SaveChangesAsync())
             {
                 return group;
             }
@@ -115,7 +115,7 @@ namespace API.SignalR
             var group = await _unitOfWork.MessageRepository.GetGroupForConnection(Context.ConnectionId);
             var connection = group.Connections.FirstOrDefault(c => c.ConnectionId == Context.ConnectionId);
             _unitOfWork.MessageRepository.RemoveConnection(connection);
-            if (await _unitOfWork.Complete())
+            if (await _unitOfWork.SaveChangesAsync())
             {
                 return group;
             }

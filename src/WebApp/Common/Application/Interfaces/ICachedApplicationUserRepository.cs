@@ -2,7 +2,7 @@
 
 namespace Application.Interfaces
 {
-    public interface ICachedUserRepository : IUserRepository
+    public interface ICachedApplicationUserRepository : IApplicationUserRepository
     {
     }
 }

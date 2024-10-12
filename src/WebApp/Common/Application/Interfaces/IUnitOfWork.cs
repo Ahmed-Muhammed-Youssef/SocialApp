@@ -5,12 +5,12 @@ namespace Application.Interfaces
 {
     public interface IUnitOfWork
     {
-        ICachedUserRepository UserRepository { get; }
+        ICachedApplicationUserRepository ApplicationUserRepository { get; }
         IPictureRepository PictureRepository { get; }
         IMessageRepository MessageRepository { get; }
         IFriendRequestRepository FriendRequestRepository { get; }
         IPostRepository PostRepository { get; }
-        Task<bool> Complete();
+        Task<bool> SaveChangesAsync();
         bool HasChanges();
     }
 }

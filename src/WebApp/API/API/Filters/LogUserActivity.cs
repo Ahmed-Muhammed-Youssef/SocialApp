@@ -18,10 +18,10 @@ namespace API.Filters
             }
             var userId = resultContext.HttpContext.User.GetId();
             var repo = resultContext.HttpContext.RequestServices.GetService<IUnitOfWork>();
-            var user = await repo.UserRepository.GetUserByIdAsync(userId);
+            var user = await repo.ApplicationUserRepository.GetUserByIdAsync(userId);
             user.LastActive = DateTime.UtcNow;
-            repo.UserRepository.Update(user);
-            await repo.Complete();
+            repo.ApplicationUserRepository.Update(user);
+            await repo.SaveChangesAsync();
         }
     }
 }

@@ -29,7 +29,7 @@ namespace API.Controllers
             }
             _unitOfWork.MessageRepository.DeleteMessage(message, issuerId);
 
-            if (await _unitOfWork.Complete())
+            if (await _unitOfWork.SaveChangesAsync())
             {
                 return NoContent();
             }

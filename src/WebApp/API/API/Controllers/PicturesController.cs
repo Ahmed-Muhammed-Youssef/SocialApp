@@ -21,7 +21,7 @@ namespace API.Controllers
         [HttpPost]
         public async Task<ActionResult<PictureDTO>> UploadPicture(IFormFile file)
         {
-            var user = await _unitOfWork.UserRepository.GetUserByIdAsync(User.GetId());
+            var user = await _unitOfWork.ApplicationUserRepository.GetUserByIdAsync(User.GetId());
             var result = await _pictureService.AddPictureAsync(file);
             if (result.Error != null)
             {
@@ -36,7 +36,7 @@ namespace API.Controllers
 
             picture = await _unitOfWork.PictureRepository.AddPictureAsync(picture);
 
-            if (await _unitOfWork.Complete())
+            if (await _unitOfWork.SaveChangesAsync())
             {
                 return Ok(_mapper.Map<PictureDTO>(picture));
             }
@@ -47,7 +47,7 @@ namespace API.Controllers
         [HttpPost("profilepicture/{pictureId}")]
         public async Task<ActionResult<PictureDTO>> SetProfilePicture(int pictureId)
         {
-            var user = await _unitOfWork.UserRepository.GetUserByIdAsync(User.GetId());
+            var user = await _unitOfWork.ApplicationUserRepository.GetUserByIdAsync(User.GetId());
             var pictures = await _unitOfWork.PictureRepository.GetUserPictureAsync(user.Id);
             var picture = pictures.FirstOrDefault(p => p.Id == pictureId);
             if (picture == null)
@@ -59,8 +59,8 @@ namespace API.Controllers
                 return Unauthorized();
             }
             user.ProfilePictureUrl = picture.Url;
-            _unitOfWork.UserRepository.Update(user);
-            if (await _unitOfWork.Complete())
+            _unitOfWork.ApplicationUserRepository.Update(user);
+            if (await _unitOfWork.SaveChangesAsync())
             {
                 return Ok();
             }
@@ -70,7 +70,7 @@ namespace API.Controllers
         [HttpDelete("{pictureId}")]
         public async Task<ActionResult<PictureDTO>> DeletePhoto(int pictureId)
         {
-            var user = await _unitOfWork.UserRepository.GetUserByIdAsync(User.GetId());
+            var user = await _unitOfWork.ApplicationUserRepository.GetUserByIdAsync(User.GetId());
             var pictures = await _unitOfWork.PictureRepository.GetUserPictureAsync(user.Id);
             var picture = pictures.FirstOrDefault(p => p.Id == pictureId);
             if (picture == null)
@@ -88,7 +88,7 @@ namespace API.Controllers
             }
             _unitOfWork.PictureRepository.DeletePicture(picture);
 
-            if (await _unitOfWork.Complete())
+            if (await _unitOfWork.SaveChangesAsync())
             {
                 return Ok();
             }
