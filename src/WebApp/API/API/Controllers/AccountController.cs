@@ -24,7 +24,6 @@ namespace API.Controllers
         public async Task<ActionResult> Register(RegisterDTO accountDTO)
         {
 
-            // throw new NotImplementedException();
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -90,29 +89,34 @@ namespace API.Controllers
         [HttpPost("login")]
         public async Task<ActionResult<TokenDTO>> Login(LoginDTO loginCredentials)
         {
-            throw new NotImplementedException();
-            //if (!ModelState.IsValid)
-            //{
-            //    return BadRequest(loginCredentials);
-            //}
-            //var user = await userManager.Users.Include(u => u.Pictures).FirstOrDefaultAsync(u => u.Email == loginCredentials.Email);
-            //if (user == null)
-            //{
-            //    return Unauthorized();
-            //}
-            //var signInResult = await signInManager
-            //    .CheckPasswordSignInAsync(user, loginCredentials.Password, lockoutOnFailure: false);
-            //if (!signInResult.Succeeded)
-            //{
-            //    return Unauthorized();
-            //}
-            //// var userData = await _unitOfWork.UserRepository.GetUserDTOByEmailAsync(loginCredentials.Email);
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(loginCredentials);
+            }
+            var user = await userManager.Users.FirstOrDefaultAsync(u => u.Email == loginCredentials.Email);
 
-            //return Ok(new TokenDTO()
-            //{
-            //    UserData = mapper.Map<AppUser, UserDTO>(user),
-            //    Token = await tokenService.CreateTokenAsync(user)
-            //});
+            if (user == null)
+            {
+                return Unauthorized();
+            }
+
+            var signInResult = await signInManager
+                .CheckPasswordSignInAsync(user, loginCredentials.Password, lockoutOnFailure: false);
+
+            if (!signInResult.Succeeded)
+            {
+                return Unauthorized();
+            }
+
+            var userData = await unitOfWork.ApplicationUserRepository.GetDtoByIdentityId(user.Id);
+
+            // username will always be null, needs a fix
+
+            return Ok(new TokenDTO()
+            {
+                UserData = userData,
+                Token = await tokenService.CreateTokenAsync(user)
+            });
         }
     }
 }

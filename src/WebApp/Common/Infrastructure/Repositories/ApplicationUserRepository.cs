@@ -7,10 +7,11 @@ using System.Data;
 using Dapper;
 using Application.DTOs.User;
 using Application.DTOs.Pagination;
+using AutoMapper;
 
 namespace Infrastructure.Repositories
 {
-    public class ApplicationUserRepository(DataContext _dataContext) : IApplicationUserRepository // using the repository design pattern to isolate the contollers further more from the entity framework. (it may not be neccesary)
+    public class ApplicationUserRepository(DataContext _dataContext, IMapper mapper) : IApplicationUserRepository // using the repository design pattern to isolate the contollers further more from the entity framework. (it may not be neccesary)
     {
         public void DeleteUser(ApplicationUser user)
         {
@@ -58,6 +59,14 @@ namespace Infrastructure.Repositories
             using IDbConnection db = new SqlConnection(connectionString);
             return (await db.QueryAsync<ApplicationUser>("GetUserById", new { Id = id }, commandType: CommandType.StoredProcedure)).FirstOrDefault();
         }
+
+        public async Task<UserDTO> GetDtoByIdentityId(string identityId)
+        {
+            var appUser = await _dataContext.ApplicationUsers.FirstOrDefaultAsync(u => u.IdentityId == identityId);
+
+            return mapper.Map<UserDTO>(appUser);
+        }
+
         public async Task<UserDTO> GetUserDTOByIdAsync(int id)
         {
             var connectionString = _dataContext.Database.GetConnectionString();
