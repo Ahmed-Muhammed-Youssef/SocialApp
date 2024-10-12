@@ -12,14 +12,15 @@ using Application.DTOs.User;
 using AutoMapper;
 using Domain;
 using Domain.Constants;
-using System;
+using Application.Authentication.GoogleModels;
+using Application.Interfaces;
 
 namespace API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
     [ServiceFilter(typeof(LogUserActivity))]
-    public class AccountExternalController(IGoogleAuthService _googleAuthService, UserManager<IdentityUser> userManager, ITokenService tokenService, IMapper _mapper, PasswordGenerationService _passwordGenerationService) : ControllerBase
+    public class AccountExternalController(IGoogleAuthService _googleAuthService, UserManager<IdentityUser> userManager, ITokenService tokenService, IMapper _mapper, PasswordGenerationService _passwordGenerationService, IUnitOfWork unitOfWork) : ControllerBase
     {
         // GET: api/AccountExternal/login-google
         [HttpGet("login-google")]
@@ -28,51 +29,55 @@ namespace API.Controllers
             return Redirect(_googleAuthService.BuildGoogleSignInUrl());
         }
 
-
-        // Not functional
         // GET: api/AccountExternal/callback-google
         [HttpGet("callback-google")]
         public async Task<IActionResult> GoogleCallback(string code)
         {
-            throw new NotImplementedException();
 
-            //var userInfo = await _googleAuthService.GetUserFromGoogleAsync(code);
+            GoogleUserInfo userInfo = await _googleAuthService.GetUserFromGoogleAsync(code);
 
-            //IdentityUser databaseUser = await userManager.Users.Where(u => u.Email == userInfo.Email).FirstOrDefaultAsync();
+            IdentityUser identityUser = await userManager.Users.Where(u => u.Email == userInfo.Email).FirstOrDefaultAsync();
+            UserDTO userDTO = new();
 
-            //if (databaseUser is null)
-            //{
-            //   databaseUser = new() 
-            //   { 
-            //        FirstName = userInfo.FirstName,
-            //        LastName = userInfo.LastName ?? "",
-            //        Email = userInfo.Email,
-            //        UserName = userInfo.Email,
-            //        EmailConfirmed = userInfo.EmailConfirmed,
-            //        Sex = ' ',
-            //        Interest = 'b',
-            //        Country = "",
-            //        City = ""
-                    
-            //   };
-            //    var password = _passwordGenerationService.GenerateRandomPassword();
-            //    var result = await userManager.CreateAsync(databaseUser, password);
-            //    if (!result.Succeeded)
-            //    {
-            //        return BadRequest("Failed to register the user.");
-            //    }
-            //    var adddRoleresult = await userManager.AddToRoleAsync(databaseUser, RolesNameValues.User);
-            //    if (!adddRoleresult.Succeeded)
-            //    {
-            //        return BadRequest();
-            //    }
-            //}
+            if (identityUser is null)
+            {
+                identityUser = new()
+                {
+                    Email = userInfo.Email,
+                    UserName = userInfo.Email,
+                    EmailConfirmed = userInfo.VerifiedEmail
+                };
 
-            //return Ok(new TokenDTO()
-            //{
-            //    UserData = _mapper.Map<AppUser, UserDTO>(databaseUser),
-            //    Token = await tokenService.CreateTokenAsync(databaseUser)
-            //});
+                var password = _passwordGenerationService.GenerateRandomPassword();
+                var result = await userManager.CreateAsync(identityUser, password);
+
+
+                if (!result.Succeeded)
+                {
+                    return BadRequest("Failed to register the user.");
+                }
+                var adddRoleresult = await userManager.AddToRoleAsync(identityUser, RolesNameValues.User);
+                if (!adddRoleresult.Succeeded)
+                {
+                    return BadRequest();
+                }
+
+                // @ToDo: add the new user data [NEED PLANNING]
+
+                userDTO.Username = userInfo.Email;
+                userDTO.FirstName = userInfo.Name;
+                userDTO.ProfilePictureUrl = userInfo.PictureUrl;
+            }
+            else
+            {
+                userDTO = await unitOfWork.ApplicationUserRepository.GetDtoByIdentityId(identityUser.Id);
+            }
+
+            return Ok(new TokenDTO()
+            {
+                UserData = userDTO,
+                Token = await tokenService.CreateTokenAsync(identityUser)
+            });
         }
     }
 }
