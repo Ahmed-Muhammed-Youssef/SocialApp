@@ -47,5 +47,8 @@ namespace Infrastructure.Repositories.CachedRepositories
         public void Update(ApplicationUser appUser) => _usersRepository.Update(appUser);
 
         public Task AddApplicationUser(ApplicationUser user) => _usersRepository.AddApplicationUser(user);
+
+        public Task<UserDTO> GetDtoByIdentityId(string identityId) => _usersRepository.GetDtoByIdentityId(identityId);
+        
     }
 }
