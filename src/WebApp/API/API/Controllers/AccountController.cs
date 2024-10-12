@@ -24,35 +24,66 @@ namespace API.Controllers
         public async Task<ActionResult> Register(RegisterDTO accountDTO)
         {
 
-            throw new NotImplementedException(); 
-            //if (!ModelState.IsValid)
-            //{
-            //    return BadRequest(ModelState);
-            //}
-            //bool emailExists = await userManager.Users.AnyAsync(u => u.Email == accountDTO.Email);
-            //if (emailExists)
-            //{
-            //    return BadRequest("The Email is already taken.");
-            //}
-            //IdentityUser newUser = new();
-            //mapper.Map(accountDTO, newUser);
-            //var result = await userManager.CreateAsync(newUser, accountDTO.Password);
-            //if (!result.Succeeded)
-            //{
-            //    return BadRequest("Failed to register the user.");
-            //}
-            //var adddRoleresult = await userManager.AddToRoleAsync(newUser, RolesNameValues.User);
-            //if (!adddRoleresult.Succeeded)
-            //{
-            //    return BadRequest();
-            //}
-            //var userData = await unitOfWork.UserRepository.GetUserDTOByIdAsync(newUser.Id);
-            //return CreatedAtAction("Register", new { email = accountDTO.Email },
-            //    new TokenDTO()
-            //    {
-            //        UserData = userData,
-            //        Token = await tokenService.CreateTokenAsync(newUser)
-            //    });
+            // throw new NotImplementedException();
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            if (await userManager.Users.AnyAsync(u => u.Email == accountDTO.Email))
+            {
+                return BadRequest("The Email is already taken.");
+            }
+
+            IdentityUser newIdentityUser = new()
+            {
+                UserName = accountDTO.Email,
+                Email = accountDTO.Email
+            };
+
+            
+
+            // Create Identity User
+
+            var result = await userManager.CreateAsync(newIdentityUser, accountDTO.Password);
+
+            if (!result.Succeeded)
+            {
+                return BadRequest("Failed to register the user.");
+            }
+
+            var adddRoleresult = await userManager.AddToRoleAsync(newIdentityUser, RolesNameValues.User);
+
+            if (!adddRoleresult.Succeeded)
+            {
+                return BadRequest();
+            }
+
+            // Create application user
+
+            ApplicationUser newApplicationUser = new();
+
+            mapper.Map(accountDTO, newApplicationUser);
+
+            newApplicationUser.IdentityId = newIdentityUser.Id;
+
+            await unitOfWork.ApplicationUserRepository.AddApplicationUser(newApplicationUser);
+
+            if (!await unitOfWork.SaveChangesAsync())
+            {
+                return BadRequest();
+            }
+
+            UserDTO userData = mapper.Map<UserDTO>(newApplicationUser);
+
+            userData.Username = accountDTO.Email;
+
+            return CreatedAtAction("Register", new { email = accountDTO.Email },
+                new TokenDTO()
+                {
+                    UserData = userData,
+                    Token = await tokenService.CreateTokenAsync(newIdentityUser)
+                });
         }
 
         // POST: api/account/login

@@ -7,7 +7,7 @@ using Application.DTOs.Pagination;
 
 namespace Infrastructure.Repositories.CachedRepositories
 {
-    public class CachedUserRepository(IUserRepository _usersRepository, IMemoryCache _memoryCache) : ICachedUserRepository
+    public class CachedUserRepository(IApplicationUserRepository _usersRepository, IMemoryCache _memoryCache) : ICachedApplicationUserRepository
     {
         // Queries
 
@@ -45,5 +45,7 @@ namespace Infrastructure.Repositories.CachedRepositories
         public void DeleteUser(ApplicationUser user) => _usersRepository.DeleteUser(user);
 
         public void Update(ApplicationUser appUser) => _usersRepository.Update(appUser);
+
+        public Task AddApplicationUser(ApplicationUser user) => _usersRepository.AddApplicationUser(user);
     }
 }

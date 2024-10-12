@@ -37,7 +37,7 @@ namespace API.Controllers
             post.UserId = User.GetId();
 
             await _unitOfWork.PostRepository.AddPostAsync(post);
-            await _unitOfWork.Complete();
+            await _unitOfWork.SaveChangesAsync();
 
             PostDTO returnPostDTO = _mapper.Map<PostDTO>(post);
             returnPostDTO.Id = post.Id;

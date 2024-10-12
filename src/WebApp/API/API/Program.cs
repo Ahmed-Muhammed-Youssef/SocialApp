@@ -30,8 +30,8 @@ builder.Services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
 
 // Repositories
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
-builder.Services.AddScoped<ICachedUserRepository, CachedUserRepository>();
-builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<ICachedApplicationUserRepository, CachedUserRepository>();
+builder.Services.AddScoped<IApplicationUserRepository, ApplicationUserRepository>();
 builder.Services.AddScoped<IPictureRepository, PictureRepository>();
 builder.Services.AddScoped<IMessageRepository, MessageRepository>();
 builder.Services.AddScoped<IFriendRequestRepository, FriendRequestsRepository>();

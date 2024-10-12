@@ -5,6 +5,7 @@ using Application.DTOs.User;
 using Domain.Entities;
 using Infrastructure.Extensions;
 using AutoMapper;
+using Application.DTOs.Registeration;
 
 namespace Infrastructure.MappingProfiles
 {
@@ -14,14 +15,13 @@ namespace Infrastructure.MappingProfiles
         {
             CreateMap<ApplicationUser, UserDTO>()
                 .ForMember(dest => dest.Age, opt => opt.MapFrom(src => src.DateOfBirth.CalculateAge()));
+
             CreateMap<Picture, PictureDTO>();
+            
             CreateMap<UpdatedUserDTO, ApplicationUser>();
 
-            // @ToDo: Needs planning again
-            //CreateMap<RegisterDTO, AppUser>()
-            //    .ForMember(au => au.UserName, opt => opt.MapFrom(src => src.Email))
-            //    .ForMember(au => au.Email, opt => opt.MapFrom(src => src.Email));
-
+            CreateMap<RegisterDTO, ApplicationUser>();
+            
             // @TODO: add profile picture mapping here
             CreateMap<Message, MessageDTO>().ForMember(m => m.SenderPhotoUrl, opt => opt.MapFrom(m => m.Sender.Pictures.FirstOrDefault().Url));
             

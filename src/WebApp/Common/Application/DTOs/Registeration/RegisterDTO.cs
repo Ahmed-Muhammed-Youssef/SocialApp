@@ -10,8 +10,6 @@ namespace Application.DTOs.Registeration
         public string LastName { get; set; }
         [Required]
         public char Sex { get; set; }
-        [Required]
-        public char Interest { get; set; }
         [EmailAddress, Required]
         public string Email { get; set; }
         [Required]
@@ -20,8 +18,6 @@ namespace Application.DTOs.Registeration
         [Required]
         public DateTime DateOfBirth { get; set; }
         [Required]
-        public string City { get; set; }
-        [Required]
-        public string Country { get; set; }
+        public int CityId { get; set; }
     }
 }

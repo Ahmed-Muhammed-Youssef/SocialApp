@@ -10,12 +10,18 @@ using Application.DTOs.Pagination;
 
 namespace Infrastructure.Repositories
 {
-    public class UserRepository(DataContext _dataContext) : IUserRepository // using the repository design pattern to isolate the contollers further more from the entity framework. (it may not be neccesary)
+    public class ApplicationUserRepository(DataContext _dataContext) : IApplicationUserRepository // using the repository design pattern to isolate the contollers further more from the entity framework. (it may not be neccesary)
     {
         public void DeleteUser(ApplicationUser user)
         {
             _dataContext.Remove(user);
         }
+
+        public async Task AddApplicationUser(ApplicationUser user)
+        {
+            await _dataContext.ApplicationUsers.AddAsync(user);
+        }
+
         public async Task<bool> UserExistsAsync(int id)
         {
             return await _dataContext.ApplicationUsers

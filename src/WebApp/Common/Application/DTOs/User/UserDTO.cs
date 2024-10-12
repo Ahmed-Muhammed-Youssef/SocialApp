@@ -17,8 +17,6 @@ namespace Application.DTOs.User
         [Required]
         public char Sex { get; set; }
         [Required]
-        public char Interest { get; set; }
-        [Required]
         public int Age { get; set; }
         [Required]
         public DateTime Created { get; set; }
@@ -26,11 +24,6 @@ namespace Application.DTOs.User
         public DateTime LastActive { get; set; }
         [Required]
         public string Bio { get; set; }
-        [Required]
-        public string City { get; set; }
-        [Required]
-        public string Country { get; set; }
-
         public IEnumerable<PictureDTO> Pictures { get; set; }
     }
 }
