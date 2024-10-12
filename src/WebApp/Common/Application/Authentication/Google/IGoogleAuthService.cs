@@ -1,11 +1,10 @@
-﻿using Domain.Entities;
-using Microsoft.AspNetCore.Identity;
+﻿using Application.Authentication.GoogleModels;
 
 namespace Application.Authentication.Google
 {
     public interface IGoogleAuthService
     {
-        Task<IdentityUser> GetUserFromGoogleAsync(string code);
+        Task<GoogleUserInfo> GetUserFromGoogleAsync(string code);
         string BuildGoogleSignInUrl();
     }
 }

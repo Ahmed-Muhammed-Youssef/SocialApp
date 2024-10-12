@@ -10,7 +10,6 @@ using Application.Interfaces;
 using Application.DTOs.User;
 using Application.DTOs.Registeration;
 using Domain.Constants;
-using System;
 
 namespace API.Controllers
 {

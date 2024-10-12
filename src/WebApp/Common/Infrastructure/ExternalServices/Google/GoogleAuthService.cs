@@ -1,6 +1,6 @@
 ﻿using Application.Authentication.Google;
+using Application.Authentication.GoogleModels;
 using Domain.Entities;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 
@@ -28,7 +28,7 @@ namespace Infrastructure.ExternalServices.Google
             return builder.ToString();
         }
 
-        public async Task<IdentityUser> GetUserFromGoogleAsync(string code)
+        public async Task<GoogleUserInfo> GetUserFromGoogleAsync(string code)
         {
             using var client = new HttpClient();
             const string userInfoEndpoint = "https://www.googleapis.com/userinfo/v2/me";
@@ -48,17 +48,18 @@ namespace Infrastructure.ExternalServices.Google
 
             // Parse JSON response and extract relevant information
             var userInfoJson = await userInfoResponse.Content.ReadAsStringAsync();
+
             var userInfo = JsonConvert.DeserializeObject<Dictionary<string, string>>(userInfoJson);
 
-            // Create new user out of the data returned
-            IdentityUser newUser = new()
+            GoogleUserInfo googleUserInfo = new()
             {
-                // FirstName = userInfo["name"],
+                Name = userInfo["name"],
                 Email = userInfo["email"],
-                EmailConfirmed = bool.Parse(userInfo["verified_email"])
+                VerifiedEmail = bool.Parse(userInfo["verified_email"]),
+                PictureUrl = userInfo["picture"]
             };
 
-            return newUser;
+            return googleUserInfo;
         }
 
         private async Task<Dictionary<string, string>> GetAccessToken(HttpClient client, string code)
