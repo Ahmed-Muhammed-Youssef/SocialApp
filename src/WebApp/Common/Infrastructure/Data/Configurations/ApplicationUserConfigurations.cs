@@ -15,7 +15,6 @@ namespace Infrastructure.Data.Configurations
             builder.Property(u => u.FirstName).IsRequired().HasMaxLength(255);
             builder.Property(u => u.LastName).IsRequired().HasMaxLength(255);
             builder.Property(u => u.Sex).IsRequired();
-            builder.Property(u => u.Interest).IsRequired();
             builder.Property(u => u.DateOfBirth).IsRequired();
             builder.Property(u => u.Created).IsRequired();
             builder.Property(u => u.LastActive).IsRequired();
