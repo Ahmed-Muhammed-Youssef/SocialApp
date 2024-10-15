@@ -7,7 +7,6 @@ namespace Application.DTOs.Pagination
     {
         private int minAge = SystemPolicy.UsersMinimumAge;
         private int? maxAge = null;
-        public SexOptions Sex { get; set; } = SexOptions.None; // to get the default value we need to make a query which is the interest field. 
         public OrderByOptions OrderBy { get; set; } = OrderByOptions.LastActive;
         public int MinAge
         {
