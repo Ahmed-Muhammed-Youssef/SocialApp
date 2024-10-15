@@ -20,7 +20,7 @@ namespace API.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [ServiceFilter(typeof(LogUserActivity))]
-    public class AccountExternalController(IGoogleAuthService _googleAuthService, UserManager<IdentityUser> userManager, ITokenService tokenService, IMapper _mapper, PasswordGenerationService _passwordGenerationService, IUnitOfWork unitOfWork) : ControllerBase
+    public class AccountExternalController(IGoogleAuthService _googleAuthService, UserManager<IdentityUser> userManager, ITokenService tokenService, PasswordGenerationService _passwordGenerationService, IUnitOfWork unitOfWork) : ControllerBase
     {
         // GET: api/AccountExternal/login-google
         [HttpGet("login-google")]
@@ -64,7 +64,6 @@ namespace API.Controllers
 
                 // @ToDo: add the new user data [NEED PLANNING]
 
-                userDTO.Username = userInfo.Email;
                 userDTO.FirstName = userInfo.Name;
                 userDTO.ProfilePictureUrl = userInfo.PictureUrl;
             }
@@ -76,7 +75,7 @@ namespace API.Controllers
             return Ok(new TokenDTO()
             {
                 UserData = userDTO,
-                Token = await tokenService.CreateTokenAsync(identityUser)
+                Token = await tokenService.CreateTokenAsync(identityUser, userDTO.Id)
             });
         }
     }

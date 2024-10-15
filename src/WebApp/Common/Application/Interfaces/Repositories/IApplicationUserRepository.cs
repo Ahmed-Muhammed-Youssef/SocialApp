@@ -11,6 +11,7 @@ namespace Application.Interfaces.Repositories
         public Task AddAsync(ApplicationUser user);
         public Task<PagedList<UserDTO>> GetUsersDTOAsync(int userId, UserParams userParams);
         public Task<UserDTO> GetDtoByIdentityId(string identityId);
+        public Task<ApplicationUser> GetByIdentity(string identity);
         public Task<ApplicationUser> GetByIdAsync(int id);
         public Task<UserDTO> GetDtoByIdAsync(int id);
         public void Delete(ApplicationUser user);
