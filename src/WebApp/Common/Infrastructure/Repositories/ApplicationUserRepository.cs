@@ -42,7 +42,6 @@ namespace Infrastructure.Repositories
             {
                 var parameters = new DynamicParameters();
                 parameters.Add("@userId", userId);
-                parameters.Add("@sex", (int)userParams.Sex);
                 parameters.Add("@minAge", userParams.MinAge);
                 parameters.Add("@maxAge", userParams.MaxAge);
                 parameters.Add("@orderBy", (int)userParams.OrderBy);
