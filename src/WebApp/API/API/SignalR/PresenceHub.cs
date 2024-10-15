@@ -14,7 +14,7 @@ namespace API.SignalR
             var isFirstConnection = await _presenceTracker.UserConnected(Context.User.GetId(), Context.ConnectionId);
             if (isFirstConnection)
             {
-                await Clients.Others.SendAsync("UserIsOnline", Context.User.GetUsername());
+                await Clients.Others.SendAsync("UserIsOnline", Context.User.GetId().ToString());
             }
             var currentUsers = await _presenceTracker.GetOnlineUsers();
             await Clients.Caller.SendAsync("GetOnlineUsers", currentUsers);
@@ -24,7 +24,7 @@ namespace API.SignalR
             var isJustDisconnected = await _presenceTracker.UserDisconnected(Context.User.GetId(), Context.ConnectionId);
             if (isJustDisconnected)
             {
-                await Clients.Others.SendAsync("UserIsOffline", Context.User.GetUsername());
+                await Clients.Others.SendAsync("UserIsOffline", Context.User.GetId().ToString());
             }
             await base.OnDisconnectedAsync(exception);
         }

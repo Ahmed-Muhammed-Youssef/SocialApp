@@ -49,6 +49,7 @@ namespace Infrastructure.Repositories.CachedRepositories
         public Task AddAsync(ApplicationUser user) => _usersRepository.AddAsync(user);
 
         public Task<UserDTO> GetDtoByIdentityId(string identityId) => _usersRepository.GetDtoByIdentityId(identityId);
-        
+
+        public Task<ApplicationUser> GetByIdentity(string identity) => _usersRepository.GetByIdentity(identity);
     }
 }

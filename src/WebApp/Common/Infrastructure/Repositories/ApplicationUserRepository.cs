@@ -52,6 +52,11 @@ namespace Infrastructure.Repositories
             }
             return new PagedList<UserDTO>(users.ToList(), users.Count(), userParams.PageNumber, userParams.ItemsPerPage);
         }
+        public async Task<ApplicationUser> GetByIdentity(string identity)
+        {
+            return await _dataContext.ApplicationUsers.FirstOrDefaultAsync(u => u.IdentityId == identity);
+        }
+        
         public async Task<ApplicationUser> GetByIdAsync(int id)
         {
             var connectionString = _dataContext.Database.GetConnectionString();

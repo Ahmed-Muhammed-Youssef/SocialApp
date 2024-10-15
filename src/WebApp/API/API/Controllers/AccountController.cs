@@ -74,13 +74,11 @@ namespace API.Controllers
 
             UserDTO userData = mapper.Map<UserDTO>(newApplicationUser);
 
-            userData.Username = accountDTO.Email;
-
             return CreatedAtAction("Register", new { email = accountDTO.Email },
                 new TokenDTO()
                 {
                     UserData = userData,
-                    Token = await tokenService.CreateTokenAsync(newIdentityUser)
+                    Token = await tokenService.CreateTokenAsync(newIdentityUser, userData.Id)
                 });
         }
 
@@ -114,7 +112,7 @@ namespace API.Controllers
             return Ok(new TokenDTO()
             {
                 UserData = userData,
-                Token = await tokenService.CreateTokenAsync(user)
+                Token = await tokenService.CreateTokenAsync(user, userData.Id)
             });
         }
     }
