@@ -21,7 +21,7 @@ namespace API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<UserDTO>>> GetAll([FromQuery] PaginationParams paginationParams)
         {
-            var user = await _unitOfWork.ApplicationUserRepository.GetUserByIdAsync(User.GetId());
+            var user = await _unitOfWork.ApplicationUserRepository.GetByIdAsync(User.GetId());
             if (user == null)
             {
                 return Unauthorized();

@@ -18,7 +18,7 @@ namespace API.Filters
             }
             var userId = resultContext.HttpContext.User.GetId();
             var repo = resultContext.HttpContext.RequestServices.GetService<IUnitOfWork>();
-            var user = await repo.ApplicationUserRepository.GetUserByIdAsync(userId);
+            var user = await repo.ApplicationUserRepository.GetByIdAsync(userId);
             user.LastActive = DateTime.UtcNow;
             repo.ApplicationUserRepository.Update(user);
             await repo.SaveChangesAsync();

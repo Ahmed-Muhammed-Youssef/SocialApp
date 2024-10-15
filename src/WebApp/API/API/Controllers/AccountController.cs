@@ -65,7 +65,7 @@ namespace API.Controllers
 
             newApplicationUser.IdentityId = newIdentityUser.Id;
 
-            await unitOfWork.ApplicationUserRepository.AddApplicationUser(newApplicationUser);
+            await unitOfWork.ApplicationUserRepository.AddAsync(newApplicationUser);
 
             if (!await unitOfWork.SaveChangesAsync())
             {

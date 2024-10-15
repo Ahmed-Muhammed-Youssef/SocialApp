@@ -8,12 +8,12 @@ namespace Application.Interfaces.Repositories
     {
 
         public void Update(ApplicationUser appUser);
-        public Task AddApplicationUser(ApplicationUser user);
+        public Task AddAsync(ApplicationUser user);
         public Task<PagedList<UserDTO>> GetUsersDTOAsync(int userId, UserParams userParams);
         public Task<UserDTO> GetDtoByIdentityId(string identityId);
-        public Task<ApplicationUser> GetUserByIdAsync(int id);
-        public Task<UserDTO> GetUserDTOByIdAsync(int id);
-        public void DeleteUser(ApplicationUser user);
-        public Task<bool> UserExistsAsync(int id);
+        public Task<ApplicationUser> GetByIdAsync(int id);
+        public Task<UserDTO> GetDtoByIdAsync(int id);
+        public void Delete(ApplicationUser user);
+        public Task<bool> IdExistsAsync(int id);
     }
 }
