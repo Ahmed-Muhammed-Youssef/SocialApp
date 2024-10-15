@@ -32,7 +32,7 @@ namespace API.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<UserDTO>> GetUser(int id)
         {
-            var user = await _unitOfWork.ApplicationUserRepository.GetUserDTOByIdAsync(id);
+            var user = await _unitOfWork.ApplicationUserRepository.GetDtoByIdAsync(id);
 
             if (user == null)
             {
@@ -49,7 +49,7 @@ namespace API.Controllers
             {
                 return BadRequest(userDTO);
             }
-            var appUser = await _unitOfWork.ApplicationUserRepository.GetUserByIdAsync(User.GetId());
+            var appUser = await _unitOfWork.ApplicationUserRepository.GetByIdAsync(User.GetId());
 
             if (appUser == null)
             {

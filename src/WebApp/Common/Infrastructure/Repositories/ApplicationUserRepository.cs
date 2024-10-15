@@ -13,17 +13,17 @@ namespace Infrastructure.Repositories
 {
     public class ApplicationUserRepository(DataContext _dataContext, IMapper mapper) : IApplicationUserRepository // using the repository design pattern to isolate the contollers further more from the entity framework. (it may not be neccesary)
     {
-        public void DeleteUser(ApplicationUser user)
+        public void Delete(ApplicationUser user)
         {
             _dataContext.Remove(user);
         }
 
-        public async Task AddApplicationUser(ApplicationUser user)
+        public async Task AddAsync(ApplicationUser user)
         {
             await _dataContext.ApplicationUsers.AddAsync(user);
         }
 
-        public async Task<bool> UserExistsAsync(int id)
+        public async Task<bool> IdExistsAsync(int id)
         {
             return await _dataContext.ApplicationUsers
                 .AsNoTracking()
@@ -52,7 +52,7 @@ namespace Infrastructure.Repositories
             }
             return new PagedList<UserDTO>(users.ToList(), users.Count(), userParams.PageNumber, userParams.ItemsPerPage);
         }
-        public async Task<ApplicationUser> GetUserByIdAsync(int id)
+        public async Task<ApplicationUser> GetByIdAsync(int id)
         {
             var connectionString = _dataContext.Database.GetConnectionString();
             using IDbConnection db = new SqlConnection(connectionString);
@@ -66,7 +66,7 @@ namespace Infrastructure.Repositories
             return mapper.Map<UserDTO>(appUser);
         }
 
-        public async Task<UserDTO> GetUserDTOByIdAsync(int id)
+        public async Task<UserDTO> GetDtoByIdAsync(int id)
         {
             var connectionString = _dataContext.Database.GetConnectionString();
             using IDbConnection db = new SqlConnection(connectionString);
