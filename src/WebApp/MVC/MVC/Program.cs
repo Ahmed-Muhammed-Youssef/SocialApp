@@ -1,3 +1,4 @@
+using Domain.Constants;
 using Infrastructure.Data;
 using Infrastructure.Identity;
 using Microsoft.AspNetCore.Identity;
@@ -25,8 +26,8 @@ namespace MVC
             .AddEntityFrameworkStores<IdentityDatabaseContext>();
 
             builder.Services.AddAuthorizationBuilder()
-            .AddPolicy("RequireAdminRole", policy => policy.RequireRole("admin"))
-            .AddPolicy("RequireModeratorOrAdmin", policy => policy.RequireRole("admin", "moderator"));
+            .AddPolicy("RequireAdminRole", policy => policy.RequireRole(RolesNameValues.Admin))
+            .AddPolicy("RequireModeratorOrAdmin", policy => policy.RequireRole(RolesNameValues.Admin, RolesNameValues.Moderator));
             
             // Add services to the container.
             builder.Services.AddControllersWithViews();

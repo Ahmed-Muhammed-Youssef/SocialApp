@@ -1,4 +1,5 @@
-﻿using Infrastructure.Identity;
+﻿using Domain.Constants;
+using Infrastructure.Identity;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
@@ -25,8 +26,8 @@ namespace API.Extensions
             .AddEntityFrameworkStores<IdentityDatabaseContext>();
 
             services.AddAuthorizationBuilder()
-            .AddPolicy("RequireAdminRole", policy => policy.RequireRole("admin"))
-            .AddPolicy("RequireModeratorOrAdmin", policy => policy.RequireRole("admin", "moderator"));
+            .AddPolicy("RequireAdminRole", policy => policy.RequireRole(RolesNameValues.Admin))
+            .AddPolicy("RequireModeratorOrAdmin", policy => policy.RequireRole(RolesNameValues.Admin, RolesNameValues.Moderator));
 
             services.AddAuthentication(options =>
             {
