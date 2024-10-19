@@ -6,5 +6,8 @@
         public string Content { get; set; }
         public DateTime DatePosted { get; set; }
         public DateTime? DateEdited { get; set; } = null;
+        public int OwnerId { get; set; }
+        public string OwnerName { get; set; } = "";
+        public string OwnerPicutreUrl { get; set; } = "";
     }
 }

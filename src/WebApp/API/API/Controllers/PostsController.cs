@@ -26,7 +26,7 @@ namespace API.Controllers
         [HttpGet("{postId}")]
         public async Task<ActionResult<IEnumerable<Post>>> GetPostByIdAsync(ulong postId)
         {
-            var posts = await _unitOfWork.PostRepository.GetPostByIdAsync(postId, User.GetId());
+            var posts = await _unitOfWork.PostRepository.GetByIdAsync(postId, User.GetId());
             return Ok(posts);
         }
 
@@ -36,7 +36,7 @@ namespace API.Controllers
             Post post = _mapper.Map<Post>(newPostDTO);
             post.UserId = User.GetId();
 
-            await _unitOfWork.PostRepository.AddPostAsync(post);
+            await _unitOfWork.PostRepository.AddAsync(post);
             await _unitOfWork.SaveChangesAsync();
 
             PostDTO returnPostDTO = _mapper.Map<PostDTO>(post);

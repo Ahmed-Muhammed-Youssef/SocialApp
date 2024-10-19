@@ -5,6 +5,11 @@
         private const int MaxPageSize = 40;
         private int pageNumber = 1;
         private int itemsPerPage = 2;
+        public int SkipValue { 
+            get {
+                return (PageNumber - 1) * ItemsPerPage;
+            } 
+        }
         public int PageNumber
         {
             get

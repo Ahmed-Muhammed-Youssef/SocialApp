@@ -53,7 +53,7 @@ namespace Infrastructure.Repositories
             queryDto = queryDto.OrderByDescending(u => u.LastActive);
 
             int count = queryDto.Count();
-            var items = queryDto.Skip((paginationParams.PageNumber - 1) * paginationParams.ItemsPerPage).Take(paginationParams.ItemsPerPage);
+            var items = queryDto.Skip(paginationParams.SkipValue).Take(paginationParams.ItemsPerPage);
             var listDto = await queryDto.ToListAsync();
             var pagedResult = new PagedList<UserDTO>(listDto, listDto.Count, paginationParams.PageNumber, paginationParams.ItemsPerPage);
             return pagedResult;
