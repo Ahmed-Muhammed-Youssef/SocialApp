@@ -1,11 +1,14 @@
-﻿using Domain.Entities;
+﻿using Application.DTOs.Pagination;
+using Application.DTOs.Post;
+using Domain.Entities;
 
 namespace Application.Interfaces.Repositories
 {
     public interface IPostRepository
     {
-        Task<Post> GetPostByIdAsync(ulong postId, int requesterId);
+        Task<Post> GetByIdAsync(ulong postId, int requesterId);
         Task<IEnumerable<Post>> GetUserPostsAsync(int userId, int requesterId);
-        Task AddPostAsync(Post newPost);
+        Task AddAsync(Post newPost);
+        Task<PagedList<PostDTO>> GetNewsfeed(int userId, PaginationParams paginationParams);
     }
 }
