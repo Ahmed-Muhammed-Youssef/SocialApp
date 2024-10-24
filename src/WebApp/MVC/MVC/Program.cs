@@ -1,7 +1,14 @@
+using Application.Interfaces.Repositories;
+using Application.Interfaces;
 using Domain.Constants;
 using Infrastructure.Data;
 using Infrastructure.Identity;
+using Infrastructure.Repositories.CachedRepositories;
+using Infrastructure.Repositories;
 using Microsoft.AspNetCore.Identity;
+using Infrastructure.MappingProfiles;
+using Application.Interfaces.Services;
+using Infrastructure.ExternalServices.Cloudinary;
 
 namespace MVC
 {
@@ -33,6 +40,18 @@ namespace MVC
             builder.Services.AddControllersWithViews();
 
             builder.Services.AddRazorPages();
+
+            // Repositories
+            builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+            builder.Services.AddScoped<ICachedApplicationUserRepository, CachedUserRepository>();
+            builder.Services.AddScoped<IApplicationUserRepository, ApplicationUserRepository>();
+            builder.Services.AddScoped<IPictureRepository, PictureRepository>();
+            builder.Services.AddScoped<IMessageRepository, MessageRepository>();
+            builder.Services.AddScoped<IFriendRequestRepository, FriendRequestsRepository>();
+            builder.Services.AddScoped<IPostRepository, PostRepository>();
+
+            builder.Services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
+            builder.Services.AddScoped<IPictureService, PictureService>();
 
             var app = builder.Build();
 
