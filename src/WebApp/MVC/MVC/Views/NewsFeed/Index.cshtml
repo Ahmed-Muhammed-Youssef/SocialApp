@@ -3,3 +3,6 @@
 @{
     ViewData["Title"] = "Newsfeed";
 }
+@foreach(var post in Model.Items){
+    @await Html.PartialAsync("_Post", post);
+}

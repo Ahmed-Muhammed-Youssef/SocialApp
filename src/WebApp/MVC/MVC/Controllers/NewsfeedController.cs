@@ -17,14 +17,16 @@ namespace MVC.Controllers
             // problems to fix:
             // validate user id
             // to have a consistant list of posts we need to pass the time first ordered the list
+            string? identityId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
-            if (int.TryParse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value, out int id))
+            if (!string.IsNullOrEmpty(identityId))
             {
-                var posts = await unitOfWork.PostRepository.GetNewsfeed(id, new Application.DTOs.Pagination.PaginationParams());
+                var user = await unitOfWork.ApplicationUserRepository.GetByIdentity(identityId);
+                var posts = await unitOfWork.PostRepository.GetNewsfeed(user.Id, new Application.DTOs.Pagination.PaginationParams());
                 return View(posts);
             }
 
-            return RedirectToAction("Index", "HomeController");
+            return RedirectToAction("Index", "Home");
         }
     }
 }
