@@ -26,14 +26,20 @@ namespace Infrastructure.Repositories
 
         public async Task<PagedList<PostDTO>> GetNewsfeed(int userId, PaginationParams paginationParams)
         {
-            var allPostsQuery = _context.Friends.Where(f => f.UserId == userId).Include(f => f.FriendUser).Join(_context.Posts, f => f.FriendId, post => post.UserId, (f, p) => new PostDTO() { 
+            var allPostsQuery = _context.Friends
+            .Where(f => f.UserId == userId)
+            .SelectMany(f => f.FriendUser.Posts, (f, p) => new PostDTO
+            {
                 Id = p.Id,
                 DateEdited = p.DateEdited,
-                OwnerName = f.User.FirstName + " " + f.User.LastName,
-                OwnerId = f.UserId,
+                OwnerName = f.FriendUser.FirstName + " " + f.FriendUser.LastName,
+                OwnerId = f.FriendUser.Id,
                 Content = p.Content,
-                OwnerPicutreUrl = f.User.ProfilePictureUrl
-            }).OrderBy(p => p.DatePosted).AsNoTracking();
+                OwnerPicutreUrl = f.FriendUser.ProfilePictureUrl,
+                DatePosted = p.DatePosted
+            })
+            .OrderBy(p => p.DatePosted)
+            .AsNoTracking();
 
             int count = await allPostsQuery.CountAsync();
 

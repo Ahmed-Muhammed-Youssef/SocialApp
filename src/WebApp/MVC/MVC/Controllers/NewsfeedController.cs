@@ -1,9 +1,11 @@
 ﻿using Application.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
 namespace MVC.Controllers
 {
+    [Authorize]
     public class NewsfeedController : Controller
     {
         private readonly IUnitOfWork unitOfWork;
@@ -14,19 +16,12 @@ namespace MVC.Controllers
         }
         public async Task<IActionResult> IndexAsync()
         {
-            // problems to fix:
-            // validate user id
             // to have a consistant list of posts we need to pass the time first ordered the list
-            string? identityId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            string identityId = User.FindFirst(ClaimTypes.NameIdentifier)!.Value;
 
-            if (!string.IsNullOrEmpty(identityId))
-            {
-                var user = await unitOfWork.ApplicationUserRepository.GetByIdentity(identityId);
-                var posts = await unitOfWork.PostRepository.GetNewsfeed(user.Id, new Application.DTOs.Pagination.PaginationParams());
-                return View(posts);
-            }
-
-            return RedirectToAction("Index", "Home");
+            var user = await unitOfWork.ApplicationUserRepository.GetByIdentity(identityId);
+            var posts = await unitOfWork.PostRepository.GetNewsfeed(user.Id, new Application.DTOs.Pagination.PaginationParams() { ItemsPerPage = 20 });
+            return View(posts);
         }
     }
 }

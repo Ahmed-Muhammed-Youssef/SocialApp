@@ -1,9 +1,29 @@
 ﻿@model Application.DTOs.Post.PostDTO
 
-<div class="card" style="width: 100%;">
+<div class="card mb-3 shadow-sm border-0" style="width: 100%; background-color: #f8f9fa;">
     <div class="card-body">
-        <h5 class="card-title">@Model.OwnerName</h5>
-        <h6 class="card-subtitle mb-2 text-body-secondary">@Model.DatePosted</h6>
-        <p class="card-text">@Model.Content</p>
+        <div class="d-flex align-items-center mb-3">
+            <img src="@(string.IsNullOrEmpty(Model.OwnerPicutreUrl) ? "/images/default-profile.jpg" : Model.OwnerPicutreUrl)"
+                 class="rounded-circle me-2"
+                 alt="@Model.OwnerName's profile picture"
+                 style="width: 48px; height: 48px; object-fit: cover;"
+                 onerror="this.onerror=null; this.src='/images/default-profile.jpg';">
+            <div>
+                <h5 class="card-title mb-0">@Model.OwnerName</h5>
+                <small class="text-muted">@Model.DatePosted.ToRelativeTimeString()</small>
+            </div>
+        </div>
+        <p class="card-text mb-2 ps-2">@Model.Content</p>
+        <div class="d-flex gap-3 mt-3">
+            <button class="btn btn-sm btn-outline-secondary">
+                <i class="bi bi-hand-thumbs-up"></i> Like
+            </button>
+            <button class="btn btn-sm btn-outline-secondary">
+                <i class="bi bi-chat-dots"></i> Comment
+            </button>
+            <button class="btn btn-sm btn-outline-secondary">
+                <i class="bi bi-share"></i> Share
+            </button>
+        </div>
     </div>
 </div>
