@@ -23,5 +23,14 @@ namespace MVC.Controllers
             var posts = await unitOfWork.PostRepository.GetNewsfeed(user.Id, new Application.DTOs.Pagination.PaginationParams() { ItemsPerPage = 20 });
             return View(posts);
         }
+
+        public async Task<IActionResult> LoadPosts(int pageNumber)
+        {
+            string identityId = User.FindFirst(ClaimTypes.NameIdentifier)!.Value;
+
+            var user = await unitOfWork.ApplicationUserRepository.GetByIdentity(identityId);
+            var posts = await unitOfWork.PostRepository.GetNewsfeed(user.Id, new Application.DTOs.Pagination.PaginationParams() { ItemsPerPage = 20, PageNumber = pageNumber });
+            return PartialView("_PostsListPartial", posts.Items);
+        }
     }
 }
