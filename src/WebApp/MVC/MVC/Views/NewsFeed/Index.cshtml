@@ -6,7 +6,7 @@
 <div id="postsContainer">
     @foreach(var post in Model.Items)
     {
-        await Html.RenderPartialAsync("_Post", post);
+        await Html.RenderPartialAsync("_PostPartial", post);
     }
 </div>
 
@@ -26,12 +26,11 @@
             document.getElementById("loadingSpinner").style.display = "block";
 
             try {
-                const response = await fetch(`/Newsfeed/LoadPosts?offset=${pageNumber}`);
+                const response = await fetch(`/Newsfeed/LoadPosts?pageNumber=${pageNumber}`);
                 const newPostsHtml = await response.text();
 
-                // Append the new posts to the container
                 document.getElementById("postsContainer").insertAdjacentHTML("beforeend", newPostsHtml);
-                offset += 1; // update offset for next batch
+                offset += 1;
             } catch (error) {
                 console.error("Failed to load posts", error);
             } finally {
