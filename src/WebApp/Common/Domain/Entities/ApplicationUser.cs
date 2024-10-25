@@ -21,5 +21,6 @@
         public ICollection<Message> MessagesReceived { get; set; }
         public ICollection<Friend> Friends { get; set; }
         public ICollection<Picture> Pictures { get; set; }
+        public ICollection<Post> Posts { get; set; }
     }
 }
