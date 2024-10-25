@@ -30,7 +30,7 @@
                 const newPostsHtml = await response.text();
 
                 document.getElementById("postsContainer").insertAdjacentHTML("beforeend", newPostsHtml);
-                offset += 1;
+                pageNumber += 1;
             } catch (error) {
                 console.error("Failed to load posts", error);
             } finally {
