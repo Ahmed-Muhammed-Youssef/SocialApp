@@ -8,6 +8,6 @@
         public DateTime? DateEdited { get; set; } = null;
         public int OwnerId { get; set; }
         public string OwnerName { get; set; } = "";
-        public string OwnerPicutreUrl { get; set; } = "";
+        public string OwnerPictureUrl { get; set; } = "";
     }
 }

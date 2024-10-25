@@ -35,7 +35,7 @@ namespace Infrastructure.Repositories
                 OwnerName = f.FriendUser.FirstName + " " + f.FriendUser.LastName,
                 OwnerId = f.FriendUser.Id,
                 Content = p.Content,
-                OwnerPicutreUrl = f.FriendUser.ProfilePictureUrl,
+                OwnerPictureUrl = f.FriendUser.ProfilePictureUrl,
                 DatePosted = p.DatePosted
             })
             .OrderBy(p => p.DatePosted)
