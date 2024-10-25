@@ -193,7 +193,39 @@ namespace Infrastructure.Data
                     dataContext.Posts.Add(post);
                     dataContext.SaveChanges();
                 }
+
             }
+
+            // add all users as friends to user1
+            if (dataContext.Friends.Any()) return;
+            var firstIdentityUser = await userManager.Users.Where(u => u.Email == "user1@test").FirstOrDefaultAsync();
+            var applicationUsers = await dataContext.ApplicationUsers.ToListAsync();
+            var firstUser = applicationUsers.Where(u => u.IdentityId ==  firstIdentityUser.Id).FirstOrDefault();    
+
+            if(firstUser is not null)
+            {
+                foreach (var user in applicationUsers)
+                {
+                    if(user.IdentityId != firstIdentityUser.Id)
+                    {
+
+                        await dataContext.Friends.AddAsync(new Friend()
+                        {
+                            UserId = firstUser.Id,
+                            FriendId = user.Id
+                        });
+
+                        await dataContext.Friends.AddAsync(new Friend()
+                        {
+                            UserId = user.Id,
+                            FriendId = firstUser.Id
+                        });
+                    }
+                }
+
+                await dataContext.SaveChangesAsync();
+            }
+
         }
     }
 }
