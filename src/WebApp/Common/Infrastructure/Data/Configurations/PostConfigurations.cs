@@ -19,7 +19,7 @@ namespace Infrastructure.Data.Configurations
 
             // relationships
             builder.HasOne(p => p.ApplicationUser)
-                .WithMany()
+                .WithMany(u => u.Posts)
                 .IsRequired()
                 .HasForeignKey(p => p.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
