@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Identity;
 using Infrastructure.MappingProfiles;
 using Application.Interfaces.Services;
 using Infrastructure.ExternalServices.Cloudinary;
+using MVC.Middleware;
 
 namespace MVC
 {
@@ -67,11 +68,17 @@ namespace MVC
             }
 
             app.UseHttpsRedirection();
+            
             app.UseStaticFiles();
 
             app.UseRouting();
 
+
+            app.UseAuthentication();
+            
             app.UseAuthorization();
+            
+            app.UseMiddleware<RedirectAuthenticatedMiddleware>();
 
             app.MapRazorPages();
 
