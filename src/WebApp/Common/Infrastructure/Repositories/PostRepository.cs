@@ -38,7 +38,7 @@ namespace Infrastructure.Repositories
                 OwnerPictureUrl = f.FriendUser.ProfilePictureUrl,
                 DatePosted = p.DatePosted
             })
-            .OrderBy(p => p.DatePosted)
+            .OrderByDescending(p => p.DatePosted)
             .AsNoTracking();
 
             int count = await allPostsQuery.CountAsync();
