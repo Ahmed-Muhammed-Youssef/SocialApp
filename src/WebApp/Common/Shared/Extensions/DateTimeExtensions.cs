@@ -15,7 +15,7 @@
             if (timeDiff.TotalDays < 7)
                 return $"{(int)timeDiff.TotalDays}d ago";
 
-            return dateTime.ToString("MMM dd");
+            return dateTime.ToString("dd MMM yyyy");
         }
     }
 }
