@@ -1,0 +1,112 @@
+﻿@using Application.DTOs.User
+@model UserDTO
+@{
+    ViewData["Title"] = Model.FirstName;
+}
+
+<!-- Add Bootstrap Icons CDN in your layout file if not already present -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+<style>
+    .profile-image {
+        transition: transform 0.3s ease;
+    }
+
+        .profile-image:hover {
+            transform: scale(1.05);
+        }
+
+    .gallery-img {
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+
+        .gallery-img:hover {
+            transform: translateY(-5px);
+        }
+
+    .bio-card {
+        background-color: #f8f9fa;
+        border: none;
+        border-radius: 1rem;
+    }
+
+    .status-badge {
+        font-size: 0.85rem;
+        padding: 0.35rem 0.75rem;
+        border-radius: 2rem;
+    }
+</style>
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <!-- Profile Section -->
+            <div class="bio-card p-4 mb-5">
+                <div class="text-center mb-4">
+                    <div class="position-relative d-inline-block mb-3">
+                        <img src="@(string.IsNullOrEmpty(Model.ProfilePictureUrl) ? "/images/default-profile.jpg": Model.ProfilePictureUrl)"
+                             class="rounded-circle profile-image"
+                             style="width: 150px; height: 150px; object-fit: cover;"
+                             alt="Profile Picture"
+                             onerror="this.onerror=null; this.src='/images/default-profile.jpg';">
+                    </div>
+                    <h2 class="display-6 fw-bold mb-2">@Model.FirstName @Model.LastName</h2>
+                    <div class="d-flex justify-content-center gap-2 mb-3">
+                        <span class="status-badge bg-light text-dark">
+                            <i class="bi @(Model.Sex == 'm' ? "bi-gender-male" : "bi-gender-female") me-1"></i>
+                            @(Model.Sex == 'm' ? "Male" : "Female")
+                        </span>
+                        <span class="status-badge bg-light text-dark">
+                            <i class="bi bi-calendar3 me-1"></i>
+                            Age: @Model.Age
+                        </span>
+                    </div>
+                    <div class="text-muted small">
+                        <span class="me-3">
+                            <i class="bi bi-clock-history me-1"></i>
+                            Joined @Model.Created.ToString("MMMM yyyy")
+                        </span>
+                        <span>
+                            <i class="bi bi-activity me-1"></i>
+                            Active @Model.LastActive.ToRelativeTimeString()
+                        </span>
+                    </div>
+                </div>
+
+                @if (!string.IsNullOrEmpty(Model.Bio))
+                {
+                    <div class="mt-4 px-lg-4">
+                        <h6 class="text-uppercase text-muted small fw-bold mb-3">
+                            <i class="bi bi-person-lines-fill me-2"></i>About
+                        </h6>
+                        <p class="text-muted mb-0">@Model.Bio</p>
+                    </div>
+                }
+            </div>
+
+            <!-- Gallery Section -->
+            @if (Model.Pictures is not null && Model.Pictures.Any())
+            {
+                <div class="mt-5">
+                    <h6 class="text-uppercase text-muted small fw-bold mb-4">
+                        <i class="bi bi-images me-2"></i>Gallery
+                    </h6>
+                    <div class="row g-4">
+                        @foreach (var picture in Model.Pictures)
+                        {
+                            <div class="col-md-4 col-sm-6">
+                                <div class="rounded overflow-hidden shadow-sm gallery-img">
+                                    <img src="@picture.Url"
+                                         class="img-fluid w-100"
+                                         style="aspect-ratio: 1; object-fit: cover;"
+                                         alt="User Photo">
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
