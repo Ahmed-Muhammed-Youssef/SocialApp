@@ -3,15 +3,19 @@
 <div class="card mb-3 shadow-sm border-0" style="width: 100%; background-color: #f8f9fa;">
     <div class="card-body">
         <div class="d-flex align-items-center mb-3">
-            <img src="@(string.IsNullOrEmpty(Model.OwnerPictureUrl) ? "/images/default-profile.jpg" : Model.OwnerPictureUrl)"
-                 class="rounded-circle me-2"
-                 alt="@Model.OwnerName's profile picture"
-                 style="width: 48px; height: 48px; object-fit: cover;"
-                 onerror="this.onerror=null; this.src='/images/default-profile.jpg';">
-            <div>
-                <h5 class="card-title mb-0">@Model.OwnerName</h5>
-                <small class="text-muted">@Model.DatePosted.ToRelativeTimeString()</small>
-            </div>
+            <a asp-controller="Profile" asp-action="Index" asp-route-id="@Model.OwnerId" class="text-decoration-none">
+                <img src="@(string.IsNullOrEmpty(Model.OwnerPictureUrl) ? "/images/default-profile.jpg" : Model.OwnerPictureUrl)"
+                     class="rounded-circle me-2"
+                     alt="@Model.OwnerName's profile picture"
+                     style="width: 48px; height: 48px; object-fit: cover;"
+                     onerror="this.onerror=null; this.src='/images/default-profile.jpg';">
+            </a>
+        <div>
+            <h5 class="card-title mb-0">
+                <a asp-controller="Profile" asp-action="Index" asp-route-id="@Model.OwnerId" class="text-decoration-none text-dark hover-primary" style="transition: color 0.2s ease;">@Model.OwnerName</a>
+            </h5>
+            <small class="text-muted">@Model.DatePosted.ToRelativeTimeString()</small>
+        </div>
         </div>
         <p class="card-text mb-2 ps-2">@Model.Content</p>
         <div class="d-flex gap-3 mt-3">
@@ -27,3 +31,9 @@
         </div>
     </div>
 </div>
+
+<style>
+    .hover-primary:hover {
+        color: var(--bs-primary) !important;
+    }
+</style>
