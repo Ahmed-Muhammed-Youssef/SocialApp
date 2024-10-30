@@ -21,6 +21,7 @@ using Application.Authentication.Google;
 using Infrastructure.ExternalServices.Google;
 using Infrastructure.ExternalServices.Cloudinary;
 using Infrastructure.Identity;
+using Infrastructure.RealTime.Presence;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -38,7 +39,7 @@ builder.Services.AddScoped<IFriendRequestRepository, FriendRequestsRepository>()
 builder.Services.AddScoped<IPostRepository, PostRepository>();
 
 // User-defined Services
-builder.Services.AddSingleton<PresenceTracker>();
+builder.Services.AddSingleton<OnlinePresenceManager>();
 builder.Services.AddScoped<IPictureService, PictureService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IGoogleAuthService, GoogleAuthService>();

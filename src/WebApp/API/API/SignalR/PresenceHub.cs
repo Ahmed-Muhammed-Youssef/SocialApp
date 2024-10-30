@@ -1,4 +1,5 @@
 using API.Extensions;
+using Infrastructure.RealTime.Presence;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
 using System;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 namespace API.SignalR
 {
     [Authorize]
-    public class PresenceHub(PresenceTracker _presenceTracker) : Hub
+    public class PresenceHub(OnlinePresenceManager _presenceTracker) : Hub
     {
         public override async Task OnConnectedAsync()
         {

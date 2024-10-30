@@ -8,11 +8,12 @@ using Microsoft.AspNetCore.SignalR;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Infrastructure.RealTime.Presence;
 
 namespace API.SignalR
 {
     public class MessageHub(IUnitOfWork _unitOfWork, IMapper _mapper,
-        IHubContext<PresenceHub> _presenceHubContext, PresenceTracker _presenceTracker) : Hub
+        IHubContext<PresenceHub> _presenceHubContext, OnlinePresenceManager _presenceTracker) : Hub
     {
         public override async Task OnConnectedAsync()
         {
