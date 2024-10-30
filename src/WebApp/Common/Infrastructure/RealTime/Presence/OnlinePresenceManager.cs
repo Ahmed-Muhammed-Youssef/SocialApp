@@ -1,12 +1,16 @@
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace API.SignalR
+﻿namespace Infrastructure.RealTime.Presence
 {
-    public class PresenceTracker
+    public class OnlinePresenceManager
     {
+        // Dictionary to track online users by their user ID and connection IDs.
         private static readonly Dictionary<int, List<string>> OnlineUsers = [];
+
+        /// <summary>
+        /// Adds a connection for a user. If this is the first connection for the user, returns true.
+        /// </summary>
+        /// <param name="userId">The unique identifier of the user.</param>
+        /// <param name="connectionId">The unique connection ID for this session.</param>
+        /// <returns>True if this is the user's first connection; otherwise, false.</returns>
         public Task<bool> UserConnected(int userId, string connectionId)
         {
             var firstConnection = false;
@@ -24,6 +28,13 @@ namespace API.SignalR
             }
             return Task.FromResult(firstConnection);
         }
+
+        /// <summary>
+        /// Removes a connection for a user. If this was the user's last connection, returns true.
+        /// </summary>
+        /// <param name="userId">The unique identifier of the user.</param>
+        /// <param name="connectionId">The unique connection ID for this session.</param>
+        /// <returns>True if the user has no remaining connections; otherwise, false.</returns>
         public Task<bool> UserDisconnected(int userId, string connectionId)
         {
             bool isOffline = false;
@@ -43,6 +54,11 @@ namespace API.SignalR
             }
             return Task.FromResult(isOffline);
         }
+
+        /// <summary>
+        /// Retrieves a list of currently online users by their user IDs.
+        /// </summary>
+        /// <returns>An array of user IDs for online users, sorted in ascending order.</returns>
         public Task<int[]> GetOnlineUsers()
         {
             int[] onlineUsers = [];
@@ -52,6 +68,11 @@ namespace API.SignalR
             }
             return Task.FromResult(onlineUsers);
         }
+
+        /// <summary>
+        /// Retrieves all connection IDs associated with a specific user.
+        /// </summary>
+        /// <param name="userId">The unique identifier of the user.</param>
         public Task<List<string>> GetConnectionForUser(int userId)
         {
             List<string> connectionIds;
