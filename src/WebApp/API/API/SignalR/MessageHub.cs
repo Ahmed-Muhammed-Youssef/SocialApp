@@ -72,7 +72,7 @@ namespace API.SignalR
             }
             else
             {
-                var recipientConnections = await _presenceTracker.GetConnectionForUser(recipient.Id);
+                var recipientConnections = await _presenceTracker.GetConnectionForUser(recipient.Id.ToString());
                 if (recipientConnections != null)
                 {
                     var senderDTO = _mapper.Map<UserDTO>(sender);
