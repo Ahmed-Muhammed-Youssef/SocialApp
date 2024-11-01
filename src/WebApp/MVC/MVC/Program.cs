@@ -10,6 +10,7 @@ using Infrastructure.MappingProfiles;
 using Application.Interfaces.Services;
 using Infrastructure.ExternalServices.Cloudinary;
 using MVC.Middleware;
+using MVC.Hubs;
 
 namespace MVC
 {
@@ -53,6 +54,7 @@ namespace MVC
 
             builder.Services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
             builder.Services.AddScoped<IPictureService, PictureService>();
+            builder.Services.AddSignalR();
 
             var app = builder.Build();
 
@@ -81,7 +83,7 @@ namespace MVC
             app.UseMiddleware<RedirectAuthenticatedMiddleware>();
 
             app.MapRazorPages();
-
+            app.MapHub<PresenceHub>("hubs/presence");
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
