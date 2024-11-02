@@ -1,8 +1,8 @@
 ﻿using Application.Interfaces;
-using API.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using Shared.Extensions;
 
 namespace API.Controllers
 {
@@ -20,7 +20,7 @@ namespace API.Controllers
             {
                 return NotFound();
             }
-            var issuerId = User.GetId();
+            var issuerId = User.GetPublicId().Value;
 
             // Checks if the message is related to the issuer
             if (message.SenderId != issuerId && message.RecipientId != issuerId)

@@ -1,7 +1,7 @@
 ﻿using Application.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
+using Shared.Extensions;
 
 namespace MVC.Controllers
 {
@@ -17,20 +17,27 @@ namespace MVC.Controllers
         public async Task<IActionResult> IndexAsync()
         {
             // to have a consistant list of posts we need to pass the time first ordered the list
-            string identityId = User.FindFirst(ClaimTypes.NameIdentifier)!.Value;
+            int? publicId = User.GetPublicId();
+            if (publicId is not null)
+            {
+                var posts = await unitOfWork.PostRepository.GetNewsfeed(publicId.Value, new Application.DTOs.Pagination.PaginationParams() { ItemsPerPage = 20 });
+                return View(posts);
+            }
 
-            var user = await unitOfWork.ApplicationUserRepository.GetByIdentity(identityId);
-            var posts = await unitOfWork.PostRepository.GetNewsfeed(user.Id, new Application.DTOs.Pagination.PaginationParams() { ItemsPerPage = 20 });
-            return View(posts);
+            return BadRequest("Error accessing user ID");
         }
 
         public async Task<IActionResult> LoadPosts(int pageNumber)
         {
-            string identityId = User.FindFirst(ClaimTypes.NameIdentifier)!.Value;
+            int? publicId = User.GetPublicId();
 
-            var user = await unitOfWork.ApplicationUserRepository.GetByIdentity(identityId);
-            var posts = await unitOfWork.PostRepository.GetNewsfeed(user.Id, new Application.DTOs.Pagination.PaginationParams() { ItemsPerPage = 20, PageNumber = pageNumber });
-            return PartialView("_PostsListPartial", posts.Items);
+            if(publicId is not null)
+            {
+                var posts = await unitOfWork.PostRepository.GetNewsfeed(publicId.Value, new Application.DTOs.Pagination.PaginationParams() { ItemsPerPage = 20, PageNumber = pageNumber });
+                return PartialView("_PostsListPartial", posts.Items);
+            }
+
+            return BadRequest("Error accessing user ID");
         }
     }
 }

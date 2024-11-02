@@ -1,8 +1,6 @@
 ﻿using Application.Interfaces;
-using Infrastructure.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
-using NuGet.Protocol.Core.Types;
 using System.Security.Claims;
 
 namespace MVC.Factories

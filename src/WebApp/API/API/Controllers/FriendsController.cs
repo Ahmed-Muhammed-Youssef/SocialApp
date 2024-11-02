@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Shared.Extensions;
 
 namespace API.Controllers
 {
@@ -21,7 +22,7 @@ namespace API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<UserDTO>>> GetAll([FromQuery] PaginationParams paginationParams)
         {
-            var user = await _unitOfWork.ApplicationUserRepository.GetByIdAsync(User.GetId());
+            var user = await _unitOfWork.ApplicationUserRepository.GetByIdAsync(User.GetPublicId().Value);
             if (user == null)
             {
                 return Unauthorized();
@@ -36,7 +37,7 @@ namespace API.Controllers
         [HttpGet("isFriend/{id}")]
         public async Task<ActionResult<bool>> IsFriend(int id)
         {
-            return Ok(await _unitOfWork.FriendRequestRepository.IsFriend(User.GetId(), id));
+            return Ok(await _unitOfWork.FriendRequestRepository.IsFriend(User.GetPublicId().Value, id));
         }
     }
 }
