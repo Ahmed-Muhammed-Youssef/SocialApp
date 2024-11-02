@@ -6,7 +6,7 @@
         {
             DateTime now = DateTime.Now;
             int age = now.Year - dob.Year;
-            // we need this for leap years 
+            // Adjust if birthday hasn't occurred yet
             if (dob > now.AddYears(-age))
             {
                 age--;
