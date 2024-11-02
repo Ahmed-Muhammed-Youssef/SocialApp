@@ -2,13 +2,13 @@ using Application.DTOs.Message;
 using Application.DTOs.User;
 using Application.Interfaces;
 using Domain.Entities;
-using API.Extensions;
 using AutoMapper;
 using Microsoft.AspNetCore.SignalR;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Infrastructure.RealTime.Presence;
+using Shared.Extensions;
 
 namespace API.SignalR
 {
@@ -19,11 +19,11 @@ namespace API.SignalR
         {
             var httpContext = Context.GetHttpContext();
             var otherUserId = int.Parse(httpContext.Request.Query["userId"]);
-            var groupName = GetGroupName(httpContext.User.GetId(), otherUserId);
+            var groupName = GetGroupName(httpContext.User.GetPublicId().Value, otherUserId);
             await Groups.AddToGroupAsync(Context.ConnectionId, groupName);
             var group = await AddToGroup(groupName);
             await Clients.Group(groupName).SendAsync("UpdatedGroup", group);
-            var messages = await _unitOfWork.MessageRepository.GetMessagesDTOThreadAsync(Context.User.GetId(), otherUserId);
+            var messages = await _unitOfWork.MessageRepository.GetMessagesDTOThreadAsync(Context.User.GetPublicId().Value, otherUserId);
             if (_unitOfWork.HasChanges()) await _unitOfWork.SaveChangesAsync();
             await Clients.Caller.SendAsync("ReceiveMessages", messages);
         }
@@ -35,7 +35,7 @@ namespace API.SignalR
         }
         public async Task SendMessages(NewMessageDTO message)
         {
-            var sender = await _unitOfWork.ApplicationUserRepository.GetByIdAsync(Context.User.GetId());
+            var sender = await _unitOfWork.ApplicationUserRepository.GetByIdAsync(Context.User.GetPublicId().Value);
             var recipient = await _unitOfWork.ApplicationUserRepository.GetByIdAsync(message.RecipientId);
             if (recipient == null || sender == null)
             {
@@ -96,7 +96,7 @@ namespace API.SignalR
         private async Task<Group> AddToGroup(string groupName)
         {
             var group = await _unitOfWork.MessageRepository.GetGroupByName(groupName);
-            var connection = new Connection(Context.ConnectionId, Context.User.GetId());
+            var connection = new Connection(Context.ConnectionId, Context.User.GetPublicId().Value);
 
             if (group == null)
             {

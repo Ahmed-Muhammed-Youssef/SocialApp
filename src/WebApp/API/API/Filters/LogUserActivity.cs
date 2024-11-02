@@ -1,9 +1,9 @@
 ﻿using Application.Interfaces;
-using API.Extensions;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Threading.Tasks;
+using Shared.Extensions;
 
 namespace API.Filters
 {
@@ -16,7 +16,7 @@ namespace API.Filters
             {
                 return;
             }
-            var userId = resultContext.HttpContext.User.GetId();
+            var userId = resultContext.HttpContext.User.GetPublicId().Value;
             var repo = resultContext.HttpContext.RequestServices.GetService<IUnitOfWork>();
             var user = await repo.ApplicationUserRepository.GetByIdAsync(userId);
             user.LastActive = DateTime.UtcNow;

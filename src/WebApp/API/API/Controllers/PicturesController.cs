@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Application.Interfaces;
 using Application.Interfaces.Services;
 using Application.DTOs.Picture;
+using Shared.Extensions;
 
 namespace API.Controllers
 {
@@ -21,7 +22,7 @@ namespace API.Controllers
         [HttpPost]
         public async Task<ActionResult<PictureDTO>> UploadPicture(IFormFile file)
         {
-            var user = await _unitOfWork.ApplicationUserRepository.GetByIdAsync(User.GetId());
+            var user = await _unitOfWork.ApplicationUserRepository.GetByIdAsync(User.GetPublicId().Value);
             var result = await _pictureService.AddPictureAsync(file);
             if (result.Error != null)
             {
@@ -47,7 +48,7 @@ namespace API.Controllers
         [HttpPost("profilepicture/{pictureId}")]
         public async Task<ActionResult<PictureDTO>> SetProfilePicture(int pictureId)
         {
-            var user = await _unitOfWork.ApplicationUserRepository.GetByIdAsync(User.GetId());
+            var user = await _unitOfWork.ApplicationUserRepository.GetByIdAsync(User.GetPublicId().Value);
             var pictures = await _unitOfWork.PictureRepository.GetUserPictureAsync(user.Id);
             var picture = pictures.FirstOrDefault(p => p.Id == pictureId);
             if (picture == null)
@@ -70,7 +71,7 @@ namespace API.Controllers
         [HttpDelete("{pictureId}")]
         public async Task<ActionResult<PictureDTO>> DeletePhoto(int pictureId)
         {
-            var user = await _unitOfWork.ApplicationUserRepository.GetByIdAsync(User.GetId());
+            var user = await _unitOfWork.ApplicationUserRepository.GetByIdAsync(User.GetPublicId().Value);
             var pictures = await _unitOfWork.PictureRepository.GetUserPictureAsync(user.Id);
             var picture = pictures.FirstOrDefault(p => p.Id == pictureId);
             if (picture == null)
@@ -99,7 +100,7 @@ namespace API.Controllers
         [HttpGet("all")]
         public async Task<ActionResult<PictureDTO>> GetPictures()
         {
-            var pictures = await _unitOfWork.PictureRepository.GetUserPictureDTOsAsync(User.GetId()); //the output is ordered
+            var pictures = await _unitOfWork.PictureRepository.GetUserPictureDTOsAsync(User.GetPublicId().Value); //the output is ordered
             return Ok(pictures);
         }
     }

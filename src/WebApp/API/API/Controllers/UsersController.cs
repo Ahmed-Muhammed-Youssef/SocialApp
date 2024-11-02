@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Shared.Extensions;
 
 namespace API.Controllers
 {
@@ -22,7 +23,7 @@ namespace API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<UserDTO>>> GetUsers([FromQuery] UserParams userParams)
         {
-            var users = await _unitOfWork.ApplicationUserRepository.GetUsersDTOAsync(User.GetId(), userParams);
+            var users = await _unitOfWork.ApplicationUserRepository.GetUsersDTOAsync(User.GetPublicId().Value, userParams);
             var newPaginationHeader = new PaginationHeader(users.CurrentPage, users.ItemsPerPage, users.Count, users.TotalPages);
             Response.AddPaginationHeader(newPaginationHeader);
             return Ok(users.Items);
@@ -49,7 +50,7 @@ namespace API.Controllers
             {
                 return BadRequest(userDTO);
             }
-            var appUser = await _unitOfWork.ApplicationUserRepository.GetByIdAsync(User.GetId());
+            var appUser = await _unitOfWork.ApplicationUserRepository.GetByIdAsync(User.GetPublicId().Value);
 
             if (appUser == null)
             {
