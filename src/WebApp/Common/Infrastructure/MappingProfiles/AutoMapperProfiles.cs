@@ -3,9 +3,9 @@ using Application.DTOs.Picture;
 using Application.DTOs.Post;
 using Application.DTOs.User;
 using Domain.Entities;
-using Infrastructure.Extensions;
 using AutoMapper;
 using Application.DTOs.Registeration;
+using Shared.Extensions;
 
 namespace Infrastructure.MappingProfiles
 {
