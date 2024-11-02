@@ -11,6 +11,7 @@ using Application.Interfaces.Services;
 using Infrastructure.ExternalServices.Cloudinary;
 using MVC.Middleware;
 using MVC.Hubs;
+using MVC.Factories;
 
 namespace MVC
 {
@@ -33,6 +34,8 @@ namespace MVC
             .AddSignInManager<SignInManager<IdentityUser>>()
             .AddRoleValidator<RoleValidator<IdentityRole>>()
             .AddEntityFrameworkStores<IdentityDatabaseContext>();
+
+            builder.Services.AddScoped<IUserClaimsPrincipalFactory<IdentityUser>, ApplicationUserClaimsPrincipalFactory<IdentityUser, IdentityRole>>();
 
             builder.Services.AddAuthorizationBuilder()
             .AddPolicy("RequireAdminRole", policy => policy.RequireRole(RolesNameValues.Admin))
