@@ -12,6 +12,7 @@ using Infrastructure.ExternalServices.Cloudinary;
 using MVC.Middleware;
 using MVC.Hubs;
 using MVC.Factories;
+using Infrastructure.RealTime.Presence;
 
 namespace MVC
 {
@@ -58,6 +59,8 @@ namespace MVC
             builder.Services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
             builder.Services.AddScoped<IPictureService, PictureService>();
             builder.Services.AddSignalR();
+
+            builder.Services.AddSingleton<OnlinePresenceManager>();
 
             var app = builder.Build();
 

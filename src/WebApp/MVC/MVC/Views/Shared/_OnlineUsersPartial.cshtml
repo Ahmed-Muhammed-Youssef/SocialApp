@@ -1,0 +1,109 @@
+﻿@*
+*@
+@{
+}
+
+
+<div class="online-users-container">
+    <div class="card">
+        <div class="card-header">
+            <h5 class="mb-0">Online Users</h5>
+        </div>
+        <div class="card-body p-0">
+            <ul id="onlineUsersList" class="list-group list-group-flush">
+                <!-- Users will be populated here -->
+            </ul>
+        </div>
+    </div>
+</div>
+
+
+<style>
+    .online-users-container {
+        position: fixed;
+        right: 20px;
+        bottom: 20px;
+        width: 250px;
+        z-index: 1000;
+    }
+
+    .online-user-item {
+        display: flex;
+        align-items: center;
+        padding: 8px 15px;
+    }
+
+    .online-indicator {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background-color: #31a24c;
+        margin-right: 10px;
+    }
+
+    .user-avatar {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        margin-right: 10px;
+        background-color: #e9ecef;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+</style>
+
+<!-- Add this near the end of your body tag -->
+
+<script>
+    // Create SignalR connection
+    const connection = new signalR.HubConnectionBuilder()
+        .withUrl("/hubs/presence", { withCredentials: true })
+        .withAutomaticReconnect()
+        .build();
+
+    // Store online users
+    let onlineUsers = new Set();
+
+    // Function to update UI
+    function updateOnlineUsersList() {
+        const usersList = document.getElementById('onlineUsersList');
+        usersList.innerHTML = '';
+
+        onlineUsers.forEach(userId => {
+            const listItem = document.createElement('li');
+            listItem.className = 'list-group-item online-user-item';
+            listItem.id = `user-${userId}`;
+
+            listItem.innerHTML = `
+                    <span class="online-indicator"></span>
+                    <div class="user-avatar">${userId}${userId}</div>
+                    <span>${userId} ${userId}</span>
+                `;
+
+            usersList.appendChild(listItem);
+        });
+    }
+
+    // Handle initial users list
+    connection.on("GetOnlineUsers", (users) => {
+        onlineUsers = new Set(users);
+        updateOnlineUsersList();
+    });
+
+    // Handle new user coming online
+    connection.on("UserIsOnline", (userId) => {
+        onlineUsers.add(userId);
+        updateOnlineUsersList();
+    });
+
+    // Handle user going offline
+    connection.on("UserIsOffline", (userId) => {
+        onlineUsers.delete(userId);
+        updateOnlineUsersList();
+    });
+
+    // Start the connection
+    connection.start()
+        .catch(err => console.error(err));
+</script>

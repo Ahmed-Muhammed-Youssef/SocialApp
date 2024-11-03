@@ -31,7 +31,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MVC", "MVC", "{655C4861-AC8
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MVC", "src\WebApp\MVC\MVC\MVC.csproj", "{876F892E-1C81-444A-B699-C7A7B45F4155}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared", "src\WebApp\Common\Shared\Shared.csproj", "{E4E32883-AA25-49EE-B7E3-54434F7A01A7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shared", "src\WebApp\Common\Shared\Shared.csproj", "{E4E32883-AA25-49EE-B7E3-54434F7A01A7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
