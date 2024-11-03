@@ -1,7 +1,7 @@
 ﻿using Infrastructure.RealTime.Presence;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
-using System.Security.Claims;
+using Shared.Extensions;
 
 namespace MVC.Hubs
 {
@@ -16,12 +16,12 @@ namespace MVC.Hubs
         }
         public override async Task OnConnectedAsync()
         {
-            string identityId = Context.User!.FindFirst(ClaimTypes.NameIdentifier)!.Value;
+            int publicId = Context.User.GetPublicId().Value;
 
-            var isFirstConnection = await _presenceManager.UserConnected(identityId, Context.ConnectionId);
+            var isFirstConnection = await _presenceManager.UserConnected(publicId, Context.ConnectionId);
             if (isFirstConnection)
             {
-                await Clients.Others.SendAsync("UserIsOnline", identityId.ToString());
+                await Clients.Others.SendAsync("UserIsOnline", publicId.ToString());
             }
             var currentUsers = await _presenceManager.GetOnlineUsers();
             await Clients.Caller.SendAsync("GetOnlineUsers", currentUsers);
@@ -29,11 +29,11 @@ namespace MVC.Hubs
 
         public override async Task OnDisconnectedAsync(Exception? exception)
         {
-            string identityId = Context.User!.FindFirst(ClaimTypes.NameIdentifier)!.Value;
-            var isJustDisconnected = await _presenceManager.UserDisconnected(identityId, Context.ConnectionId);
+            int publicId = Context.User.GetPublicId().Value;
+            var isJustDisconnected = await _presenceManager.UserDisconnected(publicId, Context.ConnectionId);
             if (isJustDisconnected)
             {
-                await Clients.Others.SendAsync("UserIsOffline", identityId);
+                await Clients.Others.SendAsync("UserIsOffline", publicId);
             }
             await base.OnDisconnectedAsync(exception);
         }

@@ -3,7 +3,7 @@
     public class OnlinePresenceManager
     {
         // Dictionary to track online users by their user ID and connection IDs.
-        private static readonly Dictionary<string, List<string>> OnlineUsers = [];
+        private static readonly Dictionary<int, List<string>> OnlineUsers = [];
 
         /// <summary>
         /// Adds a connection for a user. If this is the first connection for the user, returns true.
@@ -11,7 +11,7 @@
         /// <param name="userId">The unique identifier of the user.</param>
         /// <param name="connectionId">The unique connection ID for this session.</param>
         /// <returns>True if this is the user's first connection; otherwise, false.</returns>
-        public Task<bool> UserConnected(string userId, string connectionId)
+        public Task<bool> UserConnected(int userId, string connectionId)
         {
             var firstConnection = false;
             lock (OnlineUsers)
@@ -35,7 +35,7 @@
         /// <param name="userId">The unique identifier of the user.</param>
         /// <param name="connectionId">The unique connection ID for this session.</param>
         /// <returns>True if the user has no remaining connections; otherwise, false.</returns>
-        public Task<bool> UserDisconnected(string userId, string connectionId)
+        public Task<bool> UserDisconnected(int userId, string connectionId)
         {
             bool isOffline = false;
             lock (OnlineUsers)
@@ -59,9 +59,9 @@
         /// Retrieves a list of currently online users by their user IDs.
         /// </summary>
         /// <returns>An array of user IDs for online users, sorted in ascending order.</returns>
-        public Task<string[]> GetOnlineUsers()
+        public Task<int[]> GetOnlineUsers()
         {
-            string[] onlineUsers = [];
+            int[] onlineUsers = [];
             lock (OnlineUsers)
             {
                 onlineUsers = OnlineUsers.OrderBy(u => u.Key).Select(u => u.Key).ToArray();
@@ -73,7 +73,7 @@
         /// Retrieves all connection IDs associated with a specific user.
         /// </summary>
         /// <param name="userId">The unique identifier of the user.</param>
-        public Task<List<string>> GetConnectionForUser(string userId)
+        public Task<List<string>> GetConnectionForUser(int userId)
         {
             List<string> connectionIds;
             lock (OnlineUsers)
