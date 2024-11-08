@@ -34,22 +34,24 @@
     }
 
     .online-indicator {
-        width: 8px;
-        height: 8px;
+        width: 10px;
+        height: 10px;
         border-radius: 50%;
         background-color: #31a24c;
-        margin-right: 10px;
+        position: absolute;
+        bottom: 5px;
+        right: 0px;
     }
 
     .user-avatar {
-        width: 32px;
-        height: 32px;
-        border-radius: 50%;
         margin-right: 10px;
-        background-color: #e9ecef;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        position: relative;
+    }
+
+    .user-avatar img{
+        object-fit: cover;
+        width: 42px;
+        height: 42px;
     }
 </style>
 
@@ -70,15 +72,18 @@
         const usersList = document.getElementById('onlineUsersList');
         usersList.innerHTML = '';
 
-        onlineUsers.forEach(userId => {
+        onlineUsers.forEach(user => {
+            console.log(user);
             const listItem = document.createElement('li');
             listItem.className = 'list-group-item online-user-item';
-            listItem.id = `user-${userId}`;
+            listItem.id = `user-${user.id}`;
 
             listItem.innerHTML = `
-                    <span class="online-indicator"></span>
-                    <div class="user-avatar">${userId}${userId}</div>
-                    <span>${userId} ${userId}</span>
+                    <div class="user-avatar">
+                        <span class="online-indicator"></span>
+                        <img src="${user.profilePictureUrl}" class="rounded-circle" alt="${user.firstName}'s profile picture" onerror="this.onerror=null; this.src='/images/default-profile.jpg';">
+                    </div>
+                    <span>${user.firstName} ${user.lastName}</span>
                 `;
 
             usersList.appendChild(listItem);
@@ -92,8 +97,8 @@
     });
 
     // Handle new user coming online
-    connection.on("UserIsOnline", (userId) => {
-        onlineUsers.add(userId);
+    connection.on("UserIsOnline", (user) => {
+        onlineUsers.add(user);
         updateOnlineUsersList();
     });
 

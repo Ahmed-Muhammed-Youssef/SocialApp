@@ -16,5 +16,7 @@ namespace Application.Interfaces.Repositories
         public Task<UserDTO> GetDtoByIdAsync(int id);
         public void Delete(ApplicationUser user);
         public Task<bool> IdExistsAsync(int id);
+        public Task<List<SimplifiedUserDTO>> GetListAsync(int[] ids);
+        public Task<SimplifiedUserDTO> GetSimplifiedDTOAsync(int id);
     }
 }
