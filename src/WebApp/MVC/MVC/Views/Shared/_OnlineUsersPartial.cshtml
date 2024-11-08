@@ -1,114 +1,73 @@
-﻿@*
-*@
-@{
-}
-
-
-<div class="online-users-container">
-    <div class="card">
-        <div class="card-header">
-            <h5 class="mb-0">Online Users</h5>
-        </div>
-        <div class="card-body p-0">
-            <ul id="onlineUsersList" class="list-group list-group-flush">
-                <!-- Users will be populated here -->
-            </ul>
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@if (SignInManager.IsSignedIn(User))
+{
+    <div class="online-users-container">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">Online Users</h5>
+            </div>
+            <div class="card-body p-0">
+                <ul id="onlineUsersList" class="list-group list-group-flush">
+                    <!-- Users will be populated here -->
+                </ul>
+            </div>
         </div>
     </div>
-</div>
 
+    <script>
+        // Create SignalR connection
+        const connection = new signalR.HubConnectionBuilder()
+            .withUrl("/hubs/presence", { withCredentials: true })
+            .withAutomaticReconnect()
+            .build();
 
-<style>
-    .online-users-container {
-        position: fixed;
-        right: 20px;
-        bottom: 20px;
-        width: 250px;
-        z-index: 1000;
-    }
+        // Store online users
+        let onlineUsers = new Set();
 
-    .online-user-item {
-        display: flex;
-        align-items: center;
-        padding: 8px 15px;
-    }
+        // Function to update UI
+        function updateOnlineUsersList() {
+            const usersList = document.getElementById('onlineUsersList');
+            usersList.innerHTML = '';
 
-    .online-indicator {
-        width: 10px;
-        height: 10px;
-        border-radius: 50%;
-        background-color: #31a24c;
-        position: absolute;
-        bottom: 5px;
-        right: 0px;
-    }
+            onlineUsers.forEach(user => {
+                console.log(user);
+                const listItem = document.createElement('li');
+                listItem.className = 'list-group-item online-user-item';
+                listItem.id = `user-${user.id}`;
 
-    .user-avatar {
-        margin-right: 10px;
-        position: relative;
-    }
+                listItem.innerHTML = `
+                        <div class="user-avatar">
+                            <span class="online-indicator"></span>
+                            <img src="${user.profilePictureUrl}" class="rounded-circle" alt="${user.firstName}'s profile picture" onerror="this.onerror=null; this.src='/images/default-profile.jpg';">
+                        </div>
+                        <span>${user.firstName} ${user.lastName}</span>
+                    `;
 
-    .user-avatar img{
-        object-fit: cover;
-        width: 42px;
-        height: 42px;
-    }
-</style>
+                usersList.appendChild(listItem);
+            });
+        }
 
-<!-- Add this near the end of your body tag -->
-
-<script>
-    // Create SignalR connection
-    const connection = new signalR.HubConnectionBuilder()
-        .withUrl("/hubs/presence", { withCredentials: true })
-        .withAutomaticReconnect()
-        .build();
-
-    // Store online users
-    let onlineUsers = new Set();
-
-    // Function to update UI
-    function updateOnlineUsersList() {
-        const usersList = document.getElementById('onlineUsersList');
-        usersList.innerHTML = '';
-
-        onlineUsers.forEach(user => {
-            console.log(user);
-            const listItem = document.createElement('li');
-            listItem.className = 'list-group-item online-user-item';
-            listItem.id = `user-${user.id}`;
-
-            listItem.innerHTML = `
-                    <div class="user-avatar">
-                        <span class="online-indicator"></span>
-                        <img src="${user.profilePictureUrl}" class="rounded-circle" alt="${user.firstName}'s profile picture" onerror="this.onerror=null; this.src='/images/default-profile.jpg';">
-                    </div>
-                    <span>${user.firstName} ${user.lastName}</span>
-                `;
-
-            usersList.appendChild(listItem);
+        // Handle initial users list
+        connection.on("GetOnlineUsers", (users) => {
+            onlineUsers = new Set(users);
+            updateOnlineUsersList();
         });
-    }
 
-    // Handle initial users list
-    connection.on("GetOnlineUsers", (users) => {
-        onlineUsers = new Set(users);
-        updateOnlineUsersList();
-    });
+        // Handle new user coming online
+        connection.on("UserIsOnline", (user) => {
+            onlineUsers.add(user);
+            updateOnlineUsersList();
+        });
 
-    // Handle new user coming online
-    connection.on("UserIsOnline", (user) => {
-        onlineUsers.add(user);
-        updateOnlineUsersList();
-    });
+        // Handle user going offline
+        connection.on("UserIsOffline", (userId) => {
+            onlineUsers.delete(userId);
+            updateOnlineUsersList();
+        });
 
-    // Handle user going offline
-    connection.on("UserIsOffline", (userId) => {
-        onlineUsers.delete(userId);
-        updateOnlineUsersList();
-    });
-
-    // Start the connection
-    connection.start()
-        .catch(err => console.error(err));
-</script>
+        // Start the connection
+        connection.start()
+            .catch(err => console.error(err));
+    </script>
+}
