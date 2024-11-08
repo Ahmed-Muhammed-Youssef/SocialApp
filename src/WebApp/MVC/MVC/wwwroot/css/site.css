@@ -20,3 +20,38 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.online-users-container {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    width: 250px;
+    z-index: 1000;
+}
+
+.online-user-item {
+    display: flex;
+    align-items: center;
+    padding: 8px 15px;
+}
+
+.online-indicator {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #31a24c;
+    position: absolute;
+    bottom: 5px;
+    right: 0px;
+}
+
+.user-avatar {
+    margin-right: 10px;
+    position: relative;
+}
+
+    .user-avatar img {
+        object-fit: cover;
+        width: 42px;
+        height: 42px;
+    }
