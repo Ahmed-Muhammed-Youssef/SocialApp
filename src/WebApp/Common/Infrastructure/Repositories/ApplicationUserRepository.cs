@@ -77,5 +77,15 @@ namespace Infrastructure.Repositories
             using IDbConnection db = new SqlConnection(connectionString);
             return (await db.QueryAsync<UserDTO>("GetUserDtoById", new { Id = id }, commandType: CommandType.StoredProcedure)).FirstOrDefault();
         }
+
+        public async Task<List<SimplifiedUserDTO>> GetListAsync(int[] ids)
+        {
+            return await _dataContext.ApplicationUsers.Where(u => ids.Contains(u.Id)).Select(u => new SimplifiedUserDTO() { Id = u.Id, FirstName = u.FirstName, LastName = u.LastName, ProfilePictureUrl = u.ProfilePictureUrl} ).ToListAsync();
+        }
+
+        public async Task<SimplifiedUserDTO> GetSimplifiedDTOAsync(int id)
+        {
+            return await _dataContext.ApplicationUsers.Select(u => new SimplifiedUserDTO() { Id = u.Id, FirstName = u.FirstName, LastName = u.LastName, ProfilePictureUrl = u.ProfilePictureUrl }).FirstOrDefaultAsync(u => u.Id == id);
+        }
     }
 }

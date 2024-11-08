@@ -1,4 +1,6 @@
-﻿using Infrastructure.RealTime.Presence;
+﻿using Application.DTOs.User;
+using Application.Interfaces;
+using Infrastructure.RealTime.Presence;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
 using Shared.Extensions;
@@ -6,14 +8,11 @@ using Shared.Extensions;
 namespace MVC.Hubs
 {
     [Authorize]
-    public class PresenceHub : Hub
+    public class PresenceHub(OnlinePresenceManager presenceManager, IUnitOfWork unitOfWork) : Hub
     {
-        private readonly OnlinePresenceManager _presenceManager;
+        private readonly OnlinePresenceManager _presenceManager = presenceManager;
+        private readonly IUnitOfWork _unitOfWork = unitOfWork;
 
-        public PresenceHub(OnlinePresenceManager presenceManager)
-        {
-            _presenceManager = presenceManager;
-        }
         public override async Task OnConnectedAsync()
         {
             int publicId = Context.User.GetPublicId().Value;
@@ -21,10 +20,14 @@ namespace MVC.Hubs
             var isFirstConnection = await _presenceManager.UserConnected(publicId, Context.ConnectionId);
             if (isFirstConnection)
             {
-                await Clients.Others.SendAsync("UserIsOnline", publicId.ToString());
+                SimplifiedUserDTO connectedUser = await _unitOfWork.ApplicationUserRepository.GetSimplifiedDTOAsync(publicId);
+                await Clients.Others.SendAsync("UserIsOnline", connectedUser);
             }
-            var currentUsers = await _presenceManager.GetOnlineUsers();
-            await Clients.Caller.SendAsync("GetOnlineUsers", currentUsers);
+
+            int[] onlineUsersIds = await _presenceManager.GetOnlineUsers();
+
+            List<SimplifiedUserDTO> onlineUsers = await _unitOfWork.ApplicationUserRepository.GetListAsync(onlineUsersIds);
+            await Clients.Caller.SendAsync("GetOnlineUsers", onlineUsers);
         }
 
         public override async Task OnDisconnectedAsync(Exception? exception)
