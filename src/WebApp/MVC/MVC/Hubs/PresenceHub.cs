@@ -26,7 +26,7 @@ namespace MVC.Hubs
 
             int[] onlineUsersIds = await _presenceManager.GetOnlineUsers();
 
-            List<SimplifiedUserDTO> onlineUsers = await _unitOfWork.ApplicationUserRepository.GetListAsync(onlineUsersIds);
+            List<SimplifiedUserDTO> onlineUsers = await _unitOfWork.ApplicationUserRepository.GetListAsync(onlineUsersIds.Where(id => id != publicId).ToArray());
             await Clients.Caller.SendAsync("GetOnlineUsers", onlineUsers);
         }
 
