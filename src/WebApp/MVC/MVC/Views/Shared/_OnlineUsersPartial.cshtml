@@ -23,7 +23,7 @@
             .build();
 
         // Store online users
-        let onlineUsers = new Set();
+        let onlineUsers = [];
 
         // Function to update UI
         function updateOnlineUsersList() {
@@ -31,7 +31,6 @@
             usersList.innerHTML = '';
 
             onlineUsers.forEach(user => {
-                console.log(user);
                 const listItem = document.createElement('li');
                 listItem.className = 'list-group-item online-user-item';
                 listItem.id = `user-${user.id}`;
@@ -50,19 +49,19 @@
 
         // Handle initial users list
         connection.on("GetOnlineUsers", (users) => {
-            onlineUsers = new Set(users);
+            onlineUsers = users;
             updateOnlineUsersList();
         });
 
         // Handle new user coming online
         connection.on("UserIsOnline", (user) => {
-            onlineUsers.add(user);
+            onlineUsers.push(user);
             updateOnlineUsersList();
         });
 
         // Handle user going offline
         connection.on("UserIsOffline", (userId) => {
-            onlineUsers.delete(userId);
+            onlineUsers = onlineUsers.filter(u => u.id !== userId);
             updateOnlineUsersList();
         });
 
