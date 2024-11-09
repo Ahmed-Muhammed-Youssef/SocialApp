@@ -1,4 +1,5 @@
 ﻿using Application.DTOs.Message;
+using Application.DTOs.User;
 using Domain.Entities;
 
 namespace Application.Interfaces.Repositories
@@ -14,5 +15,6 @@ namespace Application.Interfaces.Repositories
         void DeleteMessage(Message message, int issuerId);
         Task<Message> GetMessageAsync(int messageId);
         Task<IEnumerable<MessageDTO>> GetMessagesDTOThreadAsync(int senderId, int recipientId);
+        Task<List<SimplifiedUserDTO>> GetInboxAsync(int userId);
     }
 }

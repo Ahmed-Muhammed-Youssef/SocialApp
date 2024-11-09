@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Infrastructure.Data;
 using Application.Interfaces.Repositories;
 using Application.DTOs.Message;
+using Application.DTOs.User;
 
 namespace Infrastructure.Repositories
 {
@@ -98,6 +99,24 @@ namespace Infrastructure.Repositories
             .Include(g => g.Connections)
             .Where(g => g.Connections.Any(c => c.ConnectionId == connectionId))
             .FirstOrDefaultAsync();
+        }
+
+        public async Task<List<SimplifiedUserDTO>> GetInboxAsync(int userId)
+        {
+            var inboxUsers = await _dataContext.Messages
+                .Where(m => m.SenderId == userId || m.RecipientId == userId)
+                .GroupBy(m => m.SenderId == userId ? m.RecipientId : m.SenderId) 
+                .Select(g => new SimplifiedUserDTO
+                {
+                    Id = g.Key, 
+                    ProfilePictureUrl = _dataContext.ApplicationUsers
+                                                .Where(u => u.Id == g.Key) 
+                                                .Select(u => u.ProfilePictureUrl) 
+                                                .FirstOrDefault() 
+                })
+                .ToListAsync();
+
+            return inboxUsers;
         }
     }
 }
