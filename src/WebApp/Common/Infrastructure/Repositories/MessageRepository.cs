@@ -109,6 +109,14 @@ namespace Infrastructure.Repositories
                 .Select(g => new SimplifiedUserDTO
                 {
                     Id = g.Key, 
+                    FirstName = _dataContext.ApplicationUsers
+                                                .Where(u => u.Id == g.Key)
+                                                .Select(u => u.FirstName)
+                                                .FirstOrDefault(),
+                    LastName = _dataContext.ApplicationUsers
+                                                .Where(u => u.Id == g.Key)
+                                                .Select(u => u.LastName)
+                                                .FirstOrDefault(),
                     ProfilePictureUrl = _dataContext.ApplicationUsers
                                                 .Where(u => u.Id == g.Key) 
                                                 .Select(u => u.ProfilePictureUrl) 

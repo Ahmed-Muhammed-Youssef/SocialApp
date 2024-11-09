@@ -1,0 +1,10 @@
+﻿@model Application.DTOs.User.SimplifiedUserDTO
+
+<div id="@Model.Id" class="inbox-user-card d-flex align-items-center p-2 border-bottom">
+    <img src="@Model.ProfilePictureUrl" alt="User Picture" class="user-card__picture rounded-circle me-3" onerror="this.onerror=null; this.src='/images/default-profile.jpg';" />
+    <div class="flex-grow-1">
+        <div class="d-flex justify-content-between">
+            <p class="mb-0 fw-bold">@Model.FirstName @Model.LastName</p>
+        </div>
+    </div>
+</div>
