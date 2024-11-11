@@ -16,16 +16,6 @@
     </div>
 
     <script>
-        // Create SignalR connection
-        const connection = new signalR.HubConnectionBuilder()
-            .withUrl("/hubs/presence", { withCredentials: true })
-            .withAutomaticReconnect()
-            .build();
-
-        // Store online users
-        let onlineUsers = [];
-
-        // Function to update UI
         function updateOnlineUsersList() {
             const usersList = document.getElementById('onlineUsersList');
             usersList.innerHTML = '';
@@ -36,37 +26,22 @@
                 listItem.id = `user-${user.id}`;
 
                 listItem.innerHTML = `
-                        <div class="user-avatar">
-                            <span class="online-indicator"></span>
-                            <img src="${user.profilePictureUrl}" class="rounded-circle" alt="${user.firstName}'s profile picture" onerror="this.onerror=null; this.src='/images/default-profile.jpg';">
-                        </div>
-                        <span>${user.firstName} ${user.lastName}</span>
-                    `;
+                                            <div class="user-avatar">
+                                                <span class="online-indicator"></span>
+                                                <img src="${user.profilePictureUrl}" class="rounded-circle" alt="${user.firstName}'s profile picture" onerror="this.onerror=null; this.src='/images/default-profile.jpg';">
+                                            </div>
+                                            <span>${user.firstName} ${user.lastName}</span>
+                                        `;
 
                 usersList.appendChild(listItem);
             });
         }
+        document.addEventListener("GetOnlineUsers", (event) => { updateOnlineUsersList(); });
+        document.addEventListener("UserIsOnline", (event) => { updateOnlineUsersList(); });
+        document.addEventListener("UserIsOffline", (event) => { updateOnlineUsersList(); });
 
-        // Handle initial users list
-        connection.on("GetOnlineUsers", (users) => {
-            onlineUsers = users;
-            updateOnlineUsersList();
-        });
+        // initialize the list
+        updateOnlineUsersList();
 
-        // Handle new user coming online
-        connection.on("UserIsOnline", (user) => {
-            onlineUsers.push(user);
-            updateOnlineUsersList();
-        });
-
-        // Handle user going offline
-        connection.on("UserIsOffline", (userId) => {
-            onlineUsers = onlineUsers.filter(u => u.id !== userId);
-            updateOnlineUsersList();
-        });
-
-        // Start the connection
-        connection.start()
-            .catch(err => console.error(err));
     </script>
 }
