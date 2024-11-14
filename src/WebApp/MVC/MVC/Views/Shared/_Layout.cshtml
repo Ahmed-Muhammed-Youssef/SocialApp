@@ -9,46 +9,16 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/lib/bootstrap-icons/font/bootstrap-icons.min.css" asp-append-version="true" />
     <script src="~/lib/microsoft/signalr/dist/browser/signalr.js"></script>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/MVC.styles.css" asp-append-version="true" />
+    <script src="~/js/site.js" asp-append-version="true"></script>
     @if (SignInManager.IsSignedIn(User))
     {
         <script>
-            // Store online users
             const onlineUsers = [];
-
-            // Create SignalR connection
-            const connection = new signalR.HubConnectionBuilder()
-                .withUrl("/hubs/presence", { withCredentials: true })
-                .withAutomaticReconnect()
-                .build();
-
-            // Handle initial users list
-            connection.on("GetOnlineUsers", (users) => {
-                onlineUsers.push(...users);
-                document.dispatchEvent(new CustomEvent("GetOnlineUsers"));
-            });
-
-            // Handle new user coming online
-            connection.on("UserIsOnline", (user) => {
-                onlineUsers.push(user);
-                document.dispatchEvent(new CustomEvent("UserIsOnline"));
-            });
-
-            // Handle user going offline
-            connection.on("UserIsOffline", (userId) => {
-                const index = onlineUsers.findIndex(u => u.id === userId);
-                if (index !== -1) {
-                    onlineUsers.splice(index, 1);
-                }
-                document.dispatchEvent(new CustomEvent("UserIsOffline"));
-            });
-
-            // Start the connection
-            connection.start()
-                .catch(err => console.error(err));
+            document.addEventListener("DOMContentLoaded", startSignalR);
         </script>
     }
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/MVC.styles.css" asp-append-version="true" />
 </head>
 <body>
     <header>
@@ -84,7 +54,7 @@
     }
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
+   
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
