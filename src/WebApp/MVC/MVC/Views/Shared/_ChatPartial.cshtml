@@ -1,0 +1,52 @@
+﻿@model Application.DTOs.Message.ChatDTO
+
+<div class="chat-header d-flex align-items-center">
+    <img src ="@Model.ProfilePictureUrl" alt="User Picture" class="user-card__picture rounded-circle mx-3" onerror="this.onerror=null; this.src='/images/default-profile.jpg';" />
+    <div class="flex-grow-1">
+        <div class="d-flex justify-content-between text-light">
+            <p class="mb-0 fw-bold">@Model.FirstName @Model.LastName</p>
+        </div>
+    </div>
+</div>
+<div>
+    @foreach (var message in Model.MessagesThread)
+    {
+        <div class="w-100 my-2 @(message.SenderId == Model.Id ? "theirMessage": "myMessage")">
+            <div class="chatMessage ">@message.Content</div>
+        </div>
+    }
+</div>
+
+<style>
+    .chat-header {
+        width: 100%;
+        min-height: 65px;
+        border-radius: 25px;
+        background-color: var(--primary-color);
+    }
+
+    .chatMessage{
+        display: inline-block;
+        border-radius: 20px;
+        padding: 10px;
+        word-break: break-all;
+        width: fit-content;
+    }
+    
+    .myMessage{
+        text-align: right;
+    }
+
+        .myMessage .chatMessage {
+            background-color: var(--secondary-color);
+            text-align: left;
+        }
+
+    .theirMessage{
+    }
+
+        .theirMessage .chatMessage {
+            background-color: lightgrey;
+        }
+</style>
+
