@@ -41,7 +41,7 @@
         document.addEventListener("UserIsOffline", (event) => { updateOnlineUsersList(); });
 
         // initialize the list
-        updateOnlineUsersList();
+        document.addEventListener("DOMContentLoaded", updateOnlineUsersList());
 
     </script>
 }
