@@ -4,11 +4,6 @@
   "libraries": [
     {
       "provider": "cdnjs",
-      "library": "bootstrap@5.1.0",
-      "destination": "wwwroot/lib/bootstrap/"
-    },
-    {
-      "provider": "cdnjs",
       "library": "jquery@3.6.0",
       "destination": "wwwroot/lib/jquery/"
     },
@@ -29,6 +24,15 @@
       "files": [
         "dist/browser/signalr.js",
         "dist/browser/signalr.min.js"
+      ]
+    },
+    {
+      "provider": "cdnjs",
+      "library": "bootstrap@5.1.0",
+      "destination": "wwwroot/lib/bootstrap/",
+      "files": [
+        "js/bootstrap.min.js",
+        "css/bootstrap.min.css"
       ]
     }
   ]
