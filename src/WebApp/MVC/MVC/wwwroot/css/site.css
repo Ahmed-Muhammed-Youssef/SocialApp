@@ -5,6 +5,25 @@
     --hover-color: #5435A0;
 }
 
+/* Override Bootstrap's primary color */
+.btn-primary,
+.text-primary,
+.bg-primary {
+    color: #fff;
+    background-color: var(--primary-color) !important;
+    border-color: var(--primary-color) !important;
+}
+
+    .btn-primary:hover,
+    .bg-primary:hover {
+        background-color: var(--hover-color) !important; /* Slightly darker shade for hover state */
+        border-color: var(--hover-color) !important;
+    }
+.form-check-input:checked {
+    background-color: var(--primary-color) !important;
+    border-color: var(--primary-color) !important;
+}
+
 html {
   font-size: 14px;
 }
