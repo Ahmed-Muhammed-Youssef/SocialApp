@@ -11,10 +11,18 @@
 
         public async Task InvokeAsync(HttpContext context)
         {
-            if (context.User.Identity!.IsAuthenticated && (context.Request.Path == "/" || context.Request.Path == "/home"))
+            if((context.Request.Path == "/" || context.Request.Path == "/home"))
             {
-                context.Response.Redirect("/Newsfeed/Index");
-                return;
+                if (context.User.Identity!.IsAuthenticated)
+                {
+                    context.Response.Redirect("/Newsfeed/Index");
+                    return;
+                }
+                else
+                {
+                    context.Response.Redirect("/Identity/Account/Login");
+                    return;
+                }
             }
 
             await _next(context);
