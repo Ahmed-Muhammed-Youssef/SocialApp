@@ -24,12 +24,6 @@
             success: function (data) {
                 $('#chatPanel').html('');
                 $('#chatPanel').html(data);
-                let panel = document.getElementById('chatPanel');
-                panel.scrollBy({
-                    top: panel.scrollHeight,
-                    left: 0,
-                    behavior: "smooth",
-                });
             },
             error: function () {
                 alert("Failed to load popup content.");
@@ -40,7 +34,6 @@
 <style>
     #chatPanel{
         height: 85vh;
-        overflow-y: auto;
     }
 </style>
 
