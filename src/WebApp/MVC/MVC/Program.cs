@@ -89,7 +89,10 @@ namespace MVC
             app.UseMiddleware<RedirectAuthenticatedMiddleware>();
 
             app.MapRazorPages();
+
             app.MapHub<PresenceHub>("hubs/presence");
+            app.MapHub<MessageHub>("hubs/message");
+
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");

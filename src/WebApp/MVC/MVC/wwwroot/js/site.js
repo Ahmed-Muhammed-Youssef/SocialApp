@@ -1,26 +1,33 @@
-﻿
+﻿let presenceConnection;
+let chatConnection;
 
 function startSignalR() {
+
     // Create SignalR connection
-    const connection = new signalR.HubConnectionBuilder()
+    presenceConnection = new signalR.HubConnectionBuilder()
         .withUrl("/hubs/presence", { withCredentials: true })
         .withAutomaticReconnect()
         .build();
 
+    chatConnection = new signalR.HubConnectionBuilder()
+        .withUrl("/hubs/message", { withCredentials: true })
+        .withAutomaticReconnect()
+        .build();
+
     // Handle initial users list
-    connection.on("GetOnlineUsers", (users) => {
+    presenceConnection.on("GetOnlineUsers", (users) => {
         onlineUsers.push(...users);
         document.dispatchEvent(new CustomEvent("GetOnlineUsers"));
     });
 
     // Handle new user coming online
-    connection.on("UserIsOnline", (user) => {
+    presenceConnection.on("UserIsOnline", (user) => {
         onlineUsers.push(user);
         document.dispatchEvent(new CustomEvent("UserIsOnline"));
     });
 
     // Handle user going offline
-    connection.on("UserIsOffline", (userId) => {
+    presenceConnection.on("UserIsOffline", (userId) => {
         const index = onlineUsers.findIndex(u => u.id === userId);
         if (index !== -1) {
             onlineUsers.splice(index, 1);
@@ -28,7 +35,19 @@ function startSignalR() {
         document.dispatchEvent(new CustomEvent("UserIsOffline"));
     });
 
+    // Handle new messages
+    chatConnection.on("NewMessage", (message) => {
+        document.dispatchEvent(new CustomEvent("NewMessage", { detail: message }));
+    });
+
     // Start the connection
-    connection.start()
+    presenceConnection.start()
         .catch(err => console.error(err));
+
+    chatConnection.start()
+        .catch(err => console.error(err));
+}
+
+function sendMessage(newMessage) {
+    return chatConnection.invoke("SendMessages", newMessage);
 }

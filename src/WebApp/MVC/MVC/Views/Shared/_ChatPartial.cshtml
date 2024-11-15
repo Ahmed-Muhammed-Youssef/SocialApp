@@ -8,7 +8,7 @@
         </div>
     </div>
 </div>
-<div>
+<div id="threadContainer">
     @foreach (var message in Model.MessagesThread)
     {
         <div class="w-100 my-2 @(message.SenderId == Model.Id ? "theirMessage": "myMessage")">
@@ -16,8 +16,24 @@
         </div>
     }
 </div>
-
+<div class="d-flex w-100">
+    <input id="messageInput" class="form-control" type="text" placeholder="Write your message..." />
+    <button class="sendButton" onclick="sendMessageAndClearInput()"><i class="bi bi-send text-light"></i></button>
+</div>
 <style>
+    #threadContainer{
+        height: 85%;
+        overflow-y: auto;
+    }
+
+    .sendButton{
+        background-color: var(--primary-color);
+        width: 60px;
+        height: 40px;
+        border: none;
+        margin-left: 6px;
+        border-radius: 8px;
+    }
     .chat-header {
         width: 100%;
         min-height: 65px;
@@ -49,4 +65,69 @@
             background-color: lightgrey;
         }
 </style>
+
+<script>
+    function sendMessageAndClearInput() {
+        let messageInput = document.getElementById('messageInput');
+        let newMessage = { recipientId: @Model.Id, content: messageInput.value }
+        sendMessage(newMessage)
+        .then(() => {
+            addMyMessage(newMessage.content);
+            scrollThreadToEndSmoothly();
+            messageInput.value = '';
+        })
+        .catch(err => {
+            console.error("Error sending message:", err);
+        });;
+    }
+
+    function addMyMessage(message){
+        let messageContainer = document.createElement('div');
+        messageContainer.className = "w-100 my-2 myMessage"
+        messageContainer.innerHTML = `<div class="chatMessage">${message}</div>`;
+
+        document.getElementById("threadContainer").appendChild(messageContainer);
+    }
+
+    function receiveMessage(newMessage) {
+        if (newMessage.senderId === @Model.Id) {
+
+            let newMessageContainer = document.createElement("div");
+            newMessageContainer.className = 'w-100 my-2 theirMessage';
+            newMessageContainer.innerHTML = `<div class="chatMessage">${newMessage.content}</div>`;
+            
+            document.getElementById('threadContainer').appendChild(newMessageContainer);
+
+            scrollThreadToEndSmoothly()
+        }
+    }
+
+    function scrollThreadToEndSmoothly() { 
+        let threadContainer = document.getElementById('threadContainer');
+        threadContainer.scrollBy({
+            top: threadContainer.scrollHeight,
+            left: 0,
+            behavior: "smooth"
+        });
+    }
+
+    function scrollThreadToEndInstant() {
+        let threadContainer = document.getElementById('threadContainer');
+        threadContainer.scrollBy({
+            top: threadContainer.scrollHeight,
+            left: 0,
+            behavior: "instant"
+        });
+    }
+
+    document.addEventListener("NewMessage", (event) => { receiveMessage(event.detail); });
+
+    $("#messageInput").on('keyup', function (e) {
+        if (e.key === 'Enter' || e.keyCode === 13) {
+            sendMessageAndClearInput();
+        }
+    });
+
+    scrollThreadToEndInstant();
+</script>
 
