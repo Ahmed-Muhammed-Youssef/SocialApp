@@ -34,7 +34,15 @@ namespace MVC.Controllers
             if(publicId is not null)
             {
                 var posts = await unitOfWork.PostRepository.GetNewsfeed(publicId.Value, new Application.DTOs.Pagination.PaginationParams() { ItemsPerPage = 20, PageNumber = pageNumber });
-                return PartialView("_PostsListPartial", posts.Items);
+
+                if (posts.Count > 0) 
+                { 
+                    return PartialView("_PostsListPartial", posts.Items);
+                }
+
+                Response.Headers.Append("x-no-posts", "true");
+
+                return PartialView("_NoPostsPartial");
             }
 
             return BadRequest("Error accessing user ID");
