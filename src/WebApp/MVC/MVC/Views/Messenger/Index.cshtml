@@ -1,20 +1,35 @@
 ﻿@using Application.DTOs.User
 @model List<SimplifiedUserDTO>
 
-<div class="d-flex">
-    <div class="inbox-user-list p-3 col-4">
-        @foreach (var user in Model)
-        {
-            <div onclick="loadChat(@user.Id)">
-                @{
-                    await Html.RenderPartialAsync("_InboxUserCardPartial", user);
-                }
-            </div>
-        }
+@if(Model.Count > 0)
+{
+    <div class="d-flex">
+        <div class="inbox-user-list p-3 col-4">
+            @foreach (var user in Model)
+            {
+                <div onclick="loadChat(@user.Id)">
+                    @{
+                        await Html.RenderPartialAsync("_InboxUserCardPartial", user);
+                    }
+                </div>
+            }
+        </div>
+        <div class="p-3 col-8" id="chatPanel">
+        </div>
     </div>
-    <div class="p-3 col-8" id="chatPanel">
+}
+else
+{
+    <div styel="width: 100%; text-align: center; padding: 20px; color: var(--primary-color);">
+        <div class="mb-3 text-center">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" style="width: 64px; height: 64px;">
+                <rect x="10" y="20" width="44" height="28" fill="var(--secondary-color)" rx="4" />
+                <path d="M10 20l22 14L54 20" fill="none" stroke="var(--primary-color)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+        </div>
+        <p style="font-size: 1.2em; color: var(--primary-color); font-weight: 600; text-align: center;">Oops! Your inbox is empty.</p>
     </div>
-</div>
+}
 
 <script>
     function loadChat (userId){
