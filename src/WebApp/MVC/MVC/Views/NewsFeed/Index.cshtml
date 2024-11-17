@@ -3,40 +3,60 @@
 @{
     ViewData["Title"] = "Newsfeed";
 } 
-<div id="postsContainer">
-    @foreach(var post in Model.Items)
-    {
-        await Html.RenderPartialAsync("_PostPartial", post);
-    }
-</div>
 
-<div id="loadingSpinner" class="text-center">
-    <div class="spinner-border" style="width: 4rem; height: 4rem;" role="status">
-        <span class="sr-only"></span>
+@if(Model.Items.Count > 0)
+{
+    <div id="postsContainer">
+        @foreach(var post in Model.Items)
+        {
+            await Html.RenderPartialAsync("_PostPartial", post);
+        }
     </div>
-</div>
+    <div id="loadingSpinner" class="text-center">
+        <div class="spinner-border" style="width: 4rem; height: 4rem;" role="status">
+            <span class="sr-only"></span>
+        </div>
+    </div>
+}
+else
+{
+    await Html.RenderPartialAsync("_NoPostsPartial");
+}
+
 <script>
     let pageNumber = 2;
     let isLoading = false;
+    let hasMorePosts = true;
 
     window.addEventListener("scroll", async () => {
-        if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 500 && !isLoading) {
+        if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 500 && !isLoading && hasMorePosts) {
             isLoading = true;
 
             document.getElementById("loadingSpinner").style.display = "block";
 
-            try {
-                const response = await fetch(`/Newsfeed/LoadPosts?pageNumber=${pageNumber}`);
-                const newPostsHtml = await response.text();
-
-                document.getElementById("postsContainer").insertAdjacentHTML("beforeend", newPostsHtml);
-                pageNumber += 1;
-            } catch (error) {
-                console.error("Failed to load posts", error);
-            } finally {
+            fetch(`/Newsfeed/LoadPosts?pageNumber=${pageNumber}`)
+            .then(response => {
+                console.log(response);
+                if (response.headers.get("x-no-posts") === "true") {
+                    hasMorePosts = false;
+                }
+                else {
+                    pageNumber += 1;
+                }
+                return response.text();
+            })
+            .then(html => {
+                if (html) {
+                    console.log(html);
+                    document.getElementById("postsContainer").insertAdjacentHTML("beforeend", html);
+                    container.insertAdjacentHTML('beforeend', html);
+                }
+            })
+            .catch(error => console.error('Error loading posts:', error))
+            .finally(() => {
                 document.getElementById("loadingSpinner").style.display = "none";
                 isLoading = false;
-            }
+            });;
         }
     });
 </script>
