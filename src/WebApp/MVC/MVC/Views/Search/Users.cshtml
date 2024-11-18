@@ -1,0 +1,13 @@
+﻿@model Application.DTOs.Pagination.PagedList<Application.DTOs.User.SimplifiedUserDTO>
+
+@foreach (var user in Model.Items)
+{
+    <div class="d-flex align-items-center">
+        <img src="@user.ProfilePictureUrl" alt="User Picture" class="user-card__picture rounded-circle mx-3" onerror="this.onerror=null; this.src='/images/default-profile.jpg';" />
+        <div class="flex-grow-1">
+            <div class="d-flex justify-content-between">
+                <p class="mb-0 fw-bold">@user.FirstName @user.LastName</p>
+            </div>
+        </div>
+    </div>
+}

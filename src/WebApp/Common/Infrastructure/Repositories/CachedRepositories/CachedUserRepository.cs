@@ -56,6 +56,7 @@ namespace Infrastructure.Repositories.CachedRepositories
         
 
         public Task<SimplifiedUserDTO> GetSimplifiedDTOAsync(int id) => _usersRepository.GetSimplifiedDTOAsync(id);
-        
+
+        public Task<PagedList<SimplifiedUserDTO>> SearchAsync(int userId, string search, UserParams userParams) => _usersRepository.SearchAsync(userId, search, userParams);
     }
 }

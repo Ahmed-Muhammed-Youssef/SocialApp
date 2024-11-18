@@ -87,5 +87,20 @@ namespace Infrastructure.Repositories
         {
             return await _dataContext.ApplicationUsers.Select(u => new SimplifiedUserDTO() { Id = u.Id, FirstName = u.FirstName, LastName = u.LastName, ProfilePictureUrl = u.ProfilePictureUrl }).FirstOrDefaultAsync(u => u.Id == id);
         }
+
+        public async Task<PagedList<SimplifiedUserDTO>> SearchAsync(int userId, string search, UserParams userParams)
+        {
+            var query = _dataContext.ApplicationUsers.Where(u => (u.FirstName.ToLower() + " " + u.LastName.ToLower()).Contains(search))
+                .Select(u => new SimplifiedUserDTO()
+                {
+                    Id = u.Id,
+                    FirstName = u.FirstName,
+                    LastName = u.LastName,
+                    ProfilePictureUrl = u.ProfilePictureUrl
+                });
+            var count = await query.CountAsync();
+            var users = await query.Skip(userParams.SkipValue).Take(userParams.ItemsPerPage).ToListAsync();
+            return new PagedList<SimplifiedUserDTO>(users, count, userParams.PageNumber, userParams.ItemsPerPage);
+        }
     }
 }

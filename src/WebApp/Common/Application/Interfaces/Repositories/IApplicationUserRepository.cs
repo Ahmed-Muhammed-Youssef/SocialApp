@@ -18,5 +18,7 @@ namespace Application.Interfaces.Repositories
         public Task<bool> IdExistsAsync(int id);
         public Task<List<SimplifiedUserDTO>> GetListAsync(int[] ids);
         public Task<SimplifiedUserDTO> GetSimplifiedDTOAsync(int id);
+
+        public Task<PagedList<SimplifiedUserDTO>> SearchAsync(int userId, string search, UserParams userParams);
     }
 }
