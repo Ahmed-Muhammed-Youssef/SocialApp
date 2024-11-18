@@ -3,7 +3,7 @@
 
 @if(Model.Count > 0)
 {
-    <div class="d-flex">
+    <div class="d-flex" style="height: 80vh;">
         <div class="inbox-user-list p-3 col-4">
             @foreach (var user in Model)
             {
@@ -46,9 +46,4 @@ else
         });
     }
 </script>
-<style>
-    #chatPanel{
-        height: 85vh;
-    }
-</style>
 
