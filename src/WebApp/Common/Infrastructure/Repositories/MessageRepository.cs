@@ -103,28 +103,15 @@ namespace Infrastructure.Repositories
 
         public async Task<List<SimplifiedUserDTO>> GetInboxAsync(int userId)
         {
-            var inboxUsers = await _dataContext.Messages
-                .Where(m => m.SenderId == userId || m.RecipientId == userId)
-                .GroupBy(m => m.SenderId == userId ? m.RecipientId : m.SenderId) 
-                .Select(g => new SimplifiedUserDTO
-                {
-                    Id = g.Key, 
-                    FirstName = _dataContext.ApplicationUsers
-                                                .Where(u => u.Id == g.Key)
-                                                .Select(u => u.FirstName)
-                                                .FirstOrDefault(),
-                    LastName = _dataContext.ApplicationUsers
-                                                .Where(u => u.Id == g.Key)
-                                                .Select(u => u.LastName)
-                                                .FirstOrDefault(),
-                    ProfilePictureUrl = _dataContext.ApplicationUsers
-                                                .Where(u => u.Id == g.Key) 
-                                                .Select(u => u.ProfilePictureUrl) 
-                                                .FirstOrDefault() 
-                })
-                .ToListAsync();
+            var friends = await _dataContext.Friends.Where(fr => fr.UserId == userId).Include(f => f.FriendUser).Select(f => new SimplifiedUserDTO
+            {
+                Id = f.FriendId,
+                FirstName = f.FriendUser.FirstName,
+                LastName = f.FriendUser.LastName,
+                ProfilePictureUrl =f.FriendUser.ProfilePictureUrl
+            }).ToListAsync();
 
-            return inboxUsers;
+            return friends;
         }
     }
 }
