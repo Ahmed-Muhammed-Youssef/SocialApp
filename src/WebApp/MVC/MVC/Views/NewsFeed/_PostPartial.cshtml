@@ -1,6 +1,6 @@
 ﻿@model Application.DTOs.Post.PostDTO
 
-<div class="card mb-3 shadow-sm border-0" style="width: 100%; background-color: #f8f9fa;">
+<div class="card mb-3 shadow-sm border-0 w-100" style="background-color: var(--lighter-primary-color);">
     <div class="card-body">
         <div class="d-flex align-items-center mb-3">
             <a asp-controller="Profile" asp-action="Index" asp-route-id="@Model.OwnerId" class="text-decoration-none">
@@ -19,13 +19,13 @@
         </div>
         <p class="card-text mb-2 ps-2">@Model.Content</p>
         <div class="d-flex gap-3 mt-3">
-            <button class="btn btn-sm btn-outline-secondary">
+            <button class="btn btn-sm btn-outline-primary">
                 <i class="bi bi-hand-thumbs-up"></i> Like
             </button>
-            <button class="btn btn-sm btn-outline-secondary">
+            <button class="btn btn-sm btn-outline-primary">
                 <i class="bi bi-chat-dots"></i> Comment
             </button>
-            <button class="btn btn-sm btn-outline-secondary">
+            <button class="btn btn-sm btn-outline-primary">
                 <i class="bi bi-share"></i> Share
             </button>
         </div>
@@ -34,6 +34,6 @@
 
 <style>
     .hover-primary:hover {
-        color: var(--bs-primary) !important;
+        color: var(--primary-color) !important;
     }
 </style>
