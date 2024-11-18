@@ -1,5 +1,6 @@
 :root {
     --primary-color: #6A42C2;
+    --lighter-primary-color: #d3c9f147;
     --secondary-color: #ECE3FF;
     --focus-color: #5C3AB0;
     --hover-color: #5435A0;
@@ -19,6 +20,16 @@
         background-color: var(--hover-color) !important; /* Slightly darker shade for hover state */
         border-color: var(--hover-color) !important;
     }
+
+.btn-outline-primary {
+    color: var(--primary-color) !important;
+    border-color: var(--primary-color) !important;
+}
+    .btn-outline-primary:hover {
+        color: white !important;
+        background-color: var(--primary-color) !important;
+    }
+
 .form-check-input:checked {
     background-color: var(--primary-color) !important;
     border-color: var(--primary-color) !important;
