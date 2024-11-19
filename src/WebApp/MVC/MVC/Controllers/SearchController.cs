@@ -16,15 +16,16 @@ namespace MVC.Controllers
             _unitOfWork = unitOfWork;
         }
         public async Task<IActionResult> UsersAsync(string search, UserParams userParams)
+        public async Task<IActionResult> UsersAsync(string search)
         {
             int? publicId = User.GetPublicId();
             if (publicId is not null)
             {
-                var users = await _unitOfWork.ApplicationUserRepository.SearchAsync(publicId.Value, search, userParams);
+                var users = await _unitOfWork.ApplicationUserRepository.SearchAsync(publicId.Value, search, new UserParams());
                 return View(users);
             }
 
-            return View();
+            return BadRequest();
         }
     }
 }
