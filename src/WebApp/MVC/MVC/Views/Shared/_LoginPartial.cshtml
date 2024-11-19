@@ -23,6 +23,15 @@
                 <button id="logout" type="submit" class="nav-link btn btn-link text-light border-0">Logout</button>
         </form>
     </li>
+
+    <li >
+        <form method="post" action="/Search/Users" style="position: relative;" asp-antiforgery="true">
+            <input id="search-input" type="text" class="search-box" name="search" required />
+            <button type="submit" class="search-button" onclick="search()">
+                <i class="bi bi-search"></i>
+            </button>
+        </form>
+    </li>
 }
 else
 {
@@ -34,3 +43,31 @@ else
     </li>
 }
 </ul>
+
+<style>
+    .search-box{
+        border-radius:10px;
+        height: 40px;
+        width: 350px;
+        border: none;
+        padding-right: 40px;
+        padding-left: 8px;
+    }
+
+    .search-box:focus-visible{
+        outline: none;
+    }
+
+    .search-button {
+        position: absolute;
+        top: 0px;
+        right: 0px;
+        padding: 0 12px 5px 8px;
+        border: none;
+        background-color: transparent;
+    }
+
+    .search-button i {
+        font-size: 1.5rem;
+    }
+</style>
