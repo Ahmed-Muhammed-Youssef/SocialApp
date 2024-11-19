@@ -15,7 +15,9 @@ namespace MVC.Controllers
         {
             _unitOfWork = unitOfWork;
         }
-        public async Task<IActionResult> UsersAsync(string search, UserParams userParams)
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> UsersAsync(string search)
         {
             int? publicId = User.GetPublicId();
