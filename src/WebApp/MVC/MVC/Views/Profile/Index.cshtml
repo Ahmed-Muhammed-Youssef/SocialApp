@@ -1,5 +1,4 @@
-﻿@using Application.DTOs.User
-@model UserDTO
+﻿@model Application.DTOs.User.UserProfileDTO
 @{
     ViewData["Title"] = Model.FirstName;
 }
@@ -83,7 +82,7 @@
             </div>
 
             <!-- Gallery Section -->
-            @if (Model.Pictures is not null && Model.Pictures.Any())
+@*             @if (Model.Pictures is not null && Model.Pictures.Any())
             {
                 <div class="mt-5">
                     <h6 class="text-uppercase text-muted small fw-bold mb-4">
@@ -103,7 +102,7 @@
                         }
                     </div>
                 </div>
-            }
+            } *@
         </div>
     </div>
 </div>
