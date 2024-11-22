@@ -17,9 +17,6 @@ namespace Infrastructure.Repositories
     {
         public async Task<bool> SendFriendRequest(int senderId, int targetId)
         {
-
-            // check if the target id sent him a request already or not if it does, add him to friends
-
             var frFromTarget = await _dataContext.FriendRequests
                 .AsNoTracking()
                 .FirstOrDefaultAsync(fr => fr.RequesterId == targetId && fr.RequestedId == senderId);
@@ -100,8 +97,7 @@ namespace Infrastructure.Repositories
             }
             return users;
         }
-
-        public void DeleteFriendRequest(FriendRequest friendRequest)
+        public void Delete(FriendRequest friendRequest)
         {
             _dataContext.FriendRequests.Entry(friendRequest).State = EntityState.Deleted;
         }
