@@ -1,6 +1,7 @@
 ﻿using Application.DTOs.User;
 using Application.Interfaces;
 using Domain.Constants;
+using Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Shared.Extensions;
 
@@ -70,6 +71,66 @@ namespace MVC.Controllers
             }
 
             return View(profile);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> SendFriendRequest(int id)
+        {
+            // retuns true if the user has become a frined
+            var sender = await _unitOfWork.ApplicationUserRepository.GetByIdAsync(User.GetPublicId().Value);
+            var target = await _unitOfWork.ApplicationUserRepository.GetByIdAsync(id);
+            if (sender == null || target == null)
+            {
+                return NotFound();
+            }
+            if (sender.Id == target.Id)
+            {
+                return BadRequest("You can't send friend requests to yourself.");
+            }
+            if (await _unitOfWork.FriendRequestRepository.GetFriendRequestAsync(sender.Id, target.Id) != null)
+            {
+                return BadRequest("You already sent a frient request to this user.");
+            }
+            if (await _unitOfWork.FriendRequestRepository.IsFriend(sender.Id, target.Id) == true)
+            {
+                return BadRequest("You already are friends.");
+            }
+            bool isFriend = await _unitOfWork.FriendRequestRepository.SendFriendRequest(sender.Id, target.Id);
+            if (await _unitOfWork.SaveChangesAsync())
+            {
+                return Ok(isFriend);
+            }
+            return BadRequest();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UnsendFriendRequest(int id)
+        {
+            // retuns true if the user has become a frined
+            int? senderId = User.GetPublicId();
+
+            var targetId = id;
+
+            if (senderId is null)
+            {
+                return BadRequest();
+            }
+
+            FriendRequest? fr = await _unitOfWork.FriendRequestRepository.GetFriendRequestAsync(senderId.Value, targetId);
+
+            if (fr is null)
+            {
+                return BadRequest("Invalid Operation");
+            }
+           
+            _unitOfWork.FriendRequestRepository.Delete(fr);
+
+            if (await _unitOfWork.SaveChangesAsync())
+            {
+                return NoContent();
+            }
+
+            return BadRequest();
         }
     }
 }

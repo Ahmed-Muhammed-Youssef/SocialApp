@@ -4,30 +4,7 @@
 }
 
 <style>
-    .profile-image {
-        transition: transform 0.3s ease;
-    }
-
-        .profile-image:hover {
-            transform: scale(1.05);
-        }
-
-    .gallery-img {
-        transition: all 0.3s ease;
-        cursor: pointer;
-    }
-
-        .gallery-img:hover {
-            transform: translateY(-5px);
-        }
-
-    .bio-card {
-        background-color: #f8f9fa;
-        border: none;
-        border-radius: 1rem;
-    }
-
-    .status-badge {
+      .status-badge {
         font-size: 0.85rem;
         padding: 0.35rem 0.75rem;
         border-radius: 2rem;
@@ -37,17 +14,36 @@
 <div class="container py-5">
     <div class="row justify-content-center">
         <div class="col-lg-8">
-            <!-- Profile Section -->
-            <div class="bio-card p-4 mb-5">
+            <div class="card p-4 mb-5" style="background-color: var(--lighter-primary-color);">
                 <div class="text-center mb-4">
                     <div class="position-relative d-inline-block mb-3">
                         <img src="@(string.IsNullOrEmpty(Model.ProfilePictureUrl) ? "/images/default-profile.jpg": Model.ProfilePictureUrl)"
-                             class="rounded-circle profile-image"
+                             class="rounded-circle"
                              style="width: 150px; height: 150px; object-fit: cover;"
                              alt="Profile Picture"
                              onerror="this.onerror=null; this.src='/images/default-profile.jpg';">
                     </div>
                     <h2 class="display-6 fw-bold mb-2">@Model.FirstName @Model.LastName</h2>
+                    <div id="sendBtnContainer" class="mb-3">
+                        @if(Model.Relation == Domain.Constants.SocialRelation.NotFriend)
+                        {
+                            <button class="btn btn-primary" onclick="addFriend()">Add Friend</button>
+                        }
+                        else if (Model.Relation == Domain.Constants.SocialRelation.Friend)
+                        {
+                            <button class="btn btn-primary" onclick="removeFriend()">Remove Friend</button>
+                        }
+                        else if (Model.Relation == Domain.Constants.SocialRelation.FrinedRequesSent)
+                        {
+                            <button class="btn btn-primary" onclick="unsendFriendRequest()">Unsend Friend Request</button>
+                        }
+                        else if (Model.Relation == Domain.Constants.SocialRelation.FriendRequestReceived)
+                        {
+                            <button class="btn btn-primary" onclick="acceptFriendRequest()">Accept Friend Request</button>
+                            <button class="btn btn-primary" onclick="rejectFriendRequest()">Reject Friend Request</button>
+                        }
+                    </div>
+
                     <div class="d-flex justify-content-center gap-2 mb-3">
                         <span class="status-badge bg-light text-dark">
                             <i class="bi @(Model.Sex == 'm' ? "bi-gender-male" : "bi-gender-female") me-1"></i>
@@ -80,29 +76,49 @@
                     </div>
                 }
             </div>
-
-            <!-- Gallery Section -->
-@*             @if (Model.Pictures is not null && Model.Pictures.Any())
-            {
-                <div class="mt-5">
-                    <h6 class="text-uppercase text-muted small fw-bold mb-4">
-                        <i class="bi bi-images me-2"></i>Gallery
-                    </h6>
-                    <div class="row g-4">
-                        @foreach (var picture in Model.Pictures)
-                        {
-                            <div class="col-md-4 col-sm-6">
-                                <div class="rounded overflow-hidden shadow-sm gallery-img">
-                                    <img src="@picture.Url"
-                                         class="img-fluid w-100"
-                                         style="aspect-ratio: 1; object-fit: cover;"
-                                         alt="User Photo">
-                                </div>
-                            </div>
-                        }
-                    </div>
-                </div>
-            } *@
         </div>
     </div>
 </div>
+
+<script>
+    async function addFriend() {
+        try {
+            const response = await fetch(`/Profile/SendFriendRequest/${@Model.Id}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            if (response.ok) {
+                document.getElementById("sendBtnContainer").innerHTML = '<button class="btn btn-primary" onclick="unsendFriendRequest()">Unsend Friend Request</button>';
+                console.log("Friend request sent successfully.");
+
+            } else {
+                console.error("Failed to send friend request.", response.status);
+            }
+        } catch (error) {
+            console.error("An error occurred:", error);
+        }
+    }
+
+    async function unsendFriendRequest() {
+        try {
+            const response = await fetch(`/Profile/UnsendFriendRequest/${@Model.Id}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            if (response.ok) {
+                document.getElementById("sendBtnContainer").innerHTML = '<button class="btn btn-primary" onclick="addFriend()">Add Friend</button>';
+                console.log("Friend request unsent successfully.");
+            } else {
+                console.error("Failed to unsend friend request.", response.status);
+            }
+        } catch (error) {
+            console.error("An error occurred:", error);
+        }
+    }
+</script>
