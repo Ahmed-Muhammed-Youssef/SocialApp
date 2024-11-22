@@ -92,10 +92,10 @@
 
             if (response.ok) {
                 document.getElementById("sendBtnContainer").innerHTML = '<button class="btn btn-primary" onclick="unsendFriendRequest()">Unsend Friend Request</button>';
-                console.log("Friend request sent successfully.");
+                ToastService.showToast("Friend request sent successfully.", "success");
 
             } else {
-                console.error("Failed to send friend request.", response.status);
+                ToastService.showToast("Failed to send friend request.", "error");
             }
         } catch (error) {
             console.error("An error occurred:", error);
@@ -113,9 +113,9 @@
 
             if (response.ok) {
                 document.getElementById("sendBtnContainer").innerHTML = '<button class="btn btn-primary" onclick="addFriend()">Add Friend</button>';
-                console.log("Friend request unsent successfully.");
+                ToastService.showToast("Friend request unsent successfully.", "success");
             } else {
-                console.error("Failed to unsend friend request.", response.status);
+                ToastService.showToast("Failed to unsend friend request.", "error");
             }
         } catch (error) {
             console.error("An error occurred:", error);
