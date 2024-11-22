@@ -55,7 +55,7 @@ namespace API.Controllers
             {
                 return BadRequest("You didn't sent a friend request.");
             }
-            _unitOfWork.FriendRequestRepository.DeleteFriendRequest(fr);
+            _unitOfWork.FriendRequestRepository.Delete(fr);
             if (await _unitOfWork.SaveChangesAsync())
             {
                 return Ok();
