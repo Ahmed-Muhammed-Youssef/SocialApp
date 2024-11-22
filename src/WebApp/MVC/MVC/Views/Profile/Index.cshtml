@@ -40,7 +40,6 @@
                         else if (Model.Relation == Domain.Constants.SocialRelation.FriendRequestReceived)
                         {
                             <button class="btn btn-primary" onclick="acceptFriendRequest()">Accept Friend Request</button>
-                            <button class="btn btn-primary" onclick="rejectFriendRequest()">Reject Friend Request</button>
                         }
                     </div>
 
@@ -81,6 +80,27 @@
 </div>
 
 <script>
+     async function acceptFriendRequest() {
+        try {
+            const response = await fetch(`/Profile/SendFriendRequest/${@Model.Id}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            if (response.ok) {
+                document.getElementById("sendBtnContainer").innerHTML = '<button class="btn btn-primary" onclick="unsendFriendRequest()">Unsend Friend Request</button>';
+                ToastService.showToast("Friend request accepted successfully.", "success");
+
+            } else {
+                ToastService.showToast("Failed to accepted friend request.", "error");
+            }
+        } catch (error) {
+            console.error("An error occurred:", error);
+        }
+    }
+
     async function addFriend() {
         try {
             const response = await fetch(`/Profile/SendFriendRequest/${@Model.Id}`, {
