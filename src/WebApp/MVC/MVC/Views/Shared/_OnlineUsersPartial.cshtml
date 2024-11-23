@@ -2,7 +2,7 @@
 @inject SignInManager<IdentityUser> SignInManager
 @if (SignInManager.IsSignedIn(User))
 {
-    <div class="online-users-container">
+    <div id="online-users-container" class="online-users-container">
         <div class="card">
             <div class="card-header">
                 <h5 class="mb-0">Online Users</h5>
@@ -34,6 +34,14 @@
 
                 usersList.appendChild(listItem);
             });
+
+            if(onlineUsers.length === 0)
+            {
+                document.getElementById('online-users-container').style.display = "none";
+            }
+            else{
+                document.getElementById('online-users-container').style.display = "block";
+            }
         }
 
         document.addEventListener("GetOnlineUsers", (event) => { updateOnlineUsersList(); });
