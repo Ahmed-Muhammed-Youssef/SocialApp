@@ -4,7 +4,6 @@ using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 using Application.Interfaces.Repositories;
-
 using Dapper;
 using Microsoft.Data.SqlClient;
 using System.Data;
@@ -51,7 +50,7 @@ namespace Infrastructure.Repositories
 
             int count = queryDto.Count();
             var items = queryDto.Skip(paginationParams.SkipValue).Take(paginationParams.ItemsPerPage);
-            var listDto = await queryDto.ToListAsync();
+            var listDto = await items.ToListAsync();
             var pagedResult = new PagedList<UserDTO>(listDto, listDto.Count, paginationParams.PageNumber, paginationParams.ItemsPerPage);
             return pagedResult;
         }

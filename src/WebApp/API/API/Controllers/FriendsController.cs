@@ -30,7 +30,7 @@ namespace API.Controllers
             var friends = await _unitOfWork.FriendRequestRepository.GetFriendsAsync(user.Id, paginationParams);
             var newPaginationHeader = new PaginationHeader(friends.CurrentPage, friends.ItemsPerPage, friends.Count, friends.TotalPages);
             Response.AddPaginationHeader(newPaginationHeader);
-            return Ok(friends);
+            return Ok(friends.Items);
         }
 
         // GET: api/friends/isfriend/{id}
