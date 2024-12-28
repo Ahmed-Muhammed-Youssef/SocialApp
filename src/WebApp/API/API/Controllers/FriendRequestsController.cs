@@ -26,8 +26,8 @@ namespace API.Controllers
             var friendRequests = await _unitOfWork.FriendRequestRepository.GetRecievedFriendRequestsAsync(sender.Id);
             return Ok(friendRequests);
         }
-        // POST: api/friendrequests/cancel/{id}
-        [HttpPost("cancel/{id}")]
+        // DELETE: api/friendrequests/cancel/{id}
+        [HttpDelete("cancel/{id}")]
         public async Task<IActionResult> CancelFriendRequests(int id)
         {
             var sender = await _unitOfWork.ApplicationUserRepository.GetByIdAsync(User.GetPublicId().Value);
@@ -38,7 +38,7 @@ namespace API.Controllers
             }
             if (sender.Id == target.Id)
             {
-                return BadRequest("You can't send friend requests to yourself.");
+                return BadRequest();
             }
             if (await _unitOfWork.FriendRequestRepository.IsFriend(sender.Id, target.Id) == true)
             {
