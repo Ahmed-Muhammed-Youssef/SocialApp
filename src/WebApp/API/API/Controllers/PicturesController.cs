@@ -71,7 +71,7 @@ namespace API.Controllers
         [HttpDelete("{pictureId}")]
         public async Task<ActionResult<PictureDTO>> DeletePhoto(int pictureId)
         {
-            var user = await _unitOfWork.ApplicationUserRepository.GetByIdAsync(User.GetPublicId().Value);
+            ApplicationUser user = await _unitOfWork.ApplicationUserRepository.GetByIdAsync(User.GetPublicId().Value);
             var pictures = await _unitOfWork.PictureRepository.GetUserPictureAsync(user.Id);
             var picture = pictures.FirstOrDefault(p => p.Id == pictureId);
             if (picture == null)
@@ -88,6 +88,13 @@ namespace API.Controllers
                 return BadRequest(result.Error.Message);
             }
             _unitOfWork.PictureRepository.DeletePicture(picture);
+
+            if(user.ProfilePictureUrl == picture.Url)
+            {
+                user.ProfilePictureUrl = "";
+
+                _unitOfWork.ApplicationUserRepository.Update(user);
+            }
 
             if (await _unitOfWork.SaveChangesAsync())
             {
