@@ -19,7 +19,7 @@ namespace API.Controllers
     public class RolesController(RoleManager<IdentityRole> _roleManager, UserManager<IdentityUser> _userManager, IdentityDatabaseContext _identityDatabase) : ControllerBase
     {
 
-        // GET: roles/all
+        // GET: api/roles/all
         [Authorize(Policy = "RequireAdminRole")]
         [HttpGet("all")]
         public async Task<ActionResult<IEnumerable<string>>> GetRoles()
@@ -28,7 +28,7 @@ namespace API.Controllers
             return Ok(result);
         }
 
-        // GET: roles/users-roles/all
+        // GET: api/roles/users-roles/all
         [Authorize(Policy = "RequireAdminRole")]
         [HttpGet("users-roles/all")]
         public async Task<ActionResult<PagedList<UserWithRolesDTO>>> GetUsersRoles([FromQuery] PaginationParams pagination)
@@ -65,7 +65,7 @@ namespace API.Controllers
             return Ok(new PagedList<UserWithRolesDTO>(paginatedResult, totalNumber, pagination.PageNumber, pagination.ItemsPerPage));
         }
 
-        // GET: roles/user/{email}
+        // GET: api/roles/user
         [Authorize(Policy = "RequireAdminRole")]
         [HttpGet("user")]
         public async Task<ActionResult<IEnumerable<string>>> GetUserRoles([FromBody]string email)
@@ -80,8 +80,8 @@ namespace API.Controllers
             return Ok(result);
         }
 
-        // GET: roles/user
-        [HttpGet("user")]
+        // GET: api/roles
+        [HttpGet]
         public ActionResult<IEnumerable<string>> GetMyRoles()
         {
             var result = User.GetRoles();
@@ -89,7 +89,7 @@ namespace API.Controllers
             return Ok(result);
         }
 
-        // POST: roles/create/{role}
+        // POST: api/api/roles
         [Authorize(Policy = "RequireAdminRole")]
         [HttpPost]
         public async Task<IActionResult> CreateRole(RoleRequestDTO role)
@@ -126,7 +126,7 @@ namespace API.Controllers
             return Ok();
         }
 
-        // DELETE: roles/delete/{role}
+        // DELETE: api/roles
         [Authorize(Policy = "RequireAdminRole")]
         [HttpDelete]
         public async Task<IActionResult> DeleteRole(RoleRequestDTO role)
