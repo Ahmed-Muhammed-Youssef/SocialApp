@@ -67,8 +67,8 @@ namespace API.Controllers
 
         // GET: roles/user/{email}
         [Authorize(Policy = "RequireAdminRole")]
-        [HttpGet("user/{email}")]
-        public async Task<ActionResult<IEnumerable<string>>> GetUserRoles(string email)
+        [HttpGet("user")]
+        public async Task<ActionResult<IEnumerable<string>>> GetUserRoles([FromBody]string email)
         {
             var user = await _userManager.FindByEmailAsync(email);
             if (user == null)
