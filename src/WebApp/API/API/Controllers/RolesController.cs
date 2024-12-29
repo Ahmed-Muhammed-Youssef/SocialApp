@@ -98,7 +98,7 @@ namespace API.Controllers
             var result = await _roleManager.CreateAsync(newRole);
             if (!result.Succeeded)
             {
-                return BadRequest("Failed To create a new role");
+                return BadRequest(string.Join('\n', result.Errors.Select(e => e.Description).ToList()));
             }
             return Ok(role);
         }
@@ -121,7 +121,7 @@ namespace API.Controllers
             var result = await _userManager.AddToRoleAsync(user, roleUser.Role);
             if (!result.Succeeded)
             {
-                return BadRequest("Failed To create a new role");
+                return BadRequest((string.Join('\n', result.Errors.Select(e => e.Description).ToList())));
             }
             return Ok();
         }
@@ -139,7 +139,7 @@ namespace API.Controllers
             var result = await _roleManager.DeleteAsync(appRole);
             if (!result.Succeeded)
             {
-                return BadRequest("Failed To create a new role");
+                return BadRequest(string.Join('\n', result.Errors.Select(e => e.Description).ToList()));
             }
             return NoContent();
         }
@@ -162,7 +162,7 @@ namespace API.Controllers
             var result = await _userManager.RemoveFromRoleAsync(user, roleUser.Role);
             if (!result.Succeeded)
             {
-                return BadRequest("Failed To create a new role");
+                return BadRequest(string.Join('\n', result.Errors.Select(e => e.Description).ToList()));
             }
             return Ok();
         }
