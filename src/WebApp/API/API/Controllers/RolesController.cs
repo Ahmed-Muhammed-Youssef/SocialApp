@@ -9,6 +9,7 @@ using Application.DTOs.User;
 using Shared.Extensions;
 using Infrastructure.Identity;
 using Application.DTOs.Pagination;
+using Application.DTOs.Role;
 
 namespace API.Controllers
 {
@@ -90,10 +91,10 @@ namespace API.Controllers
 
         // POST: roles/create/{role}
         [Authorize(Policy = "RequireAdminRole")]
-        [HttpPost("create/{role}")]
-        public async Task<IActionResult> CreateRole(string role)
+        [HttpPost]
+        public async Task<IActionResult> CreateRole(RoleRequestDTO role)
         {
-            var newRole = new IdentityRole() { Name = role };
+            var newRole = new IdentityRole() { Name = role.Name };
             var result = await _roleManager.CreateAsync(newRole);
             if (!result.Succeeded)
             {
@@ -107,7 +108,7 @@ namespace API.Controllers
         [HttpPost("add")]
         public async Task<IActionResult> AddRoleToUser(RoleUserDTO roleUser)
         {
-            var user = await _userManager.FindByNameAsync(roleUser.Username);
+            var user = await _userManager.FindByEmailAsync(roleUser.Email);
             if (user == null)
             {
                 return NotFound("User not found");
@@ -127,10 +128,10 @@ namespace API.Controllers
 
         // DELETE: roles/delete/{role}
         [Authorize(Policy = "RequireAdminRole")]
-        [HttpDelete("delete/{role}")]
-        public async Task<IActionResult> DeleteRole(string role)
+        [HttpDelete]
+        public async Task<IActionResult> DeleteRole(RoleRequestDTO role)
         {
-            var appRole = await _roleManager.FindByNameAsync(role);
+            var appRole = await _roleManager.FindByNameAsync(role.Name);
             if (appRole == null)
             {
                 return NotFound("Role not found");
@@ -148,7 +149,7 @@ namespace API.Controllers
         [HttpDelete("removefrom")]
         public async Task<IActionResult> RemoveRoleFromUser(RoleUserDTO roleUser)
         {
-            var user = await _userManager.FindByNameAsync(roleUser.Username);
+            var user = await _userManager.FindByEmailAsync(roleUser.Email);
             if (user == null)
             {
                 return NotFound("User not found");
