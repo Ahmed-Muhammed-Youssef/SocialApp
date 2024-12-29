@@ -7,14 +7,17 @@ using System.Linq;
 using System.Threading.Tasks;
 using Application.DTOs.User;
 using Shared.Extensions;
+using Infrastructure.Identity;
+using Application.DTOs.Pagination;
 
 namespace API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
-    public class RolesController(RoleManager<IdentityRole> _roleManager, UserManager<IdentityUser> _userManager) : ControllerBase
+    public class RolesController(RoleManager<IdentityRole> _roleManager, UserManager<IdentityUser> _userManager, IdentityDatabaseContext _identityDatabase) : ControllerBase
     {
+
         // GET: roles/all
         [Authorize(Policy = "RequireAdminRole")]
         [HttpGet("all")]
@@ -24,25 +27,42 @@ namespace API.Controllers
             return Ok(result);
         }
 
-        // @ToDo: add pagination this endpoint takes alot of time
         // GET: roles/users-roles/all
         [Authorize(Policy = "RequireAdminRole")]
         [HttpGet("users-roles/all")]
-        //public async Task<ActionResult> GetUsersRoles()
-        //{
-        //    var result = await _userManager.Users
-        //        .Include(u => u.UserRoles)
-        //        .ThenInclude(ur => ur.Role)
-        //        .Select(u =>
-        //        new
-        //        {
-        //            u.Id,
-        //            Username = u.UserName,
-        //            Roles = u.UserRoles.Select(r => r.Role.Name).ToList()
-        //        })
-        //        .ToListAsync();
-        //    return Ok(result);
-        //}
+        public async Task<ActionResult<PagedList<UserWithRolesDTO>>> GetUsersRoles([FromQuery] PaginationParams pagination)
+        {
+            var groupedUsers = _identityDatabase.Users
+               .GroupJoin(
+                   _identityDatabase.UserRoles,
+                   user => user.Id,
+                   userRole => userRole.UserId,
+                   (user, userRoles) => new
+                   {
+                       User = user,
+                       Roles = userRoles
+                           .Join(_identityDatabase.Roles,
+                                 userRole => userRole.RoleId,
+                                 role => role.Id,
+                                 (userRole, role) => role.Name)
+                           .ToList()
+                   })
+               .Select(g => new UserWithRolesDTO
+               {
+                   Email = g.User.Email,
+                   Roles = g.Roles
+               });
+
+            int totalNumber = await groupedUsers.CountAsync();
+
+            List<UserWithRolesDTO> paginatedResult = await groupedUsers
+                .OrderBy(i => i.Email)
+                .Skip(pagination.SkipValue)
+                .Take(pagination.ItemsPerPage)
+                .ToListAsync();
+            
+            return Ok(new PagedList<UserWithRolesDTO>(paginatedResult, totalNumber, pagination.PageNumber, pagination.ItemsPerPage));
+        }
 
         // GET: roles/user/{username}
         [Authorize(Policy = "RequireAdminRole")]
