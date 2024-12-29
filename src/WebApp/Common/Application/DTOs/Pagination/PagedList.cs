@@ -5,7 +5,7 @@ namespace Application.DTOs.Pagination
 
     public class PagedList<T>
     {
-        public List<T> Items;
+        public List<T> Items { get; private set; }
         public PagedList(List<T> items, int count, int pageNumber, int itemsPerPage)
         {
             CurrentPage = pageNumber; // note that: it begins with 1 
