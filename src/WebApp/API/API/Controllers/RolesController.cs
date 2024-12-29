@@ -64,12 +64,12 @@ namespace API.Controllers
             return Ok(new PagedList<UserWithRolesDTO>(paginatedResult, totalNumber, pagination.PageNumber, pagination.ItemsPerPage));
         }
 
-        // GET: roles/user/{username}
+        // GET: roles/user/{email}
         [Authorize(Policy = "RequireAdminRole")]
-        [HttpGet("user/{username}")]
-        public async Task<ActionResult<IEnumerable<string>>> GetUserRoles(string username)
+        [HttpGet("user/{email}")]
+        public async Task<ActionResult<IEnumerable<string>>> GetUserRoles(string email)
         {
-            var user = await _userManager.FindByNameAsync(username);
+            var user = await _userManager.FindByEmailAsync(email);
             if (user == null)
             {
                 return NotFound("User not found");
