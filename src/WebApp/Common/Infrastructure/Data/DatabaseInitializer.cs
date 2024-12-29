@@ -31,7 +31,7 @@ namespace Infrastructure.Data
 
                 await MigrateDatabaseAsync(dataContext, identityContext, logger);
                 await SeedStaticData(dataContext, roleManager, logger);
-                await SeedAdmin(userManager, configuration, identityContext);
+                await SeedAdmin(userManager, configuration, identityContext, dataContext);
 
                 if (environment.IsDevelopment())
                 {
@@ -110,7 +110,7 @@ namespace Infrastructure.Data
             }
         }
 
-        private static async Task SeedAdmin(UserManager<IdentityUser> userManager, IConfiguration configuration, IdentityDatabaseContext identityContext)
+        private static async Task SeedAdmin(UserManager<IdentityUser> userManager, IConfiguration configuration, IdentityDatabaseContext identityContext, DataContext dataContext)
         {
             if(!await userManager.Users.AnyAsync(u => u.Email == configuration["AdminCred:Email"]))
             {
@@ -121,6 +121,23 @@ namespace Infrastructure.Data
                 };
 
                 await userManager.CreateAsync(admin, configuration["AdminCred:Password"]);
+
+                await userManager.AddToRoleAsync(admin, RolesNameValues.Admin);
+                await userManager.AddToRoleAsync(admin, RolesNameValues.User);
+                await userManager.AddToRoleAsync(admin, RolesNameValues.Moderator);
+
+                ApplicationUser adminAppUser = new() { 
+                    IdentityId = admin.Id,
+                    FirstName = "Admin",
+                    LastName = "",
+                    ProfilePictureUrl = "",
+                    Sex = 'm',
+                    Bio = "hello there",
+                    CityId = 2000,
+                };
+
+                await dataContext.ApplicationUsers.AddAsync(adminAppUser);
+                await dataContext.SaveChangesAsync();
             }
         }
 
@@ -157,7 +174,7 @@ namespace Infrastructure.Data
 
                 var identityUser = testIdentityUsers.Generate();
                 await userManager.CreateAsync(identityUser, "Pwd12345");
-                // await userManager.AddToRolesAsync(user, [RolesNameValues.User]);
+                await userManager.AddToRoleAsync(identityUser, RolesNameValues.User);
 
                 // Generate application user
                 var testApplicationUser = new Faker<ApplicationUser>()
@@ -225,7 +242,6 @@ namespace Infrastructure.Data
 
                 await dataContext.SaveChangesAsync();
             }
-
         }
     }
 }
