@@ -89,6 +89,5 @@ app.MapControllers();
 // SignalR Endpooints
 app.MapHub<PresenceHub>("hubs/presence");
 app.MapHub<MessageHub>("hubs/message");
-app.MapFallbackToController("Index", "FallBack");
 
 await app.RunAsync();
