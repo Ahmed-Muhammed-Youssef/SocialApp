@@ -96,11 +96,10 @@ namespace MVC.Controllers
                 return BadRequest("You already are friends.");
             }
             bool isFriend = await _unitOfWork.FriendRequestRepository.SendFriendRequest(sender.Id, target.Id);
-            if (await _unitOfWork.SaveChangesAsync())
-            {
-                return Ok(isFriend);
-            }
-            return BadRequest();
+            
+            await _unitOfWork.SaveChangesAsync();
+
+            return Ok(isFriend);
         }
 
         [HttpPost]
@@ -125,12 +124,9 @@ namespace MVC.Controllers
            
             _unitOfWork.FriendRequestRepository.Delete(fr);
 
-            if (await _unitOfWork.SaveChangesAsync())
-            {
-                return NoContent();
-            }
+            await _unitOfWork.SaveChangesAsync();
 
-            return BadRequest();
+            return NoContent();
         }
     }
 }

@@ -47,11 +47,9 @@
             _mapper.Map(userDTO, appUser);
             _unitOfWork.ApplicationUserRepository.Update(appUser);
 
-            if (await _unitOfWork.SaveChangesAsync())
-            {
-                return Ok(userDTO);
-            }
-            return BadRequest(userDTO);
+            await _unitOfWork.SaveChangesAsync();
+
+            return Ok(userDTO);
         }
     }
 }

@@ -21,13 +21,12 @@
             {
                 return BadRequest("Failed to delete the message");
             }
+            
             _unitOfWork.MessageRepository.DeleteMessage(message, issuerId);
 
-            if (await _unitOfWork.SaveChangesAsync())
-            {
-                return NoContent();
-            }
-            return BadRequest("Failed to delete the message");
+            await _unitOfWork.SaveChangesAsync();
+            
+            return NoContent();
         }
     }
 }

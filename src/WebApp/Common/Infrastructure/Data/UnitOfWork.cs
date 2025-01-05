@@ -11,6 +11,10 @@ namespace Infrastructure.Data
         public IPictureRepository PictureRepository { get; } = _pictureRepository;
         public IMessageRepository MessageRepository { get; } = _messageRepository;
         public IFriendRequestRepository FriendRequestRepository { get; } = _friendRequestRepository;
+        public async Task SaveChangesAsync()
+        {
+            await _dataContext.SaveChangesAsync();
+        }
 
         public async Task<bool> SaveChangesAsync()
         {
