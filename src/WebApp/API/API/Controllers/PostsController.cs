@@ -1,14 +1,4 @@
-﻿using Application.DTOs.Post;
-using Application.Interfaces;
-using Domain.Entities;
-using AutoMapper;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Shared.Extensions;
-
-namespace API.Controllers
+﻿namespace API.Controllers
 {
 
     [Route("api/[controller]")]

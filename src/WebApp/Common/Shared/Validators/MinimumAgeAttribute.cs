@@ -1,5 +1,5 @@
 ﻿using Shared.Extensions;
-using System.ComponentModel.DataAnnotations;
+
 
 namespace Shared.Validators
 {

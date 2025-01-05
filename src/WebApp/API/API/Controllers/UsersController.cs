@@ -1,17 +1,4 @@
-﻿using Application.DTOs.Pagination;
-using Application.DTOs.User;
-using Application.Interfaces;
-using API.Extensions;
-using API.Filters;
-using AutoMapper;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Shared.Extensions;
-using System.Text.Json;
-
-namespace API.Controllers
+﻿namespace API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
