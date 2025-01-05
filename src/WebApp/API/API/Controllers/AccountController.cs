@@ -78,7 +78,7 @@
                 return Unauthorized();
             }
 
-            var signInResult = await signInManager
+            Microsoft.AspNetCore.Identity.SignInResult signInResult = await signInManager
                 .CheckPasswordSignInAsync(user, loginCredentials.Password, lockoutOnFailure: false);
 
             if (!signInResult.Succeeded)
@@ -86,9 +86,7 @@
                 return Unauthorized();
             }
 
-            var userData = await unitOfWork.ApplicationUserRepository.GetDtoByIdentityId(user.Id);
-
-            // username will always be null, needs a fix
+            UserDTO userData = await unitOfWork.ApplicationUserRepository.GetDtoByIdentityId(user.Id);
 
             return Ok(new TokenDTO()
             {
