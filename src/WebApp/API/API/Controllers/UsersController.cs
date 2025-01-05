@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Shared.Extensions;
+using System.Text.Json;
 
 namespace API.Controllers
 {
@@ -16,7 +17,7 @@ namespace API.Controllers
     [ApiController]
     [Authorize]
     [ServiceFilter(typeof(LogUserActivity))]
-    public class UsersController(IUnitOfWork _unitOfWork, IMapper _mapper) : ControllerBase
+    public class UsersController(IUnitOfWork _unitOfWork, IMapper _mapper, JsonSerializerOptions jsonSerializerOptions) : ControllerBase
     {
 
         // GET: api/users
@@ -25,7 +26,7 @@ namespace API.Controllers
         {
             var users = await _unitOfWork.ApplicationUserRepository.GetUsersDTOAsync(User.GetPublicId().Value, userParams);
             var newPaginationHeader = new PaginationHeader(users.CurrentPage, users.ItemsPerPage, users.Count, users.TotalPages);
-            Response.AddPaginationHeader(newPaginationHeader);
+            Response.AddPaginationHeader(newPaginationHeader, jsonSerializerOptions);
             return Ok(users.Items);
         }
 

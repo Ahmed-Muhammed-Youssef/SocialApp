@@ -22,12 +22,17 @@ using Infrastructure.ExternalServices.Google;
 using Infrastructure.ExternalServices.Cloudinary;
 using Infrastructure.Identity;
 using Infrastructure.RealTime.Presence;
+using System.Text.Json;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.Configure<CloudinarySettings>(builder.Configuration.GetSection("Cloudinary"));
 builder.Services.AddIdentityConfigurations(builder.Configuration);
 builder.Services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
+builder.Services.AddSingleton(new JsonSerializerOptions
+{
+    PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+});
 
 // Repositories
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
