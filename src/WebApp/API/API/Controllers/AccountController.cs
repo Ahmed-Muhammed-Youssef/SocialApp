@@ -38,20 +38,31 @@
 
             if (!adddRoleresult.Succeeded)
             {
+                await userManager.DeleteAsync(newIdentityUser);
+
                 return BadRequest();
             }
 
             // Create application user
 
             ApplicationUser newApplicationUser = new();
+            
+            try
+            {
+                mapper.Map(accountDTO, newApplicationUser);
 
-            mapper.Map(accountDTO, newApplicationUser);
+                newApplicationUser.IdentityId = newIdentityUser.Id;
 
-            newApplicationUser.IdentityId = newIdentityUser.Id;
+                await unitOfWork.ApplicationUserRepository.AddAsync(newApplicationUser);
 
-            await unitOfWork.ApplicationUserRepository.AddAsync(newApplicationUser);
+                await unitOfWork.SaveChangesAsync();
+            }
+            catch (Exception)
+            {
+                await userManager.DeleteAsync(newIdentityUser);
 
-            await unitOfWork.SaveChangesAsync();
+                return BadRequest("Failed to register user");
+            }
 
             UserDTO userData = mapper.Map<UserDTO>(newApplicationUser);
 
