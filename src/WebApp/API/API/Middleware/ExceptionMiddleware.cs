@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace API.Middleware
 {
-    public class ExceptionMiddleware(RequestDelegate next, ILogger<ExceptionMiddleware> logger, IHostEnvironment env)
+    public class ExceptionMiddleware(RequestDelegate next, ILogger<ExceptionMiddleware> logger, IHostEnvironment env, JsonSerializerOptions jsonOptions)
     {
         public async Task InvokeAsync(HttpContext httpContext)
         {
@@ -26,8 +26,7 @@ namespace API.Middleware
                 ApiException response = env.IsDevelopment() ? new ApiException(httpContext.Response.StatusCode, ex.Message, ex.StackTrace?.ToString())
                     : new ApiException(httpContext.Response.StatusCode, "Internal Server Error");
 
-                JsonSerializerOptions options = new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
-                string json = JsonSerializer.Serialize(response, options);
+                string json = JsonSerializer.Serialize(response, jsonOptions);
 
                 await httpContext.Response.WriteAsync(json);
             }

@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Shared.Extensions;
+using System.Text.Json;
 
 namespace API.Controllers
 {
@@ -16,7 +17,7 @@ namespace API.Controllers
     [Authorize]
     [ServiceFilter(typeof(LogUserActivity))]
 
-    public class FriendsController(IUnitOfWork _unitOfWork) : ControllerBase
+    public class FriendsController(IUnitOfWork _unitOfWork, JsonSerializerOptions jsonSerializerOptions) : ControllerBase
     {
         // GET: api/friends
         [HttpGet]
@@ -29,7 +30,7 @@ namespace API.Controllers
             }
             var friends = await _unitOfWork.FriendRequestRepository.GetFriendsAsync(user.Id, paginationParams);
             var newPaginationHeader = new PaginationHeader(friends.CurrentPage, friends.ItemsPerPage, friends.Count, friends.TotalPages);
-            Response.AddPaginationHeader(newPaginationHeader);
+            Response.AddPaginationHeader(newPaginationHeader, jsonSerializerOptions);
             return Ok(friends.Items);
         }
 
