@@ -24,11 +24,9 @@
 
             picture = await _unitOfWork.PictureRepository.AddPictureAsync(picture);
 
-            if (await _unitOfWork.SaveChangesAsync())
-            {
-                return Ok(_mapper.Map<PictureDTO>(picture));
-            }
-            return BadRequest();
+            await _unitOfWork.SaveChangesAsync();
+
+            return Ok(_mapper.Map<PictureDTO>(picture));
         }
 
         // POST: api/pictures/profilepicture
@@ -46,13 +44,13 @@
             {
                 return Unauthorized();
             }
+            
             user.ProfilePictureUrl = picture.Url;
             _unitOfWork.ApplicationUserRepository.Update(user);
-            if (await _unitOfWork.SaveChangesAsync())
-            {
-                return Ok();
-            }
-            return BadRequest("failed to set the profile picture.");
+
+            await _unitOfWork.SaveChangesAsync();
+
+            return Ok();
         }
         // DELETE: api/pictures/{pictureId}
         [HttpDelete("{pictureId}")]
@@ -83,11 +81,9 @@
                 _unitOfWork.ApplicationUserRepository.Update(user);
             }
 
-            if (await _unitOfWork.SaveChangesAsync())
-            {
-                return Ok();
-            }
-            return BadRequest("failed to delete the image from the server.");
+            await _unitOfWork.SaveChangesAsync();
+            
+            return Ok();
         }
 
         // GET: api/pictures/all

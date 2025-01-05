@@ -46,12 +46,12 @@
             {
                 return BadRequest("You didn't sent a friend request.");
             }
+
             _unitOfWork.FriendRequestRepository.Delete(fr);
-            if (await _unitOfWork.SaveChangesAsync())
-            {
-                return Ok();
-            }
-            return BadRequest("Failed to cancel friend request.");
+            
+            await _unitOfWork.SaveChangesAsync();
+            
+            return Ok();
         }
         // @ToDo: add pagination for scaling
         // GET: api/friendrequests/sent
@@ -112,12 +112,12 @@
             {
                 return BadRequest("You already are friends.");
             }
+
             bool isFriend = await _unitOfWork.FriendRequestRepository.SendFriendRequest(sender.Id, target.Id);
-            if (await _unitOfWork.SaveChangesAsync())
-            {
-                return Ok(isFriend);
-            }
-            return BadRequest();
+
+            await _unitOfWork.SaveChangesAsync();
+
+            return Ok(isFriend);
         }
     }
 }

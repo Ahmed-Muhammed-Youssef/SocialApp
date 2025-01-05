@@ -27,6 +27,7 @@
             post.UserId = User.GetPublicId().Value;
 
             await _unitOfWork.PostRepository.AddAsync(post);
+
             await _unitOfWork.SaveChangesAsync();
 
             PostDTO returnPostDTO = _mapper.Map<PostDTO>(post);

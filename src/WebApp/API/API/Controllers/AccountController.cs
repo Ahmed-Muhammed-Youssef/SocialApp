@@ -26,10 +26,7 @@
                 Email = accountDTO.Email
             };
 
-            
-
             // Create Identity User
-
             var result = await userManager.CreateAsync(newIdentityUser, accountDTO.Password);
 
             if (!result.Succeeded)
@@ -54,10 +51,7 @@
 
             await unitOfWork.ApplicationUserRepository.AddAsync(newApplicationUser);
 
-            if (!await unitOfWork.SaveChangesAsync())
-            {
-                return BadRequest();
-            }
+            await unitOfWork.SaveChangesAsync();
 
             UserDTO userData = mapper.Map<UserDTO>(newApplicationUser);
 

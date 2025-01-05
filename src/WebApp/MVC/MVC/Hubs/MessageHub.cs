@@ -49,9 +49,10 @@ namespace MVC.Hubs
 
             await _unitOfWork.MessageRepository.AddMessageAsync(createdMessage);
 
-
-            if (await _unitOfWork.SaveChangesAsync())
+            try
             {
+                await _unitOfWork.SaveChangesAsync();
+
                 MessageDTO msgDTO = new()
                 {
                     Id = createdMessage.Id,
@@ -60,11 +61,12 @@ namespace MVC.Hubs
                     Content = createdMessage.Content,
                     SenderPhotoUrl = sender.ProfilePictureUrl
                 };
+
                 await Clients.User(msgDTO.RecipientId.ToString()).SendAsync("NewMessage", msgDTO);
             }
-            else
+            catch (Exception ex)
             {
-                throw new HubException("Couldn't Send the message");
+                throw new HubException("Couldn't Send the message", ex);
             }
         }
     }

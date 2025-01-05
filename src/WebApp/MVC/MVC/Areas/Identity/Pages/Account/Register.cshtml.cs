@@ -95,7 +95,11 @@ namespace MVC.Areas.Identity.Pages.Account
 
                     await _unitOfWork.ApplicationUserRepository.AddAsync(applicationUser);
 
-                    if(!await _unitOfWork.SaveChangesAsync())
+                    try
+                    {
+                        await _unitOfWork.SaveChangesAsync();
+                    }
+                    catch
                     {
                         await _userManager.DeleteAsync(user);
 
@@ -103,7 +107,6 @@ namespace MVC.Areas.Identity.Pages.Account
                     }
 
                     _logger.LogInformation("User created a new profile.");
-
 
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));

@@ -10,7 +10,7 @@ namespace Application.Interfaces
         IMessageRepository MessageRepository { get; }
         IFriendRequestRepository FriendRequestRepository { get; }
         IPostRepository PostRepository { get; }
-        Task<bool> SaveChangesAsync();
+        Task SaveChangesAsync();
         bool HasChanges();
     }
 }
