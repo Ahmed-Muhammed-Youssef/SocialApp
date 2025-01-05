@@ -1,15 +1,3 @@
-using Application.DTOs.Message;
-using Application.DTOs.User;
-using Application.Interfaces;
-using Domain.Entities;
-using AutoMapper;
-using Microsoft.AspNetCore.SignalR;
-using System;
-using System.Linq;
-using System.Threading.Tasks;
-using Infrastructure.RealTime.Presence;
-using Shared.Extensions;
-
 namespace API.SignalR
 {
     public class MessageHub(IUnitOfWork _unitOfWork, IMapper _mapper,

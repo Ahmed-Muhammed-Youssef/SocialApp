@@ -1,21 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
-using Domain.Entities;
-using Microsoft.AspNetCore.Identity;
-using Application.Interfaces.Services;
-using API.Filters;
-using Application.Authentication.Google;
-using Microsoft.EntityFrameworkCore;
-using System.Linq;
-using Application.DTOs.Registeration;
-using Application.DTOs.User;
-using AutoMapper;
-using Domain;
-using Domain.Constants;
-using Application.Authentication.GoogleModels;
-using Application.Interfaces;
-
-namespace API.Controllers
+﻿namespace API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

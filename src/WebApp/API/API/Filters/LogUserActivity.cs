@@ -1,11 +1,4 @@
-﻿using Application.Interfaces;
-using Microsoft.AspNetCore.Mvc.Filters;
-using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Threading.Tasks;
-using Shared.Extensions;
-
-namespace API.Filters
+﻿namespace API.Filters
 {
     public class LogUserActivity : IAsyncActionFilter
     {

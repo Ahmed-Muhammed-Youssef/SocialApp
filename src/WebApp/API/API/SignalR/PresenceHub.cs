@@ -1,10 +1,3 @@
-using Infrastructure.RealTime.Presence;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.SignalR;
-using Shared.Extensions;
-using System;
-using System.Threading.Tasks;
-
 namespace API.SignalR
 {
     [Authorize]

@@ -1,16 +1,4 @@
-﻿using Domain.Entities;
-using AutoMapper;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using System.Linq;
-using System.Threading.Tasks;
-using Application.Interfaces;
-using Application.Interfaces.Services;
-using Application.DTOs.Picture;
-using Shared.Extensions;
-
-namespace API.Controllers
+﻿namespace API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

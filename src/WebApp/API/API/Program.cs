@@ -1,29 +1,3 @@
-using Application.Interfaces;
-using Application.Interfaces.Repositories;
-using Application.Interfaces.Services;
-using API.Extensions;
-using API.Filters;
-using Domain.Configuration;
-using Infrastructure.Data;
-using Infrastructure.MappingProfiles;
-using API.Middleware;
-using API.Services;
-using API.SignalR;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.OpenApi.Models;
-using Domain;
-using Infrastructure.Repositories.CachedRepositories;
-using Infrastructure.Repositories;
-using Application.Authentication.Google;
-using Infrastructure.ExternalServices.Google;
-using Infrastructure.ExternalServices.Cloudinary;
-using Infrastructure.Identity;
-using Infrastructure.RealTime.Presence;
-using System.Text.Json;
-
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.Configure<CloudinarySettings>(builder.Configuration.GetSection("Cloudinary"));

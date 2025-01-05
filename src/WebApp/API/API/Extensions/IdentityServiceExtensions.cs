@@ -1,14 +1,4 @@
-﻿using Domain.Constants;
-using Infrastructure.Identity;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.IdentityModel.Tokens;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace API.Extensions
+﻿namespace API.Extensions
 {
     public static class IdentityServiceExtensions
     {

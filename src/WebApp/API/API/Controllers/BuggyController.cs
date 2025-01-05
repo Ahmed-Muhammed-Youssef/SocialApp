@@ -1,16 +1,8 @@
-﻿using Domain.Entities;
-using API.Filters;
-using Infrastructure.Data;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-
-namespace API.Controllers
+﻿namespace API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
     [ServiceFilter(typeof(LogUserActivity))]
-
-
     public class BuggyController(DataContext _context) : ControllerBase
     {
         // GET: api/buggy/auth

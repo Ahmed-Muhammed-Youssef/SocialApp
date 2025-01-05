@@ -1,17 +1,4 @@
-﻿using Domain.Entities;
-using API.Filters;
-using AutoMapper;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System.Threading.Tasks;
-using Application.Interfaces.Services;
-using Application.Interfaces;
-using Application.DTOs.User;
-using Application.DTOs.Registeration;
-using Domain.Constants;
-
-namespace API.Controllers
+﻿namespace API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

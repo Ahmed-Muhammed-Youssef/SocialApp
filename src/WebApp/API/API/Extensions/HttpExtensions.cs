@@ -1,8 +1,4 @@
-﻿using Application.DTOs.Pagination;
-using Microsoft.AspNetCore.Http;
-using System.Text.Json;
-
-namespace API.Extensions
+﻿namespace API.Extensions
 {
     public static class HttpExtensions
     {
