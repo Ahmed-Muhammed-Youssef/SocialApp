@@ -1,8 +1,9 @@
-﻿namespace Application.DTOs.Pagination
+﻿using Domain.Constants;
+
+namespace Application.DTOs.Pagination
 {
     public class PaginationParams
     {
-        private const int MaxPageSize = 40;
         private int pageNumber = 1;
         private int itemsPerPage = 10;
         public int SkipValue { 
@@ -32,9 +33,9 @@
             }
             set
             {
-                if (value > MaxPageSize || value < 1)
+                if (value > SystemPolicy.MaxPageSize || value < 1)
                 {
-                    itemsPerPage = MaxPageSize;
+                    itemsPerPage = SystemPolicy.MaxPageSize;
                 }
                 else
                 {
