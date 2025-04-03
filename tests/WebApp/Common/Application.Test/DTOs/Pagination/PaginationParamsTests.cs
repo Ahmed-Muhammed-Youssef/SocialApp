@@ -6,7 +6,7 @@ namespace Application.Test.DTOs.Pagination
     public class PaginationParamsTests
     {
         [Fact]
-        public void DefaultValues()
+        public void Constructor_DefaultInput_SetsPropertiesCorrectly()
         {
             // Arrange & Act
             PaginationParams paginationParams = new();
@@ -17,14 +17,32 @@ namespace Application.Test.DTOs.Pagination
             Assert.Equal(10, paginationParams.ItemsPerPage);
         }
 
-        [Fact]
-        public void Invalid_ItemsPerPage_Uses_PageSizeMax()
+        [Theory]
+        [InlineData(2, 10)]
+        public void SkipValue_Calculation_SetsValueCorrectly(int pageNumber, int itemsPerPage)
         {
             // Arrange
             PaginationParams paginationParams = new()
             {
                 // Act
-                ItemsPerPage = -1
+                PageNumber = pageNumber,
+                ItemsPerPage = itemsPerPage
+            };
+
+            // Assert
+            Assert.Equal(10, paginationParams.SkipValue);
+        }
+
+        [Theory]
+        [InlineData(-1)]
+        [InlineData(0)]
+        public void ItemsPerPage_InvalidInput_UsesPageSizeMax(int itemsPerPage)
+        {
+            // Arrange
+            PaginationParams paginationParams = new()
+            {
+                // Act
+                ItemsPerPage = itemsPerPage
             };
 
             // Assert
@@ -32,7 +50,7 @@ namespace Application.Test.DTOs.Pagination
         }
 
         [Fact]
-        public void ItemsPerPage_Bigger_Than_PageSizeMax_Uses_PageSizeMax()
+        public void ItemsPerPage_InputBiggerThanPageSizeMax_UsesPageSizeMax()
         {
             // Arrange
             PaginationParams paginationParams = new()
@@ -46,7 +64,7 @@ namespace Application.Test.DTOs.Pagination
         }
 
         [Fact]
-        public void Invalid_PageNumber_Ignored()
+        public void PageNumber_InvalidInput_IgnoreNewValue()
         {
             // Arrange
             PaginationParams paginationParams = new()
