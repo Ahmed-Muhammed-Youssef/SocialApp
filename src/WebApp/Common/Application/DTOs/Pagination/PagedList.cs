@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-
-namespace Application.DTOs.Pagination
+﻿namespace Application.DTOs.Pagination
 {
 
     public class PagedList<T>
@@ -20,12 +18,11 @@ namespace Application.DTOs.Pagination
             {
                 Items = new List<T>();
             }
-            // AddRange(items);
         }
 
-        public int CurrentPage { get; set; }
-        public int TotalPages { get; set; }
-        public int ItemsPerPage { get; set; }
-        public int Count { get; set; } // total number of items
+        public int CurrentPage { get; private set; }
+        public int TotalPages { get; private set; }
+        public int ItemsPerPage { get; private set; }
+        public int Count { get; private set; } // total number of items
     }
 }
