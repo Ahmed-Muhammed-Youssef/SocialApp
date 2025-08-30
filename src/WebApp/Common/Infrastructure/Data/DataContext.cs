@@ -7,16 +7,6 @@ namespace Infrastructure.Data
     public class DataContext: DbContext
     {
         public DataContext(DbContextOptions<DataContext> options) : base(options) { }
-        public DataContext() { }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            if (!optionsBuilder.IsConfigured)
-            {
-                var connectionString = AppSettings.DefaultConnectionString;
-                optionsBuilder.UseSqlServer(connectionString);
-            }
-        }
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
         public DbSet<Country> Countries { get; set; }
         public DbSet<Region> Regions { get; set; }

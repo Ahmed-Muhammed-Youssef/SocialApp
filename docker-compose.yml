@@ -1,0 +1,54 @@
+services:
+  api:
+    image: ${DOCKER_REGISTRY-}api
+    build:
+      context: .
+      dockerfile: src/WebApp/API/API/Dockerfile
+    depends_on:
+      - app-db
+      - identity-db
+    networks:
+      - app-network
+
+  mvc:
+    image: ${DOCKER_REGISTRY-}mvc
+    build:
+      context: .
+      dockerfile: src/WebApp/MVC/MVC/Dockerfile
+    depends_on:
+      - app-db
+      - identity-db
+    networks:
+      - app-network
+
+  app-db:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment:
+      SA_PASSWORD: "AppDbPassword123!"  # Strong password for app DB
+      ACCEPT_EULA: "Y"
+    ports:
+      - "1433:1433"  # Expose app DB on localhost:1433
+    volumes:
+      - app-db-data:/var/opt/mssql
+    networks:
+      - app-network
+
+  identity-db:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment:
+      SA_PASSWORD: "IdentityDbPassword123!"  # Different password for identity DB
+      ACCEPT_EULA: "Y"
+    ports:
+      - "1434:1433"  # Expose identity DB on localhost:1434 (different port to avoid conflict)
+    volumes:
+      - identity-db-data:/var/opt/mssql
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  app-db-data:
+  identity-db-data:
