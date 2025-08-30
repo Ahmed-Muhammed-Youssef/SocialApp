@@ -25,8 +25,8 @@ builder.Services.AddScoped<IGoogleAuthService, GoogleAuthService>();
 builder.Services.AddScoped<PasswordGenerationService>();
 builder.Services.AddScoped<LogUserActivity>();
 
-builder.Services.AddDbContext<DataContext>();
-builder.Services.AddDbContext<IdentityDatabaseContext>();
+builder.Services.AddDbContext<DataContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("AppConnection")));
+builder.Services.AddDbContext<IdentityDatabaseContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("IdentityConnection")));
 
 builder.Services.AddControllers();
 builder.Services.AddSignalR();
