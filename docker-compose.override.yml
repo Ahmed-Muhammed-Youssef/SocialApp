@@ -4,8 +4,8 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_HTTP_PORTS=8080
       - ASPNETCORE_HTTPS_PORTS=8081
-      - ConnectionStrings__AppConnection=Server=app-db,1433;Database=AppDb;User Id=sa;Password=AppDbPassword123!;TrustServerCertificate=True;
-      - ConnectionStrings__IdentityConnection=Server=identity-db,1433;Database=IdentityDb;User Id=sa;Password=IdentityDbPassword123!;TrustServerCertificate=True;
+      - ConnectionStrings__AppConnection=Server=app-db,1433;Database=AppDb;User Id=sa;Password=Password123!;TrustServerCertificate=True;
+      - ConnectionStrings__IdentityConnection=Server=app-db,1433;Database=IdentityDb;User Id=sa;Password=Password123!;TrustServerCertificate=True;
     ports:
       - "8080"
       - "8081"
@@ -19,8 +19,8 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_HTTP_PORTS=8080
       - ASPNETCORE_HTTPS_PORTS=8081
-      - ConnectionStrings__AppConnection=Server=app-db,1433;Database=AppDb;User Id=sa;Password=AppDbPassword123!;TrustServerCertificate=True;
-      - ConnectionStrings__IdentityConnection=Server=identity-db,1433;Database=IdentityDb;User Id=sa;Password=IdentityDbPassword123!;TrustServerCertificate=True;
+      - ConnectionStrings__AppConnection=Server=app-db,1433;Database=AppDb;User Id=sa;Password=Password123!;TrustServerCertificate=True;
+      - ConnectionStrings__IdentityConnection=Server=app-db,1433;Database=IdentityDb;User Id=sa;Password=Password123!;TrustServerCertificate=True;
     ports:
       - "8080"
       - "8081"
