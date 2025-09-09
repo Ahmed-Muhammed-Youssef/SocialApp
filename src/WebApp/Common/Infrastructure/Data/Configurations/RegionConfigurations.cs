@@ -11,10 +11,12 @@ namespace Infrastructure.Data.Configurations
             builder.HasKey(r => r.Id);
 
             // Properties
-            builder.Property(r => r.Id).IsRequired().ValueGeneratedNever();
             builder.Property(r => r.Name).HasMaxLength(255).IsRequired();
 
-            builder.HasMany<City>().WithOne().HasForeignKey(city => city.RegionId).OnDelete(DeleteBehavior.Cascade);
+            builder.HasMany(r => r.Cities)
+                .WithOne(c => c.Region)
+                .HasForeignKey(city => city.RegionId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

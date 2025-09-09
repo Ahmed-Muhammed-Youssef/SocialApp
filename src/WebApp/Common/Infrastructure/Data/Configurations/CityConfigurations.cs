@@ -11,7 +11,6 @@ namespace Infrastructure.Data.Configurations
             builder.HasKey(city => city.Id);
 
             // Properties
-            builder.Property(city => city.Id).IsRequired().ValueGeneratedNever();
             builder.Property(city => city.Name).HasMaxLength(255).IsRequired();
 
             builder.HasMany<ApplicationUser>().WithOne().HasForeignKey(u => u.CityId);
