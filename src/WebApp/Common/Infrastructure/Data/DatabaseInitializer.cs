@@ -6,7 +6,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Infrastructure.Identity;
-using System.Text;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -31,12 +30,12 @@ namespace Infrastructure.Data
 
                 await MigrateDatabaseAsync(dataContext, identityContext, logger);
                 await SeedStaticData(dataContext, roleManager, logger);
-                await SeedAdmin(userManager, configuration, identityContext, dataContext);
+                await SeedAdmin(userManager, configuration, dataContext, logger);
 
                 if (environment.IsDevelopment())
                 {
                     // seed test records
-                    await AddTestUsers(userManager, dataContext, configuration);
+                    await AddTestUsers(userManager, dataContext, configuration, logger);
                 }
             }
             catch (Exception ex)
@@ -60,187 +59,232 @@ namespace Infrastructure.Data
 
         private static async Task SeedStaticData(DataContext dataContext, RoleManager<IdentityRole> roleManager, ILogger<DatabaseInitializer> logger)
         {
+            await SeedCountriesAndCities(dataContext, logger);
+            await SeedRoles(roleManager, logger);
+        }
+
+        private static async Task SeedCountriesAndCities(DataContext dataContext, ILogger<DatabaseInitializer> logger)
+        {
             try
             {
-                await dataContext.Database.MigrateAsync();
-                await SeedCountriesAndCities(dataContext);
-
-                if (!roleManager.Roles.Any())
+                if (!await dataContext.Countries.AnyAsync(c => c.Code == "EG"))
                 {
-                    await SeedRoles(roleManager);
-                }
+                    var egypt = new Country
+                    {
+                        Name = "Egypt",
+                        Code = "EG",
+                        Language = "ar",
+                        Regions =
+                        [
+                            new Region
+                            {
+                                Name = "Cairo",
+                                Cities =
+                                [
+                                    new City { Name = "Nasr City" },
+                                    new City { Name = "Heliopolis" },
+                                    new City { Name = "Maadi" },
+                                    new City { Name = "Downtown Cairo" }
+                                ]
+                            },
+                            new Region
+                            {
+                                Name = "Alexandria",
+                                Cities =
+                                [
+                                    new City { Name = "Montaza" },
+                                    new City { Name = "Sidi Gaber" },
+                                    new City { Name = "Smouha" },
+                                    new City { Name = "Mansheya" }
+                                ]
+                            },
+                            new Region
+                            {
+                                Name = "Giza",
+                                Cities =
+                                [
+                                    new City { Name = "Dokki" },
+                                    new City { Name = "Mohandessin" },
+                                    new City { Name = "Haram" },
+                                    new City { Name = "Sheikh Zayed" }
+                                ]
+                            }
+                        ]
+                    };
 
+                    await dataContext.Countries.AddAsync(egypt);
+                    await dataContext.SaveChangesAsync();
+                }
             }
             catch (Exception ex)
             {
-                logger.LogError(ex, "An error occurred during seeding static data");
+                logger.LogError(ex, "An error occurred while seeding countries, regions and cities.");
             }
         }
 
-        private static async Task SeedCountriesAndCities(DataContext dataContext)
+        private static async Task SeedAdmin(UserManager<IdentityUser> userManager, IConfiguration configuration, DataContext dataContext, ILogger<DatabaseInitializer> logger)
         {
-            if (!await dataContext.Cities.AnyAsync())
+            try
             {
-                string scriptsPath = Directory.GetCurrentDirectory();
-
-                scriptsPath = scriptsPath[..scriptsPath.LastIndexOf("src")];
-
-                scriptsPath = Path.Combine(scriptsPath, "scripts");
-
-                scriptsPath = Path.Combine(scriptsPath, "CitySeedingScripts");
-
-                foreach (var filePath in Directory.GetFiles(scriptsPath))
+                if (!await userManager.Users.AnyAsync(u => u.Email == configuration["AdminCred:Email"]))
                 {
-                    StreamReader streamReader = new(filePath);
-
-                    while (!streamReader.EndOfStream)
+                    IdentityUser admin = new()
                     {
-                        StringBuilder script = new();
+                        UserName = configuration["AdminCred:Email"],
+                        Email = configuration["AdminCred:Email"]
+                    };
 
-                        while(script.Length < 200000 && !streamReader.EndOfStream)
-                        {
-                            script.AppendLine(streamReader.ReadLine());
-                        }
+                    await userManager.CreateAsync(admin, configuration["AdminCred:Password"]);
 
-                        // this mechanism is vulnerable to sql injection, but the files are on the server (the attacker needs to access the files)
-                        // for now it's okay, but needs to be changed in the future
-                        await dataContext.Database.ExecuteSqlRawAsync(script.ToString());
+                    await userManager.AddToRoleAsync(admin, RolesNameValues.Admin);
+                    await userManager.AddToRoleAsync(admin, RolesNameValues.User);
+                    await userManager.AddToRoleAsync(admin, RolesNameValues.Moderator);
+
+                    City city = await dataContext.Cities.FirstOrDefaultAsync() ?? throw new Exception("No cities found in the database. Please ensure that countries and cities are seeded before seeding the admin user.");
+
+                    ApplicationUser adminAppUser = new()
+                    {
+                        IdentityId = admin.Id,
+                        FirstName = "Admin",
+                        LastName = "",
+                        ProfilePictureUrl = "",
+                        Sex = 'm',
+                        Bio = "hello there",
+                        CityId = city.Id
+                    };
+
+                    await dataContext.ApplicationUsers.AddAsync(adminAppUser);
+                    await dataContext.SaveChangesAsync();
+                }
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, "An error occurred while seeding the admin user.");
+            }
+        }
+
+        private static async Task SeedRoles(RoleManager<IdentityRole> roleManager, ILogger<DatabaseInitializer> logger)
+        {
+            try
+            {
+                if (!roleManager.Roles.Any())
+                {
+                    var roles = new List<IdentityRole>
+                    {
+                        new() {Name = RolesNameValues.Admin},
+                        new() {Name = RolesNameValues.Moderator},
+                        new() {Name = RolesNameValues.User}
+                    };
+
+                    foreach (var role in roles)
+                    {
+                        await roleManager.CreateAsync(role);
                     }
                 }
             }
-        }
-
-        private static async Task SeedAdmin(UserManager<IdentityUser> userManager, IConfiguration configuration, IdentityDatabaseContext identityContext, DataContext dataContext)
-        {
-            if(!await userManager.Users.AnyAsync(u => u.Email == configuration["AdminCred:Email"]))
+            catch (Exception ex)
             {
-                IdentityUser admin = new()
-                {
-                    UserName = configuration["AdminCred:Email"],
-                    Email = configuration["AdminCred:Email"]
-                };
-
-                await userManager.CreateAsync(admin, configuration["AdminCred:Password"]);
-
-                await userManager.AddToRoleAsync(admin, RolesNameValues.Admin);
-                await userManager.AddToRoleAsync(admin, RolesNameValues.User);
-                await userManager.AddToRoleAsync(admin, RolesNameValues.Moderator);
-
-                ApplicationUser adminAppUser = new() { 
-                    IdentityId = admin.Id,
-                    FirstName = "Admin",
-                    LastName = "",
-                    ProfilePictureUrl = "",
-                    Sex = 'm',
-                    Bio = "hello there",
-                    CityId = 2000,
-                };
-
-                await dataContext.ApplicationUsers.AddAsync(adminAppUser);
-                await dataContext.SaveChangesAsync();
+                logger.LogError(ex, "An error occurred while seeding roles.");
             }
         }
 
-        private static async Task SeedRoles(RoleManager<IdentityRole> roleManager)
+        private static async Task AddTestUsers(UserManager<IdentityUser> userManager, DataContext dataContext, IConfiguration configuration, ILogger<DatabaseInitializer> logger)
         {
-            if (!roleManager.Roles.Any())
+            try
             {
-                var roles = new List<IdentityRole>
-                {
-                    new() {Name = RolesNameValues.Admin},
-                    new() {Name = RolesNameValues.Moderator},
-                    new() {Name = RolesNameValues.User}
-                };
+                if (await userManager.Users.AnyAsync(u => u.Email != configuration["AdminCred:Email"])) return;
 
-                foreach (var role in roles)
-                {
-                    await roleManager.CreateAsync(role);
-                }
-            }
-        }
+                Random random = new();
 
-        private static async Task AddTestUsers(UserManager<IdentityUser> userManager, DataContext dataContext, IConfiguration configuration)
-        {
-            if (await userManager.Users.AnyAsync(u => u.Email != configuration["AdminCred:Email"])) return;
-
-            Random random = new();
-            for (int i = 0; i < 100; i++)
-            {
-                // Generate Idneity User
-                var testIdentityUsers = new Faker<IdentityUser>()
-                    .RuleFor(u => u.UserName, (f, u) => $"user{i}@test")
-                    .RuleFor(u => u.Email, (f, u) => $"user{i}@test")
-                    .RuleFor(u => u.SecurityStamp, (f, u) => Guid.NewGuid().ToString());
-
-                var identityUser = testIdentityUsers.Generate();
-                await userManager.CreateAsync(identityUser, "Pwd12345");
-                await userManager.AddToRoleAsync(identityUser, RolesNameValues.User);
-
-                // Generate application user
-                var testApplicationUser = new Faker<ApplicationUser>()
-                            .RuleFor(u => u.ProfilePictureUrl, f => f.Internet.Avatar())
-                            .RuleFor(u => u.Sex, f => f.PickRandom(new List<char>() { 'f', 'm' }))
-                            .RuleFor(u => u.FirstName, (f, u) => f.Name.FirstName((u.Sex == 'm') ? Bogus.DataSets.Name.Gender.Male : Bogus.DataSets.Name.Gender.Female))
-                            .RuleFor(u => u.LastName, (f, u) => f.Name.LastName(Bogus.DataSets.Name.Gender.Male))
-                            .RuleFor(u => u.Bio, f => f.Lorem.Paragraph())
-                            .RuleFor(u => u.CityId, f => f.Random.Number(1, 100000))
-                            .RuleFor(u => u.DateOfBirth, f => f.Date.Past(refDate: DateTime.UtcNow.AddYears(-18), yearsToGoBack: 70))
-                            .RuleFor(u => u.LastActive, f => f.Date.BetweenOffset(DateTimeOffset.UtcNow, DateTimeOffset.UtcNow.AddDays(-30)).DateTime)
-                            .RuleFor(u => u.Created, f => f.Date.Past(refDate: DateTime.UtcNow.AddMonths(-7), yearsToGoBack: 2));
-
-                var applicationUser = testApplicationUser.Generate();
-                applicationUser.IdentityId = identityUser.Id;
-
-                await dataContext.ApplicationUsers.AddAsync(applicationUser);
-
-                await dataContext.SaveChangesAsync();
-
-                // Add some posts to that user
-                Faker<Post> postsFaker = new Faker<Post>()
-                    .RuleFor(p => p.Content, f => f.Lorem.Paragraph())
-                    .RuleFor(p => p.DatePosted, f => f.Date.Past(3))
-                    .RuleFor(p =>p.DateEdited, f => f.Date.Recent(30));
+                var cities = await dataContext.Cities.ToListAsync();
                 
-                int randomNumber = random.Next(0, 101);
-                List<Post> fakePosts = postsFaker.Generate(randomNumber);
-
-                foreach (var post in fakePosts)
+                if (cities.Count == 0)
                 {
-                    post.UserId = applicationUser.Id;
-                    dataContext.Posts.Add(post);
-                    dataContext.SaveChanges();
+                    throw new Exception("No cities found in the database. Please ensure that countries and cities are seeded before adding test users.");
                 }
 
-            }
-
-            // add all users as friends to user1
-            if (dataContext.Friends.Any()) return;
-            var firstIdentityUser = await userManager.Users.Where(u => u.Email == "user1@test").FirstOrDefaultAsync();
-            var applicationUsers = await dataContext.ApplicationUsers.ToListAsync();
-            var firstUser = applicationUsers.Where(u => u.IdentityId ==  firstIdentityUser.Id).FirstOrDefault();    
-
-            if(firstUser is not null)
-            {
-                foreach (var user in applicationUsers)
+                for (int i = 0; i < 100; i++)
                 {
-                    if(user.IdentityId != firstIdentityUser.Id)
+                    // Generate Idneity User
+                    var testIdentityUsers = new Faker<IdentityUser>()
+                        .RuleFor(u => u.UserName, (f, u) => $"user{i}@test")
+                        .RuleFor(u => u.Email, (f, u) => $"user{i}@test")
+                        .RuleFor(u => u.SecurityStamp, (f, u) => Guid.NewGuid().ToString());
+
+                    var identityUser = testIdentityUsers.Generate();
+                    await userManager.CreateAsync(identityUser, "Pwd12345");
+                    await userManager.AddToRoleAsync(identityUser, RolesNameValues.User);
+
+                    // Generate application user
+                    var testApplicationUser = new Faker<ApplicationUser>()
+                                .RuleFor(u => u.ProfilePictureUrl, f => f.Internet.Avatar())
+                                .RuleFor(u => u.Sex, f => f.PickRandom(new List<char>() { 'f', 'm' }))
+                                .RuleFor(u => u.FirstName, (f, u) => f.Name.FirstName((u.Sex == 'm') ? Bogus.DataSets.Name.Gender.Male : Bogus.DataSets.Name.Gender.Female))
+                                .RuleFor(u => u.LastName, (f, u) => f.Name.LastName(Bogus.DataSets.Name.Gender.Male))
+                                .RuleFor(u => u.Bio, f => f.Lorem.Paragraph())
+                                .RuleFor(u => u.CityId, f => f.PickRandom(cities).Id)
+                                .RuleFor(u => u.DateOfBirth, f => f.Date.Past(refDate: DateTime.UtcNow.AddYears(-18), yearsToGoBack: 70))
+                                .RuleFor(u => u.LastActive, f => f.Date.BetweenOffset(DateTimeOffset.UtcNow, DateTimeOffset.UtcNow.AddDays(-30)).DateTime)
+                                .RuleFor(u => u.Created, f => f.Date.Past(refDate: DateTime.UtcNow.AddMonths(-7), yearsToGoBack: 2));
+
+                    var applicationUser = testApplicationUser.Generate();
+                    applicationUser.IdentityId = identityUser.Id;
+
+                    await dataContext.ApplicationUsers.AddAsync(applicationUser);
+
+                    await dataContext.SaveChangesAsync();
+
+                    // Add some posts to that user
+                    Faker<Post> postsFaker = new Faker<Post>()
+                        .RuleFor(p => p.Content, f => f.Lorem.Paragraph())
+                        .RuleFor(p => p.DatePosted, f => f.Date.Past(3))
+                        .RuleFor(p => p.DateEdited, f => f.Date.Recent(30));
+
+                    int randomNumber = random.Next(0, 101);
+                    List<Post> fakePosts = postsFaker.Generate(randomNumber);
+
+                    foreach (var post in fakePosts)
                     {
-
-                        await dataContext.Friends.AddAsync(new Friend()
-                        {
-                            UserId = firstUser.Id,
-                            FriendId = user.Id
-                        });
-
-                        await dataContext.Friends.AddAsync(new Friend()
-                        {
-                            UserId = user.Id,
-                            FriendId = firstUser.Id
-                        });
+                        post.UserId = applicationUser.Id;
+                        dataContext.Posts.Add(post);
+                        dataContext.SaveChanges();
                     }
+
                 }
 
-                await dataContext.SaveChangesAsync();
+                // add all users as friends to user1
+                if (dataContext.Friends.Any()) return;
+                var firstIdentityUser = await userManager.Users.Where(u => u.Email == "user1@test").FirstOrDefaultAsync();
+                var applicationUsers = await dataContext.ApplicationUsers.ToListAsync();
+                var firstUser = applicationUsers.Where(u => u.IdentityId == firstIdentityUser.Id).FirstOrDefault();
+
+                if (firstUser is not null)
+                {
+                    foreach (var user in applicationUsers)
+                    {
+                        if (user.IdentityId != firstIdentityUser.Id)
+                        {
+
+                            await dataContext.Friends.AddAsync(new Friend()
+                            {
+                                UserId = firstUser.Id,
+                                FriendId = user.Id
+                            });
+
+                            await dataContext.Friends.AddAsync(new Friend()
+                            {
+                                UserId = user.Id,
+                                FriendId = firstUser.Id
+                            });
+                        }
+                    }
+
+                    await dataContext.SaveChangesAsync();
+                }
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, "An error occurred while adding test users.");
             }
         }
     }
