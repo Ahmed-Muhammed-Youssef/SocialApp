@@ -11,12 +11,14 @@ namespace Infrastructure.Data.Configurations
             builder.HasKey(country => country.Id);
 
             // Properties
-            builder.Property(country => country.Id).IsRequired().ValueGeneratedNever();
             builder.Property(country => country.Name).HasMaxLength(255).IsRequired();
             builder.Property(country => country.Code).HasMaxLength(2).IsRequired();
             builder.Property(country => country.Language).HasMaxLength(3).IsRequired();
 
-            builder.HasMany<Region>().WithOne().HasForeignKey(region => region.CountryId).OnDelete(DeleteBehavior.Cascade);
+            builder.HasMany(c => c.Regions)
+                .WithOne()
+                .HasForeignKey(region => region.CountryId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

@@ -4,6 +4,7 @@ using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20250909124013_DropCountriesTables")]
+    partial class DropCountriesTables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -67,32 +70,7 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CityId");
-
                     b.ToTable("ApplicationUsers");
-                });
-
-            modelBuilder.Entity("Domain.Entities.City", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
-
-                    b.Property<int>("RegionId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RegionId");
-
-                    b.ToTable("Cities");
                 });
 
             modelBuilder.Entity("Domain.Entities.Connection", b =>
@@ -111,34 +89,6 @@ namespace Infrastructure.Migrations
                     b.HasIndex("GroupName");
 
                     b.ToTable("Connections");
-                });
-
-            modelBuilder.Entity("Domain.Entities.Country", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Code")
-                        .IsRequired()
-                        .HasMaxLength(2)
-                        .HasColumnType("nvarchar(2)");
-
-                    b.Property<string>("Language")
-                        .IsRequired()
-                        .HasMaxLength(3)
-                        .HasColumnType("nvarchar(3)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Countries");
                 });
 
             modelBuilder.Entity("Domain.Entities.Friend", b =>
@@ -283,49 +233,6 @@ namespace Infrastructure.Migrations
                     b.ToTable("Posts");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Region", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("CountryId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CountryId");
-
-                    b.ToTable("Regions");
-                });
-
-            modelBuilder.Entity("Domain.Entities.ApplicationUser", b =>
-                {
-                    b.HasOne("Domain.Entities.City", null)
-                        .WithMany()
-                        .HasForeignKey("CityId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Domain.Entities.City", b =>
-                {
-                    b.HasOne("Domain.Entities.Region", "Region")
-                        .WithMany("Cities")
-                        .HasForeignKey("RegionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Region");
-                });
-
             modelBuilder.Entity("Domain.Entities.Connection", b =>
                 {
                     b.HasOne("Domain.Entities.Group", null)
@@ -412,15 +319,6 @@ namespace Infrastructure.Migrations
                     b.Navigation("ApplicationUser");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Region", b =>
-                {
-                    b.HasOne("Domain.Entities.Country", null)
-                        .WithMany("Regions")
-                        .HasForeignKey("CountryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("Domain.Entities.ApplicationUser", b =>
                 {
                     b.Navigation("FriendRequestsReceived");
@@ -438,19 +336,9 @@ namespace Infrastructure.Migrations
                     b.Navigation("Posts");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Country", b =>
-                {
-                    b.Navigation("Regions");
-                });
-
             modelBuilder.Entity("Domain.Entities.Group", b =>
                 {
                     b.Navigation("Connections");
-                });
-
-            modelBuilder.Entity("Domain.Entities.Region", b =>
-                {
-                    b.Navigation("Cities");
                 });
 #pragma warning restore 612, 618
         }
