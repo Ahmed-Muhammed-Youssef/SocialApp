@@ -1,8 +1,10 @@
-﻿namespace API;
+﻿using Infrastructure.Services;
+
+namespace API;
 
 public static class DependecyInjection
 {
-    public static WebApplicationBuilder AddGenericServices(this WebApplicationBuilder builder)
+    public static IHostApplicationBuilder AddGenericServices(this IHostApplicationBuilder builder)
     {
         builder.Services.AddControllers();
         builder.Services.AddMemoryCache();
@@ -23,29 +25,11 @@ public static class DependecyInjection
             PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
         });
         builder.Services.AddScoped<LogUserActivity>();
+        builder.Services.AddSignalR();
 
         return builder;
     }
-    public static WebApplicationBuilder AddDatabase(this WebApplicationBuilder builder)
-    {
-        builder.Services.AddDbContext<DataContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("AppConnection")));
-        builder.Services.AddDbContext<IdentityDatabaseContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("IdentityConnection")));
-
-        return builder;
-    }
-    public static WebApplicationBuilder AddRespositories(this WebApplicationBuilder builder)
-    {
-        // Repositories
-        builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
-        builder.Services.AddScoped<ICachedApplicationUserRepository, CachedUserRepository>();
-        builder.Services.AddScoped<IApplicationUserRepository, ApplicationUserRepository>();
-        builder.Services.AddScoped<IPictureRepository, PictureRepository>();
-        builder.Services.AddScoped<IMessageRepository, MessageRepository>();
-        builder.Services.AddScoped<IFriendRequestRepository, FriendRequestsRepository>();
-        builder.Services.AddScoped<IPostRepository, PostRepository>();
-        return builder;
-    }
-    public static WebApplicationBuilder AddIdentity(this WebApplicationBuilder builder)
+    public static IHostApplicationBuilder AddIdentity(this IHostApplicationBuilder builder)
     {
         builder.Services.AddIdentityCore<IdentityUser>(opt =>
         {
@@ -96,20 +80,6 @@ public static class DependecyInjection
         builder.Services.AddScoped<ITokenService, TokenService>();
         builder.Services.AddScoped<IGoogleAuthService, GoogleAuthService>();
         builder.Services.AddScoped<PasswordGenerationService>();
-
-        return builder;
-    }
-    public static WebApplicationBuilder AddSignalR(this WebApplicationBuilder builder)
-    {
-        builder.Services.AddSingleton<OnlinePresenceManager>();
-        builder.Services.AddSignalR();
-
-        return builder;
-    }
-    public static WebApplicationBuilder AddPictureStorage(this WebApplicationBuilder builder)
-    {
-        builder.Services.Configure<CloudinarySettings>(builder.Configuration.GetSection("Cloudinary"));
-        builder.Services.AddScoped<IPictureService, PictureService>();
 
         return builder;
     }

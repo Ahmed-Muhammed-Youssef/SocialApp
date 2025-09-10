@@ -1,14 +1,12 @@
 using API;
+using Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder
-    .AddPictureStorage()
-    .AddSignalR()
-    .AddDatabase()
-    .AddRespositories()
     .AddGenericServices()
-    .AddIdentity();
+    .AddIdentity()
+    .AddInfrastructureServices();
 
 var app = builder.Build();
 

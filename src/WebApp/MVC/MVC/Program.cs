@@ -1,3 +1,4 @@
+using Infrastructure;
 using Infrastructure.Data;
 using MVC;
 using MVC.Hubs;
@@ -5,12 +6,10 @@ using MVC.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.AddSignalR()
-    .AddDatabase()
-    .AddRepositories()
+builder
     .AddGenericServices()
     .AddIdentity()
-    .AddPictureStorage();
+    .AddInfrastructureServices();
 
 var app = builder.Build();
 
