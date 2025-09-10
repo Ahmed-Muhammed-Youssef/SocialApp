@@ -1,26 +1,25 @@
-﻿namespace API.Middleware
+﻿namespace API.Middleware;
+
+public class ExceptionMiddleware(RequestDelegate next, ILogger<ExceptionMiddleware> logger, IHostEnvironment env, JsonSerializerOptions jsonOptions)
 {
-    public class ExceptionMiddleware(RequestDelegate next, ILogger<ExceptionMiddleware> logger, IHostEnvironment env, JsonSerializerOptions jsonOptions)
+    public async Task InvokeAsync(HttpContext httpContext)
     {
-        public async Task InvokeAsync(HttpContext httpContext)
+        try
         {
-            try
-            {
-                await next(httpContext);
-            }
-            catch (Exception ex)
-            {
-                logger.LogError("Error Message: {exceptionMessage}, Time of occurence {time}", ex.Message, DateTime.UtcNow);
-                httpContext.Response.ContentType = "application/json";
-                httpContext.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+            await next(httpContext);
+        }
+        catch (Exception ex)
+        {
+            logger.LogError("Error Message: {exceptionMessage}, Time of occurence {time}", ex.Message, DateTime.UtcNow);
+            httpContext.Response.ContentType = "application/json";
+            httpContext.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
 
-                ApiException response = env.IsDevelopment() ? new ApiException(httpContext.Response.StatusCode, ex.Message, ex.StackTrace?.ToString())
-                    : new ApiException(httpContext.Response.StatusCode, "Internal Server Error");
+            ApiException response = env.IsDevelopment() ? new ApiException(httpContext.Response.StatusCode, ex.Message, ex.StackTrace?.ToString())
+                : new ApiException(httpContext.Response.StatusCode, "Internal Server Error");
 
-                string json = JsonSerializer.Serialize(response, jsonOptions);
+            string json = JsonSerializer.Serialize(response, jsonOptions);
 
-                await httpContext.Response.WriteAsync(json);
-            }
+            await httpContext.Response.WriteAsync(json);
         }
     }
 }
