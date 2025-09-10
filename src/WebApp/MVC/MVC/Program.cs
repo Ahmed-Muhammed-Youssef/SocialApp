@@ -1,69 +1,16 @@
-using Application.Interfaces;
-using Application.Interfaces.Repositories;
-using Application.Interfaces.Services;
-using Domain.Constants;
 using Infrastructure.Data;
-using Infrastructure.ExternalServices.Cloudinary;
-using Infrastructure.Identity;
-using Infrastructure.MappingProfiles;
-using Infrastructure.RealTime.Presence;
-using Infrastructure.Repositories;
-using Infrastructure.Repositories.CachedRepositories;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using MVC.Factories;
+using MVC;
 using MVC.Hubs;
 using MVC.Middleware;
 
-
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddDbContext<DataContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("AppConnection")));
-builder.Services.AddDbContext<IdentityDatabaseContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("IdentityConnection")));
-
-builder.Services.AddDefaultIdentity<IdentityUser>(opt =>
-{
-    opt.Password.RequireNonAlphanumeric = false;
-    opt.SignIn.RequireConfirmedAccount = false;
-})
-.AddRoles<IdentityRole>()
-.AddRoleManager<RoleManager<IdentityRole>>()
-.AddSignInManager<SignInManager<IdentityUser>>()
-.AddRoleValidator<RoleValidator<IdentityRole>>()
-.AddEntityFrameworkStores<IdentityDatabaseContext>();
-
-builder.Services.AddScoped<IUserClaimsPrincipalFactory<IdentityUser>, ApplicationUserClaimsPrincipalFactory<IdentityUser, IdentityRole>>();
-
-builder.Services.AddAuthorizationBuilder()
-.AddPolicy("RequireAdminRole", policy => policy.RequireRole(RolesNameValues.Admin))
-.AddPolicy("RequireModeratorOrAdmin", policy => policy.RequireRole(RolesNameValues.Admin, RolesNameValues.Moderator));
-
-builder.Services.AddAntiforgery(options =>
-{
-    options.FormFieldName = "AntiforgeryFieldname";
-    options.HeaderName = "X-CSRF-TOKEN-HEADERNAME";
-    options.SuppressXFrameOptionsHeader = false;
-});
-
-// Add services to the container.
-builder.Services.AddControllersWithViews();
-
-builder.Services.AddRazorPages();
-
-// Repositories
-builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
-builder.Services.AddScoped<ICachedApplicationUserRepository, CachedUserRepository>();
-builder.Services.AddScoped<IApplicationUserRepository, ApplicationUserRepository>();
-builder.Services.AddScoped<IPictureRepository, PictureRepository>();
-builder.Services.AddScoped<IMessageRepository, MessageRepository>();
-builder.Services.AddScoped<IFriendRequestRepository, FriendRequestsRepository>();
-builder.Services.AddScoped<IPostRepository, PostRepository>();
-
-builder.Services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
-builder.Services.AddScoped<IPictureService, PictureService>();
-builder.Services.AddSignalR();
-
-builder.Services.AddSingleton<OnlinePresenceManager>();
+builder.AddSignalR()
+    .AddDatabase()
+    .AddRepositories()
+    .AddGenericServices()
+    .AddIdentity()
+    .AddPictureStorage();
 
 var app = builder.Build();
 
