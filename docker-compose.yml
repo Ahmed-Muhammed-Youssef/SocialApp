@@ -3,7 +3,7 @@ services:
     image: ${DOCKER_REGISTRY-}api
     build:
       context: .
-      dockerfile: src/WebApp/API/API/Dockerfile
+      dockerfile: src/WebApp/API/Dockerfile
     depends_on:
       - app-db
     networks:
@@ -13,7 +13,7 @@ services:
     image: ${DOCKER_REGISTRY-}mvc
     build:
       context: .
-      dockerfile: src/WebApp/MVC/MVC/Dockerfile
+      dockerfile: src/WebApp/MVC/Dockerfile
     depends_on:
       - app-db
     networks:
