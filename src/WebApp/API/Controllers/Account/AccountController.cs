@@ -1,4 +1,5 @@
 ﻿using API.Controllers.Account.Requests;
+using API.Controllers.Account.Responses;
 
 namespace API.Controllers.Account;
 
@@ -73,7 +74,7 @@ public class AccountController(IUnitOfWork unitOfWork, UserManager<IdentityUser>
         UserDTO userData = mapper.Map<UserDTO>(newApplicationUser);
 
         return CreatedAtAction("Register", new { email = registerRequest.Email },
-            new TokenDTO()
+            new AuthResponse()
             {
                 UserData = userData,
                 Token = await tokenService.CreateTokenAsync(newIdentityUser, userData.Id)
@@ -82,13 +83,13 @@ public class AccountController(IUnitOfWork unitOfWork, UserManager<IdentityUser>
 
     // POST: api/account/login
     [HttpPost("login")]
-    public async Task<ActionResult<TokenDTO>> Login(LoginDTO loginCredentials)
+    public async Task<ActionResult<AuthResponse>> Login(LoginRequest loginRequest)
     {
         if (!ModelState.IsValid)
         {
-            return BadRequest(loginCredentials);
+            return BadRequest(loginRequest);
         }
-        var user = await userManager.Users.FirstOrDefaultAsync(u => u.Email == loginCredentials.Email);
+        var user = await userManager.Users.FirstOrDefaultAsync(u => u.Email == loginRequest.Email);
 
         if (user == null)
         {
@@ -96,7 +97,7 @@ public class AccountController(IUnitOfWork unitOfWork, UserManager<IdentityUser>
         }
 
         Microsoft.AspNetCore.Identity.SignInResult signInResult = await signInManager
-            .CheckPasswordSignInAsync(user, loginCredentials.Password, lockoutOnFailure: false);
+            .CheckPasswordSignInAsync(user, loginRequest.Password, lockoutOnFailure: false);
 
         if (!signInResult.Succeeded)
         {
@@ -105,7 +106,7 @@ public class AccountController(IUnitOfWork unitOfWork, UserManager<IdentityUser>
 
         UserDTO userData = await unitOfWork.ApplicationUserRepository.GetDtoByIdentityId(user.Id);
 
-        return Ok(new TokenDTO()
+        return Ok(new AuthResponse()
         {
             UserData = userData,
             Token = await tokenService.CreateTokenAsync(user, userData.Id)
