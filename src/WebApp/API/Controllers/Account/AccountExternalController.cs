@@ -1,4 +1,6 @@
-﻿namespace API.Controllers;
+﻿using API.Controllers.Account.Responses;
+
+namespace API.Controllers.Account;
 
 [Route("api/[controller]")]
 [ApiController]
@@ -55,7 +57,7 @@ public class AccountExternalController(IGoogleAuthService _googleAuthService, Us
             userDTO = await unitOfWork.ApplicationUserRepository.GetDtoByIdentityId(identityUser.Id);
         }
 
-        return Ok(new TokenDTO()
+        return Ok(new AuthResponse()
         {
             UserData = userDTO,
             Token = await tokenService.CreateTokenAsync(identityUser, userDTO.Id)
