@@ -1,4 +1,6 @@
-﻿namespace API.Controllers;
+﻿using API.Controllers.Account.Requests;
+
+namespace API.Controllers.Account;
 
 [Route("api/[controller]")]
 [ApiController]
@@ -7,7 +9,7 @@ public class AccountController(IUnitOfWork unitOfWork, UserManager<IdentityUser>
 {
     // POST: api/account/register
     [HttpPost("register")]
-    public async Task<ActionResult> Register(RegisterDTO accountDTO)
+    public async Task<ActionResult> Register(RegisterRequest registerRequest)
     {
 
         if (!ModelState.IsValid)
@@ -15,19 +17,19 @@ public class AccountController(IUnitOfWork unitOfWork, UserManager<IdentityUser>
             return BadRequest(ModelState);
         }
 
-        if (await userManager.Users.AnyAsync(u => u.Email == accountDTO.Email))
+        if (await userManager.Users.AnyAsync(u => u.Email == registerRequest.Email))
         {
             return BadRequest("The Email is already taken.");
         }
 
         IdentityUser newIdentityUser = new()
         {
-            UserName = accountDTO.Email,
-            Email = accountDTO.Email
+            UserName = registerRequest.Email,
+            Email = registerRequest.Email
         };
 
         // Create Identity User
-        var result = await userManager.CreateAsync(newIdentityUser, accountDTO.Password);
+        var result = await userManager.CreateAsync(newIdentityUser, registerRequest.Password);
 
         if (!result.Succeeded)
         {
@@ -45,14 +47,18 @@ public class AccountController(IUnitOfWork unitOfWork, UserManager<IdentityUser>
 
         // Create application user
 
-        ApplicationUser newApplicationUser = new();
+        ApplicationUser newApplicationUser = new()
+        {
+            FirstName = registerRequest.FirstName,
+            LastName = registerRequest.LastName,
+            Sex = registerRequest.Sex,
+            DateOfBirth = registerRequest.DateOfBirth,
+            CityId = registerRequest.CityId,
+            IdentityId = newIdentityUser.Id
+        };
         
         try
         {
-            mapper.Map(accountDTO, newApplicationUser);
-
-            newApplicationUser.IdentityId = newIdentityUser.Id;
-
             await unitOfWork.ApplicationUserRepository.AddAsync(newApplicationUser);
 
             await unitOfWork.SaveChangesAsync();
@@ -66,7 +72,7 @@ public class AccountController(IUnitOfWork unitOfWork, UserManager<IdentityUser>
 
         UserDTO userData = mapper.Map<UserDTO>(newApplicationUser);
 
-        return CreatedAtAction("Register", new { email = accountDTO.Email },
+        return CreatedAtAction("Register", new { email = registerRequest.Email },
             new TokenDTO()
             {
                 UserData = userData,

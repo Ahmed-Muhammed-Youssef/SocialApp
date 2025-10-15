@@ -4,7 +4,6 @@ using Application.DTOs.Post;
 using Application.DTOs.User;
 using Domain.Entities;
 using AutoMapper;
-using Application.DTOs.Registeration;
 using Shared.Extensions;
 
 namespace Infrastructure.MappingProfiles
@@ -19,8 +18,6 @@ namespace Infrastructure.MappingProfiles
             CreateMap<Picture, PictureDTO>();
             
             CreateMap<UpdatedUserDTO, ApplicationUser>();
-
-            CreateMap<RegisterDTO, ApplicationUser>();
             
             // @TODO: add profile picture mapping here
             CreateMap<Message, MessageDTO>().ForMember(m => m.SenderPhotoUrl, opt => opt.MapFrom(m => m.Sender.Pictures.FirstOrDefault().Url));
