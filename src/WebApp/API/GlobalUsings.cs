@@ -34,7 +34,6 @@ global using Application.DTOs.Post;
 global using Application.DTOs.Message;
 global using Application.DTOs.Picture;
 global using Application.DTOs.Pagination;
-global using Application.DTOs.Registeration;
 
 global using API.Extensions;
 global using API.Filters;
