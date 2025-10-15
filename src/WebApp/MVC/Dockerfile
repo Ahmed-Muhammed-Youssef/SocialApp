@@ -12,7 +12,12 @@ EXPOSE 8081
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
+COPY ["SocialApp/Directory.Packages.props", "SocialApp/"]
 COPY ["SocialApp/src/WebApp/MVC/MVC.csproj", "SocialApp/src/WebApp/MVC/"]
+COPY ["SocialApp/src/WebApp/Common/Infrastructure/Infrastructure.csproj", "SocialApp/src/WebApp/Common/Infrastructure/"]
+COPY ["SocialApp/src/WebApp/Common/Application/Application.csproj", "SocialApp/src/WebApp/Common/Application/"]
+COPY ["SocialApp/src/WebApp/Common/Domain/Domain.csproj", "SocialApp/src/WebApp/Common/Domain/"]
+COPY ["SocialApp/src/WebApp/Common/Shared/Shared.csproj", "SocialApp/src/WebApp/Common/Shared/"]
 RUN dotnet restore "./SocialApp/src/WebApp/MVC/MVC.csproj"
 COPY . .
 WORKDIR "/src/SocialApp/src/WebApp/MVC"
