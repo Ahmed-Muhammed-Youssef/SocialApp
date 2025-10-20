@@ -1,6 +1,6 @@
-﻿using Domain.Constants;
+﻿using Application.MappingProfiles;
+using Domain.Constants;
 using Infrastructure.Identity;
-using Infrastructure.MappingProfiles;
 using Microsoft.AspNetCore.Identity;
 using MVC.Factories;
 

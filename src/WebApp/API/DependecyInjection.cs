@@ -1,4 +1,5 @@
-﻿using Infrastructure.Services;
+﻿using Application.MappingProfiles;
+using Infrastructure.Services;
 
 namespace API;
 

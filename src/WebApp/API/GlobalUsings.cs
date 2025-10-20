@@ -34,6 +34,7 @@ global using Application.DTOs.Post;
 global using Application.DTOs.Message;
 global using Application.DTOs.Picture;
 global using Application.DTOs.Pagination;
+global using Application.MappingProfiles;
 
 global using API.Extensions;
 global using API.Filters;
@@ -46,7 +47,6 @@ global using Domain.Entities;
 global using Domain.Constants;
 
 global using Infrastructure.Data;
-global using Infrastructure.MappingProfiles;
 global using Infrastructure.ExternalServices.Google;
 global using Infrastructure.Identity;
 global using Infrastructure.RealTime.Presence;

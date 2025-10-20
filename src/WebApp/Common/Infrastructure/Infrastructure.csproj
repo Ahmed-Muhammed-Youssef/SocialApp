@@ -1,6 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
-    <PackageReference Include="AutoMapper" />
     <PackageReference Include="Bogus" />
     <PackageReference Include="Dapper" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design">
