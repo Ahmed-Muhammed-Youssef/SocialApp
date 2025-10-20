@@ -8,10 +8,10 @@ namespace Application.DTOs.User
         [Required]
         public int Id { get; set; }
         [Required, MaxLength(255)]
-        public string FirstName { get; set; }
+        public required string FirstName { get; set; }
         [Required, MaxLength(255)]
-        public string LastName { get; set; }
-        public string ProfilePictureUrl { get; set; }
+        public required string LastName { get; set; }
+        public string? ProfilePictureUrl { get; set; }
         [Required]
         public char Sex { get; set; }
         [Required]
@@ -21,7 +21,7 @@ namespace Application.DTOs.User
         [Required]
         public DateTime LastActive { get; set; }
         [Required]
-        public string Bio { get; set; }
-        public IEnumerable<PictureDTO> Pictures { get; set; }
+        public required string Bio { get; set; }
+        public IEnumerable<PictureDTO> Pictures { get; set; } = [];
     }
 }

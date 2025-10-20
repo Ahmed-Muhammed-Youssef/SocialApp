@@ -4,7 +4,7 @@ namespace API.Controllers.Account.Responses;
 
 public record AuthResponse
 {
-    public UserDTO UserData { get; init; }
+    public required UserDTO UserData { get; init; }
     [Required]
-    public string Token { get; init; }
+    public required string Token { get; init; }
 }

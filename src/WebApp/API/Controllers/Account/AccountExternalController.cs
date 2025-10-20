@@ -22,7 +22,14 @@ public class AccountExternalController(IGoogleAuthService _googleAuthService, Us
         GoogleUserInfo userInfo = await _googleAuthService.GetUserFromGoogleAsync(code);
 
         IdentityUser identityUser = await userManager.Users.Where(u => u.Email == userInfo.Email).FirstOrDefaultAsync();
-        UserDTO userDTO = new();
+
+        UserDTO userDTO = new()
+        {
+            FirstName = userInfo.Name,
+            LastName = "",
+            ProfilePictureUrl = userInfo.PictureUrl,
+            Bio = ""
+        };
 
         if (identityUser is null)
         {
@@ -48,9 +55,6 @@ public class AccountExternalController(IGoogleAuthService _googleAuthService, Us
             }
 
             // @ToDo: add the new user data [NEED PLANNING]
-
-            userDTO.FirstName = userInfo.Name;
-            userDTO.ProfilePictureUrl = userInfo.PictureUrl;
         }
         else
         {
