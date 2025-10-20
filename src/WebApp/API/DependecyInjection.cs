@@ -1,5 +1,4 @@
-﻿using Application.MappingProfiles;
-using Infrastructure.Services;
+﻿using Infrastructure.Services;
 
 namespace API;
 
@@ -27,6 +26,7 @@ public static class DependecyInjection
         });
         builder.Services.AddScoped<LogUserActivity>();
         builder.Services.AddSignalR();
+        builder.Services.AddMediator();
 
         return builder;
     }

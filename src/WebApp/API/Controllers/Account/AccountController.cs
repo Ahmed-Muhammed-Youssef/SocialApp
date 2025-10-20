@@ -1,12 +1,15 @@
 ﻿using API.Controllers.Account.Requests;
 using API.Controllers.Account.Responses;
+using Application.Features.Account.Login;
+using Mediator;
+using Shared.Results;
 
 namespace API.Controllers.Account;
 
 [Route("api/[controller]")]
 [ApiController]
 [ServiceFilter(typeof(LogUserActivity))]
-public class AccountController(IUnitOfWork unitOfWork, UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, ITokenService tokenService, IMapper mapper) : ControllerBase
+public class AccountController(IUnitOfWork unitOfWork, UserManager<IdentityUser> userManager, ITokenService tokenService, IMapper mapper, IMediator mediator) : ControllerBase
 {
     // POST: api/account/register
     [HttpPost("register")]
@@ -89,27 +92,20 @@ public class AccountController(IUnitOfWork unitOfWork, UserManager<IdentityUser>
         {
             return BadRequest(loginRequest);
         }
-        var user = await userManager.Users.FirstOrDefaultAsync(u => u.Email == loginRequest.Email);
 
-        if (user == null)
+        Result<LoginDTO> result = await mediator.Send(new LoginCommand(loginRequest.Email, loginRequest.Password));
+
+        if(result.IsSuccess)
+        {
+            return Ok(new AuthResponse()
+            {
+                UserData = result.Value.UserData,
+                Token = result.Value.Token
+            });
+        }
+        else
         {
             return Unauthorized();
         }
-
-        Microsoft.AspNetCore.Identity.SignInResult signInResult = await signInManager
-            .CheckPasswordSignInAsync(user, loginRequest.Password, lockoutOnFailure: false);
-
-        if (!signInResult.Succeeded)
-        {
-            return Unauthorized();
-        }
-
-        UserDTO userData = await unitOfWork.ApplicationUserRepository.GetDtoByIdentityId(user.Id);
-
-        return Ok(new AuthResponse()
-        {
-            UserData = userData,
-            Token = await tokenService.CreateTokenAsync(user, userData.Id)
-        });
     }
 }

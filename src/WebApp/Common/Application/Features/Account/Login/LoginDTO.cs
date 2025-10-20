@@ -2,4 +2,4 @@
 
 namespace Application.Features.Account.Login;
 
-public record LoginResult(UserDTO UserData, string Token);
+public record LoginDTO(UserDTO UserData, string Token);
