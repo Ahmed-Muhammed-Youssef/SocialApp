@@ -11,7 +11,5 @@ namespace Application.Interfaces
         IPostRepository PostRepository { get; }
         Task SaveChangesAsync();
         bool HasChanges();
-        Task CommitAsync();
-        Task RollbackAsync();
     }
 }
