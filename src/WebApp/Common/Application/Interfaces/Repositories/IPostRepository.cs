@@ -6,7 +6,7 @@ namespace Application.Interfaces.Repositories;
 
 public interface IPostRepository
 {
-    Task<Post?> GetByIdAsync(ulong postId, int requesterId);
+    Task<Post?> GetByIdAsync(ulong postId);
     Task<IEnumerable<Post>> GetUserPostsAsync(int userId, int requesterId);
     Task AddAsync(Post newPost);
     Task<PagedList<PostDTO>> GetNewsfeed(int userId, PaginationParams paginationParams);

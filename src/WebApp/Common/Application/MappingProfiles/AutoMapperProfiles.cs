@@ -24,7 +24,7 @@ public class AutoMapperProfiles : Profile
         CreateMap<Message, MessageDTO>();
         
         CreateMap<Post, PostDTO>();
-        CreateMap<AddPostDTO, Post>();
+        CreateMap<CreatePostDTO, Post>();
     }
 
 }

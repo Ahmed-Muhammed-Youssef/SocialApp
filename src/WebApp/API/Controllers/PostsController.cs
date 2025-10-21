@@ -1,42 +1,62 @@
-﻿using Application.Features.Posts;
+﻿using Application.Features.Posts.Create;
 using Application.Features.Posts.GetById;
+using Application.Features.Posts.GetByOwnerId;
 using Mediator;
+using Shared.Results;
 
 namespace API.Controllers;
-
 
 [Route("api/[controller]")]
 [ApiController]
 [Authorize]
-public class PostsController(IUnitOfWork _unitOfWork, IMapper _mapper) : ControllerBase
+public class PostsController(IMediator mediator) : ControllerBase
 {
     [HttpGet]
     public async Task<ActionResult<IEnumerable<Post>>> GetUserPostsAsync([FromQuery]int userId)
     {
-        var posts = await _unitOfWork.PostRepository.GetUserPostsAsync(userId, User.GetPublicId());
-        return Ok(posts);
+        var result = await mediator.Send(new GetPostsByOwnerIdQuery(userId));
+
+        if (result.IsSuccess)
+        {
+            return Ok(result.Value);
+        }
+        else
+        {
+            return BadRequest(result.Errors);
+        }
     }
 
     [HttpGet("{postId}")]
-    public async Task<ActionResult<IEnumerable<Post>>> GetPostByIdAsync(ulong postId)
+    public async Task<ActionResult<Post>> GetPostById(ulong postId)
     {
-        var posts = await _unitOfWork.PostRepository.GetByIdAsync(postId, User.GetPublicId());
-        return Ok(posts);
+        Result<Post> result = await mediator.Send(new GetPostByIdQuery(postId));
+
+        if (result.IsSuccess)
+        {
+            return Ok(result.Value);
+        }
+        else
+        {
+            return NotFound(result.Errors);
+        }
     }
 
     [HttpPost]
-    public async Task<ActionResult<PostDTO>> AddPost([FromBody]AddPostDTO newPostDTO)
+    public async Task<ActionResult> Create([FromBody]CreatePostDTO newPostDTO)
     {
-        Post post = _mapper.Map<Post>(newPostDTO);
-        post.UserId = User.GetPublicId();
+        if(!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
 
-        await _unitOfWork.PostRepository.AddAsync(post);
-
-        await _unitOfWork.SaveChangesAsync();
-
-        PostDTO returnPostDTO = _mapper.Map<PostDTO>(post);
-        returnPostDTO.Id = post.Id;
-
-        return Ok(returnPostDTO);
+        Result<ulong> result = await mediator.Send(new CreatePostCommand(newPostDTO.Content));
+        if (result.IsSuccess)
+        {
+            return CreatedAtAction(nameof(GetPostById), new { postId = result.Value});
+        }
+        else
+        {
+            return BadRequest(result.Errors);
+        }
     }
 }
