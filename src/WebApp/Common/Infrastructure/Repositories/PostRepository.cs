@@ -9,7 +9,7 @@ namespace Infrastructure.Repositories;
 
 public class PostRepository(DataContext _context) : IPostRepository
 {
-    public async Task<Post> GetByIdAsync(ulong postId, int requesterId)
+    public async Task<Post?> GetByIdAsync(ulong postId, int requesterId)
     {
         return await _context.Posts.Where(p => p.Id == postId).FirstOrDefaultAsync();
     }

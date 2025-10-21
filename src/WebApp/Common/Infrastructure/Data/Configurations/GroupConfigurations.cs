@@ -2,20 +2,19 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Infrastructure.Data.Configurations
+namespace Infrastructure.Data.Configurations;
+
+public class GroupConfigurations : IEntityTypeConfiguration<Group>
 {
-    public class GroupConfigurations : IEntityTypeConfiguration<Group>
+    public void Configure(EntityTypeBuilder<Group> builder)
     {
-        public void Configure(EntityTypeBuilder<Group> builder)
-        {
-            builder.HasKey(g => g.Name);
+        builder.HasKey(g => g.Name);
 
-            // properties
-            builder.Property(g => g.Name).IsRequired();
+        // properties
+        builder.Property(g => g.Name).IsRequired();
 
-            // relationships
-            builder.HasMany(g => g.Connections)
-                    .WithOne();
-        }
+        // relationships
+        builder.HasMany(g => g.Connections)
+                .WithOne();
     }
 }

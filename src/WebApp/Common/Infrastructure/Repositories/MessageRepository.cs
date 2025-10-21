@@ -43,7 +43,7 @@ public class MessageRepository(DataContext _dataContext, IMapper _mapper) : IMes
             _dataContext.Messages.Update(message);
         }
     }
-    public async Task<Message> GetMessageAsync(int messageId)
+    public async Task<Message?> GetMessageAsync(int messageId)
     {
         return await _dataContext.Messages
             .AsNoTracking()
@@ -78,21 +78,21 @@ public class MessageRepository(DataContext _dataContext, IMapper _mapper) : IMes
         _dataContext.Connections.Remove(connection);
     }
 
-    public async Task<Connection> GetConnection(string connectionId)
+    public async Task<Connection?> GetConnection(string connectionId)
     {
         return await _dataContext.Connections
             .AsNoTracking()
             .FirstOrDefaultAsync(c => c.ConnectionId == connectionId);
     }
 
-    public async Task<Group> GetGroupByName(string groupName)
+    public async Task<Group?> GetGroupByName(string groupName)
     {
         return await _dataContext.Groups
         .Include(g => g.Connections)
         .FirstOrDefaultAsync(g => g.Name == groupName);
     }
 
-    public async Task<Group> GetGroupForConnection(string connectionId)
+    public async Task<Group?> GetGroupForConnection(string connectionId)
     {
         return await _dataContext.Groups
         .AsNoTracking()

@@ -11,10 +11,10 @@ public class CachedUserRepository(IApplicationUserRepository _usersRepository, I
 {
     // Queries
 
-    public async Task<ApplicationUser> GetByIdAsync(int id)
+    public async Task<ApplicationUser?> GetByIdAsync(int id)
     {
         object key = nameof(GetByIdAsync) + id;
-        if (!_memoryCache.TryGetValue(key, out ApplicationUser result))
+        if (!_memoryCache.TryGetValue(key, out ApplicationUser? result))
         {
             result = await _usersRepository.GetByIdAsync(id);
 
@@ -24,10 +24,10 @@ public class CachedUserRepository(IApplicationUserRepository _usersRepository, I
         return result;
     }
 
-    public async Task<UserDTO> GetDtoByIdAsync(int id)
+    public async Task<UserDTO?> GetDtoByIdAsync(int id)
     {
         object key = nameof(GetDtoByIdAsync) + id;
-        if (!_memoryCache.TryGetValue(key, out UserDTO result))
+        if (!_memoryCache.TryGetValue(key, out UserDTO? result))
         {
             result = await _usersRepository.GetDtoByIdAsync(id);
 
@@ -39,6 +39,7 @@ public class CachedUserRepository(IApplicationUserRepository _usersRepository, I
 
     // Caching this mehtod will need a complex implemention
     public Task<PagedList<UserDTO>> GetUsersDTOAsync(int userId, UserParams userParams) => _usersRepository.GetUsersDTOAsync(userId, userParams);
+
     public Task<bool> IdExistsAsync(int id) => _usersRepository.IdExistsAsync(id);
 
     // Commands
@@ -48,14 +49,13 @@ public class CachedUserRepository(IApplicationUserRepository _usersRepository, I
 
     public Task AddAsync(ApplicationUser user) => _usersRepository.AddAsync(user);
 
-    public Task<UserDTO> GetDtoByIdentityId(string identityId) => _usersRepository.GetDtoByIdentityId(identityId);
+    public Task<UserDTO?> GetDtoByIdentityId(string identityId) => _usersRepository.GetDtoByIdentityId(identityId);
 
-    public Task<ApplicationUser> GetByIdentity(string identity) => _usersRepository.GetByIdentity(identity);
+    public Task<ApplicationUser?> GetByIdentity(string identity) => _usersRepository.GetByIdentity(identity);
 
     public Task<List<SimplifiedUserDTO>> GetListAsync(int[] ids) => _usersRepository.GetListAsync(ids);
     
-
-    public Task<SimplifiedUserDTO> GetSimplifiedDTOAsync(int id) => _usersRepository.GetSimplifiedDTOAsync(id);
+    public Task<SimplifiedUserDTO?> GetSimplifiedDTOAsync(int id) => _usersRepository.GetSimplifiedDTOAsync(id);
 
     public Task<PagedList<SimplifiedUserDTO>> SearchAsync(int userId, string search, UserParams userParams) => _usersRepository.SearchAsync(userId, search, userParams);
 }

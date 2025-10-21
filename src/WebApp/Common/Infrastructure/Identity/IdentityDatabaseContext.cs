@@ -1,12 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace Infrastructure.Identity
+namespace Infrastructure.Identity;
+
+public class IdentityDatabaseContext(DbContextOptions<IdentityDatabaseContext> options) : IdentityDbContext(options)
 {
-    public class IdentityDatabaseContext : IdentityDbContext
-    {
-        public IdentityDatabaseContext(DbContextOptions<IdentityDatabaseContext> options) : base(options)
-        {
-        }
-    }
 }

@@ -2,13 +2,12 @@
 using Application.DTOs.Post;
 using Domain.Entities;
 
-namespace Application.Interfaces.Repositories
+namespace Application.Interfaces.Repositories;
+
+public interface IPostRepository
 {
-    public interface IPostRepository
-    {
-        Task<Post> GetByIdAsync(ulong postId, int requesterId);
-        Task<IEnumerable<Post>> GetUserPostsAsync(int userId, int requesterId);
-        Task AddAsync(Post newPost);
-        Task<PagedList<PostDTO>> GetNewsfeed(int userId, PaginationParams paginationParams);
-    }
+    Task<Post?> GetByIdAsync(ulong postId, int requesterId);
+    Task<IEnumerable<Post>> GetUserPostsAsync(int userId, int requesterId);
+    Task AddAsync(Post newPost);
+    Task<PagedList<PostDTO>> GetNewsfeed(int userId, PaginationParams paginationParams);
 }

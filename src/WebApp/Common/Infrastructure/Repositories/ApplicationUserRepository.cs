@@ -52,26 +52,26 @@ public class ApplicationUserRepository(DataContext _dataContext, IMapper mapper)
         }
         return new PagedList<UserDTO>(users.ToList(), users.Count(), userParams.PageNumber, userParams.ItemsPerPage);
     }
-    public async Task<ApplicationUser> GetByIdentity(string identity)
+    public async Task<ApplicationUser?> GetByIdentity(string identity)
     {
         return await _dataContext.ApplicationUsers.FirstOrDefaultAsync(u => u.IdentityId == identity);
     }
     
-    public async Task<ApplicationUser> GetByIdAsync(int id)
+    public async Task<ApplicationUser?> GetByIdAsync(int id)
     {
         var connectionString = _dataContext.Database.GetConnectionString();
         using IDbConnection db = new SqlConnection(connectionString);
         return (await db.QueryAsync<ApplicationUser>("GetUserById", new { Id = id }, commandType: CommandType.StoredProcedure)).FirstOrDefault();
     }
 
-    public async Task<UserDTO> GetDtoByIdentityId(string identityId)
+    public async Task<UserDTO?> GetDtoByIdentityId(string identityId)
     {
         var appUser = await _dataContext.ApplicationUsers.FirstOrDefaultAsync(u => u.IdentityId == identityId);
 
         return mapper.Map<UserDTO>(appUser);
     }
 
-    public async Task<UserDTO> GetDtoByIdAsync(int id)
+    public async Task<UserDTO?> GetDtoByIdAsync(int id)
     {
         var connectionString = _dataContext.Database.GetConnectionString();
         using IDbConnection db = new SqlConnection(connectionString);
@@ -83,7 +83,7 @@ public class ApplicationUserRepository(DataContext _dataContext, IMapper mapper)
         return await _dataContext.ApplicationUsers.Where(u => ids.Contains(u.Id)).Select(u => new SimplifiedUserDTO() { Id = u.Id, FirstName = u.FirstName, LastName = u.LastName, ProfilePictureUrl = u.ProfilePictureUrl} ).ToListAsync();
     }
 
-    public async Task<SimplifiedUserDTO> GetSimplifiedDTOAsync(int id)
+    public async Task<SimplifiedUserDTO?> GetSimplifiedDTOAsync(int id)
     {
         return await _dataContext.ApplicationUsers.Select(u => new SimplifiedUserDTO() { Id = u.Id, FirstName = u.FirstName, LastName = u.LastName, ProfilePictureUrl = u.ProfilePictureUrl }).FirstOrDefaultAsync(u => u.Id == id);
     }

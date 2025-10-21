@@ -10,14 +10,14 @@ namespace Infrastructure.Services;
 
 public class TokenService(IConfiguration _config, UserManager<IdentityUser> _userManager) : ITokenService
 {
-    private readonly SymmetricSecurityKey _key = new(Encoding.UTF8.GetBytes(_config["JWT:Key"]));
+    private readonly SymmetricSecurityKey _key = new(Encoding.UTF8.GetBytes(_config["JWT:Key"]!));
 
     public async Task<string> CreateTokenAsync(IdentityUser identityUser, int applicationUserId)
     {
         var roles = await _userManager.GetRolesAsync(identityUser);
         var claims = new List<Claim>()
         {
-            new(JwtRegisteredClaimNames.Email, identityUser.Email),
+            new(JwtRegisteredClaimNames.Email, identityUser.Email ?? ""),
             new(JwtRegisteredClaimNames.NameId, applicationUserId.ToString())
         };
         foreach (var role in roles)

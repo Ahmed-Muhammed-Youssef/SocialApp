@@ -60,7 +60,7 @@ public class FriendRequestsRepository(DataContext _dataContext, IMapper _mapper)
             .AsNoTracking()
             .AnyAsync(u => u.UserId == userId && u.FriendId == targetId);
     }
-    public async Task<FriendRequest> GetFriendRequestAsync(int senderId, int targetId)
+    public async Task<FriendRequest?> GetFriendRequestAsync(int senderId, int targetId)
     {
         return await _dataContext.FriendRequests
             .AsNoTracking()

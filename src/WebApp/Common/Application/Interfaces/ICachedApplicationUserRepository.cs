@@ -1,8 +1,7 @@
 ﻿using Application.Interfaces.Repositories;
 
-namespace Application.Interfaces
+namespace Application.Interfaces;
+
+public interface ICachedApplicationUserRepository : IApplicationUserRepository
 {
-    public interface ICachedApplicationUserRepository : IApplicationUserRepository
-    {
-    }
 }
