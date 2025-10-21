@@ -1,9 +1,13 @@
-﻿namespace API.Controllers;
+﻿using Application.Features.Roles.Create;
+using Application.Features.Roles.Delete;
+using Mediator;
+
+namespace API.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
 [Authorize]
-public class RolesController(RoleManager<IdentityRole> _roleManager, UserManager<IdentityUser> _userManager, IdentityDatabaseContext _identityDatabase) : ControllerBase
+public class RolesController(RoleManager<IdentityRole> _roleManager, UserManager<IdentityUser> _userManager, IdentityDatabaseContext _identityDatabase, IMediator mediator) : ControllerBase
 {
 
     // GET: api/roles/all
@@ -79,15 +83,18 @@ public class RolesController(RoleManager<IdentityRole> _roleManager, UserManager
     // POST: api/api/roles
     [Authorize(Policy = "RequireAdminRole")]
     [HttpPost]
-    public async Task<IActionResult> CreateRole(RoleRequestDTO role)
+    public async Task<IActionResult> Create(RoleRequestDTO role)
     {
-        var newRole = new IdentityRole() { Name = role.Name };
-        var result = await _roleManager.CreateAsync(newRole);
-        if (!result.Succeeded)
+        var result = await mediator.Send(new CreateRoleCommand(role.Name));
+        if (!result.IsSuccess)
         {
-            return BadRequest(string.Join('\n', result.Errors.Select(e => e.Description).ToList()));
+            return BadRequest(result.Errors);
         }
-        return Ok(role);
+        else
+        {
+            // @todo: return createdAtAction with route to get the created role
+            return Ok(result.Value);
+        }
     }
 
     // POST: roles/add
@@ -113,22 +120,25 @@ public class RolesController(RoleManager<IdentityRole> _roleManager, UserManager
         return Ok();
     }
 
-    // DELETE: api/roles
+    // DELETE: api/roles/{id}
     [Authorize(Policy = "RequireAdminRole")]
-    [HttpDelete]
-    public async Task<IActionResult> DeleteRole(RoleRequestDTO role)
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeleteRole(string id)
     {
-        var appRole = await _roleManager.FindByNameAsync(role.Name);
-        if (appRole == null)
+        var result = await mediator.Send(new DeleteRoleCommand(id));
+
+        if (result.IsSuccess)
         {
-            return NotFound("Role not found");
+            return NoContent(); 
         }
-        var result = await _roleManager.DeleteAsync(appRole);
-        if (!result.Succeeded)
+        else if(result.Status == Shared.Results.ResultStatus.NotFound)
         {
-            return BadRequest(string.Join('\n', result.Errors.Select(e => e.Description).ToList()));
+            return NotFound(result.Errors);
         }
-        return NoContent();
+        else
+        {
+            return BadRequest(result.Errors);
+        }
     }
 
     // DELETE: roles/removefrom
