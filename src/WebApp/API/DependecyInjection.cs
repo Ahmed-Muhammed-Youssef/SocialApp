@@ -8,6 +8,7 @@ public static class DependecyInjection
     {
         builder.Services.AddControllers();
         builder.Services.AddMemoryCache();
+        builder.Services.AddHttpContextAccessor();
         builder.Services.AddSwaggerGen(c =>
         {
             c.SwaggerDoc("v1", new OpenApiInfo { Title = "API", Version = "v1" });

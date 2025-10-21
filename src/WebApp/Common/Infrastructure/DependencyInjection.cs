@@ -7,6 +7,7 @@ using Infrastructure.Identity;
 using Infrastructure.RealTime.Presence;
 using Infrastructure.Repositories;
 using Infrastructure.Repositories.CachedRepositories;
+using Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -34,6 +35,7 @@ public static class DependencyInjection
         // Cloudinary
         builder.Services.Configure<CloudinaryOptions>(builder.Configuration.GetSection("Cloudinary"));
         builder.Services.AddScoped<IPictureService, PictureService>();
+        builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
 
         // Other Services
         builder.Services.AddSingleton<OnlinePresenceManager>();
