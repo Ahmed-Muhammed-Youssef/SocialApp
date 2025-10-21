@@ -1,4 +1,4 @@
-﻿namespace Application.DTOs.Role;
+﻿namespace Application.Features.Roles;
 
 public class RoleRequestDTO
 {

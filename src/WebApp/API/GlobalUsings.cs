@@ -29,7 +29,6 @@ global using System.Threading.Tasks;
 global using System.Net;
 
 global using Application.DTOs.User;
-global using Application.DTOs.Role;
 global using Application.DTOs.Post;
 global using Application.DTOs.Message;
 global using Application.DTOs.Picture;
