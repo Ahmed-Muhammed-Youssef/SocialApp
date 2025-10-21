@@ -1,7 +1,6 @@
 ﻿using Application.Interfaces;
 using Application.Interfaces.Repositories;
 using Application.Interfaces.Services;
-using Domain.Configuration;
 using Infrastructure.Data;
 using Infrastructure.ExternalServices.Cloudinary;
 using Infrastructure.Identity;
@@ -33,7 +32,7 @@ public static class DependencyInjection
         builder.Services.AddScoped<IPostRepository, PostRepository>();
 
         // Cloudinary
-        builder.Services.Configure<CloudinarySettings>(builder.Configuration.GetSection("Cloudinary"));
+        builder.Services.Configure<CloudinaryOptions>(builder.Configuration.GetSection("Cloudinary"));
         builder.Services.AddScoped<IPictureService, PictureService>();
 
         // Other Services

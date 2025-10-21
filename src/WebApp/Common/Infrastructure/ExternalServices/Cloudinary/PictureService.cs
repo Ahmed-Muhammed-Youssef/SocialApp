@@ -1,5 +1,4 @@
 ﻿using Application.Interfaces.Services;
-using Domain.Configuration;
 using CloudinaryDotNet;
 using CloudinaryDotNet.Actions;
 using Microsoft.AspNetCore.Http;
@@ -11,7 +10,7 @@ namespace Infrastructure.ExternalServices.Cloudinary
     {
         private readonly CloudinaryDotNet.Cloudinary _cloudinary;
 
-        public PictureService(IOptions<CloudinarySettings> config)
+        public PictureService(IOptions<CloudinaryOptions> config)
         {
             var account = new Account(config.Value.CloudName, config.Value.APIKey, config.Value.APISecret);
             _cloudinary = new CloudinaryDotNet.Cloudinary(account);
