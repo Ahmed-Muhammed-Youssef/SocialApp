@@ -1,6 +1,7 @@
 ﻿using API.Controllers.Account.Requests;
 using API.Controllers.Account.Responses;
 using Application.Features.Account.Login;
+using Application.Features.Account.Register;
 using Mediator;
 using Shared.Results;
 
@@ -9,11 +10,11 @@ namespace API.Controllers.Account;
 [Route("api/[controller]")]
 [ApiController]
 [ServiceFilter(typeof(LogUserActivity))]
-public class AccountController(IUnitOfWork unitOfWork, UserManager<IdentityUser> userManager, ITokenService tokenService, IMapper mapper, IMediator mediator) : ControllerBase
+public class AccountController(IMediator mediator) : ControllerBase
 {
     // POST: api/account/register
     [HttpPost("register")]
-    public async Task<ActionResult> Register(RegisterRequest registerRequest)
+    public async Task<ActionResult> Register(RegisterRequest registerRequest, CancellationToken cancellationToken)
     {
 
         if (!ModelState.IsValid)
@@ -21,67 +22,34 @@ public class AccountController(IUnitOfWork unitOfWork, UserManager<IdentityUser>
             return BadRequest(ModelState);
         }
 
-        if (await userManager.Users.AnyAsync(u => u.Email == registerRequest.Email))
-        {
-            return BadRequest("The Email is already taken.");
-        }
-
-        IdentityUser newIdentityUser = new()
-        {
-            UserName = registerRequest.Email,
-            Email = registerRequest.Email
-        };
-
-        // Create Identity User
-        var result = await userManager.CreateAsync(newIdentityUser, registerRequest.Password);
-
-        if (!result.Succeeded)
-        {
-            return BadRequest("Failed to register the user.");
-        }
-
-        var adddRoleresult = await userManager.AddToRoleAsync(newIdentityUser, RolesNameValues.User);
-
-        if (!adddRoleresult.Succeeded)
-        {
-            await userManager.DeleteAsync(newIdentityUser);
-
-            return BadRequest();
-        }
-
-        // Create application user
-
-        ApplicationUser newApplicationUser = new()
+        RegisterCommand registerCommand = new()
         {
             FirstName = registerRequest.FirstName,
             LastName = registerRequest.LastName,
+            Email = registerRequest.Email,
+            Password = registerRequest.Password,
             Sex = registerRequest.Sex,
             DateOfBirth = registerRequest.DateOfBirth,
-            CityId = registerRequest.CityId,
-            IdentityId = newIdentityUser.Id
+            CityId = registerRequest.CityId
         };
-        
-        try
+
+
+        Result<RegisterDTO> result = await mediator.Send(registerCommand, cancellationToken);
+
+        if(result.IsSuccess)
         {
-            await unitOfWork.ApplicationUserRepository.AddAsync(newApplicationUser);
-
-            await unitOfWork.SaveChangesAsync();
+            return CreatedAtAction(nameof(UsersController.GetUser), "Users", new { id = result.Value.UserData.Id },
+                new AuthResponse()
+                {
+                    UserData = result.Value.UserData,
+                    Token = result.Value.Token
+                });
         }
-        catch (Exception)
+        else
         {
-            await userManager.DeleteAsync(newIdentityUser);
-
-            return BadRequest("Failed to register user");
+            return BadRequest(result.Errors);
         }
 
-        UserDTO userData = mapper.Map<UserDTO>(newApplicationUser);
-
-        return CreatedAtAction("Register", new { email = registerRequest.Email },
-            new AuthResponse()
-            {
-                UserData = userData,
-                Token = await tokenService.CreateTokenAsync(newIdentityUser, userData.Id)
-            });
     }
 
     // POST: api/account/login

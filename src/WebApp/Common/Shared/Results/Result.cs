@@ -32,7 +32,7 @@ public class Result<T> : IResult
 
     public static Result<T> Created(T value, string location) => new(ResultStatus.Created) { Value = value, Location = location };
 
-    public static Result<T> Error(string errorMessage) => new(ResultStatus.Error) { Errors = new[] { errorMessage } };
+    public static Result<T> Error(string errorMessage) => new(ResultStatus.Error) { Errors = [errorMessage] };
 
     public static Result<T> NotFound() => new(ResultStatus.NotFound);
 
