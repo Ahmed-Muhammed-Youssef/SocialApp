@@ -5,6 +5,7 @@ using Application.DTOs.User;
 using Domain.Entities;
 using AutoMapper;
 using Shared.Extensions;
+using Application.Features.Posts;
 
 namespace Application.MappingProfiles;
 

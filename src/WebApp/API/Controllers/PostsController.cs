@@ -1,4 +1,8 @@
-﻿namespace API.Controllers;
+﻿using Application.Features.Posts;
+using Application.Features.Posts.GetById;
+using Mediator;
+
+namespace API.Controllers;
 
 
 [Route("api/[controller]")]

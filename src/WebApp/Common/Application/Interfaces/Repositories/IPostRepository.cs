@@ -1,5 +1,5 @@
 ﻿using Application.DTOs.Pagination;
-using Application.DTOs.Post;
+using Application.Features.Posts;
 using Domain.Entities;
 
 namespace Application.Interfaces.Repositories;
