@@ -37,8 +37,8 @@ public class RolesController(RoleManager<IdentityRole> _roleManager, UserManager
                })
            .Select(g => new UserWithRolesDTO
            {
-               Email = g.User.Email,
-               Roles = g.Roles
+               Email = g.User!.Email!,
+               Roles = g.Roles!
            });
 
         int totalNumber = await groupedUsers.CountAsync();

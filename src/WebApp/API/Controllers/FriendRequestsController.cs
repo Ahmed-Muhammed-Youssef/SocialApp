@@ -9,7 +9,7 @@ public class FriendRequestsController(IUnitOfWork _unitOfWork) : ControllerBase
     [HttpGet]
     public async Task<ActionResult<IEnumerable<UserDTO>>> GetFriendRequests()
     {
-        var sender = await _unitOfWork.ApplicationUserRepository.GetByIdAsync(User.GetPublicId().Value);
+        var sender = await _unitOfWork.ApplicationUserRepository.GetByIdAsync(User.GetPublicId());
         if (sender == null)
         {
             return BadRequest();
@@ -21,7 +21,7 @@ public class FriendRequestsController(IUnitOfWork _unitOfWork) : ControllerBase
     [HttpDelete("cancel/{id}")]
     public async Task<IActionResult> CancelFriendRequests(int id)
     {
-        var sender = await _unitOfWork.ApplicationUserRepository.GetByIdAsync(User.GetPublicId().Value);
+        var sender = await _unitOfWork.ApplicationUserRepository.GetByIdAsync(User.GetPublicId());
         var target = await _unitOfWork.ApplicationUserRepository.GetByIdAsync(id);
         if (sender == null || target == null)
         {
@@ -58,7 +58,7 @@ public class FriendRequestsController(IUnitOfWork _unitOfWork) : ControllerBase
     [HttpGet("sent")]
     public async Task<ActionResult<IEnumerable<UserDTO>>> GetFriendRequestedUsers()
     {
-        var sender = await _unitOfWork.ApplicationUserRepository.GetByIdAsync(User.GetPublicId().Value);
+        var sender = await _unitOfWork.ApplicationUserRepository.GetByIdAsync(User.GetPublicId());
         if (sender == null)
         {
             return BadRequest();
@@ -71,7 +71,7 @@ public class FriendRequestsController(IUnitOfWork _unitOfWork) : ControllerBase
     [HttpGet("issent/{id}")]
     public async Task<ActionResult<bool>> IsFriendRequested(int id)
     {
-        var senderId = User.GetPublicId().Value;
+        var senderId = User.GetPublicId();
         var target = await _unitOfWork.ApplicationUserRepository.GetByIdAsync(id);
         if (target == null)
         {
@@ -94,7 +94,7 @@ public class FriendRequestsController(IUnitOfWork _unitOfWork) : ControllerBase
     public async Task<ActionResult> SendFriendRequest(int id)
     {
         // retuns true if the user has become a frined
-        var sender = await _unitOfWork.ApplicationUserRepository.GetByIdAsync(User.GetPublicId().Value);
+        var sender = await _unitOfWork.ApplicationUserRepository.GetByIdAsync(User.GetPublicId());
         var target = await _unitOfWork.ApplicationUserRepository.GetByIdAsync(id);
         if (sender == null || target == null)
         {

@@ -9,14 +9,14 @@ public class PostsController(IUnitOfWork _unitOfWork, IMapper _mapper) : Control
     [HttpGet]
     public async Task<ActionResult<IEnumerable<Post>>> GetUserPostsAsync([FromQuery]int userId)
     {
-        var posts = await _unitOfWork.PostRepository.GetUserPostsAsync(userId, User.GetPublicId().Value);
+        var posts = await _unitOfWork.PostRepository.GetUserPostsAsync(userId, User.GetPublicId());
         return Ok(posts);
     }
 
     [HttpGet("{postId}")]
     public async Task<ActionResult<IEnumerable<Post>>> GetPostByIdAsync(ulong postId)
     {
-        var posts = await _unitOfWork.PostRepository.GetByIdAsync(postId, User.GetPublicId().Value);
+        var posts = await _unitOfWork.PostRepository.GetByIdAsync(postId, User.GetPublicId());
         return Ok(posts);
     }
 
@@ -24,7 +24,7 @@ public class PostsController(IUnitOfWork _unitOfWork, IMapper _mapper) : Control
     public async Task<ActionResult<PostDTO>> AddPost([FromBody]AddPostDTO newPostDTO)
     {
         Post post = _mapper.Map<Post>(newPostDTO);
-        post.UserId = User.GetPublicId().Value;
+        post.UserId = User.GetPublicId();
 
         await _unitOfWork.PostRepository.AddAsync(post);
 

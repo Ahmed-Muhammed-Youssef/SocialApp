@@ -9,7 +9,13 @@ public class PicturesController(IUnitOfWork _unitOfWork, IPictureService _pictur
     [HttpPost]
     public async Task<ActionResult<PictureDTO>> UploadPicture(IFormFile file)
     {
-        var user = await _unitOfWork.ApplicationUserRepository.GetByIdAsync(User.GetPublicId().Value);
+        var user = await _unitOfWork.ApplicationUserRepository.GetByIdAsync(User.GetPublicId());
+
+        if(user is null)
+        {
+            return Unauthorized();
+        }
+
         var result = await _pictureService.AddPictureAsync(file);
         if (result.Error != null)
         {
@@ -33,7 +39,13 @@ public class PicturesController(IUnitOfWork _unitOfWork, IPictureService _pictur
     [HttpPost("profilepicture/{pictureId}")]
     public async Task<ActionResult<PictureDTO>> SetProfilePicture(int pictureId)
     {
-        var user = await _unitOfWork.ApplicationUserRepository.GetByIdAsync(User.GetPublicId().Value);
+        var user = await _unitOfWork.ApplicationUserRepository.GetByIdAsync(User.GetPublicId());
+
+        if (user is null)
+        {
+            return Unauthorized();
+        }
+
         var pictures = await _unitOfWork.PictureRepository.GetUserPictureAsync(user.Id);
         var picture = pictures.FirstOrDefault(p => p.Id == pictureId);
         if (picture == null)
@@ -56,7 +68,13 @@ public class PicturesController(IUnitOfWork _unitOfWork, IPictureService _pictur
     [HttpDelete("{pictureId}")]
     public async Task<ActionResult<PictureDTO>> DeletePhoto(int pictureId)
     {
-        ApplicationUser user = await _unitOfWork.ApplicationUserRepository.GetByIdAsync(User.GetPublicId().Value);
+        ApplicationUser? user = await _unitOfWork.ApplicationUserRepository.GetByIdAsync(User.GetPublicId());
+
+        if(user == null)
+        {
+            return Unauthorized();
+        }
+
         var pictures = await _unitOfWork.PictureRepository.GetUserPictureAsync(user.Id);
         var picture = pictures.FirstOrDefault(p => p.Id == pictureId);
         if (picture == null)
@@ -90,7 +108,7 @@ public class PicturesController(IUnitOfWork _unitOfWork, IPictureService _pictur
     [HttpGet("all")]
     public async Task<ActionResult<PictureDTO>> GetPictures()
     {
-        var pictures = await _unitOfWork.PictureRepository.GetUserPictureDTOsAsync(User.GetPublicId().Value); //the output is ordered
+        var pictures = await _unitOfWork.PictureRepository.GetUserPictureDTOsAsync(User.GetPublicId()); //the output is ordered
         return Ok(pictures);
     }
 }

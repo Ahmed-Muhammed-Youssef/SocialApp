@@ -52,7 +52,7 @@ public class GoogleAuthService(IConfiguration configuration) : IGoogleAuthServic
 
         GoogleUserInfo googleUserInfo = new()
         {
-            Name = userInfo["name"],
+            Name = userInfo!["name"],
             Email = userInfo["email"],
             VerifiedEmail = bool.Parse(userInfo["verified_email"]),
             PictureUrl = userInfo["picture"]

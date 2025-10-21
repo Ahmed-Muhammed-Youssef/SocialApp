@@ -11,7 +11,7 @@ public class UsersController(IUnitOfWork _unitOfWork, IMapper _mapper, JsonSeria
     [HttpGet]
     public async Task<ActionResult<IEnumerable<UserDTO>>> GetUsers([FromQuery] UserParams userParams)
     {
-        var users = await _unitOfWork.ApplicationUserRepository.GetUsersDTOAsync(User.GetPublicId().Value, userParams);
+        var users = await _unitOfWork.ApplicationUserRepository.GetUsersDTOAsync(User.GetPublicId(), userParams);
         var newPaginationHeader = new PaginationHeader(users.CurrentPage, users.ItemsPerPage, users.Count, users.TotalPages);
         Response.AddPaginationHeader(newPaginationHeader, jsonSerializerOptions);
         return Ok(users.Items);
@@ -38,7 +38,7 @@ public class UsersController(IUnitOfWork _unitOfWork, IMapper _mapper, JsonSeria
         {
             return BadRequest(userDTO);
         }
-        var appUser = await _unitOfWork.ApplicationUserRepository.GetByIdAsync(User.GetPublicId().Value);
+        var appUser = await _unitOfWork.ApplicationUserRepository.GetByIdAsync(User.GetPublicId());
 
         if (appUser == null)
         {

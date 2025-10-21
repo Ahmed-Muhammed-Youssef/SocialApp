@@ -5,40 +5,39 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
 using Shared.Extensions;
 
-namespace MVC.Hubs
+namespace MVC.Hubs;
+
+[Authorize]
+public class PresenceHub(OnlinePresenceManager presenceManager, IUnitOfWork unitOfWork) : Hub
 {
-    [Authorize]
-    public class PresenceHub(OnlinePresenceManager presenceManager, IUnitOfWork unitOfWork) : Hub
+    private readonly OnlinePresenceManager _presenceManager = presenceManager;
+    private readonly IUnitOfWork _unitOfWork = unitOfWork;
+
+    public override async Task OnConnectedAsync()
     {
-        private readonly OnlinePresenceManager _presenceManager = presenceManager;
-        private readonly IUnitOfWork _unitOfWork = unitOfWork;
+        int publicId = Context.User?.GetPublicId() ?? throw new InvalidDataException("Failed to get user Id");
 
-        public override async Task OnConnectedAsync()
+        var isFirstConnection = await _presenceManager.UserConnected(publicId, Context.ConnectionId);
+        if (isFirstConnection)
         {
-            int publicId = Context.User.GetPublicId().Value;
-
-            var isFirstConnection = await _presenceManager.UserConnected(publicId, Context.ConnectionId);
-            if (isFirstConnection)
-            {
-                SimplifiedUserDTO connectedUser = await _unitOfWork.ApplicationUserRepository.GetSimplifiedDTOAsync(publicId);
-                await Clients.Others.SendAsync("UserIsOnline", connectedUser);
-            }
-
-            int[] onlineUsersIds = await _presenceManager.GetOnlineUsers();
-
-            List<SimplifiedUserDTO> onlineUsers = await _unitOfWork.ApplicationUserRepository.GetListAsync(onlineUsersIds.Where(id => id != publicId).ToArray());
-            await Clients.Caller.SendAsync("GetOnlineUsers", onlineUsers);
+            SimplifiedUserDTO? connectedUser = await _unitOfWork.ApplicationUserRepository.GetSimplifiedDTOAsync(publicId);
+            await Clients.Others.SendAsync("UserIsOnline", connectedUser);
         }
 
-        public override async Task OnDisconnectedAsync(Exception? exception)
+        int[] onlineUsersIds = await _presenceManager.GetOnlineUsers();
+
+        List<SimplifiedUserDTO> onlineUsers = await _unitOfWork.ApplicationUserRepository.GetListAsync(onlineUsersIds.Where(id => id != publicId).ToArray());
+        await Clients.Caller.SendAsync("GetOnlineUsers", onlineUsers);
+    }
+
+    public override async Task OnDisconnectedAsync(Exception? exception)
+    {
+        int publicId = Context.User?.GetPublicId() ?? throw new InvalidDataException("Failed to get user Id");
+        var isJustDisconnected = await _presenceManager.UserDisconnected(publicId, Context.ConnectionId);
+        if (isJustDisconnected)
         {
-            int publicId = Context.User.GetPublicId().Value;
-            var isJustDisconnected = await _presenceManager.UserDisconnected(publicId, Context.ConnectionId);
-            if (isJustDisconnected)
-            {
-                await Clients.Others.SendAsync("UserIsOffline", publicId);
-            }
-            await base.OnDisconnectedAsync(exception);
+            await Clients.Others.SendAsync("UserIsOffline", publicId);
         }
+        await base.OnDisconnectedAsync(exception);
     }
 }

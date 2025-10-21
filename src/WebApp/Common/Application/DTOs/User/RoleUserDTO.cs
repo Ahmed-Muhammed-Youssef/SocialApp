@@ -1,11 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Application.DTOs.User
+namespace Application.DTOs.User;
+
+public class RoleUserDTO
 {
-    public class RoleUserDTO
-    {
-        [EmailAddress]
-        public string Email { get; set; }
-        public string Role { get; set; }
-    }
+    [EmailAddress]
+    public required string Email { get; set; }
+    public required string Role { get; set; }
 }

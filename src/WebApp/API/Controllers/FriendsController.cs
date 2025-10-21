@@ -11,7 +11,7 @@ public class FriendsController(IUnitOfWork _unitOfWork, JsonSerializerOptions js
     [HttpGet]
     public async Task<ActionResult<IEnumerable<UserDTO>>> GetAll([FromQuery] PaginationParams paginationParams)
     {
-        var user = await _unitOfWork.ApplicationUserRepository.GetByIdAsync(User.GetPublicId().Value);
+        var user = await _unitOfWork.ApplicationUserRepository.GetByIdAsync(User.GetPublicId());
         if (user == null)
         {
             return Unauthorized();
@@ -19,6 +19,7 @@ public class FriendsController(IUnitOfWork _unitOfWork, JsonSerializerOptions js
         var friends = await _unitOfWork.FriendRequestRepository.GetFriendsAsync(user.Id, paginationParams);
         var newPaginationHeader = new PaginationHeader(friends.CurrentPage, friends.ItemsPerPage, friends.Count, friends.TotalPages);
         Response.AddPaginationHeader(newPaginationHeader, jsonSerializerOptions);
+
         return Ok(friends.Items);
     }
 
@@ -26,6 +27,6 @@ public class FriendsController(IUnitOfWork _unitOfWork, JsonSerializerOptions js
     [HttpGet("isFriend/{id}")]
     public async Task<ActionResult<bool>> IsFriend(int id)
     {
-        return Ok(await _unitOfWork.FriendRequestRepository.IsFriend(User.GetPublicId().Value, id));
+        return Ok(await _unitOfWork.FriendRequestRepository.IsFriend(User.GetPublicId(), id));
     }
 }

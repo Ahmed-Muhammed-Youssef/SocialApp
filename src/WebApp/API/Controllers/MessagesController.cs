@@ -14,7 +14,7 @@ public class MessagesController(IUnitOfWork _unitOfWork) : ControllerBase
         {
             return NotFound();
         }
-        var issuerId = User.GetPublicId().Value;
+        var issuerId = User.GetPublicId();
 
         // Checks if the message is related to the issuer
         if (message.SenderId != issuerId && message.RecipientId != issuerId)

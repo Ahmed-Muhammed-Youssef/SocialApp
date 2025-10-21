@@ -1,8 +1,7 @@
-﻿namespace Application.DTOs.Picture
+﻿namespace Application.DTOs.Picture;
+
+public class PictureDTO
 {
-    public class PictureDTO
-    {
-        public int Id { get; set; }
-        public string Url { get; set; }
-    }
+    public int Id { get; set; }
+    public required string Url { get; set; }
 }

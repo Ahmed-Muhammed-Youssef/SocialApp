@@ -25,7 +25,7 @@ namespace Application.Test.DTOs.Pagination
         public void Constructor_NullItems_InitializesEmptyList()
         {
             // Act
-            var pagedList = new PagedList<int>(null, 0, 1, 10);
+            var pagedList = new PagedList<int>(null!, 0, 1, 10);
 
             // Assert
             Assert.NotNull(pagedList.Items);

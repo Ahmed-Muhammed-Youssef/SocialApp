@@ -1,18 +1,17 @@
 ﻿using Domain.Constants;
 
-namespace Application.DTOs.User
+namespace Application.DTOs.User;
+
+public class UserProfileDTO
 {
-    public class UserProfileDTO
-    {
-        public int Id { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string ProfilePictureUrl { get; set; }
-        public char Sex { get; set; }
-        public int Age { get; set; }
-        public DateTime Created { get; set; }
-        public DateTime LastActive { get; set; }
-        public string Bio { get; set; }
-        public SocialRelation Relation { get; set; }
-    }
+    public int Id { get; set; }
+    public required string FirstName { get; set; }
+    public required string LastName { get; set; }
+    public string? ProfilePictureUrl { get; set; }
+    public char Sex { get; set; }
+    public int Age { get; set; }
+    public DateTime Created { get; set; }
+    public DateTime LastActive { get; set; }
+    public string? Bio { get; set; }
+    public SocialRelation Relation { get; set; }
 }

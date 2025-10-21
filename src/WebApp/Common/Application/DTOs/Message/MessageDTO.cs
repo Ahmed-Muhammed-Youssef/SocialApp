@@ -6,13 +6,13 @@ namespace Application.DTOs.Message
     {
         public int Id { get; set; }
         [Required]
-        public string Content { get; set; }
+        public required string Content { get; set; }
         public DateTime? ReadDate { get; set; }
         [Required]
         public DateTime SentDate { get; set; }
 
         [Required]
-        public string SenderPhotoUrl { get; set; }
+        public string? SenderPhotoUrl { get; set; }
 
         [Required]
         public int SenderId { get; set; }

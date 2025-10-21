@@ -28,14 +28,14 @@ public class PostRepository(DataContext _context) : IPostRepository
     {
         var allPostsQuery = _context.Friends
         .Where(f => f.UserId == userId)
-        .SelectMany(f => f.FriendUser.Posts, (f, p) => new PostDTO
+        .SelectMany(f => f.FriendUser!.Posts, (f, p) => new PostDTO
         {
             Id = p.Id,
             DateEdited = p.DateEdited,
-            OwnerName = f.FriendUser.FirstName + " " + f.FriendUser.LastName,
+            OwnerName = f.FriendUser!.FirstName + " " + f.FriendUser.LastName,
             OwnerId = f.FriendUser.Id,
             Content = p.Content,
-            OwnerPictureUrl = f.FriendUser.ProfilePictureUrl,
+            OwnerPictureUrl = f.FriendUser!.ProfilePictureUrl ?? "",
             DatePosted = p.DatePosted
         })
         .OrderByDescending(p => p.DatePosted)

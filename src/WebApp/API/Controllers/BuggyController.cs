@@ -30,7 +30,7 @@ public class BuggyController(DataContext _context) : ControllerBase
     public ActionResult<ApplicationUser> GetServerError()
     {
         var thing = _context.ApplicationUsers.Find(-1);
-        var toPrint = thing.ToString();
+        var toPrint = thing!.ToString();
         return Ok(toPrint);
     }
 

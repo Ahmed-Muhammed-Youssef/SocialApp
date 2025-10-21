@@ -5,26 +5,63 @@ public class MessageHub(IUnitOfWork _unitOfWork, IMapper _mapper,
 {
     public override async Task OnConnectedAsync()
     {
-        var httpContext = Context.GetHttpContext();
-        var otherUserId = int.Parse(httpContext.Request.Query["userId"]);
-        var groupName = GetGroupName(httpContext.User.GetPublicId().Value, otherUserId);
+        // Validate the user identity first
+        int currentUserId = Context.User?.GetPublicId()
+            ?? throw new InvalidOperationException("Failed to resolve current user ID from claims.");
+
+        HttpContext httpContext = Context.GetHttpContext()
+            ?? throw new InvalidOperationException("Failed to get HttpContext from SignalR context.");
+
+        // Try to parse the "userId" query string
+        if (!httpContext.Request.Query.TryGetValue("userId", out var userIdValues) ||
+            !int.TryParse(userIdValues.FirstOrDefault(), out int otherUserId))
+        {
+            throw new InvalidOperationException("Missing or invalid 'userId' query parameter.");
+        }
+
+        if (currentUserId == otherUserId)
+        {
+            throw new InvalidOperationException("Cannot start a chat with yourself.");
+        }
+
+        string groupName = GetGroupName(httpContext.User.GetPublicId(), otherUserId);
+
         await Groups.AddToGroupAsync(Context.ConnectionId, groupName);
-        var group = await AddToGroup(groupName);
+
+        Group group = await AddToGroup(groupName);
+
         await Clients.Group(groupName).SendAsync("UpdatedGroup", group);
-        var messages = await _unitOfWork.MessageRepository.GetMessagesDTOThreadAsync(Context.User.GetPublicId().Value, otherUserId);
-        if (_unitOfWork.HasChanges()) await _unitOfWork.SaveChangesAsync();
+
+        IEnumerable<MessageDTO> messages = await _unitOfWork.MessageRepository.GetMessagesDTOThreadAsync(currentUserId, otherUserId);
+
+        if (_unitOfWork.HasChanges())
+        {
+            await _unitOfWork.SaveChangesAsync();
+        }
+        
         await Clients.Caller.SendAsync("ReceiveMessages", messages);
     }
-    public override async Task OnDisconnectedAsync(Exception exception)
+
+    public override async Task OnDisconnectedAsync(Exception? exception)
     {
-        var group = await RemoveFromMessageGroup();
-        await Clients.Group(group.Name).SendAsync("UpdatedGroup", group);
+        Group? group = await RemoveFromMessageGroup();
+
+        if(group is not null)
+        {
+            await Clients.Group(group.Name).SendAsync("UpdatedGroup", group);
+        }
+
         await base.OnDisconnectedAsync(exception);
     }
     public async Task SendMessages(NewMessageDTO message)
     {
-        var sender = await _unitOfWork.ApplicationUserRepository.GetByIdAsync(Context.User.GetPublicId().Value);
+        int currentUserId = Context.User?.GetPublicId()
+           ?? throw new InvalidOperationException("Failed to resolve current user ID from claims.");
+
+        var sender = await _unitOfWork.ApplicationUserRepository.GetByIdAsync(currentUserId);
+
         var recipient = await _unitOfWork.ApplicationUserRepository.GetByIdAsync(message.RecipientId);
+
         if (recipient == null || sender == null)
         {
             throw new HubException("User not found");
@@ -53,7 +90,8 @@ public class MessageHub(IUnitOfWork _unitOfWork, IMapper _mapper,
         // msgDTO.SenderPhotoUrl = null;
         var groupName = GetGroupName(sender.Id, recipient.Id);
         var group = await _unitOfWork.MessageRepository.GetGroupByName(groupName);
-        if (group.Connections.Any(c => c.UserId == recipient.Id))
+
+        if (group is not null && group.Connections.Any(c => c.UserId == recipient.Id))
         {
             createdMessage.ReadDate = DateTime.UtcNow;
             msgDTO.ReadDate = createdMessage.ReadDate;
@@ -86,7 +124,7 @@ public class MessageHub(IUnitOfWork _unitOfWork, IMapper _mapper,
     private async Task<Group> AddToGroup(string groupName)
     {
         var group = await _unitOfWork.MessageRepository.GetGroupByName(groupName);
-        var connection = new Connection(Context.ConnectionId, Context.User.GetPublicId().Value);
+        var connection = new Connection(Context.ConnectionId, Context.User?.GetPublicId() ?? throw new InvalidDataException("Failed to get user Id"));
 
         if (group == null)
         {
@@ -107,14 +145,22 @@ public class MessageHub(IUnitOfWork _unitOfWork, IMapper _mapper,
             throw new HubException("Failed to create group", ex);
         }
     }
-    private async Task<Group> RemoveFromMessageGroup()
+    private async Task<Group?> RemoveFromMessageGroup()
     {
         try
         {
-            var group = await _unitOfWork.MessageRepository.GetGroupForConnection(Context.ConnectionId);
-            var connection = group.Connections.FirstOrDefault(c => c.ConnectionId == Context.ConnectionId);
-            _unitOfWork.MessageRepository.RemoveConnection(connection);
+            Group? group = await _unitOfWork.MessageRepository.GetGroupForConnection(Context.ConnectionId);
+
+            if(group is null) return null;
+
+            Connection? connection = group.Connections.FirstOrDefault(c => c.ConnectionId == Context.ConnectionId);
+
+            if(connection is not null)
+            {
+                _unitOfWork.MessageRepository.RemoveConnection(connection);
+            }
             await _unitOfWork.SaveChangesAsync();
+
             return group;
         }
         catch (Exception ex)
@@ -122,9 +168,6 @@ public class MessageHub(IUnitOfWork _unitOfWork, IMapper _mapper,
             throw new HubException("Failed to remove group", ex);
         }
     }
-    private string GetGroupName(int callerId, int otherId)
-    {
-        return callerId > otherId ? $"{callerId}-{otherId}" : $"{otherId}-{callerId}";
-    }
+    private static string GetGroupName(int callerId, int otherId) => callerId > otherId ? $"{callerId}-{otherId}" : $"{otherId}-{callerId}";
 
 }

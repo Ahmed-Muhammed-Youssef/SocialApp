@@ -3,7 +3,7 @@
     public class Message
     {
         public int Id { get; set; }
-        public string Content { get; set; }
+        public required string Content { get; set; }
         public DateTime? ReadDate { get; set; }
         public DateTime SentDate { get; set; } = DateTime.UtcNow;
 
@@ -16,7 +16,7 @@
         public int RecipientId { get; set; }
 
         //navigation preoperties
-        public ApplicationUser Sender { get; set; }
-        public ApplicationUser Recipient { get; set; }
+        public ApplicationUser? Sender { get; set; }
+        public ApplicationUser? Recipient { get; set; }
     }
 }

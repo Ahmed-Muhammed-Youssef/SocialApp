@@ -1,12 +1,11 @@
-﻿namespace Domain.Entities
-{
-    public class Country
-    {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public string Code { get; set; }
-        public string Language { get; set; }
+﻿namespace Domain.Entities;
 
-        public ICollection<Region> Regions { get; set; } = [];
-    }
+public class Country
+{
+    public int Id { get; set; }
+    public required string Name { get; set; }
+    public required string Code { get; set; }
+    public required string Language { get; set; }
+
+    public ICollection<Region> Regions { get; set; } = [];
 }

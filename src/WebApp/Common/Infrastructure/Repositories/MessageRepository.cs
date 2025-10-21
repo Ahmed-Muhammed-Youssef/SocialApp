@@ -106,7 +106,7 @@ public class MessageRepository(DataContext _dataContext, IMapper _mapper) : IMes
         var friends = await _dataContext.Friends.Where(fr => fr.UserId == userId).Include(f => f.FriendUser).Select(f => new SimplifiedUserDTO
         {
             Id = f.FriendId,
-            FirstName = f.FriendUser.FirstName,
+            FirstName = f.FriendUser!.FirstName,
             LastName = f.FriendUser.LastName,
             ProfilePictureUrl =f.FriendUser.ProfilePictureUrl
         }).ToListAsync();

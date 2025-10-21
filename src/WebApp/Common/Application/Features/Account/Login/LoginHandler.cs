@@ -28,7 +28,13 @@ public class LoginHandler(IUnitOfWork unitOfWork, UserManager<IdentityUser> user
             return Result<LoginDTO>.Unauthorized();
         }
 
-        UserDTO userData = await unitOfWork.ApplicationUserRepository.GetDtoByIdentityId(user.Id);
+        UserDTO? userData = await unitOfWork.ApplicationUserRepository.GetDtoByIdentityId(user.Id);
+
+        if(userData is null)
+        {
+            return Result<LoginDTO>.Unauthorized();
+        }
+
         string token = await tokenService.CreateTokenAsync(user, userData.Id);
 
         return Result<LoginDTO>.Success(new LoginDTO(userData, token));

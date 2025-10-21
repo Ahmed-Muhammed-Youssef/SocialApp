@@ -1,19 +1,19 @@
 ﻿namespace API.Filters;
 
-public class LogUserActivity : IAsyncActionFilter
+public class LogUserActivity(IUnitOfWork unitOfWork) : IAsyncActionFilter
 {
     public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
     {
         var resultContext = await next();
-        if (!resultContext.HttpContext.User.Identity.IsAuthenticated)
-        {
+        if (resultContext.HttpContext.User.Identity is not { IsAuthenticated: true })
             return;
-        }
-        var userId = resultContext.HttpContext.User.GetPublicId().Value;
-        var repo = resultContext.HttpContext.RequestServices.GetService<IUnitOfWork>();
-        var user = await repo.ApplicationUserRepository.GetByIdAsync(userId);
+
+        var userId = resultContext.HttpContext.User.GetPublicId();
+        var user = await unitOfWork.ApplicationUserRepository.GetByIdAsync(userId);
+        if (user is null) return;
+
         user.LastActive = DateTime.UtcNow;
-        repo.ApplicationUserRepository.Update(user);
-        await repo.SaveChangesAsync();
+        unitOfWork.ApplicationUserRepository.Update(user);
+        await unitOfWork.SaveChangesAsync();
     }
 }

@@ -20,7 +20,7 @@ public class AutoMapperProfiles : Profile
         CreateMap<UpdatedUserDTO, ApplicationUser>();
         
         // @TODO: add profile picture mapping here
-        CreateMap<Message, MessageDTO>().ForMember(m => m.SenderPhotoUrl, opt => opt.MapFrom(m => m.Sender.Pictures.FirstOrDefault().Url));
+        CreateMap<Message, MessageDTO>();
         
         CreateMap<Post, PostDTO>();
         CreateMap<AddPostDTO, Post>();

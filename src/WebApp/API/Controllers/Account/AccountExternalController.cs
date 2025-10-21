@@ -21,9 +21,9 @@ public class AccountExternalController(IGoogleAuthService _googleAuthService, Us
 
         GoogleUserInfo userInfo = await _googleAuthService.GetUserFromGoogleAsync(code);
 
-        IdentityUser identityUser = await userManager.Users.Where(u => u.Email == userInfo.Email).FirstOrDefaultAsync();
+        IdentityUser? identityUser = await userManager.Users.Where(u => u.Email == userInfo.Email).FirstOrDefaultAsync();
 
-        UserDTO userDTO = new()
+        UserDTO? userDTO = new()
         {
             FirstName = userInfo.Name,
             LastName = "",
@@ -59,6 +59,11 @@ public class AccountExternalController(IGoogleAuthService _googleAuthService, Us
         else
         {
             userDTO = await unitOfWork.ApplicationUserRepository.GetDtoByIdentityId(identityUser.Id);
+
+            if(userDTO is null)
+            {
+                return BadRequest("Failed to retrieve the user data.");
+            }
         }
 
         return Ok(new AuthResponse()
