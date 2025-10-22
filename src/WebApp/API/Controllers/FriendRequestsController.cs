@@ -1,4 +1,6 @@
-﻿namespace API.Controllers;
+﻿using Application.Features.Users;
+
+namespace API.Controllers;
 
 [ApiController]
 [Authorize]

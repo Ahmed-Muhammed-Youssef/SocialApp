@@ -1,4 +1,4 @@
-﻿using Application.DTOs.User;
+﻿using Application.Features.Users;
 using Application.Interfaces;
 using Application.Interfaces.Services;
 using Mediator;

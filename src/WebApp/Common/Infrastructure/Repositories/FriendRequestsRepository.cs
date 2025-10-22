@@ -7,8 +7,8 @@ using Application.Interfaces.Repositories;
 using Dapper;
 using Microsoft.Data.SqlClient;
 using System.Data;
-using Application.DTOs.User;
 using Application.DTOs.Pagination;
+using Application.Features.Users;
 
 namespace Infrastructure.Repositories;
 

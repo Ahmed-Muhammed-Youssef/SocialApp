@@ -1,10 +1,15 @@
-﻿namespace API.Controllers;
+﻿using Application.Features.Users;
+using Application.Features.Users.GetById;
+using Mediator;
+using Shared.Results;
+
+namespace API.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
 [Authorize]
 [ServiceFilter(typeof(LogUserActivity))]
-public class UsersController(IUnitOfWork _unitOfWork, IMapper _mapper, JsonSerializerOptions jsonSerializerOptions) : ControllerBase
+public class UsersController(IUnitOfWork _unitOfWork, IMapper _mapper, JsonSerializerOptions jsonSerializerOptions, IMediator mediator) : ControllerBase
 {
 
     // GET: api/users
@@ -21,13 +26,16 @@ public class UsersController(IUnitOfWork _unitOfWork, IMapper _mapper, JsonSeria
     [HttpGet("{id}")]
     public async Task<ActionResult<UserDTO>> GetUser(int id)
     {
-        var user = await _unitOfWork.ApplicationUserRepository.GetDtoByIdAsync(id);
+        Result<UserDTO> result = await mediator.Send(new GetUserByIdQuery(id));
 
-        if (user == null)
+        if(result.IsSuccess)
+        {
+            return Ok(result.Value);
+        }
+        else
         {
             return NotFound();
         }
-        return Ok(user);
     }
 
     // PUT: api/users/update

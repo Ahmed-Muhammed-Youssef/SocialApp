@@ -1,4 +1,4 @@
-﻿using Application.DTOs.User;
+﻿using Application.Features.Users;
 
 namespace Application.Features.Account.Login;
 

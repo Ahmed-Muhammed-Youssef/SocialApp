@@ -1,4 +1,5 @@
 ﻿using API.Controllers.Account.Responses;
+using Application.Features.Users;
 
 namespace API.Controllers.Account;
 

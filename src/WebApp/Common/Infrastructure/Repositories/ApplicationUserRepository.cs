@@ -8,6 +8,7 @@ using Dapper;
 using Application.DTOs.User;
 using Application.DTOs.Pagination;
 using AutoMapper;
+using Application.Features.Users;
 
 namespace Infrastructure.Repositories;
 

@@ -6,6 +6,7 @@ using Domain.Entities;
 using AutoMapper;
 using Shared.Extensions;
 using Application.Features.Posts;
+using Application.Features.Users;
 
 namespace Application.MappingProfiles;
 
