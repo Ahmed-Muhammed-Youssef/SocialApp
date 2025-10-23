@@ -1,19 +1,14 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Application.DTOs.User;
+namespace API.Controllers.Users.Requests;
 
-public class UpdatedUserDTO
+public class UpdateUserRequest
 {
-
     [Required, MaxLength(255)]
     public required string FirstName { get; set; }
     [Required, MaxLength(255)]
     public required string LastName { get; set; }
-    [Required]
-    public char Interest { get; set; }
     public string? Bio { get; set; }
     [Required]
-    public required string City { get; set; }
-    [Required]
-    public required string Country { get; set; }
+    public required int CityId { get; set; }
 }

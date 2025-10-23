@@ -1,7 +1,6 @@
 ﻿using Application.DTOs.Message;
 using Application.DTOs.Picture;
 using Application.DTOs.Post;
-using Application.DTOs.User;
 using Domain.Entities;
 using AutoMapper;
 using Shared.Extensions;
@@ -18,8 +17,6 @@ public class AutoMapperProfiles : Profile
             .ForMember(dest => dest.Age, opt => opt.MapFrom(src => src.DateOfBirth.CalculateAge()));
 
         CreateMap<Picture, PictureDTO>();
-        
-        CreateMap<UpdatedUserDTO, ApplicationUser>();
         
         // @TODO: add profile picture mapping here
         CreateMap<Message, MessageDTO>();

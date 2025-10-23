@@ -1,15 +1,17 @@
-﻿using Application.Features.Users;
+﻿using API.Controllers.Users.Requests;
+using Application.Features.Users;
 using Application.Features.Users.GetById;
+using Application.Features.Users.Update;
 using Mediator;
 using Shared.Results;
 
-namespace API.Controllers;
+namespace API.Controllers.Users;
 
 [Route("api/[controller]")]
 [ApiController]
 [Authorize]
 [ServiceFilter(typeof(LogUserActivity))]
-public class UsersController(IUnitOfWork _unitOfWork, IMapper _mapper, JsonSerializerOptions jsonSerializerOptions, IMediator mediator) : ControllerBase
+public class UsersController(IUnitOfWork _unitOfWork, JsonSerializerOptions jsonSerializerOptions, IMediator mediator) : ControllerBase
 {
 
     // GET: api/users
@@ -40,23 +42,28 @@ public class UsersController(IUnitOfWork _unitOfWork, IMapper _mapper, JsonSeria
 
     // PUT: api/users/update
     [HttpPut]
-    public async Task<ActionResult<UpdatedUserDTO>> PutUser(UpdatedUserDTO userDTO)
+    public async Task<ActionResult<UserDTO>> Update(UpdateUserRequest userDTO)
     {
         if (!ModelState.IsValid)
         {
-            return BadRequest(userDTO);
+            return BadRequest(ModelState);
         }
-        var appUser = await _unitOfWork.ApplicationUserRepository.GetByIdAsync(User.GetPublicId());
 
-        if (appUser == null)
+        Result<UserDTO> result = await mediator.Send(new UpdateUserCommand
         {
-            return BadRequest(userDTO);
+            FirstName = userDTO.FirstName,
+            LastName = userDTO.LastName,
+            Bio = userDTO.Bio,
+            CityId = userDTO.CityId
+        });
+
+        if (result.IsSuccess)
+        {
+            return Ok(result.Value);
         }
-        _mapper.Map(userDTO, appUser);
-        _unitOfWork.ApplicationUserRepository.Update(appUser);
-
-        await _unitOfWork.SaveChangesAsync();
-
-        return Ok(userDTO);
+        else
+        {
+            return NotFound();
+        }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using API.Controllers.Account.Requests;
 using API.Controllers.Account.Responses;
+using API.Controllers.Users;
 using Application.Features.Account.Login;
 using Application.Features.Account.Register;
 using Mediator;
