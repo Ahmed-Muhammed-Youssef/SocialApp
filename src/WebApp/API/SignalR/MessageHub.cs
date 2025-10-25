@@ -1,5 +1,3 @@
-using Application.Features.Users;
-
 namespace API.SignalR;
 
 public class MessageHub(IUnitOfWork _unitOfWork, IMapper _mapper,

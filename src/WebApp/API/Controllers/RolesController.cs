@@ -1,9 +1,4 @@
-﻿using Application.Features.Roles;
-using Application.Features.Roles.Create;
-using Application.Features.Roles.Delete;
-using Mediator;
-
-namespace API.Controllers;
+﻿namespace API.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
@@ -50,7 +45,7 @@ public class RolesController(RoleManager<IdentityRole> _roleManager, UserManager
 
         List<UserWithRolesDTO> paginatedResult = await groupedUsers
             .OrderBy(i => i.Email)
-            .Skip(pagination.SkipValue)
+            .Skip(pagination.SkipValue())
             .Take(pagination.ItemsPerPage)
             .ToListAsync();
         

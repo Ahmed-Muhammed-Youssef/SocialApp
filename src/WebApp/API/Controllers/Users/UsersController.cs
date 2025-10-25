@@ -1,11 +1,4 @@
-﻿using API.Controllers.Users.Requests;
-using Application.Features.Users;
-using Application.Features.Users.GetById;
-using Application.Features.Users.Update;
-using Mediator;
-using Shared.Results;
-
-namespace API.Controllers.Users;
+﻿namespace API.Controllers.Users;
 
 [Route("api/[controller]")]
 [ApiController]

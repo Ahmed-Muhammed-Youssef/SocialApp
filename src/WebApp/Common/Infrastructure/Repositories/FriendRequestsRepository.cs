@@ -9,6 +9,7 @@ using Microsoft.Data.SqlClient;
 using System.Data;
 using Application.DTOs.Pagination;
 using Application.Features.Users;
+using Shared.Pagination;
 
 namespace Infrastructure.Repositories;
 
@@ -49,7 +50,7 @@ public class FriendRequestsRepository(DataContext _dataContext, IMapper _mapper)
         queryDto = queryDto.OrderByDescending(u => u.LastActive);
 
         int count = queryDto.Count();
-        var items = queryDto.Skip(paginationParams.SkipValue).Take(paginationParams.ItemsPerPage);
+        var items = queryDto.Skip(paginationParams.SkipValue()).Take(paginationParams.ItemsPerPage);
         var listDto = await items.ToListAsync();
         var pagedResult = new PagedList<UserDTO>(listDto, listDto.Count, paginationParams.PageNumber, paginationParams.ItemsPerPage);
         return pagedResult;

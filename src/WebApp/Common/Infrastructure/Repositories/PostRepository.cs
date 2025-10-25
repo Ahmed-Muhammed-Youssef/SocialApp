@@ -4,6 +4,7 @@ using Application.Interfaces.Repositories;
 using Domain.Entities;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
+using Shared.Pagination;
 
 namespace Infrastructure.Repositories;
 
@@ -43,7 +44,7 @@ public class PostRepository(DataContext _context) : IPostRepository
 
         int count = await allPostsQuery.CountAsync();
 
-        List<PostDTO> posts  = await allPostsQuery.Skip(paginationParams.SkipValue)
+        List<PostDTO> posts  = await allPostsQuery.Skip(paginationParams.SkipValue())
             .Take(paginationParams.ItemsPerPage).ToListAsync();
 
         return new PagedList<PostDTO>(posts, count, paginationParams.PageNumber, paginationParams.ItemsPerPage);

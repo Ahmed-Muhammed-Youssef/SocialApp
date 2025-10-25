@@ -1,6 +1,7 @@
 ﻿using Application.DTOs.Pagination;
 using Application.Features.Users;
 using Domain.Entities;
+using Shared.Pagination;
 
 namespace Application.Interfaces.Repositories;
 

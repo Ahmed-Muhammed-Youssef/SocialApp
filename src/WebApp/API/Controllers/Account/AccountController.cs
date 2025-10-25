@@ -1,12 +1,4 @@
-﻿using API.Controllers.Account.Requests;
-using API.Controllers.Account.Responses;
-using API.Controllers.Users;
-using Application.Features.Account.Login;
-using Application.Features.Account.Register;
-using Mediator;
-using Shared.Results;
-
-namespace API.Controllers.Account;
+﻿namespace API.Controllers.Account;
 
 [Route("api/[controller]")]
 [ApiController]

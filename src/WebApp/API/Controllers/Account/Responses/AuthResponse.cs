@@ -1,5 +1,4 @@
-﻿using Application.Features.Users;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace API.Controllers.Account.Responses;
 

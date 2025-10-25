@@ -1,42 +1,40 @@
 ﻿using Domain.Constants;
 using Domain.Enums;
+using Shared.Pagination;
 
-namespace Application.DTOs.Pagination
+namespace Application.DTOs.Pagination;
+
+public record UserParams : PaginationParams
 {
-    public class UserParams : PaginationParams
+    private int minAge = SystemPolicy.UsersMinimumAge;
+    private int? maxAge = null;
+    public OrderByOptions OrderBy { get; init; } = OrderByOptions.LastActive;
+    public int MinAge
     {
-        private int minAge = SystemPolicy.UsersMinimumAge;
-        private int? maxAge = null;
-        public OrderByOptions OrderBy { get; set; } = OrderByOptions.LastActive;
-        public int MinAge
+        get
         {
-            get
-            {
-                return minAge;
-            }
-            set
-            {
-                if (value >= SystemPolicy.UsersMinimumAge)
-                {
-                    minAge = value;
-                }
-            }
+            return minAge;
         }
-        public int? MaxAge
+        init
         {
-            get
+            if (value >= SystemPolicy.UsersMinimumAge)
             {
-                return maxAge;
-            }
-            set
-            {
-                if (value >= minAge)
-                {
-                    maxAge = value;
-                }
+                minAge = value;
             }
         }
     }
-
-
+    public int? MaxAge
+    {
+        get
+        {
+            return maxAge;
+        }
+        init
+        {
+            if (value >= minAge)
+            {
+                maxAge = value;
+            }
+        }
+    }
 }

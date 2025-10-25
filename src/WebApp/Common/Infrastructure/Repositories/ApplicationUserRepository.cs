@@ -100,7 +100,7 @@ public class ApplicationUserRepository(DataContext _dataContext, IMapper mapper)
                 ProfilePictureUrl = u.ProfilePictureUrl
             });
         var count = await query.CountAsync();
-        var users = await query.Skip(userParams.SkipValue).Take(userParams.ItemsPerPage).ToListAsync();
+        var users = await query.Skip(userParams.SkipValue()).Take(userParams.ItemsPerPage).ToListAsync();
         return new PagedList<SimplifiedUserDTO>(users, count, userParams.PageNumber, userParams.ItemsPerPage);
     }
 }

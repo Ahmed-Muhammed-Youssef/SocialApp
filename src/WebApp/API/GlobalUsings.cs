@@ -15,11 +15,8 @@ global using Microsoft.OpenApi.Models;
 global using Microsoft.EntityFrameworkCore;
 
 global using AutoMapper;
+global using Mediator;
 
-global using Application.Interfaces;
-global using Application.Interfaces.Services;
-global using Application.Authentication.Google;
-global using Application.Authentication.GoogleModels;
 global using System;
 global using System.Text;
 global using System.Text.Json;
@@ -28,18 +25,37 @@ global using System.Collections.Generic;
 global using System.Threading.Tasks;
 global using System.Net;
 
+global using Application.Interfaces;
+global using Application.Interfaces.Services;
+global using Application.Authentication.Google;
+global using Application.Authentication.GoogleModels;
 global using Application.DTOs.User;
 global using Application.DTOs.Post;
 global using Application.DTOs.Message;
 global using Application.DTOs.Picture;
 global using Application.DTOs.Pagination;
 global using Application.MappingProfiles;
+global using Application.Features.Users;
+global using Application.Features.Users.GetById;
+global using Application.Features.Users.Update;
+global using Application.Features.Roles;
+global using Application.Features.Roles.Create;
+global using Application.Features.Roles.Delete;
+global using Application.Features.Posts.Create;
+global using Application.Features.Posts.GetById;
+global using Application.Features.Posts.GetByOwnerId;
+global using Application.Features.Account.Login;
+global using Application.Features.Account.Register;
 
 global using API.Extensions;
 global using API.Filters;
 global using API.Middleware;
 global using API.SignalR;
 global using API.Errors;
+global using API.Controllers.Account.Requests;
+global using API.Controllers.Account.Responses;
+global using API.Controllers.Users;
+global using API.Controllers.Users.Requests;
 
 global using Domain;
 global using Domain.Entities;
@@ -51,3 +67,5 @@ global using Infrastructure.Identity;
 global using Infrastructure.RealTime.Presence;
 
 global using Shared.Extensions;
+global using Shared.Pagination;
+global using Shared.Results;

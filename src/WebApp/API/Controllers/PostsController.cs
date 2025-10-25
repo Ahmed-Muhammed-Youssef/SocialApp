@@ -1,10 +1,4 @@
-﻿using Application.Features.Posts.Create;
-using Application.Features.Posts.GetById;
-using Application.Features.Posts.GetByOwnerId;
-using Mediator;
-using Shared.Results;
-
-namespace API.Controllers;
+﻿namespace API.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
