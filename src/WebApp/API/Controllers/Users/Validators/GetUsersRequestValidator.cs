@@ -10,7 +10,7 @@ public class GetUsersRequestValidator : AbstractValidator<GetUsersRequest>
             .GreaterThanOrEqualTo(1).WithMessage("PageNumber must be greater than or equal to 1.");
 
         RuleFor(x => x.UserParams.ItemsPerPage)
-            .InclusiveBetween(1, 100).WithMessage("ItemsPerPage must be between 1 and 100.");
+            .InclusiveBetween(1, SystemPolicy.MaxPageSize).WithMessage($"ItemsPerPage must be between 1 and {SystemPolicy.MaxPageSize}.");
 
         RuleFor(x => x.UserParams.MinAge)
             .GreaterThanOrEqualTo(SystemPolicy.UsersMinimumAge).WithMessage($"MinAge must be greater than or equal to {SystemPolicy.UsersMinimumAge}.");
