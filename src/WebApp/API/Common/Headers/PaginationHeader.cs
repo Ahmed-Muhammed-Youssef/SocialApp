@@ -1,4 +1,4 @@
-﻿namespace Application.DTOs.Pagination;
+﻿namespace API.Common.Headers;
 
 public class PaginationHeader(int currentPage, int itemsPerPage, int totalItems, int totalPages)
 {

@@ -4,24 +4,33 @@
 [ApiController]
 [Authorize]
 [ServiceFilter(typeof(LogUserActivity))]
-public class UsersController(IUnitOfWork _unitOfWork, JsonSerializerOptions jsonSerializerOptions, IMediator mediator) : ControllerBase
+public class UsersController(JsonSerializerOptions jsonSerializerOptions, IMediator mediator) : ControllerBase
 {
 
     // GET: api/users
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<UserDTO>>> GetUsers([FromQuery] UserParams userParams)
+    public async Task<ActionResult<IEnumerable<UserDTO>>> GetUsers([FromQuery] GetUsersRequest request)
     {
-        var users = await _unitOfWork.ApplicationUserRepository.GetUsersDTOAsync(User.GetPublicId(), userParams);
-        var newPaginationHeader = new PaginationHeader(users.CurrentPage, users.ItemsPerPage, users.Count, users.TotalPages);
-        Response.AddPaginationHeader(newPaginationHeader, jsonSerializerOptions);
-        return Ok(users.Items);
+        var result = await mediator.Send(new GetUsersQuery(request.UserParams));
+
+        if (result.IsSuccess)
+        {
+            var newPaginationHeader = new PaginationHeader(result.Value.CurrentPage, result.Value.ItemsPerPage, result.Value.Count, result.Value.TotalPages);
+            Response.AddPaginationHeader(newPaginationHeader, jsonSerializerOptions);
+            return Ok(result.Value.Items);
+        }
+        else
+        {
+            return BadRequest(result.Errors);
+        }
+
     }
 
     // GET: api/users/{id}
     [HttpGet("{id}")]
     public async Task<ActionResult<UserDTO>> GetUser(int id)
     {
-        Result<UserDTO> result = await mediator.Send(new GetUserByIdQuery(id));
+        Result<UserDTO> result = await mediator.Send(new GetUserQuery(id));
 
         if(result.IsSuccess)
         {

@@ -2,11 +2,11 @@
 using Mediator;
 using Shared.Results;
 
-namespace Application.Features.Users.GetById;
+namespace Application.Features.Users.Get;
 
-public class GetUserByIdHandler(IUnitOfWork _unitOfWork) : IQueryHandler<GetUserByIdQuery, Result<UserDTO>>
+public class GetUserHandler(IUnitOfWork _unitOfWork) : IQueryHandler<GetUserQuery, Result<UserDTO>>
 {
-    public async ValueTask<Result<UserDTO>> Handle(GetUserByIdQuery query, CancellationToken cancellationToken)
+    public async ValueTask<Result<UserDTO>> Handle(GetUserQuery query, CancellationToken cancellationToken)
     {
         UserDTO? user = await _unitOfWork.ApplicationUserRepository.GetDtoByIdAsync(query.Id);
 

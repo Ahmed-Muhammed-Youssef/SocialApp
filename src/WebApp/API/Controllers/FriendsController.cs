@@ -1,4 +1,6 @@
-﻿namespace API.Controllers;
+﻿using API.Common.Headers;
+
+namespace API.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
