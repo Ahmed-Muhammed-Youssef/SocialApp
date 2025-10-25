@@ -41,6 +41,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		Directory.Packages.props = Directory.Packages.props
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared.Test", "tests\WebApp\Common\Shared.Test\Shared.Test.csproj", "{06896473-BBCC-4F2C-B5EC-DE242F4296AB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -83,6 +85,10 @@ Global
 		{C1F4D3B5-72A7-B843-8093-A0D40323C665}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C1F4D3B5-72A7-B843-8093-A0D40323C665}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C1F4D3B5-72A7-B843-8093-A0D40323C665}.Release|Any CPU.Build.0 = Release|Any CPU
+		{06896473-BBCC-4F2C-B5EC-DE242F4296AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{06896473-BBCC-4F2C-B5EC-DE242F4296AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{06896473-BBCC-4F2C-B5EC-DE242F4296AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{06896473-BBCC-4F2C-B5EC-DE242F4296AB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -100,6 +106,7 @@ Global
 		{6C0BEC64-9A5B-4A2B-9FE6-14EDA142B8B8} = {DECD884E-7F32-4842-B03F-BE649E5F2FAE}
 		{EB30BF6A-90ED-BF42-9D4A-6CEF3C015028} = {5788F821-CD8D-413B-BC22-4716B8174758}
 		{C1F4D3B5-72A7-B843-8093-A0D40323C665} = {5788F821-CD8D-413B-BC22-4716B8174758}
+		{06896473-BBCC-4F2C-B5EC-DE242F4296AB} = {DECD884E-7F32-4842-B03F-BE649E5F2FAE}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {086248C4-AB8B-4BB5-AE43-08066E98C3D3}

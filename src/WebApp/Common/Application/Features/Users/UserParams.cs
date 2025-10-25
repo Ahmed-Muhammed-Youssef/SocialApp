@@ -2,7 +2,7 @@
 using Domain.Enums;
 using Shared.Pagination;
 
-namespace Application.DTOs.Pagination;
+namespace Application.Features.Users;
 
 public record UserParams : PaginationParams
 {

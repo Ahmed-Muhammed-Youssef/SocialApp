@@ -1,33 +1,32 @@
-﻿using Application.DTOs.Pagination;
+﻿using Application.Features.Users;
 using Application.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Shared.Extensions;
 
-namespace MVC.Controllers
+namespace MVC.Controllers;
+
+[Authorize]
+public class SearchController : Controller
 {
-    [Authorize]
-    public class SearchController : Controller
+    private readonly IUnitOfWork _unitOfWork;
+
+    public SearchController(IUnitOfWork unitOfWork)
     {
-        private readonly IUnitOfWork _unitOfWork;
+        _unitOfWork = unitOfWork;
+    }
 
-        public SearchController(IUnitOfWork unitOfWork)
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> UsersAsync(string search)
+    {
+        int? publicId = User.GetPublicId();
+        if (publicId is not null)
         {
-            _unitOfWork = unitOfWork;
+            var users = await _unitOfWork.ApplicationUserRepository.SearchAsync(publicId.Value, search, new UserParams());
+            return View(users);
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> UsersAsync(string search)
-        {
-            int? publicId = User.GetPublicId();
-            if (publicId is not null)
-            {
-                var users = await _unitOfWork.ApplicationUserRepository.SearchAsync(publicId.Value, search, new UserParams());
-                return View(users);
-            }
-
-            return BadRequest();
-        }
+        return BadRequest();
     }
 }
