@@ -1,10 +1,9 @@
-﻿namespace Domain.Constants
+﻿namespace Domain.Constants;
+
+public enum SocialRelation
 {
-    public enum SocialRelation
-    {
-        Friend,
-        NotFriend,
-        FrinedRequesSent,
-        FriendRequestReceived
-    }
+    Friend,
+    NotFriend,
+    FrinedRequesSent,
+    FriendRequestReceived
 }
