@@ -1,4 +1,6 @@
-﻿namespace API.Controllers.Users;
+﻿using FluentValidation;
+
+namespace API.Controllers.Users;
 
 [Route("api/[controller]")]
 [ApiController]
@@ -9,8 +11,15 @@ public class UsersController(JsonSerializerOptions jsonSerializerOptions, IMedia
 
     // GET: api/users
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<UserDTO>>> GetUsers([FromQuery] GetUsersRequest request)
+    public async Task<ActionResult<IEnumerable<UserDTO>>> GetUsers([FromQuery] GetUsersRequest request, IValidator<GetUsersRequest> validator)
     {
+        var validationResult = validator.Validate(request);
+
+        if(!validationResult.IsValid)
+        {
+            return BadRequest(validationResult.Errors);
+        }
+
         var result = await mediator.Send(new GetUsersQuery(request.UserParams));
 
         if (result.IsSuccess)
