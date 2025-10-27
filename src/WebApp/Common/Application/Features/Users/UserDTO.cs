@@ -1,26 +1,28 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Application.DTOs.Picture;
+using Domain.Enums;
 
 namespace Application.Features.Users;
 
-public class UserDTO
+public record UserDTO
 {
     [Required]
-    public int Id { get; set; }
+    public int Id { get; init; }
     [Required, MaxLength(255)]
-    public required string FirstName { get; set; }
+    public required string FirstName { get; init; }
     [Required, MaxLength(255)]
-    public required string LastName { get; set; }
-    public string? ProfilePictureUrl { get; set; }
+    public required string LastName { get; init; }
+    public string? ProfilePictureUrl { get; init; }
     [Required]
-    public char Sex { get; set; }
+    public char Sex { get; init; }
     [Required]
-    public int Age { get; set; }
+    public int Age { get; init; }
     [Required]
-    public DateTime Created { get; set; }
+    public DateTime Created { get; init; }
     [Required]
-    public DateTime LastActive { get; set; }
+    public DateTime LastActive { get; init; }
     [Required]
-    public required string Bio { get; set; }
-    public IEnumerable<PictureDTO> Pictures { get; set; } = [];
+    public required string Bio { get; init; }
+    public RelationStatus RelationStatus { get; init; } = RelationStatus.None;
+    public IEnumerable<PictureDTO> Pictures { get; init; } = [];
 }
