@@ -1,41 +1,28 @@
-﻿using Application.Features.Pictures;
-using Application.Features.Pictures.List;
-
-namespace API.Controllers.Pictures;
+﻿namespace API.Controllers.Pictures;
 
 [Route("api/[controller]")]
 [ApiController]
 [Authorize]
-public class PicturesController(IUnitOfWork _unitOfWork, IPictureService _pictureService, IMapper _mapper, IMediator mediator) : ControllerBase
+public class PicturesController(IUnitOfWork _unitOfWork, IMediator mediator) : ControllerBase
 {
     // POST: api/pictures
     [HttpPost]
     public async Task<ActionResult<PictureDTO>> Create(IFormFile file)
     {
-        var user = await _unitOfWork.ApplicationUserRepository.GetByIdAsync(User.GetPublicId());
+        Result<int> result = await mediator.Send(new CreatePictureCommand(file));
 
-        if(user is null)
+        if (result.IsSuccess)
         {
-            return Unauthorized();
+            return Created();
         }
-
-        var result = await _pictureService.AddPictureAsync(file);
-        if (result.Error != null)
+        else if (result.Status == ResultStatus.Unauthorized)
         {
-            return BadRequest(result.Error.Message);
+            return Unauthorized(result.Errors);
         }
-        var picture = new Picture
+        else
         {
-            AppUserId = user.Id,
-            Url = result.SecureUrl.AbsoluteUri,
-            PublicId = result.PublicId
-        };
-
-        picture = await _unitOfWork.PictureRepository.AddPictureAsync(picture);
-
-        await _unitOfWork.SaveChangesAsync();
-
-        return Ok(_mapper.Map<PictureDTO>(picture));
+            return BadRequest(result.Errors);
+        }
     }
 
     // POST: api/pictures/profilepicture
@@ -67,44 +54,29 @@ public class PicturesController(IUnitOfWork _unitOfWork, IPictureService _pictur
 
         return Ok();
     }
+
     // DELETE: api/pictures/{pictureId}
     [HttpDelete("{pictureId}")]
     public async Task<ActionResult<PictureDTO>> Delete(int pictureId)
     {
-        ApplicationUser? user = await _unitOfWork.ApplicationUserRepository.GetByIdAsync(User.GetPublicId());
+        Result<object?> result = await mediator.Send(new DeletePictureCommand(pictureId));
 
-        if(user == null)
+        if(result.IsSuccess)
         {
-            return Unauthorized();
+            return NoContent();
         }
-
-        var pictures = await _unitOfWork.PictureRepository.GetUserPictureAsync(user.Id);
-        var picture = pictures.FirstOrDefault(p => p.Id == pictureId);
-        if (picture == null)
+        else if(result.Status == ResultStatus.NotFound)
         {
-            return BadRequest($"{pictureId} doesn't exist.");
+            return NotFound(result.Errors);
         }
-        if (picture.AppUserId != user.Id)
+        else if(result.Status == ResultStatus.Unauthorized)
         {
-            return Unauthorized();
+            return Unauthorized(result.Errors);
         }
-        var result = await _pictureService.DeletePictureAsync(picture.PublicId);
-        if (result.Error != null)
+        else
         {
-            return BadRequest(result.Error.Message);
+            return BadRequest(result.Errors);
         }
-        _unitOfWork.PictureRepository.DeletePicture(picture);
-
-        if(user.ProfilePictureUrl == picture.Url)
-        {
-            user.ProfilePictureUrl = "";
-
-            _unitOfWork.ApplicationUserRepository.Update(user);
-        }
-
-        await _unitOfWork.SaveChangesAsync();
-        
-        return Ok();
     }
 
     // GET: api/pictures

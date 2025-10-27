@@ -45,6 +45,10 @@ global using Application.Features.Posts.GetByOwnerId;
 global using Application.Features.Account.Login;
 global using Application.Features.Account.Register;
 global using Application.Features.Messages.Delete;
+global using Application.Features.Pictures;
+global using Application.Features.Pictures.Delete;
+global using Application.Features.Pictures.List;
+global using Application.Features.Pictures.Create;
 
 global using API.Extensions;
 global using API.Filters;
