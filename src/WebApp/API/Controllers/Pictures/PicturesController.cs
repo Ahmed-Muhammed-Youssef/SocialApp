@@ -1,13 +1,16 @@
-﻿namespace API.Controllers;
+﻿using Application.Features.Pictures;
+using Application.Features.Pictures.List;
+
+namespace API.Controllers.Pictures;
 
 [Route("api/[controller]")]
 [ApiController]
 [Authorize]
-public class PicturesController(IUnitOfWork _unitOfWork, IPictureService _pictureService, IMapper _mapper) : ControllerBase
+public class PicturesController(IUnitOfWork _unitOfWork, IPictureService _pictureService, IMapper _mapper, IMediator mediator) : ControllerBase
 {
     // POST: api/pictures
     [HttpPost]
-    public async Task<ActionResult<PictureDTO>> UploadPicture(IFormFile file)
+    public async Task<ActionResult<PictureDTO>> Create(IFormFile file)
     {
         var user = await _unitOfWork.ApplicationUserRepository.GetByIdAsync(User.GetPublicId());
 
@@ -66,7 +69,7 @@ public class PicturesController(IUnitOfWork _unitOfWork, IPictureService _pictur
     }
     // DELETE: api/pictures/{pictureId}
     [HttpDelete("{pictureId}")]
-    public async Task<ActionResult<PictureDTO>> DeletePhoto(int pictureId)
+    public async Task<ActionResult<PictureDTO>> Delete(int pictureId)
     {
         ApplicationUser? user = await _unitOfWork.ApplicationUserRepository.GetByIdAsync(User.GetPublicId());
 
@@ -104,11 +107,16 @@ public class PicturesController(IUnitOfWork _unitOfWork, IPictureService _pictur
         return Ok();
     }
 
-    // GET: api/pictures/all
-    [HttpGet("all")]
-    public async Task<ActionResult<PictureDTO>> GetPictures()
+    // GET: api/pictures
+    [HttpGet]
+    public async Task<ActionResult<PictureDTO>> Get()
     {
-        var pictures = await _unitOfWork.PictureRepository.GetUserPictureDTOsAsync(User.GetPublicId()); //the output is ordered
-        return Ok(pictures);
+        var result = await mediator.Send(new GetPicturesQuery());
+
+        if(result.IsSuccess)
+        {
+            return Ok(result.Value);
+        }
+        return BadRequest(result.Errors);
     }
 }

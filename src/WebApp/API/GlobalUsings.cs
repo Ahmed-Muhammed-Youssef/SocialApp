@@ -30,7 +30,6 @@ global using Application.Interfaces.Services;
 global using Application.Authentication.Google;
 global using Application.Authentication.GoogleModels;
 global using Application.DTOs.User;
-global using Application.DTOs.Picture;
 global using Application.DTOs.Pagination;
 global using Application.MappingProfiles;
 global using Application.Features.Users;

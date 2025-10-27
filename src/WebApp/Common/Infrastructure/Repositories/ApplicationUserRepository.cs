@@ -11,7 +11,7 @@ using AutoMapper;
 using Application.Features.Users;
 using Domain.Enums;
 using Shared.Extensions;
-using Application.DTOs.Picture;
+using Application.Features.Pictures;
 
 namespace Infrastructure.Repositories;
 
@@ -87,11 +87,7 @@ public class ApplicationUserRepository(DataContext _dataContext, IMapper mapper)
             Created = u.Created,
             LastActive = u.LastActive,
             Bio = u.Bio ?? string.Empty,
-            Pictures = u.Pictures.Select(p => new PictureDTO
-            {
-                Id = p.Id,
-                Url = p.Url
-            })
+            Pictures = u.Pictures.Select(p => new PictureDTO(p.Id, p.Url))
         });
 
         var count = await projectedQuery.CountAsync();

@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using Application.DTOs.Picture;
+using Application.Features.Pictures;
 using Domain.Enums;
 
 namespace Application.Features.Users;

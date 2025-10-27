@@ -1,14 +1,12 @@
 ﻿using Domain.Entities;
-using AutoMapper;
-using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 using Infrastructure.Data;
 using Application.Interfaces.Repositories;
-using Application.DTOs.Picture;
+using Application.Features.Pictures;
 
 namespace Infrastructure.Repositories;
 
-public class PictureRepository(DataContext _dataContext, IMapper _mapper) : IPictureRepository
+public class PictureRepository(DataContext _dataContext) : IPictureRepository
 {
     public async Task<Picture> AddPictureAsync(Picture picture)
     {
@@ -21,7 +19,7 @@ public class PictureRepository(DataContext _dataContext, IMapper _mapper) : IPic
         _dataContext.Pictures.Remove(picture);
     }
 
-    public async Task<IEnumerable<Picture>> GetUserPictureAsync(int id)
+    public async Task<List<Picture>> GetUserPictureAsync(int id)
     {
         var result = _dataContext.Pictures
            .AsNoTracking()
@@ -30,12 +28,12 @@ public class PictureRepository(DataContext _dataContext, IMapper _mapper) : IPic
         return await result.ToListAsync();
     }
 
-    public async Task<IEnumerable<PictureDTO>> GetUserPictureDTOsAsync(int id)
+    public async Task<List<PictureDTO>> GetUserPictureDTOsAsync(int id)
     {
         var result = await _dataContext.Pictures
             .AsNoTracking()
             .Where(p => p.AppUserId == id)
-            .ProjectTo<PictureDTO>(_mapper.ConfigurationProvider)
+            .Select(p => new PictureDTO(p.Id, p.Url))
             .ToListAsync();
 
         return result;
