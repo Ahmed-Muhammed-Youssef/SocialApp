@@ -7,9 +7,7 @@ using Application.Interfaces.Repositories;
 using Dapper;
 using Microsoft.Data.SqlClient;
 using System.Data;
-using Application.DTOs.Pagination;
 using Application.Features.Users;
-using Shared.Pagination;
 
 namespace Infrastructure.Repositories;
 
@@ -36,31 +34,14 @@ public class FriendRequestsRepository(DataContext _dataContext, IMapper _mapper)
         }
         return frFromTarget != null;
     }
-    public async Task<PagedList<UserDTO>> GetFriendsAsync(int id, PaginationParams paginationParams)
-    {
-        var friendsIds = await _dataContext.Friends
-            .AsNoTracking()
-            .Where(u => u.UserId == id)
-            .Select(u => u.FriendId).ToListAsync();
 
-        var queryDto = _dataContext.ApplicationUsers
-            .Where(user => friendsIds.Contains(user.Id))
-            .ProjectTo<UserDTO>(_mapper.ConfigurationProvider).AsNoTracking();
-
-        queryDto = queryDto.OrderByDescending(u => u.LastActive);
-
-        int count = queryDto.Count();
-        var items = queryDto.Skip(paginationParams.SkipValue()).Take(paginationParams.ItemsPerPage);
-        var listDto = await items.ToListAsync();
-        var pagedResult = new PagedList<UserDTO>(listDto, listDto.Count, paginationParams.PageNumber, paginationParams.ItemsPerPage);
-        return pagedResult;
-    }
     public async Task<bool> IsFriend(int userId, int targetId)
     {
         return await _dataContext.Friends
             .AsNoTracking()
             .AnyAsync(u => u.UserId == userId && u.FriendId == targetId);
     }
+
     public async Task<FriendRequest?> GetFriendRequestAsync(int senderId, int targetId)
     {
         return await _dataContext.FriendRequests
@@ -68,12 +49,14 @@ public class FriendRequestsRepository(DataContext _dataContext, IMapper _mapper)
             .Where(fr => fr.RequestedId == targetId && fr.RequesterId == senderId)
             .FirstOrDefaultAsync();
     }
+
     public async Task<bool> IsFriendRequestedAsync(int senderId, int targetId)
     {
         return await _dataContext.FriendRequests
             .AsNoTracking()
             .AnyAsync(fr => fr.RequestedId == targetId && fr.RequesterId == senderId);
     }
+
     public async Task<List<UserDTO>> GetRecievedFriendRequestsAsync(int targetId)
     {
         return await _dataContext.FriendRequests

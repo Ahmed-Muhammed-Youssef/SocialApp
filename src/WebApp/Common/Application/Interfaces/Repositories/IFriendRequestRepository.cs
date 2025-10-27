@@ -1,7 +1,5 @@
-﻿using Application.DTOs.Pagination;
-using Application.Features.Users;
+﻿using Application.Features.Users;
 using Domain.Entities;
-using Shared.Pagination;
 
 namespace Application.Interfaces.Repositories;
 
@@ -65,16 +63,6 @@ public interface IFriendRequestRepository
     /// <param name="targetId">The ID of the second user.</param>
     /// <returns>A boolean value indicating whether the two users are friends.</returns>
     public Task<bool> IsFriend(int userId, int targetId);
-
-    /// <summary>
-    /// Retrieves a paginated list of friends for a given user.
-    /// </summary>
-    /// <param name="id">The ID of the user whose friends are being retrieved.</param>
-    /// <param name="paginationParams">The pagination parameters specifying page number and items per page.</param>
-    /// <returns>
-    /// A <see cref="PagedList{T}"/> containing a paginated list of <see cref="UserDTO"/> representing the user's friends.
-    /// </returns>
-    public Task<PagedList<UserDTO>> GetFriendsAsync(int id, PaginationParams paginationParams);
 
     /// <summary>
     /// Deletes a specified friend request from the database.
