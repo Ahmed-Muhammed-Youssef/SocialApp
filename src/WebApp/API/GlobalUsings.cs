@@ -49,6 +49,7 @@ global using Application.Features.Pictures;
 global using Application.Features.Pictures.Delete;
 global using Application.Features.Pictures.List;
 global using Application.Features.Pictures.Create;
+global using Application.Features.FriendRequests.List;
 
 global using API.Extensions;
 global using API.Filters;
