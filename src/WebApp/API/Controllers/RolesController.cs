@@ -111,7 +111,7 @@ public class RolesController(RoleManager<IdentityRole> _roleManager, UserManager
         var result = await _userManager.AddToRoleAsync(user, roleUser.Role);
         if (!result.Succeeded)
         {
-            return BadRequest((string.Join('\n', result.Errors.Select(e => e.Description).ToList())));
+            return BadRequest(string.Join('\n', result.Errors.Select(e => e.Description).ToList()));
         }
         return Ok();
     }
@@ -127,7 +127,7 @@ public class RolesController(RoleManager<IdentityRole> _roleManager, UserManager
         {
             return NoContent(); 
         }
-        else if(result.Status == Shared.Results.ResultStatus.NotFound)
+        else if(result.Status == ResultStatus.NotFound)
         {
             return NotFound(result.Errors);
         }

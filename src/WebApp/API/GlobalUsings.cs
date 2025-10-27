@@ -47,6 +47,7 @@ global using Application.Features.Posts.GetById;
 global using Application.Features.Posts.GetByOwnerId;
 global using Application.Features.Account.Login;
 global using Application.Features.Account.Register;
+global using Application.Features.Messages.Delete;
 
 global using API.Extensions;
 global using API.Filters;
