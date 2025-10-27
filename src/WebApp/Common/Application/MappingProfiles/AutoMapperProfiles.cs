@@ -1,5 +1,4 @@
 ﻿using Application.DTOs.Picture;
-using Application.DTOs.Post;
 using Domain.Entities;
 using AutoMapper;
 using Shared.Extensions;
@@ -22,7 +21,6 @@ public class AutoMapperProfiles : Profile
         CreateMap<Message, MessageDTO>();
         
         CreateMap<Post, PostDTO>();
-        CreateMap<CreatePostDTO, Post>();
     }
 
 }

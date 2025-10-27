@@ -1,4 +1,6 @@
-﻿namespace API.Controllers.Posts;
+﻿using API.Controllers.Posts.Requests;
+
+namespace API.Controllers.Posts;
 
 [Route("api/[controller]")]
 [ApiController]
@@ -36,14 +38,14 @@ public class PostsController(IMediator mediator) : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult> Create([FromBody]CreatePostDTO newPostDTO)
+    public async Task<ActionResult> Create([FromBody]CreatePostRequest request)
     {
         if(!ModelState.IsValid)
         {
             return BadRequest(ModelState);
         }
 
-        Result<ulong> result = await mediator.Send(new CreatePostCommand(newPostDTO.Content));
+        Result<ulong> result = await mediator.Send(new CreatePostCommand(request.Content));
         if (result.IsSuccess)
         {
             return CreatedAtAction(nameof(GetPostById), new { postId = result.Value});
