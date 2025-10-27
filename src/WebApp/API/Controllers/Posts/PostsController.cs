@@ -1,4 +1,4 @@
-﻿namespace API.Controllers;
+﻿namespace API.Controllers.Posts;
 
 [Route("api/[controller]")]
 [ApiController]
