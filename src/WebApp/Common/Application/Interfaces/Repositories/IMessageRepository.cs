@@ -1,5 +1,5 @@
-﻿using Application.DTOs.Message;
-using Application.DTOs.User;
+﻿using Application.DTOs.User;
+using Application.Features.Messages;
 using Domain.Entities;
 
 namespace Application.Interfaces.Repositories;

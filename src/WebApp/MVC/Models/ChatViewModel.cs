@@ -1,6 +1,8 @@
-﻿namespace Application.DTOs.Message;
+﻿using Application.Features.Messages;
 
-public class ChatDTO
+namespace MVC.Models;
+
+public class ChatViewModel
 {
     public int Id { get; set; }
     public string? ProfilePictureUrl { get; set; }

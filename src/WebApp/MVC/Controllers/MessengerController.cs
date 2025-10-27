@@ -1,8 +1,8 @@
-﻿using Application.DTOs.Message;
-using Application.DTOs.User;
+﻿using Application.DTOs.User;
 using Application.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using MVC.Models;
 using Shared.Extensions;
 
 namespace MVC.Controllers;
@@ -43,7 +43,7 @@ public class MessengerController : Controller
             return NotFound();
         }
 
-        ChatDTO chatDTO = new()
+        ChatViewModel chatDTO = new()
         {
             Id = user.Id,
             FirstName = user.FirstName,

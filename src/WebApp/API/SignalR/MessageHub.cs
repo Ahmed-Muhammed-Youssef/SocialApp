@@ -1,3 +1,5 @@
+using Application.Features.Messages;
+
 namespace API.SignalR;
 
 public class MessageHub(IUnitOfWork _unitOfWork, IMapper _mapper,
@@ -84,7 +86,7 @@ public class MessageHub(IUnitOfWork _unitOfWork, IMapper _mapper,
             RecipientDeleted = false,
             ReadDate = null
         };
-        var msgDTO = _mapper.Map<MessageDTO>(createdMessage);
+        
 
         // @ToDo: Add Profile Picture Here
         // msgDTO.SenderPhotoUrl = null;
@@ -94,7 +96,6 @@ public class MessageHub(IUnitOfWork _unitOfWork, IMapper _mapper,
         if (group is not null && group.Connections.Any(c => c.UserId == recipient.Id))
         {
             createdMessage.ReadDate = DateTime.UtcNow;
-            msgDTO.ReadDate = createdMessage.ReadDate;
         }
         else
         {
@@ -102,6 +103,7 @@ public class MessageHub(IUnitOfWork _unitOfWork, IMapper _mapper,
             if (recipientConnections != null)
             {
                 var senderDTO = _mapper.Map<UserDTO>(sender);
+                var msgDTO = _mapper.Map<MessageDTO>(createdMessage);
                 await _presenceHubContext.Clients.Clients(recipientConnections)
                 .SendAsync("NewMessage", new { senderDTO, msgDTO });
             }
@@ -111,8 +113,9 @@ public class MessageHub(IUnitOfWork _unitOfWork, IMapper _mapper,
         {
             await _unitOfWork.MessageRepository.AddMessageAsync(createdMessage);
             await _unitOfWork.SaveChangesAsync();
-            msgDTO.Id = createdMessage.Id;
-            await Clients.Group(groupName).SendAsync("NewMessage", msgDTO);
+            
+
+            await Clients.Group(groupName).SendAsync("NewMessage", _mapper.Map<MessageDTO>(createdMessage));
         }
         catch(Exception ex) 
         { 

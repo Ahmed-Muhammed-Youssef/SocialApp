@@ -1,11 +1,11 @@
-﻿using Application.DTOs.Message;
-using Application.DTOs.Picture;
+﻿using Application.DTOs.Picture;
 using Application.DTOs.Post;
 using Domain.Entities;
 using AutoMapper;
 using Shared.Extensions;
 using Application.Features.Posts;
 using Application.Features.Users;
+using Application.Features.Messages;
 
 namespace Application.MappingProfiles;
 

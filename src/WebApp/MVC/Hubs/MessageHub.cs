@@ -1,4 +1,4 @@
-﻿using Application.DTOs.Message;
+﻿using Application.Features.Messages;
 using Application.Interfaces;
 using Domain.Entities;
 using Microsoft.AspNetCore.SignalR;

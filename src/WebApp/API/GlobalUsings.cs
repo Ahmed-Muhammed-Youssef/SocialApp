@@ -31,7 +31,6 @@ global using Application.Authentication.Google;
 global using Application.Authentication.GoogleModels;
 global using Application.DTOs.User;
 global using Application.DTOs.Post;
-global using Application.DTOs.Message;
 global using Application.DTOs.Picture;
 global using Application.DTOs.Pagination;
 global using Application.MappingProfiles;

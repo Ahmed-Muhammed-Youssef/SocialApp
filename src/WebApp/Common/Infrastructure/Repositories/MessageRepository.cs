@@ -4,8 +4,8 @@ using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 using Infrastructure.Data;
 using Application.Interfaces.Repositories;
-using Application.DTOs.Message;
 using Application.DTOs.User;
+using Application.Features.Messages;
 
 namespace Infrastructure.Repositories;
 
@@ -54,7 +54,6 @@ public class MessageRepository(DataContext _dataContext, IMapper _mapper) : IMes
         var query = _dataContext.Messages
             .AsNoTracking()
             .Where(m => m.SenderId == issuerId && m.RecipientId == theOtherUserId && !m.SenderDeleted || m.SenderId == theOtherUserId && m.RecipientId == issuerId && !m.RecipientDeleted)
-            .ProjectTo<MessageDTO>(_mapper.ConfigurationProvider)
             .OrderBy(m => m.SentDate);
 
         // update unread messages state to read
@@ -66,7 +65,8 @@ public class MessageRepository(DataContext _dataContext, IMapper _mapper) : IMes
                 message.ReadDate = DateTime.UtcNow;
             }
         }
-        return await query.ToListAsync(); ;
+
+        return await query.ProjectTo<MessageDTO>(_mapper.ConfigurationProvider).ToListAsync(); ;
     }
 
     public async Task AddGroupAsync(Group group)
