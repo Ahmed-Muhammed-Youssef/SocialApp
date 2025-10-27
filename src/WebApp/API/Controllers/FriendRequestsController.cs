@@ -17,9 +17,10 @@ public class FriendRequestsController(IUnitOfWork _unitOfWork) : ControllerBase
         var friendRequests = await _unitOfWork.FriendRequestRepository.GetRecievedFriendRequestsAsync(sender.Id);
         return Ok(friendRequests);
     }
+
     // DELETE: api/friendrequests/cancel/{id}
-    [HttpDelete("cancel/{id}")]
-    public async Task<IActionResult> CancelFriendRequests(int id)
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> Delete(int id)
     {
         var sender = await _unitOfWork.ApplicationUserRepository.GetByIdAsync(User.GetPublicId());
         var target = await _unitOfWork.ApplicationUserRepository.GetByIdAsync(id);
@@ -53,49 +54,14 @@ public class FriendRequestsController(IUnitOfWork _unitOfWork) : ControllerBase
         
         return Ok();
     }
-    // @ToDo: add pagination for scaling
-    // GET: api/friendrequests/sent
-    [HttpGet("sent")]
-    public async Task<ActionResult<IEnumerable<UserDTO>>> GetFriendRequestedUsers()
-    {
-        var sender = await _unitOfWork.ApplicationUserRepository.GetByIdAsync(User.GetPublicId());
-        if (sender == null)
-        {
-            return BadRequest();
-        }
-        var friendRequestedUsers = await _unitOfWork.FriendRequestRepository.GetFriendRequestedUsersDTOAsync(sender.Id);
-        return Ok(friendRequestedUsers);
-    }
 
-    // GET: api/friendrequests/isSent/{id}
-    [HttpGet("issent/{id}")]
-    public async Task<ActionResult<bool>> IsFriendRequested(int id)
-    {
-        var senderId = User.GetPublicId();
-        var target = await _unitOfWork.ApplicationUserRepository.GetByIdAsync(id);
-        if (target == null)
-        {
-            return NotFound();
-        }
-        if (senderId == target.Id)
-        {
-            return BadRequest("you can't check liking yourself.");
-        }
-        if (await _unitOfWork.FriendRequestRepository.IsFriendRequestedAsync(senderId, target.Id))
-        {
-            return Ok(true);
-        }
-
-        return Ok(false);
-    }
-
-    // POST: api/friendrequests/send/{id}
-    [HttpPost("send/{id}")]
-    public async Task<ActionResult> SendFriendRequest(int id)
+    // POST: api/friendrequests/{id}
+    [HttpPost("{userId}")]
+    public async Task<ActionResult> Create(int userId)
     {
         // retuns true if the user has become a frined
         var sender = await _unitOfWork.ApplicationUserRepository.GetByIdAsync(User.GetPublicId());
-        var target = await _unitOfWork.ApplicationUserRepository.GetByIdAsync(id);
+        var target = await _unitOfWork.ApplicationUserRepository.GetByIdAsync(userId);
         if (sender == null || target == null)
         {
             return NotFound();
