@@ -3,7 +3,7 @@
 [Route("api/[controller]")]
 [ApiController]
 [Authorize]
-public class PicturesController(IUnitOfWork _unitOfWork, IMediator mediator) : ControllerBase
+public class PicturesController(IMediator mediator) : ControllerBase
 {
     // POST: api/pictures
     [HttpPost]
@@ -23,36 +23,6 @@ public class PicturesController(IUnitOfWork _unitOfWork, IMediator mediator) : C
         {
             return BadRequest(result.Errors);
         }
-    }
-
-    // POST: api/pictures/profilepicture
-    [HttpPost("profilepicture/{pictureId}")]
-    public async Task<ActionResult<PictureDTO>> SetProfilePicture(int pictureId)
-    {
-        var user = await _unitOfWork.ApplicationUserRepository.GetByIdAsync(User.GetPublicId());
-
-        if (user is null)
-        {
-            return Unauthorized();
-        }
-
-        var pictures = await _unitOfWork.PictureRepository.GetUserPictureAsync(user.Id);
-        var picture = pictures.FirstOrDefault(p => p.Id == pictureId);
-        if (picture == null)
-        {
-            return BadRequest($"{pictureId} doesn't exist.");
-        }
-        if (picture.AppUserId != user.Id)
-        {
-            return Unauthorized();
-        }
-        
-        user.ProfilePictureUrl = picture.Url;
-        _unitOfWork.ApplicationUserRepository.Update(user);
-
-        await _unitOfWork.SaveChangesAsync();
-
-        return Ok();
     }
 
     // DELETE: api/pictures/{pictureId}
