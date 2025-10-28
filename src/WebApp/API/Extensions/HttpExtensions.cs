@@ -1,6 +1,4 @@
-﻿using API.Common.Headers;
-
-namespace API.Extensions;
+﻿namespace API.Extensions;
 
 public static class HttpExtensions
 {

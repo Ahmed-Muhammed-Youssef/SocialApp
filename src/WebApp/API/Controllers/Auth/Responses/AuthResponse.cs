@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace API.Controllers.Account.Responses;
+namespace API.Controllers.Auth.Responses;
 
 public record AuthResponse
 {

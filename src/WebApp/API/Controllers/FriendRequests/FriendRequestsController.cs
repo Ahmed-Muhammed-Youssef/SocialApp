@@ -1,7 +1,4 @@
-﻿using Application.Features.FriendRequests.Create;
-using Application.Features.FriendRequests.Delete;
-
-namespace API.Controllers.FriendRequests;
+﻿namespace API.Controllers.FriendRequests;
 
 [ApiController]
 [Authorize]

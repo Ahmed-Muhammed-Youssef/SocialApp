@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Shared.Results;
 
-namespace Application.Features.Account.Register;
+namespace Application.Features.Auth.Register;
 
 public class RegisterHandler(IUnitOfWork unitOfWork, UserManager<IdentityUser> userManager, ITokenService tokenService, IMapper mapper) : ICommandHandler<RegisterCommand, Result<RegisterDTO>>
 {

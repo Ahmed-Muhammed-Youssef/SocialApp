@@ -1,9 +1,9 @@
 ﻿namespace Application.Authentication.GoogleModels;
 
-public class GoogleUserInfo
+public record GoogleUserInfo
 {
-    public required string Name { get; set; }
-    public required string Email { get; set; }
-    public bool VerifiedEmail { get; set; }
-    public string? PictureUrl { get; set; }
+    public required string Name { get; init; }
+    public required string Email { get; init; }
+    public bool VerifiedEmail { get; init; }
+    public string? PictureUrl { get; init; }
 }

@@ -42,14 +42,14 @@ global using Application.Features.Roles.Delete;
 global using Application.Features.Posts.Create;
 global using Application.Features.Posts.GetById;
 global using Application.Features.Posts.GetByOwnerId;
-global using Application.Features.Account.Login;
-global using Application.Features.Account.Register;
 global using Application.Features.Messages.Delete;
 global using Application.Features.Pictures;
 global using Application.Features.Pictures.Delete;
 global using Application.Features.Pictures.List;
 global using Application.Features.Pictures.Create;
 global using Application.Features.FriendRequests.List;
+global using Application.Features.FriendRequests.Create;
+global using Application.Features.FriendRequests.Delete;
 
 global using API.Extensions;
 global using API.Filters;
@@ -57,8 +57,6 @@ global using API.Middleware;
 global using API.SignalR;
 global using API.Errors;
 global using API.Common.Headers;
-global using API.Controllers.Account.Requests;
-global using API.Controllers.Account.Responses;
 global using API.Controllers.Users;
 global using API.Controllers.Users.Requests;
 

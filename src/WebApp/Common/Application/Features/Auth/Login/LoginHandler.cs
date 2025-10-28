@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Shared.Results;
 
-namespace Application.Features.Account.Login;
+namespace Application.Features.Auth.Login;
 
 public class LoginHandler(IUnitOfWork unitOfWork, UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, ITokenService tokenService) 
     : ICommandHandler<LoginCommand, Result<LoginDTO>>
