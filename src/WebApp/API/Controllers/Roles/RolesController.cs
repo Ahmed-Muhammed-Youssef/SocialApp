@@ -1,22 +1,29 @@
-﻿namespace API.Controllers.Roles;
+﻿using Application.Features.Roles.List;
+
+namespace API.Controllers.Roles;
 
 [Route("api/[controller]")]
 [ApiController]
-[Authorize]
-public class RolesController(RoleManager<IdentityRole> _roleManager, IMediator mediator) : ControllerBase
+[Authorize(Policy = "RequireAdminRole")]
+public class RolesController(IMediator mediator) : ControllerBase
 {
-
-    // GET: api/roles/all
-    [Authorize(Policy = "RequireAdminRole")]
-    [HttpGet("all")]
+    // GET: api/roles
+    [HttpGet]
     public async Task<ActionResult<IEnumerable<string>>> GetRoles()
     {
-        var result = await _roleManager.Roles.Select(r => r.Name).ToListAsync();
-        return Ok(result);
+        var result = await mediator.Send(new GetRolesQuery());
+
+        if (!result.IsSuccess)
+        {
+            return Ok(result);
+        }
+        else
+        {
+            return BadRequest(result.Errors);
+        }
     }
 
     // POST: api/api/roles
-    [Authorize(Policy = "RequireAdminRole")]
     [HttpPost]
     public async Task<IActionResult> Create(RoleRequestDTO role)
     {
@@ -31,10 +38,8 @@ public class RolesController(RoleManager<IdentityRole> _roleManager, IMediator m
             return Ok(result.Value);
         }
     }
-
     
     // DELETE: api/roles/{id}
-    [Authorize(Policy = "RequireAdminRole")]
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteRole(string id)
     {
