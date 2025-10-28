@@ -1,4 +1,4 @@
-﻿using Application.Interfaces.Services;
+﻿using Application.Features.Auth;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;

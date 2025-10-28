@@ -25,11 +25,6 @@ global using System.Collections.Generic;
 global using System.Threading.Tasks;
 global using System.Net;
 
-global using Application.Interfaces;
-global using Application.Interfaces.Services;
-global using Application.Authentication.Google;
-global using Application.Authentication.GoogleModels;
-global using Application.MappingProfiles;
 global using Application.Features.Users;
 global using Application.Features.Users.Get;
 global using Application.Features.Users.List;

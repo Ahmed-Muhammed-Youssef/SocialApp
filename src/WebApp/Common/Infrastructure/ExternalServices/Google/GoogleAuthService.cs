@@ -1,5 +1,4 @@
-﻿using Application.Authentication.Google;
-using Application.Authentication.GoogleModels;
+﻿using Application.Features.Auth;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 

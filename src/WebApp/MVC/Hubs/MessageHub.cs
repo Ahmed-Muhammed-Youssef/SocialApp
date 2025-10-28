@@ -1,5 +1,5 @@
-﻿using Application.Features.Messages;
-using Application.Interfaces;
+﻿using Application.Common.Interfaces;
+using Application.Features.Messages;
 using Domain.Entities;
 using Microsoft.AspNetCore.SignalR;
 using Shared.Extensions;

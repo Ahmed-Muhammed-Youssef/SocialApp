@@ -1,6 +1,5 @@
-﻿using Application.Features.Users;
-using Application.Interfaces;
-using Application.Interfaces.Services;
+﻿using Application.Common.Interfaces;
+using Application.Features.Users;
 using AutoMapper;
 using Domain.Constants;
 using Domain.Entities;

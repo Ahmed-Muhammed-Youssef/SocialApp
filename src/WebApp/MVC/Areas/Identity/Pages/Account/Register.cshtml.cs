@@ -4,7 +4,7 @@
 
 using System.Text;
 using System.Text.Encodings.Web;
-using Application.Interfaces;
+using Application.Common.Interfaces;
 using Domain.Entities;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;

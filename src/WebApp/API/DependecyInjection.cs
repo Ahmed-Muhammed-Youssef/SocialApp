@@ -1,4 +1,6 @@
-﻿using FluentValidation;
+﻿using Application.Common.MappingProfiles;
+using Application.Features.Auth;
+using FluentValidation;
 using Infrastructure.Services;
 
 namespace API;

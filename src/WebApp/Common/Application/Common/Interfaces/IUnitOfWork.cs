@@ -1,6 +1,6 @@
-using Application.Interfaces.Repositories;
+using Application.Common.Interfaces.Repositories;
 
-namespace Application.Interfaces;
+namespace Application.Common.Interfaces;
 
 public interface IUnitOfWork
 {

@@ -1,4 +1,4 @@
-﻿using Application.MappingProfiles;
+﻿using Application.Common.MappingProfiles;
 using Domain.Constants;
 using Infrastructure.Identity;
 using Microsoft.AspNetCore.Identity;

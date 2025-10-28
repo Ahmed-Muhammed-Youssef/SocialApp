@@ -1,5 +1,4 @@
-﻿using Application.Interfaces;
-using Application.Interfaces.Services;
+﻿using Application.Common.Interfaces;
 using Domain.Entities;
 using Mediator;
 using Shared.Results;

@@ -1,7 +1,6 @@
 ﻿using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Infrastructure.Data;
-using Application.Interfaces.Repositories;
 using Microsoft.Data.SqlClient;
 using System.Data;
 using Dapper;
@@ -11,6 +10,7 @@ using Application.Features.Users;
 using Domain.Enums;
 using Shared.Extensions;
 using Application.Features.Pictures;
+using Application.Common.Interfaces.Repositories;
 
 namespace Infrastructure.Repositories;
 

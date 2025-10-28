@@ -1,8 +1,8 @@
 ﻿using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Infrastructure.Data;
-using Application.Interfaces.Repositories;
 using Application.Features.Pictures;
+using Application.Common.Interfaces.Repositories;
 
 namespace Infrastructure.Repositories;
 

@@ -3,7 +3,7 @@ using Application.Features.Posts;
 using Domain.Entities;
 using Shared.Pagination;
 
-namespace Application.Interfaces.Repositories;
+namespace Application.Common.Interfaces.Repositories;
 
 public interface IPostRepository
 {

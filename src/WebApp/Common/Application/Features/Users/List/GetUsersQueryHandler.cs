@@ -1,6 +1,5 @@
-﻿using Application.DTOs.Pagination;
-using Application.Interfaces;
-using Application.Interfaces.Services;
+﻿using Application.Common.Interfaces;
+using Application.DTOs.Pagination;
 using Mediator;
 using Shared.Results;
 

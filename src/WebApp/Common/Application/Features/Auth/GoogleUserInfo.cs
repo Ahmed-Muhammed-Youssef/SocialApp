@@ -1,4 +1,4 @@
-﻿namespace Application.Authentication.GoogleModels;
+﻿namespace Application.Features.Auth;
 
 public record GoogleUserInfo
 {

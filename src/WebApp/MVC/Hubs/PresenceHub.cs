@@ -1,5 +1,5 @@
-﻿using Application.Features.Users;
-using Application.Interfaces;
+﻿using Application.Common.Interfaces;
+using Application.Features.Users;
 using Infrastructure.RealTime.Presence;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;

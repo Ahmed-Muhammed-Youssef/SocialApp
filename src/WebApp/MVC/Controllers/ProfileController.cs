@@ -1,4 +1,4 @@
-﻿using Application.Interfaces;
+﻿using Application.Common.Interfaces;
 using Domain.Constants;
 using Domain.Entities;
 using Microsoft.AspNetCore.Mvc;

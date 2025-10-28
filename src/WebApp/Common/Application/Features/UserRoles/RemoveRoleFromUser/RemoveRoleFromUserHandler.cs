@@ -1,4 +1,4 @@
-﻿using Application.Interfaces;
+﻿using Application.Common.Interfaces;
 using Mediator;
 using Microsoft.AspNetCore.Identity;
 using Shared.Results;

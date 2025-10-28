@@ -1,6 +1,6 @@
-﻿using Application.Interfaces;
-using Application.Interfaces.Repositories;
-using Application.Interfaces.Services;
+﻿using Application.Common.Interfaces;
+using Application.Common.Interfaces.Repositories;
+using Application.Features.Pictures;
 using Infrastructure.Data;
 using Infrastructure.ExternalServices.Cloudinary;
 using Infrastructure.Identity;

@@ -1,5 +1,7 @@
 ﻿using API.Controllers.Auth.Requests;
 using API.Controllers.Auth.Responses;
+using Application.Common.Interfaces;
+using Application.Features.Auth;
 using Application.Features.Auth.Login;
 using Application.Features.Auth.Register;
 

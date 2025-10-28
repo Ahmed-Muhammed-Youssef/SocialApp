@@ -6,7 +6,7 @@ using Application.Features.Users;
 using Application.Features.Messages;
 using Application.Features.Pictures;
 
-namespace Application.MappingProfiles;
+namespace Application.Common.MappingProfiles;
 
 public class AutoMapperProfiles : Profile
 {

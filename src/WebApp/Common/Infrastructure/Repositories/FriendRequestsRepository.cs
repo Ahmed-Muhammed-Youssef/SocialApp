@@ -3,11 +3,11 @@ using Infrastructure.Data;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
-using Application.Interfaces.Repositories;
 using Dapper;
 using Microsoft.Data.SqlClient;
 using System.Data;
 using Application.Features.Users;
+using Application.Common.Interfaces.Repositories;
 
 namespace Infrastructure.Repositories;
 

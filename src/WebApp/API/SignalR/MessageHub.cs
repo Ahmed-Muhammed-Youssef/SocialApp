@@ -1,3 +1,4 @@
+using Application.Common.Interfaces;
 using Application.Features.Messages;
 
 namespace API.SignalR;

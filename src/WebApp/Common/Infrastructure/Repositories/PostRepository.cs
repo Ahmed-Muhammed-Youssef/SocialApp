@@ -1,6 +1,6 @@
-﻿using Application.DTOs.Pagination;
+﻿using Application.Common.Interfaces.Repositories;
+using Application.DTOs.Pagination;
 using Application.Features.Posts;
-using Application.Interfaces.Repositories;
 using Domain.Entities;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;

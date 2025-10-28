@@ -1,5 +1,5 @@
-﻿using Application.Features.Users;
-using Application.Interfaces;
+﻿using Application.Common.Interfaces;
+using Application.Features.Users;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Shared.Extensions;

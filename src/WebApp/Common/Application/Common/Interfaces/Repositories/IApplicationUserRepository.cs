@@ -2,7 +2,7 @@
 using Application.Features.Users;
 using Domain.Entities;
 
-namespace Application.Interfaces.Repositories;
+namespace Application.Common.Interfaces.Repositories;
 
 public interface IApplicationUserRepository
 {

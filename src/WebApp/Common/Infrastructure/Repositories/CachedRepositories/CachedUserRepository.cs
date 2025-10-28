@@ -1,9 +1,9 @@
 ﻿using Microsoft.Extensions.Caching.Memory;
 using Domain.Entities;
-using Application.Interfaces;
-using Application.Interfaces.Repositories;
 using Application.DTOs.Pagination;
 using Application.Features.Users;
+using Application.Common.Interfaces;
+using Application.Common.Interfaces.Repositories;
 
 namespace Infrastructure.Repositories.CachedRepositories;
 
