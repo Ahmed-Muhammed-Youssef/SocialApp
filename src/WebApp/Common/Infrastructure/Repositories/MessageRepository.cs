@@ -4,8 +4,8 @@ using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 using Infrastructure.Data;
 using Application.Interfaces.Repositories;
-using Application.DTOs.User;
 using Application.Features.Messages;
+using Application.Features.Users;
 
 namespace Infrastructure.Repositories;
 

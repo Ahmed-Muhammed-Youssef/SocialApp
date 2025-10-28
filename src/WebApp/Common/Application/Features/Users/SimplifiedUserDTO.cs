@@ -1,4 +1,4 @@
-﻿namespace Application.DTOs.User;
+﻿namespace Application.Features.Users;
 
 public class SimplifiedUserDTO
 {

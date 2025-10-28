@@ -1,8 +1,8 @@
-﻿using Application.DTOs.User;
-using Application.Interfaces;
+﻿using Application.Interfaces;
 using Domain.Constants;
 using Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
+using MVC.Models;
 using Shared.Extensions;
 
 namespace MVC.Controllers;
@@ -28,7 +28,7 @@ public class ProfileController : Controller
             return NotFound();
         }
 
-        UserProfileDTO profile = new()
+        UserProfileViewModel profile = new()
         { 
             Id = id,
             FirstName = userProfile.FirstName,

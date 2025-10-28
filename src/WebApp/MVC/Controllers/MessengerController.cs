@@ -1,4 +1,4 @@
-﻿using Application.DTOs.User;
+﻿using Application.Features.Users;
 using Application.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

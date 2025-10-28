@@ -1,8 +1,8 @@
 ﻿using Domain.Constants;
 
-namespace Application.DTOs.User;
+namespace MVC.Models;
 
-public class UserProfileDTO
+public class UserProfileViewModel
 {
     public int Id { get; set; }
     public required string FirstName { get; set; }

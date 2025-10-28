@@ -1,4 +1,5 @@
-﻿@model Application.DTOs.Pagination.PagedList<Application.DTOs.User.SimplifiedUserDTO>
+﻿@using Application.Features.Users
+@model Application.DTOs.Pagination.PagedList<SimplifiedUserDTO>
 
 @foreach (var user in Model.Items)
 {

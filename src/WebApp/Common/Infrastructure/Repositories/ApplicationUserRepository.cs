@@ -5,7 +5,6 @@ using Application.Interfaces.Repositories;
 using Microsoft.Data.SqlClient;
 using System.Data;
 using Dapper;
-using Application.DTOs.User;
 using Application.DTOs.Pagination;
 using AutoMapper;
 using Application.Features.Users;

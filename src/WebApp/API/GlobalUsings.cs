@@ -29,8 +29,6 @@ global using Application.Interfaces;
 global using Application.Interfaces.Services;
 global using Application.Authentication.Google;
 global using Application.Authentication.GoogleModels;
-global using Application.DTOs.User;
-global using Application.DTOs.Pagination;
 global using Application.MappingProfiles;
 global using Application.Features.Users;
 global using Application.Features.Users.Get;
@@ -70,5 +68,4 @@ global using Infrastructure.Identity;
 global using Infrastructure.RealTime.Presence;
 
 global using Shared.Extensions;
-global using Shared.Pagination;
 global using Shared.Results;

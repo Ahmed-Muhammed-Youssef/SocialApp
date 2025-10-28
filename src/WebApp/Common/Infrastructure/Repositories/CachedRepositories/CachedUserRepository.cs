@@ -2,7 +2,6 @@
 using Domain.Entities;
 using Application.Interfaces;
 using Application.Interfaces.Repositories;
-using Application.DTOs.User;
 using Application.DTOs.Pagination;
 using Application.Features.Users;
 
