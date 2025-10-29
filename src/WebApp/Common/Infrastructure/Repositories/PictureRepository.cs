@@ -3,25 +3,26 @@ using Microsoft.EntityFrameworkCore;
 using Infrastructure.Data;
 using Application.Features.Pictures;
 using Application.Common.Interfaces.Repositories;
+using Application.Common.Mappings;
 
 namespace Infrastructure.Repositories;
 
-public class PictureRepository(DataContext _dataContext) : IPictureRepository
+public class PictureRepository(DataContext dataContext) : RepositoryBase<Picture>(dataContext), IPictureRepository
 {
     public async Task<Picture> AddPictureAsync(Picture picture)
     {
-        await _dataContext.Pictures.AddAsync(picture);
+        await dataContext.Pictures.AddAsync(picture);
         return picture;
     }
 
     public void DeletePicture(Picture picture)
     {
-        _dataContext.Pictures.Remove(picture);
+        dataContext.Pictures.Remove(picture);
     }
 
     public async Task<List<Picture>> GetUserPictureAsync(int id)
     {
-        var result = _dataContext.Pictures
+        var result = dataContext.Pictures
            .AsNoTracking()
            .Where(p => p.AppUserId == id)
            .OrderBy(p => p.Created);
@@ -30,16 +31,16 @@ public class PictureRepository(DataContext _dataContext) : IPictureRepository
 
     public async Task<List<PictureDTO>> GetUserPictureDTOsAsync(int id)
     {
-        var result = await _dataContext.Pictures
+        var result = await dataContext.Pictures
             .AsNoTracking()
             .Where(p => p.AppUserId == id)
-            .Select(p => new PictureDTO(p.Id, p.Url))
+            .Select(p => PictureMappings.ToDto(p))
             .ToListAsync();
 
         return result;
     }
     public void UpdatePicture(Picture picture)
     {
-        _dataContext.Entry(picture).State = EntityState.Modified;
+        dataContext.Entry(picture).State = EntityState.Modified;
     }
 }

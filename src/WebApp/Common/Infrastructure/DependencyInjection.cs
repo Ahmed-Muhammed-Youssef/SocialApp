@@ -9,6 +9,7 @@ using Infrastructure.Repositories;
 using Infrastructure.Repositories.CachedRepositories;
 using Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -25,8 +26,13 @@ public static class DependencyInjection
 
         // Repositories
         builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
-        builder.Services.AddScoped<ICachedApplicationUserRepository, CachedUserRepository>();
-        builder.Services.AddScoped<IApplicationUserRepository, ApplicationUserRepository>();
+        builder.Services.AddScoped<IApplicationUserRepository>(sp =>
+        {
+            IMemoryCache cache = sp.GetRequiredService<IMemoryCache>();
+            DataContext dataContext = sp.GetRequiredService<DataContext>();
+            ApplicationUserRepository inner = new(dataContext);
+            return new CachedUserRepository(inner, cache, dataContext);
+        });
         builder.Services.AddScoped<IPictureRepository, PictureRepository>();
         builder.Services.AddScoped<IMessageRepository, MessageRepository>();
         builder.Services.AddScoped<IFriendRequestRepository, FriendRequestsRepository>();

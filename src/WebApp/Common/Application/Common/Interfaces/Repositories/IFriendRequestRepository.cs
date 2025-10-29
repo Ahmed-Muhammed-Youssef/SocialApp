@@ -3,7 +3,7 @@ using Domain.Entities;
 
 namespace Application.Common.Interfaces.Repositories;
 
-public interface IFriendRequestRepository
+public interface IFriendRequestRepository : IRepositoryBase<FriendRequest>
 {
     /// <summary>
     /// Sends a friend request from one user to another.

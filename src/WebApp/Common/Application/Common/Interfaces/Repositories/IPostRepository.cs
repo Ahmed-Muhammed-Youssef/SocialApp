@@ -5,7 +5,7 @@ using Shared.Pagination;
 
 namespace Application.Common.Interfaces.Repositories;
 
-public interface IPostRepository
+public interface IPostRepository : IRepositoryBase<Post>
 {
     Task<Post?> GetByIdAsync(ulong postId);
     Task<IEnumerable<Post>> GetUserPostsAsync(int userId, int requesterId);

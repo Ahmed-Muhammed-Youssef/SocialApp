@@ -14,7 +14,6 @@
     <PackageVersion Include="Mediator.Abstractions" Version="3.0.1" />
     <PackageVersion Include="Mediator.SourceGenerator" Version="3.0.1" />
     <PackageVersion Include="Swashbuckle.AspNetCore" Version="7.2.0" />
-    <PackageVersion Include="AutoMapper" Version="13.0.1" />
     <PackageVersion Include="Bogus" Version="35.6.1" />
     <PackageVersion Include="Dapper" Version="2.1.35" />
     <PackageVersion Include="System.IdentityModel.Tokens.Jwt" Version="8.3.0" />

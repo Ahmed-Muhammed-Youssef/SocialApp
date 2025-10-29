@@ -14,7 +14,6 @@ global using Microsoft.IdentityModel.Tokens;
 global using Microsoft.OpenApi.Models;
 global using Microsoft.EntityFrameworkCore;
 
-global using AutoMapper;
 global using Mediator;
 
 global using System;

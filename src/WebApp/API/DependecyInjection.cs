@@ -1,5 +1,4 @@
-﻿using Application.Common.MappingProfiles;
-using Application.Features.Auth;
+﻿using Application.Features.Auth;
 using FluentValidation;
 using Infrastructure.Services;
 
@@ -23,7 +22,6 @@ public static class DependecyInjection
             .AllowAnyHeader().WithOrigins("https://localhost:4200").AllowCredentials());
         });
 
-        builder.Services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
         builder.Services.AddSingleton(new JsonSerializerOptions
         {
             PropertyNamingPolicy = JsonNamingPolicy.CamelCase,

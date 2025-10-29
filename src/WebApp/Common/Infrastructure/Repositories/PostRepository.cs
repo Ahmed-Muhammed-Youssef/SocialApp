@@ -8,26 +8,26 @@ using Shared.Pagination;
 
 namespace Infrastructure.Repositories;
 
-public class PostRepository(DataContext _context) : IPostRepository
+public class PostRepository(DataContext dataContext) : RepositoryBase<Post>(dataContext), IPostRepository
 {
     public async Task<Post?> GetByIdAsync(ulong postId)
     {
-        return await _context.Posts.Where(p => p.Id == postId).FirstOrDefaultAsync();
+        return await dataContext.Posts.Where(p => p.Id == postId).FirstOrDefaultAsync();
     }
 
     public async Task<IEnumerable<Post>> GetUserPostsAsync(int userId, int requesterId)
     {
-        return await _context.Posts.Where(p => p.UserId == userId).ToListAsync();
+        return await dataContext.Posts.Where(p => p.UserId == userId).ToListAsync();
     }
 
     public async Task AddAsync(Post newPost)
     {
-        await _context.Posts.AddAsync(newPost);
+        await dataContext.Posts.AddAsync(newPost);
     }
 
     public async Task<PagedList<PostDTO>> GetNewsfeed(int userId, PaginationParams paginationParams)
     {
-        var allPostsQuery = _context.Friends
+        var allPostsQuery = dataContext.Friends
         .Where(f => f.UserId == userId)
         .SelectMany(f => f.FriendUser!.Posts, (f, p) => new PostDTO
         {

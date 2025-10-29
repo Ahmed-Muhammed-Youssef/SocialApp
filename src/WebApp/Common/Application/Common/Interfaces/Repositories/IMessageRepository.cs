@@ -4,7 +4,7 @@ using Domain.Entities;
 
 namespace Application.Common.Interfaces.Repositories;
 
-public interface IMessageRepository
+public interface IMessageRepository : IRepositoryBase<Message>
 {
     Task AddGroupAsync(Group group);
     void RemoveConnection(Connection connection);

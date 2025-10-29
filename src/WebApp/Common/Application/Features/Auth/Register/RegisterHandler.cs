@@ -1,6 +1,6 @@
 ﻿using Application.Common.Interfaces;
+using Application.Common.Mappings;
 using Application.Features.Users;
-using AutoMapper;
 using Domain.Constants;
 using Domain.Entities;
 using Mediator;
@@ -10,7 +10,7 @@ using Shared.Results;
 
 namespace Application.Features.Auth.Register;
 
-public class RegisterHandler(IUnitOfWork unitOfWork, UserManager<IdentityUser> userManager, ITokenService tokenService, IMapper mapper) : ICommandHandler<RegisterCommand, Result<RegisterDTO>>
+public class RegisterHandler(IUnitOfWork unitOfWork, UserManager<IdentityUser> userManager, ITokenService tokenService) : ICommandHandler<RegisterCommand, Result<RegisterDTO>>
 {
     public async ValueTask<Result<RegisterDTO>> Handle(RegisterCommand command, CancellationToken cancellationToken)
     {
@@ -67,7 +67,7 @@ public class RegisterHandler(IUnitOfWork unitOfWork, UserManager<IdentityUser> u
             return Result<RegisterDTO>.Error("Failed to register the user.");
         }
 
-        UserDTO userData = mapper.Map<UserDTO>(newApplicationUser);
+        UserDTO userData = UserMappings.ToDto(newApplicationUser);
         string token = await tokenService.CreateTokenAsync(newIdentityUser, userData.Id);
 
         RegisterDTO dto = new(userData, token);

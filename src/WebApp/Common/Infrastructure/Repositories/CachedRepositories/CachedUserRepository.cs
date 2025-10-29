@@ -2,12 +2,12 @@
 using Domain.Entities;
 using Application.DTOs.Pagination;
 using Application.Features.Users;
-using Application.Common.Interfaces;
 using Application.Common.Interfaces.Repositories;
+using Infrastructure.Data;
 
 namespace Infrastructure.Repositories.CachedRepositories;
 
-public class CachedUserRepository(IApplicationUserRepository _usersRepository, IMemoryCache _memoryCache) : ICachedApplicationUserRepository
+public class CachedUserRepository(IApplicationUserRepository _usersRepository, IMemoryCache _memoryCache, DataContext dataContext) : RepositoryBase<ApplicationUser>(dataContext), IApplicationUserRepository
 {
     // Queries
 

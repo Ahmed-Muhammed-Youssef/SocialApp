@@ -1,5 +1,4 @@
-﻿using Application.Common.MappingProfiles;
-using Domain.Constants;
+﻿using Domain.Constants;
 using Infrastructure.Identity;
 using Microsoft.AspNetCore.Identity;
 using MVC.Factories;
@@ -20,7 +19,6 @@ public static class DependencyInjection
         builder.Services.AddControllersWithViews();
         builder.Services.AddRazorPages();
         builder.Services.AddSignalR();
-        builder.Services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
         return builder;
     }
     public static IHostApplicationBuilder AddIdentity(this IHostApplicationBuilder builder)

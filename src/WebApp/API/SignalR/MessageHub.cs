@@ -1,10 +1,10 @@
 using Application.Common.Interfaces;
+using Application.Common.Mappings;
 using Application.Features.Messages;
 
 namespace API.SignalR;
 
-public class MessageHub(IUnitOfWork _unitOfWork, IMapper _mapper,
-    IHubContext<PresenceHub> _presenceHubContext, OnlinePresenceManager _presenceTracker) : Hub
+public class MessageHub(IUnitOfWork _unitOfWork, IHubContext<PresenceHub> _presenceHubContext, OnlinePresenceManager _presenceTracker) : Hub
 {
     public override async Task OnConnectedAsync()
     {
@@ -103,8 +103,8 @@ public class MessageHub(IUnitOfWork _unitOfWork, IMapper _mapper,
             var recipientConnections = await _presenceTracker.GetConnectionForUser(recipient.Id);
             if (recipientConnections != null)
             {
-                var senderDTO = _mapper.Map<UserDTO>(sender);
-                var msgDTO = _mapper.Map<MessageDTO>(createdMessage);
+                UserDTO senderDTO = UserMappings.ToDto(sender);
+                MessageDTO msgDTO = MessageMappings.ToDto(createdMessage);
                 await _presenceHubContext.Clients.Clients(recipientConnections)
                 .SendAsync("NewMessage", new { senderDTO, msgDTO });
             }
@@ -116,7 +116,7 @@ public class MessageHub(IUnitOfWork _unitOfWork, IMapper _mapper,
             await _unitOfWork.SaveChangesAsync();
             
 
-            await Clients.Group(groupName).SendAsync("NewMessage", _mapper.Map<MessageDTO>(createdMessage));
+            await Clients.Group(groupName).SendAsync("NewMessage", MessageMappings.ToDto(createdMessage));
         }
         catch(Exception ex) 
         { 

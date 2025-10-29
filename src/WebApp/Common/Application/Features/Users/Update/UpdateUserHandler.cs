@@ -1,5 +1,4 @@
 ﻿using Application.Common.Interfaces;
-using AutoMapper;
 using Domain.Entities;
 using Mediator;
 using Shared.Extensions;

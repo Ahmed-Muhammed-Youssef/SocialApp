@@ -1,19 +1,18 @@
 ﻿using Domain.Entities;
-using AutoMapper;
-using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 using Infrastructure.Data;
 using Application.Features.Messages;
 using Application.Features.Users;
 using Application.Common.Interfaces.Repositories;
+using Application.Common.Mappings;
 
 namespace Infrastructure.Repositories;
 
-public class MessageRepository(DataContext _dataContext, IMapper _mapper) : IMessageRepository
+public class MessageRepository(DataContext dataContext) : RepositoryBase<Message>(dataContext), IMessageRepository
 {
     public async Task AddMessageAsync(Message message)
     {
-        await _dataContext.Messages.AddAsync(message);
+        await dataContext.Messages.AddAsync(message);
     }
 
     public void DeleteMessage(Message message, int issuerId)
@@ -36,22 +35,22 @@ public class MessageRepository(DataContext _dataContext, IMapper _mapper) : IMes
         }
         if (message.RecipientDeleted && message.SenderDeleted)
         {
-            _dataContext.Messages.Remove(message);
+            dataContext.Messages.Remove(message);
         }
         else
         {
-            _dataContext.Messages.Update(message);
+            dataContext.Messages.Update(message);
         }
     }
     public async Task<Message?> GetMessageAsync(int messageId)
     {
-        return await _dataContext.Messages
+        return await dataContext.Messages
             .AsNoTracking()
             .FirstOrDefaultAsync(m => m.Id == messageId);
     }
     public async Task<IEnumerable<MessageDTO>> GetMessagesDTOThreadAsync(int issuerId, int theOtherUserId)
     {
-        var query = _dataContext.Messages
+        var query = dataContext.Messages
             .AsNoTracking()
             .Where(m => m.SenderId == issuerId && m.RecipientId == theOtherUserId && !m.SenderDeleted || m.SenderId == theOtherUserId && m.RecipientId == issuerId && !m.RecipientDeleted)
             .OrderBy(m => m.SentDate);
@@ -66,35 +65,35 @@ public class MessageRepository(DataContext _dataContext, IMapper _mapper) : IMes
             }
         }
 
-        return await query.ProjectTo<MessageDTO>(_mapper.ConfigurationProvider).ToListAsync(); ;
+        return await query.Select(m => MessageMappings.ToDto(m)).ToListAsync();
     }
 
     public async Task AddGroupAsync(Group group)
     {
-        await _dataContext.Groups.AddAsync(group);
+        await dataContext.Groups.AddAsync(group);
     }
     public void RemoveConnection(Connection connection)
     {
-        _dataContext.Connections.Remove(connection);
+        dataContext.Connections.Remove(connection);
     }
 
     public async Task<Connection?> GetConnection(string connectionId)
     {
-        return await _dataContext.Connections
+        return await dataContext.Connections
             .AsNoTracking()
             .FirstOrDefaultAsync(c => c.ConnectionId == connectionId);
     }
 
     public async Task<Group?> GetGroupByName(string groupName)
     {
-        return await _dataContext.Groups
+        return await dataContext.Groups
         .Include(g => g.Connections)
         .FirstOrDefaultAsync(g => g.Name == groupName);
     }
 
     public async Task<Group?> GetGroupForConnection(string connectionId)
     {
-        return await _dataContext.Groups
+        return await dataContext.Groups
         .AsNoTracking()
         .Include(g => g.Connections)
         .Where(g => g.Connections.Any(c => c.ConnectionId == connectionId))
@@ -103,7 +102,7 @@ public class MessageRepository(DataContext _dataContext, IMapper _mapper) : IMes
 
     public async Task<List<SimplifiedUserDTO>> GetInboxAsync(int userId)
     {
-        var friends = await _dataContext.Friends.Where(fr => fr.UserId == userId).Include(f => f.FriendUser).Select(f => new SimplifiedUserDTO
+        var friends = await dataContext.Friends.Where(fr => fr.UserId == userId).Include(f => f.FriendUser).Select(f => new SimplifiedUserDTO
         {
             Id = f.FriendId,
             FirstName = f.FriendUser!.FirstName,

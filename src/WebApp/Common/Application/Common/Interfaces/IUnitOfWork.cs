@@ -4,7 +4,7 @@ namespace Application.Common.Interfaces;
 
 public interface IUnitOfWork
 {
-    ICachedApplicationUserRepository ApplicationUserRepository { get; }
+    IApplicationUserRepository ApplicationUserRepository { get; }
     IPictureRepository PictureRepository { get; }
     IMessageRepository MessageRepository { get; }
     IFriendRequestRepository FriendRequestRepository { get; }

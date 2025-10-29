@@ -4,7 +4,7 @@ using Domain.Entities;
 
 namespace Application.Common.Interfaces.Repositories;
 
-public interface IApplicationUserRepository
+public interface IApplicationUserRepository : IRepositoryBase<ApplicationUser>
 {
 
     public void Update(ApplicationUser appUser);

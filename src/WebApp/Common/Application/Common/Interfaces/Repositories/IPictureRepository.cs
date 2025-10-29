@@ -3,7 +3,7 @@ using Domain.Entities;
 
 namespace Application.Common.Interfaces.Repositories;
 
-public interface IPictureRepository
+public interface IPictureRepository : IRepositoryBase<Picture>
 {
     public void DeletePicture(Picture picture);
     public Task<Picture> AddPictureAsync(Picture picture);
