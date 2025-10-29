@@ -34,7 +34,7 @@ public class MessengerController : Controller
     {
         int publicId = User.GetPublicId();
 
-        var thread = await unitOfWork.MessageRepository.GetMessagesDTOThreadAsync(publicId, userId);
+        var thread = await unitOfWork.MessageRepository.GetMessagesDTOThreadAsync(publicId, userId, cancellationToken);
 
         var user = await unitOfWork.ApplicationUserRepository.GetByIdAsync(userId, cancellationToken);
 

@@ -1,10 +1,11 @@
-using Application.Common.Interfaces;
 using Application.Features.Messages;
+using Application.Features.Messages.ConnectToChat;
+using Application.Features.Messages.DisconnectFromChat;
 using Application.Features.Messages.Send;
 
 namespace API.SignalR;
 
-public class MessageHub(IUnitOfWork unitOfWork, IMediator mediator) : Hub
+public class MessageHub(IMediator mediator) : Hub
 {
     public override async Task OnConnectedAsync()
     {
@@ -12,49 +13,49 @@ public class MessageHub(IUnitOfWork unitOfWork, IMediator mediator) : Hub
 
         // Validate the user identity first
         int currentUserId = Context.User?.GetPublicId()
-            ?? throw new InvalidOperationException("Failed to resolve current user ID from claims.");
+            ?? throw new HubException("Failed to resolve current user ID from claims.");
 
         HttpContext httpContext = Context.GetHttpContext()
-            ?? throw new InvalidOperationException("Failed to get HttpContext from SignalR context.");
+            ?? throw new HubException("Failed to get HttpContext from SignalR context.");
 
         // Try to parse the "userId" query string
         if (!httpContext.Request.Query.TryGetValue("userId", out var userIdValues) ||
             !int.TryParse(userIdValues.FirstOrDefault(), out int otherUserId))
         {
-            throw new InvalidOperationException("Missing or invalid 'userId' query parameter.");
+            throw new HubException("Missing or invalid 'userId' query parameter.");
         }
 
-        if (currentUserId == otherUserId)
+        Result<ConnectToChatResult> result = await mediator.Send(new ConnectToChatCommand(
+            ConnectionId: Context.ConnectionId,
+            CurrentUserId: currentUserId,
+            OtherUserId: otherUserId), cancellationToken);
+
+        if(result.IsSuccess)
         {
-            throw new InvalidOperationException("Cannot start a chat with yourself.");
+            await Groups.AddToGroupAsync(Context.ConnectionId, result.Value.Group.Name);
+            await Clients.Group(result.Value.Group.Name).SendAsync("UpdatedGroup", result.Value.Group);
+            await Clients.Caller.SendAsync("ReceiveMessages", result.Value.Messages);
         }
-
-        string groupName = GetGroupName(httpContext.User.GetPublicId(), otherUserId);
-
-        await Groups.AddToGroupAsync(Context.ConnectionId, groupName);
-
-        Group group = await AddToGroup(groupName, cancellationToken);
-
-        await Clients.Group(groupName).SendAsync("UpdatedGroup", group);
-
-        IEnumerable<MessageDTO> messages = await unitOfWork.MessageRepository.GetMessagesDTOThreadAsync(currentUserId, otherUserId, cancellationToken);
-
-        if (unitOfWork.HasChanges())
+        else
         {
-            await unitOfWork.SaveChangesAsync();
+            throw new HubException(string.Join('-', result.Errors));
         }
-        
-        await Clients.Caller.SendAsync("ReceiveMessages", messages);
     }
 
     public override async Task OnDisconnectedAsync(Exception? exception)
     {
         var cancellationToken = Context.ConnectionAborted;
-        Group? group = await RemoveFromMessageGroup(cancellationToken);
+        var result = await mediator.Send(new DisconnectFromChatCommand(ConnectionId: Context.ConnectionId), cancellationToken);
 
-        if(group is not null)
+        if (result.IsSuccess) {
+            if (result.Value.Group is not null)
+            {
+                await Clients.Group(result.Value.Group.Name).SendAsync("UpdatedGroup", result.Value.Group);
+            }
+        }
+        else
         {
-            await Clients.Group(group.Name).SendAsync("UpdatedGroup", group);
+            throw new HubException(string.Join('-', result.Errors));
         }
 
         await base.OnDisconnectedAsync(exception);
@@ -81,49 +82,4 @@ public class MessageHub(IUnitOfWork unitOfWork, IMediator mediator) : Hub
             throw new HubException(string.Join('-', result.Errors));
         }
     }
-
-    // utility methods
-    private async Task<Group> AddToGroup(string groupName, CancellationToken cancellationToken)
-    {
-        try
-        {
-            var group = await unitOfWork.GroupRepository.GetGroupByName(groupName, cancellationToken);
-            var connection = new Connection(Context.ConnectionId, Context.User?.GetPublicId() ?? throw new InvalidDataException("Failed to get user Id"));
-            if (group == null)
-            {
-                group = new Group(name: groupName);
-                group.Connections.Add(connection);
-                await unitOfWork.GroupRepository.AddAsync(group, cancellationToken);
-            }
-
-            return group;
-        }
-        catch (Exception ex)
-        {
-            throw new HubException("Failed to create group", ex);
-        }
-    }
-    private async Task<Group?> RemoveFromMessageGroup(CancellationToken cancellationToken)
-    {
-        try
-        {
-            Group? group = await unitOfWork.GroupRepository.GetGroupByConnectionId(Context.ConnectionId, cancellationToken);
-
-            if(group is null) return null;
-
-            Connection? connection = group.Connections.FirstOrDefault(c => c.ConnectionId == Context.ConnectionId);
-
-            if(connection is not null)
-            {
-                await unitOfWork.ConnectionRepository.DeleteAsync(connection, cancellationToken);
-            }
-
-            return group;
-        }
-        catch (Exception ex)
-        {
-            throw new HubException("Failed to remove group", ex);
-        }
-    }
-    private static string GetGroupName(int callerId, int otherId) => callerId > otherId ? $"{callerId}-{otherId}" : $"{otherId}-{callerId}";
 }

@@ -2,7 +2,6 @@
 using Application.Common.Mappings;
 using Domain.Entities;
 using Mediator;
-using Microsoft.AspNetCore.SignalR;
 using Shared.Results;
 
 namespace Application.Features.Messages.Send;
@@ -39,8 +38,8 @@ public class SendMessageHandler(IUnitOfWork unitOfWork, IMessageNotifier message
             Sender = sender
         };
 
-        var groupName = GetGroupName(sender.Id, recipient.Id);
-        var group = await unitOfWork.GroupRepository.GetGroupByName(groupName);
+        var groupName = ChatGroupHelper.GetGroupName(sender.Id, recipient.Id);
+        var group = await unitOfWork.GroupRepository.GetGroupByName(groupName, cancellationToken);
 
         if (group is not null && group.Connections.Any(c => c.UserId == recipient.Id))
         {
@@ -62,7 +61,4 @@ public class SendMessageHandler(IUnitOfWork unitOfWork, IMessageNotifier message
             return Result<SendMessageResult>.Error("Couldn't Send the message");
         }
     }
-
-    private static string GetGroupName(int callerId, int otherId) => callerId > otherId ? $"{callerId}-{otherId}" : $"{otherId}-{callerId}";
-
 }
