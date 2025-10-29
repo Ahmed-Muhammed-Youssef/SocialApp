@@ -9,14 +9,12 @@ namespace Infrastructure.Repositories.CachedRepositories;
 
 public class CachedUserRepository(IApplicationUserRepository _usersRepository, IMemoryCache _memoryCache, DataContext dataContext) : RepositoryBase<ApplicationUser>(dataContext), IApplicationUserRepository
 {
-    // Queries
-
-    public async Task<ApplicationUser?> GetByIdAsync(int id)
+    public async Task<ApplicationUser?> GetByIdAsync(int id, CancellationToken cancellationToken = default)
     {
         object key = nameof(GetByIdAsync) + id;
         if (!_memoryCache.TryGetValue(key, out ApplicationUser? result))
         {
-            result = await _usersRepository.GetByIdAsync(id);
+            result = await _usersRepository.GetByIdAsync(id, cancellationToken);
 
             // cache the value
             _memoryCache.Set(key, result, TimeSpan.FromMinutes(1));
@@ -39,15 +37,6 @@ public class CachedUserRepository(IApplicationUserRepository _usersRepository, I
 
     // Caching this mehtod will need a complex implemention
     public Task<PagedList<UserDTO>> GetUsersDTOAsync(int userId, UserParams userParams) => _usersRepository.GetUsersDTOAsync(userId, userParams);
-
-    public Task<bool> IdExistsAsync(int id) => _usersRepository.IdExistsAsync(id);
-
-    // Commands
-    public void Delete(ApplicationUser user) => _usersRepository.Delete(user);
-
-    public void Update(ApplicationUser appUser) => _usersRepository.Update(appUser);
-
-    public Task AddAsync(ApplicationUser user) => _usersRepository.AddAsync(user);
 
     public Task<UserDTO?> GetDtoByIdentityId(string identityId) => _usersRepository.GetDtoByIdentityId(identityId);
 

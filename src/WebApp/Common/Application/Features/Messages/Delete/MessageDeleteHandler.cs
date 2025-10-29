@@ -8,7 +8,7 @@ public class MessageDeleteHandler(IUnitOfWork unitOfWork, ICurrentUserService cu
 {
     public async ValueTask<Result<object?>> Handle(MessageDeleteCommand command, CancellationToken cancellationToken)
     {
-        var message = await unitOfWork.MessageRepository.GetMessageAsync(command.Id);
+        var message = await unitOfWork.MessageRepository.GetByIdAsync(command.Id, cancellationToken);
         if (message == null)
         {
             return Result<object?>.NotFound();

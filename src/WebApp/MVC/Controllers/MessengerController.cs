@@ -30,13 +30,13 @@ public class MessengerController : Controller
     }
 
     [HttpGet]
-    public async Task<IActionResult> LoadChat(int userId)
+    public async Task<IActionResult> LoadChat(int userId, CancellationToken cancellationToken)
     {
         int publicId = User.GetPublicId();
 
         var thread = await unitOfWork.MessageRepository.GetMessagesDTOThreadAsync(publicId, userId);
 
-        var user = await unitOfWork.ApplicationUserRepository.GetByIdAsync(userId);
+        var user = await unitOfWork.ApplicationUserRepository.GetByIdAsync(userId, cancellationToken);
 
         if (user is null)
         {

@@ -1,7 +1,7 @@
 ﻿using Application.Common.Interfaces;
+using Application.Common.Mappings;
 using Domain.Entities;
 using Mediator;
-using Shared.Extensions;
 using Shared.Results;
 
 namespace Application.Features.Users.Update;
@@ -10,7 +10,7 @@ public class UpdateUserHandler(IUnitOfWork unitOfWork, ICurrentUserService curre
 {
     public async ValueTask<Result<UserDTO>> Handle(UpdateUserCommand command, CancellationToken cancellationToken)
     {
-        ApplicationUser? appUser = await unitOfWork.ApplicationUserRepository.GetByIdAsync(currentUserService.GetPublicId());
+        ApplicationUser? appUser = await unitOfWork.ApplicationUserRepository.GetByIdAsync(currentUserService.GetPublicId(), cancellationToken);
 
         if (appUser == null)
         {
@@ -22,24 +22,8 @@ public class UpdateUserHandler(IUnitOfWork unitOfWork, ICurrentUserService curre
         appUser.Bio = command.Bio;
         appUser.CityId = command.CityId;
 
-        unitOfWork.ApplicationUserRepository.Update(appUser);
+        await unitOfWork.ApplicationUserRepository.UpdateAsync(appUser, cancellationToken);
 
-        await unitOfWork.SaveChangesAsync();
-
-        UserDTO userDto = new()
-        {
-            Id = appUser.Id,
-            FirstName = appUser.FirstName,
-            LastName = appUser.LastName,
-            ProfilePictureUrl = appUser.ProfilePictureUrl,
-            Sex = appUser.Sex,
-            Age = appUser.DateOfBirth.CalculateAge(),
-            Created = appUser.Created,
-            LastActive = appUser.LastActive,
-            Bio = appUser.Bio ?? string.Empty,
-            Pictures = []
-        };
-
-        return Result<UserDTO>.Success(userDto);
+        return Result<UserDTO>.Success(UserMappings.ToDto(appUser));
     }
 }

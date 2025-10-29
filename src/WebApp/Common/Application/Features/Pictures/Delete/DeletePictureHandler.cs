@@ -9,7 +9,7 @@ public class DeletePictureHandler(IUnitOfWork unitOfWork, IPictureService pictur
 {
     public async ValueTask<Result<object?>> Handle(DeletePictureCommand command, CancellationToken cancellationToken)
     {
-        ApplicationUser? user = await unitOfWork.ApplicationUserRepository.GetByIdAsync(currentUserService.GetPublicId());
+        ApplicationUser? user = await unitOfWork.ApplicationUserRepository.GetByIdAsync(currentUserService.GetPublicId(), cancellationToken);
 
         if (user == null)
         {
@@ -32,16 +32,14 @@ public class DeletePictureHandler(IUnitOfWork unitOfWork, IPictureService pictur
             return Result<object?>.Error(result.Error.Message);
         }
 
-        unitOfWork.PictureRepository.DeletePicture(picture);
+        await unitOfWork.PictureRepository.DeleteAsync(picture, cancellationToken);
 
         if (user.ProfilePictureUrl == picture.Url)
         {
             user.ProfilePictureUrl = "";
 
-            unitOfWork.ApplicationUserRepository.Update(user);
+            await unitOfWork.ApplicationUserRepository.UpdateAsync(user, cancellationToken);
         }
-
-        await unitOfWork.SaveChangesAsync();
 
         return Result<object?>.NoContent();
     }

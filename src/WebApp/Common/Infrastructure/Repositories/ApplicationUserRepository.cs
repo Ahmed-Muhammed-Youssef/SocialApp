@@ -13,30 +13,7 @@ using Application.Common.Mappings;
 namespace Infrastructure.Repositories;
 
 public class ApplicationUserRepository(DataContext dataContext) : RepositoryBase<ApplicationUser>(dataContext), IApplicationUserRepository // using the repository design pattern to isolate the contollers further more from the entity framework. (it may not be neccesary)
-{
-    public void Delete(ApplicationUser user)
-    {
-        dataContext.Remove(user);
-    }
-
-    public async Task AddAsync(ApplicationUser user)
-    {
-        await dataContext.ApplicationUsers.AddAsync(user);
-    }
-
-    public async Task<bool> IdExistsAsync(int id)
-    {
-        return await dataContext.ApplicationUsers
-            .AsNoTracking()
-            .AnyAsync(e => e.Id == id);
-    }
-    
-    public void Update(ApplicationUser appUser)
-    {
-        dataContext.ChangeTracker.Clear();
-        dataContext.Entry(appUser).State = EntityState.Modified;
-    }
-
+{  
     public async Task<PagedList<UserDTO>> GetUsersDTOAsync(int userId, UserParams userParams)
     {
         DateTime? birthDateMax = userParams.MaxAge != null ? DateTime.UtcNow.AddYears(-userParams.MaxAge.Value - 1) : null;
@@ -89,13 +66,6 @@ public class ApplicationUserRepository(DataContext dataContext) : RepositoryBase
     public async Task<ApplicationUser?> GetByIdentity(string identity)
     {
         return await dataContext.ApplicationUsers.FirstOrDefaultAsync(u => u.IdentityId == identity);
-    }
-
-    public async Task<ApplicationUser?> GetByIdAsync(int id)
-    {
-        var connectionString = dataContext.Database.GetConnectionString();
-        using IDbConnection db = new SqlConnection(connectionString);
-        return (await db.QueryAsync<ApplicationUser>("GetUserById", new { Id = id }, commandType: CommandType.StoredProcedure)).FirstOrDefault();
     }
 
     public async Task<UserDTO?> GetDtoByIdentityId(string identityId)

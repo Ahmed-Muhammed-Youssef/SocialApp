@@ -9,17 +9,6 @@ namespace Infrastructure.Repositories;
 
 public class PictureRepository(DataContext dataContext) : RepositoryBase<Picture>(dataContext), IPictureRepository
 {
-    public async Task<Picture> AddPictureAsync(Picture picture)
-    {
-        await dataContext.Pictures.AddAsync(picture);
-        return picture;
-    }
-
-    public void DeletePicture(Picture picture)
-    {
-        dataContext.Pictures.Remove(picture);
-    }
-
     public async Task<List<Picture>> GetUserPictureAsync(int id)
     {
         var result = dataContext.Pictures
@@ -38,9 +27,5 @@ public class PictureRepository(DataContext dataContext) : RepositoryBase<Picture
             .ToListAsync();
 
         return result;
-    }
-    public void UpdatePicture(Picture picture)
-    {
-        dataContext.Entry(picture).State = EntityState.Modified;
     }
 }

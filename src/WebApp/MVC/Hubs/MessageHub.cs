@@ -1,4 +1,5 @@
 ﻿using Application.Common.Interfaces;
+using Application.Common.Mappings;
 using Application.Features.Messages;
 using Domain.Entities;
 using Microsoft.AspNetCore.SignalR;
@@ -6,24 +7,20 @@ using Shared.Extensions;
 
 namespace MVC.Hubs;
 
-public class MessageHub : Hub
+public class MessageHub(IUnitOfWork unitOfWork) : Hub
 {
-    private readonly IUnitOfWork _unitOfWork;
-
-    public MessageHub(IUnitOfWork unitOfWork)
-    {
-        _unitOfWork = unitOfWork;
-    }
     public override Task OnConnectedAsync()
     {
         return base.OnConnectedAsync();
     }
     public async Task SendMessages(NewMessageDTO message)
     {
+        var cancellationToken = Context.ConnectionAborted;
+
         var id = Context.User?.GetPublicId() ?? throw new InvalidDataException("Failed to get user Id");
 
-        var sender = await _unitOfWork.ApplicationUserRepository.GetByIdAsync(id);
-        var recipient = await _unitOfWork.ApplicationUserRepository.GetByIdAsync(message.RecipientId);
+        var sender = await unitOfWork.ApplicationUserRepository.GetByIdAsync(id, cancellationToken);
+        var recipient = await unitOfWork.ApplicationUserRepository.GetByIdAsync(message.RecipientId, cancellationToken);
 
         if (recipient == null || sender == null)
         {
@@ -33,35 +30,28 @@ public class MessageHub : Hub
         {
             throw new HubException("You can't send messages to yourself");
         }
-        if (!await _unitOfWork.FriendRequestRepository.IsFriend(sender.Id, recipient.Id))
+        if (!await unitOfWork.FriendRequestRepository.IsFriend(sender.Id, recipient.Id))
         {
             throw new HubException("You can send messages to friends only");
 
         }
-        var createdMessage = new Message
+        Message createdMessage = new Message
         {
             SenderId = sender.Id,
             RecipientId = recipient.Id,
             Content = message.Content,
             SenderDeleted = false,
             RecipientDeleted = false,
-            ReadDate = null
+            ReadDate = null,
+            Sender = sender
         };
 
-        await _unitOfWork.MessageRepository.AddMessageAsync(createdMessage);
+        await unitOfWork.MessageRepository.AddAsync(createdMessage, cancellationToken);
 
         try
         {
-            await _unitOfWork.SaveChangesAsync();
-
-            MessageDTO msgDTO = new()
-            {
-                Id = createdMessage.Id,
-                SenderId = createdMessage.SenderId,
-                RecipientId = createdMessage.RecipientId,
-                Content = createdMessage.Content,
-                SenderPhotoUrl = sender.ProfilePictureUrl
-            };
+            await unitOfWork.SaveChangesAsync();
+            MessageDTO msgDTO = MessageMappings.ToDto(createdMessage);
 
             await Clients.User(msgDTO.RecipientId.ToString()).SendAsync("NewMessage", msgDTO);
         }

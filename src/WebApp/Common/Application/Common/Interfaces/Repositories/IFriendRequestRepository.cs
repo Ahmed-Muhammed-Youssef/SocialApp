@@ -63,10 +63,4 @@ public interface IFriendRequestRepository : IRepositoryBase<FriendRequest>
     /// <param name="targetId">The ID of the second user.</param>
     /// <returns>A boolean value indicating whether the two users are friends.</returns>
     public Task<bool> IsFriend(int userId, int targetId);
-
-    /// <summary>
-    /// Deletes a specified friend request from the database.
-    /// </summary>
-    /// <param name="friendRequest">The <see cref="FriendRequest"/> to be deleted.</param>
-    public void Delete(FriendRequest friendRequest);
 }

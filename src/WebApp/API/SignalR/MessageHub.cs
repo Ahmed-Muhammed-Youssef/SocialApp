@@ -4,7 +4,7 @@ using Application.Features.Messages;
 
 namespace API.SignalR;
 
-public class MessageHub(IUnitOfWork _unitOfWork, IHubContext<PresenceHub> _presenceHubContext, OnlinePresenceManager _presenceTracker) : Hub
+public class MessageHub(IUnitOfWork unitOfWork, IHubContext<PresenceHub> presenceHubContext, OnlinePresenceManager presenceTracker) : Hub
 {
     public override async Task OnConnectedAsync()
     {
@@ -35,11 +35,11 @@ public class MessageHub(IUnitOfWork _unitOfWork, IHubContext<PresenceHub> _prese
 
         await Clients.Group(groupName).SendAsync("UpdatedGroup", group);
 
-        IEnumerable<MessageDTO> messages = await _unitOfWork.MessageRepository.GetMessagesDTOThreadAsync(currentUserId, otherUserId);
+        IEnumerable<MessageDTO> messages = await unitOfWork.MessageRepository.GetMessagesDTOThreadAsync(currentUserId, otherUserId);
 
-        if (_unitOfWork.HasChanges())
+        if (unitOfWork.HasChanges())
         {
-            await _unitOfWork.SaveChangesAsync();
+            await unitOfWork.SaveChangesAsync();
         }
         
         await Clients.Caller.SendAsync("ReceiveMessages", messages);
@@ -58,12 +58,14 @@ public class MessageHub(IUnitOfWork _unitOfWork, IHubContext<PresenceHub> _prese
     }
     public async Task SendMessages(NewMessageDTO message)
     {
+        var cancelationToken = Context.ConnectionAborted;
+
         int currentUserId = Context.User?.GetPublicId()
            ?? throw new InvalidOperationException("Failed to resolve current user ID from claims.");
 
-        var sender = await _unitOfWork.ApplicationUserRepository.GetByIdAsync(currentUserId);
+        var sender = await unitOfWork.ApplicationUserRepository.GetByIdAsync(currentUserId, cancelationToken);
 
-        var recipient = await _unitOfWork.ApplicationUserRepository.GetByIdAsync(message.RecipientId);
+        var recipient = await unitOfWork.ApplicationUserRepository.GetByIdAsync(message.RecipientId, cancelationToken);
 
         if (recipient == null || sender == null)
         {
@@ -73,7 +75,7 @@ public class MessageHub(IUnitOfWork _unitOfWork, IHubContext<PresenceHub> _prese
         {
             throw new HubException("You can't send messages to yourself");
         }
-        if (!await _unitOfWork.FriendRequestRepository.IsFriend(sender.Id, recipient.Id))
+        if (!await unitOfWork.FriendRequestRepository.IsFriend(sender.Id, recipient.Id))
         {
             throw new HubException("You can't send messages to an unmatch");
 
@@ -85,14 +87,12 @@ public class MessageHub(IUnitOfWork _unitOfWork, IHubContext<PresenceHub> _prese
             Content = message.Content,
             SenderDeleted = false,
             RecipientDeleted = false,
-            ReadDate = null
+            ReadDate = null,
+            Sender = sender
         };
         
-
-        // @ToDo: Add Profile Picture Here
-        // msgDTO.SenderPhotoUrl = null;
         var groupName = GetGroupName(sender.Id, recipient.Id);
-        var group = await _unitOfWork.MessageRepository.GetGroupByName(groupName);
+        var group = await unitOfWork.MessageRepository.GetGroupByName(groupName);
 
         if (group is not null && group.Connections.Any(c => c.UserId == recipient.Id))
         {
@@ -100,21 +100,19 @@ public class MessageHub(IUnitOfWork _unitOfWork, IHubContext<PresenceHub> _prese
         }
         else
         {
-            var recipientConnections = await _presenceTracker.GetConnectionForUser(recipient.Id);
+            var recipientConnections = await presenceTracker.GetConnectionForUser(recipient.Id);
             if (recipientConnections != null)
             {
                 UserDTO senderDTO = UserMappings.ToDto(sender);
                 MessageDTO msgDTO = MessageMappings.ToDto(createdMessage);
-                await _presenceHubContext.Clients.Clients(recipientConnections)
+                await presenceHubContext.Clients.Clients(recipientConnections)
                 .SendAsync("NewMessage", new { senderDTO, msgDTO });
             }
         }
 
         try
         {
-            await _unitOfWork.MessageRepository.AddMessageAsync(createdMessage);
-            await _unitOfWork.SaveChangesAsync();
-            
+            await unitOfWork.MessageRepository.AddAsync(createdMessage, cancelationToken);         
 
             await Clients.Group(groupName).SendAsync("NewMessage", MessageMappings.ToDto(createdMessage));
         }
@@ -127,19 +125,19 @@ public class MessageHub(IUnitOfWork _unitOfWork, IHubContext<PresenceHub> _prese
     // utility methods
     private async Task<Group> AddToGroup(string groupName)
     {
-        var group = await _unitOfWork.MessageRepository.GetGroupByName(groupName);
+        var group = await unitOfWork.MessageRepository.GetGroupByName(groupName);
         var connection = new Connection(Context.ConnectionId, Context.User?.GetPublicId() ?? throw new InvalidDataException("Failed to get user Id"));
 
         if (group == null)
         {
             group = new Group(name: groupName);
-            await _unitOfWork.MessageRepository.AddGroupAsync(group);
+            await unitOfWork.MessageRepository.AddGroupAsync(group);
         }
 
         try
         {
             group.Connections.Add(connection);
-            await _unitOfWork.SaveChangesAsync();
+            await unitOfWork.SaveChangesAsync();
             return group;
 
         }
@@ -153,7 +151,7 @@ public class MessageHub(IUnitOfWork _unitOfWork, IHubContext<PresenceHub> _prese
     {
         try
         {
-            Group? group = await _unitOfWork.MessageRepository.GetGroupForConnection(Context.ConnectionId);
+            Group? group = await unitOfWork.MessageRepository.GetGroupForConnection(Context.ConnectionId);
 
             if(group is null) return null;
 
@@ -161,9 +159,9 @@ public class MessageHub(IUnitOfWork _unitOfWork, IHubContext<PresenceHub> _prese
 
             if(connection is not null)
             {
-                _unitOfWork.MessageRepository.RemoveConnection(connection);
+                unitOfWork.MessageRepository.RemoveConnection(connection);
             }
-            await _unitOfWork.SaveChangesAsync();
+            await unitOfWork.SaveChangesAsync();
 
             return group;
         }

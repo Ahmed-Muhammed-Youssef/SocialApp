@@ -23,9 +23,7 @@ public class DeleteFriendRequestHandler(IUnitOfWork unitOfWork, ICurrentUserServ
             return Result<object?>.Error("You didn't sent a friend request.");
         }
 
-        unitOfWork.FriendRequestRepository.Delete(fr);
-
-        await unitOfWork.SaveChangesAsync();
+        await unitOfWork.FriendRequestRepository.DeleteAsync(fr, cancellationToken);
 
         return Result<object?>.NoContent();
     }

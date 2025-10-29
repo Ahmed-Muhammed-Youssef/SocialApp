@@ -10,19 +10,9 @@ namespace Infrastructure.Repositories;
 
 public class PostRepository(DataContext dataContext) : RepositoryBase<Post>(dataContext), IPostRepository
 {
-    public async Task<Post?> GetByIdAsync(ulong postId)
-    {
-        return await dataContext.Posts.Where(p => p.Id == postId).FirstOrDefaultAsync();
-    }
-
     public async Task<IEnumerable<Post>> GetUserPostsAsync(int userId, int requesterId)
     {
         return await dataContext.Posts.Where(p => p.UserId == userId).ToListAsync();
-    }
-
-    public async Task AddAsync(Post newPost)
-    {
-        await dataContext.Posts.AddAsync(newPost);
     }
 
     public async Task<PagedList<PostDTO>> GetNewsfeed(int userId, PaginationParams paginationParams)

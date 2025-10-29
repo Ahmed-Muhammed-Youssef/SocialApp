@@ -9,7 +9,7 @@ public class RemoveRoleFromUserHandler(RoleManager<IdentityRole> roleManager, Us
 {
     public async ValueTask<Result<object?>> Handle(RemoveRoleFromUserCommand command, CancellationToken cancellationToken)
     {
-        var user = await unitOfWork.ApplicationUserRepository.GetByIdAsync(command.UserId);
+        var user = await unitOfWork.ApplicationUserRepository.GetByIdAsync(command.UserId, cancellationToken);
 
         if (user is null)
         {

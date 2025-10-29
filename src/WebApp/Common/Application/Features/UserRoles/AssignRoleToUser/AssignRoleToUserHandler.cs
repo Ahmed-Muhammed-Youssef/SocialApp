@@ -10,7 +10,7 @@ public class AssignRoleToUserHandler(RoleManager<IdentityRole> roleManager, User
 {
     public async ValueTask<Result<object?>> Handle(AssignRoleToUserCommand command, CancellationToken cancellationToken)
     {
-        ApplicationUser? user = await unitOfWork.ApplicationUserRepository.GetByIdAsync(command.UserId);
+        ApplicationUser? user = await unitOfWork.ApplicationUserRepository.GetByIdAsync(command.UserId, cancellationToken);
 
         if (user == null)
         {

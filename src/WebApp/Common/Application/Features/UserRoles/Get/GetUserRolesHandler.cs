@@ -11,7 +11,7 @@ public class GetUserRolesHandler(IUnitOfWork unitOfWork, UserManager<IdentityUse
     public async ValueTask<Result<List<string>>> Handle(GetUserRolesQuery query, CancellationToken cancellationToken)
     {
         // get user identity id
-        ApplicationUser? user = await unitOfWork.ApplicationUserRepository.GetByIdAsync(query.UserId);
+        ApplicationUser? user = await unitOfWork.ApplicationUserRepository.GetByIdAsync(query.UserId, cancellationToken);
 
         if(user is null)
         {

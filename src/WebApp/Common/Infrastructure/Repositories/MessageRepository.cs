@@ -10,11 +10,6 @@ namespace Infrastructure.Repositories;
 
 public class MessageRepository(DataContext dataContext) : RepositoryBase<Message>(dataContext), IMessageRepository
 {
-    public async Task AddMessageAsync(Message message)
-    {
-        await dataContext.Messages.AddAsync(message);
-    }
-
     public void DeleteMessage(Message message, int issuerId)
     {
 
@@ -42,12 +37,7 @@ public class MessageRepository(DataContext dataContext) : RepositoryBase<Message
             dataContext.Messages.Update(message);
         }
     }
-    public async Task<Message?> GetMessageAsync(int messageId)
-    {
-        return await dataContext.Messages
-            .AsNoTracking()
-            .FirstOrDefaultAsync(m => m.Id == messageId);
-    }
+
     public async Task<IEnumerable<MessageDTO>> GetMessagesDTOThreadAsync(int issuerId, int theOtherUserId)
     {
         var query = dataContext.Messages

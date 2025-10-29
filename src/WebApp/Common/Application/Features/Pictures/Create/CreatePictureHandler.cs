@@ -10,7 +10,7 @@ public class CreatePictureHandler(IUnitOfWork unitOfWork, IPictureService pictur
 {
     public async ValueTask<Result<int>> Handle(CreatePictureCommand command, CancellationToken cancellationToken)
     {
-        var user = await unitOfWork.ApplicationUserRepository.GetByIdAsync(currentUserService.GetPublicId());
+        var user = await unitOfWork.ApplicationUserRepository.GetByIdAsync(currentUserService.GetPublicId(), cancellationToken);
 
         if (user is null)
         {
@@ -30,10 +30,7 @@ public class CreatePictureHandler(IUnitOfWork unitOfWork, IPictureService pictur
             PublicId = result.PublicId
         };
 
-        picture = await unitOfWork.PictureRepository.AddPictureAsync(picture);
-
-        await unitOfWork.SaveChangesAsync();
-
+        picture = await unitOfWork.PictureRepository.AddAsync(picture, cancellationToken);
         return Result<int>.Created(picture.Id);
     }
 }

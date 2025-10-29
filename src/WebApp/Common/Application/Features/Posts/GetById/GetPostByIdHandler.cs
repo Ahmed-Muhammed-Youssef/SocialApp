@@ -9,7 +9,7 @@ public class GetPostByIdHandler(IUnitOfWork unitOfWork) : IQueryHandler<GetPostB
 {
     public async ValueTask<Result<Post>> Handle(GetPostByIdQuery query, CancellationToken cancellationToken)
     {
-        Post? post = await unitOfWork.PostRepository.GetByIdAsync(query.PostId);
+        Post? post = await unitOfWork.PostRepository.GetByIdAsync(query.PostId, cancellationToken);
 
         if (post == null)
         {

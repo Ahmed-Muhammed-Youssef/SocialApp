@@ -78,8 +78,4 @@ public class FriendRequestsRepository(DataContext dataContext) : RepositoryBase<
         }
         return users;
     }
-    public void Delete(FriendRequest friendRequest)
-    {
-        dataContext.FriendRequests.Entry(friendRequest).State = EntityState.Deleted;
-    }
 }

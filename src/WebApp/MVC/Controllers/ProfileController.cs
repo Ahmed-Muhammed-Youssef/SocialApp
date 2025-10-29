@@ -17,11 +17,11 @@ public class ProfileController : Controller
     }
 
     [HttpGet("[controller]/{id}")]
-    public async Task<IActionResult> Index(int id)
+    public async Task<IActionResult> Index(int id, CancellationToken cancellationToken)
     {
         var publicId = User.GetPublicId();
 
-        var userProfile = await _unitOfWork.ApplicationUserRepository.GetByIdAsync(id);
+        var userProfile = await _unitOfWork.ApplicationUserRepository.GetByIdAsync(id, cancellationToken);
 
         if(userProfile is null)
         {
@@ -69,11 +69,11 @@ public class ProfileController : Controller
     }
 
     [HttpPost]
-    public async Task<IActionResult> SendFriendRequest(int id)
+    public async Task<IActionResult> SendFriendRequest(int id, CancellationToken cancellationToken)
     {
         // retuns true if the user has become a frined
-        var sender = await _unitOfWork.ApplicationUserRepository.GetByIdAsync(User.GetPublicId());
-        var target = await _unitOfWork.ApplicationUserRepository.GetByIdAsync(id);
+        var sender = await _unitOfWork.ApplicationUserRepository.GetByIdAsync(User.GetPublicId(), cancellationToken);
+        var target = await _unitOfWork.ApplicationUserRepository.GetByIdAsync(id, cancellationToken);
         if (sender == null || target == null)
         {
             return NotFound();
@@ -98,7 +98,7 @@ public class ProfileController : Controller
     }
 
     [HttpPost]
-    public async Task<IActionResult> UnsendFriendRequest(int id)
+    public async Task<IActionResult> UnsendFriendRequest(int id, CancellationToken cancellationToken)
     {
         // retuns true if the user has become a frined
         int? senderId = User.GetPublicId();
@@ -117,9 +117,7 @@ public class ProfileController : Controller
             return BadRequest("Invalid Operation");
         }
        
-        _unitOfWork.FriendRequestRepository.Delete(fr);
-
-        await _unitOfWork.SaveChangesAsync();
+        await _unitOfWork.FriendRequestRepository.DeleteAsync(fr, cancellationToken);
 
         return NoContent();
     }
