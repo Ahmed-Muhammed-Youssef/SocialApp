@@ -1,16 +1,19 @@
-﻿namespace Infrastructure.RealTime.Presence;
+﻿using Application.Features.Messages;
 
-public class OnlinePresenceManager
+namespace Infrastructure.RealTime.Presence;
+
+/// <summary>
+/// Manages the online presence of users by tracking their connection states and IDs.
+/// </summary>
+/// <remarks>This class provides methods to handle user connections and disconnections, retrieve the list of
+/// online users, and obtain connection IDs for a specific user. It ensures thread-safe operations on the user
+/// connection data.</remarks>
+public class OnlinePresenceManager : IOnlinePresenceManager
 {
     // Dictionary to track online users by their user ID and connection IDs.
     private static readonly Dictionary<int, List<string>> OnlineUsers = [];
 
-    /// <summary>
-    /// Adds a connection for a user. If this is the first connection for the user, returns true.
-    /// </summary>
-    /// <param name="userId">The unique identifier of the user.</param>
-    /// <param name="connectionId">The unique connection ID for this session.</param>
-    /// <returns>True if this is the user's first connection; otherwise, false.</returns>
+    /// <inheritdoc/>
     public Task<bool> UserConnected(int userId, string connectionId)
     {
         var firstConnection = false;
@@ -29,12 +32,7 @@ public class OnlinePresenceManager
         return Task.FromResult(firstConnection);
     }
 
-    /// <summary>
-    /// Removes a connection for a user. If this was the user's last connection, returns true.
-    /// </summary>
-    /// <param name="userId">The unique identifier of the user.</param>
-    /// <param name="connectionId">The unique connection ID for this session.</param>
-    /// <returns>True if the user has no remaining connections; otherwise, false.</returns>
+    /// <inheritdoc/>
     public Task<bool> UserDisconnected(int userId, string connectionId)
     {
         bool isOffline = false;
@@ -55,10 +53,7 @@ public class OnlinePresenceManager
         return Task.FromResult(isOffline);
     }
 
-    /// <summary>
-    /// Retrieves a list of currently online users by their user IDs.
-    /// </summary>
-    /// <returns>An array of user IDs for online users, sorted in ascending order.</returns>
+    /// <inheritdoc/>
     public Task<int[]> GetOnlineUsers()
     {
         int[] onlineUsers = [];
@@ -69,10 +64,7 @@ public class OnlinePresenceManager
         return Task.FromResult(onlineUsers);
     }
 
-    /// <summary>
-    /// Retrieves all connection IDs associated with a specific user.
-    /// </summary>
-    /// <param name="userId">The unique identifier of the user.</param>
+    /// <inheritdoc/>
     public Task<List<string>> GetConnectionForUser(int userId)
     {
         List<string> connectionIds;

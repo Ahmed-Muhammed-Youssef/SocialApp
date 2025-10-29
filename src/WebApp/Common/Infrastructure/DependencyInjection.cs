@@ -1,5 +1,6 @@
 ﻿using Application.Common.Interfaces;
 using Application.Common.Interfaces.Repositories;
+using Application.Features.Messages;
 using Application.Features.Pictures;
 using Infrastructure.Data;
 using Infrastructure.ExternalServices.Cloudinary;
@@ -46,7 +47,7 @@ public static class DependencyInjection
         builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
 
         // Other Services
-        builder.Services.AddSingleton<OnlinePresenceManager>();
+        builder.Services.AddSingleton<IOnlinePresenceManager, OnlinePresenceManager>();
 
         return builder;
     }
