@@ -9,6 +9,8 @@ public interface IUnitOfWork
     IMessageRepository MessageRepository { get; }
     IFriendRequestRepository FriendRequestRepository { get; }
     IPostRepository PostRepository { get; }
+    IGroupRepository GroupRepository { get; }
+    IConnectionRepository ConnectionRepository { get; }
     Task SaveChangesAsync();
     bool HasChanges();
 }

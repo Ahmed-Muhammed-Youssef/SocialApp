@@ -37,6 +37,8 @@ public static class DependencyInjection
         builder.Services.AddScoped<IMessageRepository, MessageRepository>();
         builder.Services.AddScoped<IFriendRequestRepository, FriendRequestsRepository>();
         builder.Services.AddScoped<IPostRepository, PostRepository>();
+        builder.Services.AddScoped<IGroupRepository, GroupRepository>();
+        builder.Services.AddScoped<IConnectionRepository, ConnectionRepository>();
 
         // Cloudinary
         builder.Services.Configure<CloudinaryOptions>(builder.Configuration.GetSection("Cloudinary"));
