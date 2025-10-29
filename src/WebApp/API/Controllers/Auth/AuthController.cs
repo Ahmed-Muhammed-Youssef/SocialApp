@@ -1,7 +1,6 @@
 ﻿using API.Controllers.Auth.Requests;
 using API.Controllers.Auth.Responses;
-using Application.Common.Interfaces;
-using Application.Features.Auth;
+using Application.Features.Auth.GoogleSignIn;
 using Application.Features.Auth.Login;
 using Application.Features.Auth.Register;
 
@@ -10,7 +9,7 @@ namespace API.Controllers.Auth;
 [Route("api/[controller]")]
 [ApiController]
 [ServiceFilter(typeof(LogUserActivity))]
-public class AuthController(IMediator mediator, IGoogleAuthService _googleAuthService, UserManager<IdentityUser> userManager, ITokenService tokenService, PasswordGenerationService _passwordGenerationService, IUnitOfWork unitOfWork) : ControllerBase
+public class AuthController(IMediator mediator) : ControllerBase
 {
     // POST: api/auth/register
     [HttpPost("register")]
@@ -77,69 +76,22 @@ public class AuthController(IMediator mediator, IGoogleAuthService _googleAuthSe
         }
     }
 
-    // GET: api/AccountExternal/login-google
-    [HttpGet("login-google")]
-    public IActionResult GoogleSignIn()
+    // GET: api/auth/google-signin
+    [HttpGet("google-signin")]
+    public async Task<IActionResult> GoogleSignIn(string code)
     {
-        return Redirect(_googleAuthService.BuildGoogleSignInUrl());
-    }
-
-    // GET: api/AccountExternal/callback-google
-    [HttpGet("callback-google")]
-    public async Task<IActionResult> GoogleCallback(string code)
-    {
-
-        GoogleUserInfo userInfo = await _googleAuthService.GetUserFromGoogleAsync(code);
-
-        IdentityUser? identityUser = await userManager.Users.Where(u => u.Email == userInfo.Email).FirstOrDefaultAsync();
-
-        UserDTO? userDTO = new()
+        Result<LoginDTO> result = await mediator.Send(new GoogleSignInCommand(code));
+        if (result.IsSuccess)
         {
-            FirstName = userInfo.Name,
-            LastName = "",
-            ProfilePictureUrl = userInfo.PictureUrl,
-            Bio = ""
-        };
-
-        if (identityUser is null)
-        {
-            identityUser = new()
+            return Ok(new AuthResponse()
             {
-                Email = userInfo.Email,
-                UserName = userInfo.Email,
-                EmailConfirmed = userInfo.VerifiedEmail
-            };
-
-            var password = _passwordGenerationService.GenerateRandomPassword();
-            var result = await userManager.CreateAsync(identityUser, password);
-
-
-            if (!result.Succeeded)
-            {
-                return BadRequest("Failed to register the user.");
-            }
-            var adddRoleresult = await userManager.AddToRoleAsync(identityUser, RolesNameValues.User);
-            if (!adddRoleresult.Succeeded)
-            {
-                return BadRequest();
-            }
-
-            // @ToDo: add the new user data [NEED PLANNING]
+                UserData = result.Value.UserData,
+                Token = result.Value.Token
+            });
         }
         else
         {
-            userDTO = await unitOfWork.ApplicationUserRepository.GetDtoByIdentityId(identityUser.Id);
-
-            if (userDTO is null)
-            {
-                return BadRequest("Failed to retrieve the user data.");
-            }
+            return BadRequest(result.Errors);
         }
-
-        return Ok(new AuthResponse()
-        {
-            UserData = userDTO,
-            Token = await tokenService.CreateTokenAsync(identityUser, userDTO.Id)
-        });
     }
 }

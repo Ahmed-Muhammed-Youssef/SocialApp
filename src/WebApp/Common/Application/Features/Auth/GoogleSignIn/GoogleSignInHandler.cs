@@ -1,0 +1,68 @@
+﻿using Application.Common.Interfaces;
+using Application.Features.Auth.Login;
+using Application.Features.Users;
+using Domain;
+using Domain.Constants;
+using Mediator;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Shared.Results;
+
+namespace Application.Features.Auth.GoogleSignIn;
+
+public class GoogleSignInHandler(IGoogleAuthService googleAuthService, UserManager<IdentityUser> userManager, ITokenService tokenService, PasswordGenerationService passwordGenerationService, IUnitOfWork unitOfWork) : ICommandHandler<GoogleSignInCommand, Result<LoginDTO>>
+{
+    public async ValueTask<Result<LoginDTO>> Handle(GoogleSignInCommand command, CancellationToken cancellationToken)
+    {
+        GoogleUserInfo userInfo = await googleAuthService.GetUserFromGoogleAsync(command.Code);
+
+        IdentityUser? identityUser = await userManager.Users.Where(u => u.Email == userInfo.Email).FirstOrDefaultAsync(cancellationToken: cancellationToken);
+
+        UserDTO? userDTO = new()
+        {
+            FirstName = userInfo.Name,
+            LastName = "",
+            ProfilePictureUrl = userInfo.PictureUrl,
+            Bio = ""
+        };
+
+        if (identityUser is null)
+        {
+            identityUser = new()
+            {
+                Email = userInfo.Email,
+                UserName = userInfo.Email,
+                EmailConfirmed = userInfo.VerifiedEmail
+            };
+
+            var password = passwordGenerationService.GenerateRandomPassword();
+            var result = await userManager.CreateAsync(identityUser, password);
+
+
+            if (!result.Succeeded)
+            {
+                return Result<LoginDTO>.Error("Failed to register the user.");
+            }
+            var adddRoleresult = await userManager.AddToRoleAsync(identityUser, RolesNameValues.User);
+            if (!adddRoleresult.Succeeded)
+            {
+                return Result<LoginDTO>.Error("Failed to assign role to the user.");
+            }
+
+            // @ToDo: add the new user data [NEED PLANNING]
+        }
+        else
+        {
+            userDTO = await unitOfWork.ApplicationUserRepository.GetDtoByIdentityId(identityUser.Id);
+
+            if (userDTO is null)
+            {
+                return Result<LoginDTO>.Error("Failed to retrieve the user data.");
+            }
+        }
+
+        var token = await tokenService.CreateTokenAsync(identityUser, userDTO.Id);
+
+        return Result<LoginDTO>.Success(new LoginDTO(userDTO, token));
+    }
+}
