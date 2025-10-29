@@ -12,7 +12,6 @@ global using Microsoft.Extensions.DependencyInjection;
 global using Microsoft.Extensions.Hosting;
 global using Microsoft.IdentityModel.Tokens;
 global using Microsoft.OpenApi.Models;
-global using Microsoft.EntityFrameworkCore;
 
 global using Mediator;
 
@@ -42,12 +41,8 @@ global using Application.Features.Pictures.Create;
 global using Application.Features.FriendRequests.List;
 global using Application.Features.FriendRequests.Create;
 global using Application.Features.FriendRequests.Delete;
-
-global using API.Extensions;
-global using API.Filters;
 global using API.Middleware;
 global using API.SignalR;
-global using API.Errors;
 global using API.Common.Headers;
 global using API.Controllers.Users;
 global using API.Controllers.Users.Requests;

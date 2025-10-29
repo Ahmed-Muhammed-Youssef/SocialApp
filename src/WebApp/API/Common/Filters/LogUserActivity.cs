@@ -1,6 +1,6 @@
 ﻿using Application.Common.Interfaces;
 
-namespace API.Filters;
+namespace API.Common.Filters;
 
 public class LogUserActivity(IUnitOfWork unitOfWork) : IAsyncActionFilter
 {

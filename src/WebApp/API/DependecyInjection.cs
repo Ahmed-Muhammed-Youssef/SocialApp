@@ -1,4 +1,5 @@
-﻿using Application.Features.Auth;
+﻿using API.Common.Filters;
+using Application.Features.Auth;
 using FluentValidation;
 using Infrastructure.Services;
 

@@ -106,7 +106,7 @@ public class MessageHub(IUnitOfWork unitOfWork, IHubContext<PresenceHub> presenc
                 UserDTO senderDTO = UserMappings.ToDto(sender);
                 MessageDTO msgDTO = MessageMappings.ToDto(createdMessage);
                 await presenceHubContext.Clients.Clients(recipientConnections)
-                .SendAsync("NewMessage", new { senderDTO, msgDTO });
+                    .SendAsync("NewMessage", new { senderDTO, msgDTO });
             }
         }
 
@@ -171,5 +171,4 @@ public class MessageHub(IUnitOfWork unitOfWork, IHubContext<PresenceHub> presenc
         }
     }
     private static string GetGroupName(int callerId, int otherId) => callerId > otherId ? $"{callerId}-{otherId}" : $"{otherId}-{callerId}";
-
 }

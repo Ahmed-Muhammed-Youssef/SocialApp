@@ -1,4 +1,4 @@
-﻿namespace API.Extensions;
+﻿namespace API.Common.Extensions;
 
 public static class HttpExtensions
 {

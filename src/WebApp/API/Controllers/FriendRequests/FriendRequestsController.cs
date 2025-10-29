@@ -1,4 +1,6 @@
-﻿namespace API.Controllers.FriendRequests;
+﻿using API.Common.Filters;
+
+namespace API.Controllers.FriendRequests;
 
 [ApiController]
 [Authorize]
