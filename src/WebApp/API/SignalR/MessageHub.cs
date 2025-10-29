@@ -1,13 +1,15 @@
 using Application.Common.Interfaces;
-using Application.Common.Mappings;
 using Application.Features.Messages;
+using Application.Features.Messages.Send;
 
 namespace API.SignalR;
 
-public class MessageHub(IUnitOfWork unitOfWork, IHubContext<PresenceHub> presenceHubContext, OnlinePresenceManager presenceTracker) : Hub
+public class MessageHub(IUnitOfWork unitOfWork, IMediator mediator) : Hub
 {
     public override async Task OnConnectedAsync()
     {
+        var cancellationToken = Context.ConnectionAborted;
+
         // Validate the user identity first
         int currentUserId = Context.User?.GetPublicId()
             ?? throw new InvalidOperationException("Failed to resolve current user ID from claims.");
@@ -31,11 +33,11 @@ public class MessageHub(IUnitOfWork unitOfWork, IHubContext<PresenceHub> presenc
 
         await Groups.AddToGroupAsync(Context.ConnectionId, groupName);
 
-        Group group = await AddToGroup(groupName);
+        Group group = await AddToGroup(groupName, cancellationToken);
 
         await Clients.Group(groupName).SendAsync("UpdatedGroup", group);
 
-        IEnumerable<MessageDTO> messages = await unitOfWork.MessageRepository.GetMessagesDTOThreadAsync(currentUserId, otherUserId);
+        IEnumerable<MessageDTO> messages = await unitOfWork.MessageRepository.GetMessagesDTOThreadAsync(currentUserId, otherUserId, cancellationToken);
 
         if (unitOfWork.HasChanges())
         {
@@ -47,7 +49,8 @@ public class MessageHub(IUnitOfWork unitOfWork, IHubContext<PresenceHub> presenc
 
     public override async Task OnDisconnectedAsync(Exception? exception)
     {
-        Group? group = await RemoveFromMessageGroup();
+        var cancellationToken = Context.ConnectionAborted;
+        Group? group = await RemoveFromMessageGroup(cancellationToken);
 
         if(group is not null)
         {
@@ -56,102 +59,55 @@ public class MessageHub(IUnitOfWork unitOfWork, IHubContext<PresenceHub> presenc
 
         await base.OnDisconnectedAsync(exception);
     }
-    public async Task SendMessages(NewMessageDTO message)
+
+    public async Task SendMessage(NewMessageDTO message)
     {
-        var cancelationToken = Context.ConnectionAborted;
+        var cancellationToken = Context.ConnectionAborted;
 
         int currentUserId = Context.User?.GetPublicId()
            ?? throw new InvalidOperationException("Failed to resolve current user ID from claims.");
 
-        var sender = await unitOfWork.ApplicationUserRepository.GetByIdAsync(currentUserId, cancelationToken);
+        var result = await mediator.Send(new SendMessageCommand(
+            SenderId: currentUserId,
+            RecipientId: message.RecipientId,
+            Content: message.Content), cancellationToken);
 
-        var recipient = await unitOfWork.ApplicationUserRepository.GetByIdAsync(message.RecipientId, cancelationToken);
-
-        if (recipient == null || sender == null)
+        if(result.IsSuccess)
         {
-            throw new HubException("User not found");
-        }
-        if (sender.Id == recipient.Id)
-        {
-            throw new HubException("You can't send messages to yourself");
-        }
-        if (!await unitOfWork.FriendRequestRepository.IsFriend(sender.Id, recipient.Id))
-        {
-            throw new HubException("You can't send messages to an unmatch");
-
-        }
-        var createdMessage = new Message
-        {
-            SenderId = sender.Id,
-            RecipientId = recipient.Id,
-            Content = message.Content,
-            SenderDeleted = false,
-            RecipientDeleted = false,
-            ReadDate = null,
-            Sender = sender
-        };
-        
-        var groupName = GetGroupName(sender.Id, recipient.Id);
-        var group = await unitOfWork.MessageRepository.GetGroupByName(groupName);
-
-        if (group is not null && group.Connections.Any(c => c.UserId == recipient.Id))
-        {
-            createdMessage.ReadDate = DateTime.UtcNow;
+            await Clients.Group(result.Value.GroupName).SendAsync("NewMessage", result.Value.MessageDTO);
         }
         else
         {
-            var recipientConnections = await presenceTracker.GetConnectionForUser(recipient.Id);
-            if (recipientConnections != null)
-            {
-                UserDTO senderDTO = UserMappings.ToDto(sender);
-                MessageDTO msgDTO = MessageMappings.ToDto(createdMessage);
-                await presenceHubContext.Clients.Clients(recipientConnections)
-                    .SendAsync("NewMessage", new { senderDTO, msgDTO });
-            }
-        }
-
-        try
-        {
-            await unitOfWork.MessageRepository.AddAsync(createdMessage, cancelationToken);         
-
-            await Clients.Group(groupName).SendAsync("NewMessage", MessageMappings.ToDto(createdMessage));
-        }
-        catch(Exception ex) 
-        { 
-            throw new HubException("Couldn't Send the message", ex);
+            throw new HubException(string.Join('-', result.Errors));
         }
     }
 
     // utility methods
-    private async Task<Group> AddToGroup(string groupName)
+    private async Task<Group> AddToGroup(string groupName, CancellationToken cancellationToken)
     {
-        var group = await unitOfWork.MessageRepository.GetGroupByName(groupName);
-        var connection = new Connection(Context.ConnectionId, Context.User?.GetPublicId() ?? throw new InvalidDataException("Failed to get user Id"));
-
-        if (group == null)
-        {
-            group = new Group(name: groupName);
-            await unitOfWork.MessageRepository.AddGroupAsync(group);
-        }
-
         try
         {
-            group.Connections.Add(connection);
-            await unitOfWork.SaveChangesAsync();
-            return group;
+            var group = await unitOfWork.GroupRepository.GetGroupByName(groupName, cancellationToken);
+            var connection = new Connection(Context.ConnectionId, Context.User?.GetPublicId() ?? throw new InvalidDataException("Failed to get user Id"));
+            if (group == null)
+            {
+                group = new Group(name: groupName);
+                group.Connections.Add(connection);
+                await unitOfWork.GroupRepository.AddAsync(group, cancellationToken);
+            }
 
+            return group;
         }
         catch (Exception ex)
         {
-
             throw new HubException("Failed to create group", ex);
         }
     }
-    private async Task<Group?> RemoveFromMessageGroup()
+    private async Task<Group?> RemoveFromMessageGroup(CancellationToken cancellationToken)
     {
         try
         {
-            Group? group = await unitOfWork.MessageRepository.GetGroupForConnection(Context.ConnectionId);
+            Group? group = await unitOfWork.GroupRepository.GetGroupByConnectionId(Context.ConnectionId, cancellationToken);
 
             if(group is null) return null;
 
@@ -159,9 +115,8 @@ public class MessageHub(IUnitOfWork unitOfWork, IHubContext<PresenceHub> presenc
 
             if(connection is not null)
             {
-                unitOfWork.MessageRepository.RemoveConnection(connection);
+                await unitOfWork.ConnectionRepository.DeleteAsync(connection, cancellationToken);
             }
-            await unitOfWork.SaveChangesAsync();
 
             return group;
         }

@@ -38,7 +38,7 @@ public class MessageRepository(DataContext dataContext) : RepositoryBase<Message
         }
     }
 
-    public async Task<IEnumerable<MessageDTO>> GetMessagesDTOThreadAsync(int issuerId, int theOtherUserId)
+    public async Task<IEnumerable<MessageDTO>> GetMessagesDTOThreadAsync(int issuerId, int theOtherUserId, CancellationToken cancellationToken = default)
     {
         var query = dataContext.Messages
             .AsNoTracking()
@@ -55,39 +55,7 @@ public class MessageRepository(DataContext dataContext) : RepositoryBase<Message
             }
         }
 
-        return await query.Select(m => MessageMappings.ToDto(m)).ToListAsync();
-    }
-
-    public async Task AddGroupAsync(Group group)
-    {
-        await dataContext.Groups.AddAsync(group);
-    }
-    public void RemoveConnection(Connection connection)
-    {
-        dataContext.Connections.Remove(connection);
-    }
-
-    public async Task<Connection?> GetConnection(string connectionId)
-    {
-        return await dataContext.Connections
-            .AsNoTracking()
-            .FirstOrDefaultAsync(c => c.ConnectionId == connectionId);
-    }
-
-    public async Task<Group?> GetGroupByName(string groupName)
-    {
-        return await dataContext.Groups
-        .Include(g => g.Connections)
-        .FirstOrDefaultAsync(g => g.Name == groupName);
-    }
-
-    public async Task<Group?> GetGroupForConnection(string connectionId)
-    {
-        return await dataContext.Groups
-        .AsNoTracking()
-        .Include(g => g.Connections)
-        .Where(g => g.Connections.Any(c => c.ConnectionId == connectionId))
-        .FirstOrDefaultAsync();
+        return await query.Select(m => MessageMappings.ToDto(m)).ToListAsync(cancellationToken: cancellationToken);
     }
 
     public async Task<List<SimplifiedUserDTO>> GetInboxAsync(int userId)
