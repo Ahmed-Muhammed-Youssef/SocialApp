@@ -1,6 +1,6 @@
 ﻿using Application.Features.Messages;
 
-namespace API.SignalR;
+namespace API.SignalR.Messages;
 
 public class MessageNotifier (IHubContext<PresenceHub> presenceHubContext, OnlinePresenceManager presenceTracker) : IMessageNotifier
 {

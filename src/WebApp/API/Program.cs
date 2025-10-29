@@ -1,4 +1,5 @@
 using API;
+using API.SignalR.Messages;
 using Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);

@@ -1,9 +1,8 @@
-using Application.Features.Messages;
 using Application.Features.Messages.ConnectToChat;
 using Application.Features.Messages.DisconnectFromChat;
 using Application.Features.Messages.Send;
 
-namespace API.SignalR;
+namespace API.SignalR.Messages;
 
 public class MessageHub(IMediator mediator) : Hub
 {
@@ -61,7 +60,7 @@ public class MessageHub(IMediator mediator) : Hub
         await base.OnDisconnectedAsync(exception);
     }
 
-    public async Task SendMessage(NewMessageDTO message)
+    public async Task SendMessage(SendMessageRequest request)
     {
         var cancellationToken = Context.ConnectionAborted;
 
@@ -70,8 +69,8 @@ public class MessageHub(IMediator mediator) : Hub
 
         var result = await mediator.Send(new SendMessageCommand(
             SenderId: currentUserId,
-            RecipientId: message.RecipientId,
-            Content: message.Content), cancellationToken);
+            RecipientId: request.RecipientId,
+            Content: request.Content), cancellationToken);
 
         if(result.IsSuccess)
         {
