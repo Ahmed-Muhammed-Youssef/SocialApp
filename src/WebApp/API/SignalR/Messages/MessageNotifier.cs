@@ -2,7 +2,7 @@
 
 namespace API.SignalR.Messages;
 
-public class MessageNotifier (IHubContext<PresenceHub> presenceHubContext, OnlinePresenceManager presenceTracker) : IMessageNotifier
+public class MessageNotifier (IHubContext<PresenceHub> presenceHubContext, IOnlinePresenceManager presenceTracker) : IMessageNotifier
 {
     /// <inheritdoc/>
     public async Task NotifyRecipientAsync(UserDTO sender, MessageDTO message)

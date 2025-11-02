@@ -1,5 +1,7 @@
 ﻿using API.Common.Filters;
+using API.SignalR.Messages;
 using Application.Features.Auth;
+using Application.Features.Messages;
 using FluentValidation;
 using Infrastructure.Services;
 
@@ -29,8 +31,12 @@ public static class DependecyInjection
         });
         builder.Services.AddScoped<LogUserActivity>();
         builder.Services.AddSignalR();
-        builder.Services.AddMediator();
+        builder.Services.AddMediator(config =>
+        {
+            config.ServiceLifetime = ServiceLifetime.Scoped;
+        });
         builder.Services.AddValidatorsFromAssemblyContaining<Program>();
+        builder.Services.AddScoped<IMessageNotifier, MessageNotifier>();
 
         return builder;
     }
