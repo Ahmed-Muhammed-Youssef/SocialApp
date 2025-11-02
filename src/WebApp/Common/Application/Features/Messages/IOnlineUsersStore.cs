@@ -34,5 +34,5 @@ public interface IOnlineUsersStore
     /// Retrieves all connection IDs associated with a specific user.
     /// </summary>
     /// <param name="userId">The unique identifier of the user.</param>
-    public Task<List<string>> GetConnectionsByUserId(int userId);
+    public Task<IReadOnlyList<string>> GetConnectionsByUserId(int userId);
 }
