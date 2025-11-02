@@ -13,7 +13,7 @@ public class UsersController(JsonSerializerOptions jsonSerializerOptions, IMedia
 
     // GET: api/users
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<UserDTO>>> GetUsers([FromQuery] GetUsersRequest request, IValidator<GetUsersRequest> validator)
+    public async Task<ActionResult<IEnumerable<UserDTO>>> GetUsers([FromQuery] GetUsersRequest request, CancellationToken cancellationToken, IValidator<GetUsersRequest> validator)
     {
         var validationResult = validator.Validate(request);
 
@@ -22,7 +22,7 @@ public class UsersController(JsonSerializerOptions jsonSerializerOptions, IMedia
             return BadRequest(validationResult.Errors);
         }
 
-        var result = await mediator.Send(new GetUsersQuery(request.UserParams));
+        var result = await mediator.Send(new GetUsersQuery(request.UserParams), cancellationToken);
 
         if (result.IsSuccess)
         {
@@ -39,9 +39,9 @@ public class UsersController(JsonSerializerOptions jsonSerializerOptions, IMedia
 
     // GET: api/users/{id}
     [HttpGet("{id}")]
-    public async Task<ActionResult<UserDTO>> GetUser(int id)
+    public async Task<ActionResult<UserDTO>> GetUser(int id, CancellationToken cancellationToken)
     {
-        Result<UserDTO> result = await mediator.Send(new GetUserQuery(id));
+        Result<UserDTO> result = await mediator.Send(new GetUserQuery(id), cancellationToken);
 
         if(result.IsSuccess)
         {
@@ -55,7 +55,7 @@ public class UsersController(JsonSerializerOptions jsonSerializerOptions, IMedia
 
     // PUT: api/users/update
     [HttpPut]
-    public async Task<ActionResult<UserDTO>> Update(UpdateUserRequest userDTO)
+    public async Task<ActionResult<UserDTO>> Update(UpdateUserRequest userDTO, CancellationToken cancellationToken)
     {
         if (!ModelState.IsValid)
         {
@@ -68,7 +68,7 @@ public class UsersController(JsonSerializerOptions jsonSerializerOptions, IMedia
             LastName = userDTO.LastName,
             Bio = userDTO.Bio,
             CityId = userDTO.CityId
-        });
+        }, cancellationToken);
 
         if (result.IsSuccess)
         {

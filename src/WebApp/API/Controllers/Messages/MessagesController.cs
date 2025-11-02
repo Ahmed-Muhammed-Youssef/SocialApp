@@ -7,9 +7,9 @@ public class MessagesController(IMediator mediator) : ControllerBase
 {
     // DELETE: api/Messages/{id}
     [HttpDelete("{id}")]
-    public async Task<IActionResult> DeleteMessage(int id)
+    public async Task<IActionResult> DeleteMessage(int id, CancellationToken cancellationToken)
     {
-        var result =  await mediator.Send(new MessageDeleteCommand(id));
+        var result =  await mediator.Send(new MessageDeleteCommand(id), cancellationToken);
 
         if(result.IsSuccess)
         {

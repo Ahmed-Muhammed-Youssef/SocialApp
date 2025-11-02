@@ -7,9 +7,9 @@ public class PicturesController(IMediator mediator) : ControllerBase
 {
     // POST: api/pictures
     [HttpPost]
-    public async Task<ActionResult<PictureDTO>> Create(IFormFile file)
+    public async Task<ActionResult<PictureDTO>> Create(IFormFile file, CancellationToken cancellationToken)
     {
-        Result<int> result = await mediator.Send(new CreatePictureCommand(file));
+        Result<int> result = await mediator.Send(new CreatePictureCommand(file), cancellationToken);
 
         if (result.IsSuccess)
         {
@@ -27,9 +27,9 @@ public class PicturesController(IMediator mediator) : ControllerBase
 
     // DELETE: api/pictures/{pictureId}
     [HttpDelete("{pictureId}")]
-    public async Task<ActionResult<PictureDTO>> Delete(int pictureId)
+    public async Task<ActionResult<PictureDTO>> Delete(int pictureId, CancellationToken cancellationToken)
     {
-        Result<object?> result = await mediator.Send(new DeletePictureCommand(pictureId));
+        Result<object?> result = await mediator.Send(new DeletePictureCommand(pictureId), cancellationToken);
 
         if(result.IsSuccess)
         {
@@ -51,9 +51,9 @@ public class PicturesController(IMediator mediator) : ControllerBase
 
     // GET: api/pictures
     [HttpGet]
-    public async Task<ActionResult<PictureDTO>> Get()
+    public async Task<ActionResult<PictureDTO>> Get(CancellationToken cancellationToken)
     {
-        var result = await mediator.Send(new GetPicturesQuery());
+        var result = await mediator.Send(new GetPicturesQuery(), cancellationToken);
 
         if(result.IsSuccess)
         {

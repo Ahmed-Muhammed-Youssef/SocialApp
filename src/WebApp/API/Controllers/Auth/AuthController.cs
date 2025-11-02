@@ -54,14 +54,14 @@ public class AuthController(IMediator mediator) : ControllerBase
 
     // POST: api/auth/login
     [HttpPost("login")]
-    public async Task<ActionResult<AuthResponse>> Login(LoginRequest loginRequest)
+    public async Task<ActionResult<AuthResponse>> Login(LoginRequest loginRequest, CancellationToken cancellationToken)
     {
         if (!ModelState.IsValid)
         {
             return BadRequest(loginRequest);
         }
 
-        Result<LoginDTO> result = await mediator.Send(new LoginCommand(loginRequest.Email, loginRequest.Password));
+        Result<LoginDTO> result = await mediator.Send(new LoginCommand(loginRequest.Email, loginRequest.Password), cancellationToken);
 
         if(result.IsSuccess)
         {
@@ -79,9 +79,9 @@ public class AuthController(IMediator mediator) : ControllerBase
 
     // GET: api/auth/google-signin
     [HttpGet("google-signin")]
-    public async Task<IActionResult> GoogleSignIn(string code)
+    public async Task<IActionResult> GoogleSignIn(string code, CancellationToken cancellationToken)
     {
-        Result<LoginDTO> result = await mediator.Send(new GoogleSignInCommand(code));
+        Result<LoginDTO> result = await mediator.Send(new GoogleSignInCommand(code), cancellationToken);
         if (result.IsSuccess)
         {
             return Ok(new AuthResponse()

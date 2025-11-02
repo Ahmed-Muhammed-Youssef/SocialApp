@@ -1,4 +1,5 @@
 ﻿using API.Common.Filters;
+using System.Threading;
 
 namespace API.Controllers.FriendRequests;
 
@@ -9,9 +10,9 @@ namespace API.Controllers.FriendRequests;
 public class FriendRequestsController(IMediator mediator) : ControllerBase
 {
     [HttpGet]
-    public async Task<ActionResult<List<UserDTO>>> GetFriendRequests()
+    public async Task<ActionResult<List<UserDTO>>> GetFriendRequests(CancellationToken cancellationToken)
     {
-        Result<List<UserDTO>> result = await mediator.Send(new GetFriendRequstsQuery());
+        Result<List<UserDTO>> result = await mediator.Send(new GetFriendRequstsQuery(), cancellationToken);
 
         if (result.IsSuccess)
         {
@@ -25,9 +26,9 @@ public class FriendRequestsController(IMediator mediator) : ControllerBase
 
     // DELETE: api/friendrequests/{userId}
     [HttpDelete("{userId}")]
-    public async Task<IActionResult> Delete(int userId)
+    public async Task<IActionResult> Delete(int userId, CancellationToken cancellationToken)
     {
-        Result<object?> result = await mediator.Send(new DeleteFriendRequestCommand(userId));
+        Result<object?> result = await mediator.Send(new DeleteFriendRequestCommand(userId), cancellationToken);
 
         if (result.IsSuccess)
         {
@@ -41,9 +42,9 @@ public class FriendRequestsController(IMediator mediator) : ControllerBase
 
     // POST: api/friendrequests/{id}
     [HttpPost("{userId}")]
-    public async Task<ActionResult> Create(int userId)
+    public async Task<ActionResult> Create(int userId, CancellationToken cancellationToken)
     {
-        Result<int> result = await mediator.Send(new CreateFriendRequestCommand(userId));
+        Result<int> result = await mediator.Send(new CreateFriendRequestCommand(userId), cancellationToken);
         if (result.IsSuccess)
         {
             return Ok(result.Value);
