@@ -1,28 +1,11 @@
-﻿using Application.Common.Interfaces;
-using Application.Common.Interfaces.Repositories;
-using Application.Features.Messages;
-using Application.Features.Pictures;
-using Infrastructure.Data;
-using Infrastructure.ExternalServices.Cloudinary;
-using Infrastructure.Identity;
-using Infrastructure.RealTime.Presence;
-using Infrastructure.Repositories;
-using Infrastructure.Repositories.CachedRepositories;
-using Infrastructure.Services;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Caching.Memory;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-
-namespace Infrastructure;
+﻿namespace Infrastructure;
 
 public static class DependencyInjection
 {
     public static IHostApplicationBuilder AddInfrastructureServices(this IHostApplicationBuilder builder)
     {
         // Database Contexts
-        builder.Services.AddDbContext<DataContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("AppConnection")));
+        builder.Services.AddDbContext<ApplicationDatabaseContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("AppConnection")));
         builder.Services.AddDbContext<IdentityDatabaseContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("IdentityConnection")));
 
         // Repositories
@@ -30,7 +13,7 @@ public static class DependencyInjection
         builder.Services.AddScoped<IApplicationUserRepository>(sp =>
         {
             IMemoryCache cache = sp.GetRequiredService<IMemoryCache>();
-            DataContext dataContext = sp.GetRequiredService<DataContext>();
+            ApplicationDatabaseContext dataContext = sp.GetRequiredService<ApplicationDatabaseContext>();
             ApplicationUserRepository inner = new(dataContext);
             return new CachedUserRepository(inner, cache, dataContext);
         });
@@ -43,11 +26,11 @@ public static class DependencyInjection
 
         // Cloudinary
         builder.Services.Configure<CloudinaryOptions>(builder.Configuration.GetSection("Cloudinary"));
-        builder.Services.AddScoped<IPictureService, PictureService>();
+        builder.Services.AddScoped<IPictureService, CloudinaryPictureService>();
         builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
 
         // Other Services
-        builder.Services.AddSingleton<IOnlinePresenceManager, OnlinePresenceManager>();
+        builder.Services.AddSingleton<IOnlineUsersStore, OnlineUsersStore>();
 
         return builder;
     }

@@ -1,5 +1,5 @@
 ﻿using Domain.Constants;
-using Infrastructure.Identity;
+using Infrastructure.Data.Identity;
 using Microsoft.AspNetCore.Identity;
 using MVC.Factories;
 

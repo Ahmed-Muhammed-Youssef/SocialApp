@@ -1,9 +1,6 @@
-using Application.Common.Interfaces;
-using Application.Common.Interfaces.Repositories;
-
 namespace Infrastructure.Data;
 
-public class UnitOfWork(DataContext _dataContext, IApplicationUserRepository userRepository, IPictureRepository pictureRepository,
+public class UnitOfWork(ApplicationDatabaseContext _dataContext, IApplicationUserRepository userRepository, IPictureRepository pictureRepository,
     IMessageRepository messageRepository, IFriendRequestRepository friendRequestRepository, IPostRepository postRepository,
     IGroupRepository groupRepository, IConnectionRepository connectionRepository) : IUnitOfWork
 {

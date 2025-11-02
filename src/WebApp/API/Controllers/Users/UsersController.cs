@@ -10,10 +10,9 @@ namespace API.Controllers.Users;
 [ServiceFilter(typeof(LogUserActivity))]
 public class UsersController(JsonSerializerOptions jsonSerializerOptions, IMediator mediator) : ControllerBase
 {
-
     // GET: api/users
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<UserDTO>>> GetUsers([FromQuery] GetUsersRequest request, CancellationToken cancellationToken, IValidator<GetUsersRequest> validator)
+    public async Task<ActionResult<IEnumerable<UserDTO>>> GetUsers([FromQuery] GetUsersRequest request, IValidator<GetUsersRequest> validator, CancellationToken cancellationToken)
     {
         var validationResult = validator.Validate(request);
 

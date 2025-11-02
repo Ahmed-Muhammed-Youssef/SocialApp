@@ -1,26 +1,16 @@
 ﻿global using Microsoft.AspNetCore.SignalR;
-global using Microsoft.AspNetCore.Builder;
-global using Microsoft.AspNetCore.Hosting;
 global using Microsoft.AspNetCore.Authentication.JwtBearer;
-global using Microsoft.AspNetCore.Http;
 global using Microsoft.AspNetCore.Authorization;
 global using Microsoft.AspNetCore.Mvc;
 global using Microsoft.AspNetCore.Mvc.Filters;
 global using Microsoft.AspNetCore.Identity;
-global using Microsoft.Extensions.Logging;
-global using Microsoft.Extensions.DependencyInjection;
-global using Microsoft.Extensions.Hosting;
 global using Microsoft.IdentityModel.Tokens;
 global using Microsoft.OpenApi.Models;
 
 global using Mediator;
 
-global using System;
 global using System.Text;
 global using System.Text.Json;
-global using System.Linq;
-global using System.Collections.Generic;
-global using System.Threading.Tasks;
 global using System.Net;
 
 global using Application.Features.Users;
@@ -52,9 +42,6 @@ global using Domain.Entities;
 global using Domain.Constants;
 
 global using Infrastructure.Data;
-global using Infrastructure.ExternalServices.Google;
-global using Infrastructure.Identity;
-global using Infrastructure.RealTime.Presence;
 
 global using Shared.Extensions;
 global using Shared.Results;

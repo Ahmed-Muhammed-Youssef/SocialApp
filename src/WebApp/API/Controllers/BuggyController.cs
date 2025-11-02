@@ -5,7 +5,7 @@ namespace API.Controllers;
 [Route("api/[controller]")]
 [ApiController]
 [ServiceFilter(typeof(LogUserActivity))]
-public class BuggyController(DataContext _context) : ControllerBase
+public class BuggyController(ApplicationDatabaseContext _context) : ControllerBase
 {
     // GET: api/buggy/auth
     [Authorize]

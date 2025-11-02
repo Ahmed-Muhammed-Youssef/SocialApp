@@ -3,7 +3,9 @@ using API.SignalR.Messages;
 using Application.Features.Auth;
 using Application.Features.Messages;
 using FluentValidation;
-using Infrastructure.Services;
+using Infrastructure.Auth;
+using Infrastructure.Auth.External;
+using Infrastructure.Data.Identity;
 
 namespace API;
 

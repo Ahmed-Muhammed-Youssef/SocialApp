@@ -1,16 +1,4 @@
-﻿using Domain.Constants;
-using Domain.Entities;
-using Bogus;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Infrastructure.Identity;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Configuration;
-
-namespace Infrastructure.Data;
+﻿namespace Infrastructure.Data;
 
 public class DatabaseInitializer
 {
@@ -21,7 +9,7 @@ public class DatabaseInitializer
         ILogger<DatabaseInitializer> logger = services.GetRequiredService<ILogger<DatabaseInitializer>>();
         try
         {
-            DataContext dataContext = services.GetRequiredService<DataContext>();
+            ApplicationDatabaseContext dataContext = services.GetRequiredService<ApplicationDatabaseContext>();
             IdentityDatabaseContext identityContext = services.GetRequiredService<IdentityDatabaseContext>();
             IWebHostEnvironment environment = services.GetRequiredService<IWebHostEnvironment>();
             UserManager<IdentityUser> userManager = services.GetRequiredService<UserManager<IdentityUser>>();
@@ -44,7 +32,7 @@ public class DatabaseInitializer
         }
     }
 
-    private static async Task MigrateDatabaseAsync(DataContext dataContext, IdentityDatabaseContext identityContext, ILogger<DatabaseInitializer> logger)
+    private static async Task MigrateDatabaseAsync(ApplicationDatabaseContext dataContext, IdentityDatabaseContext identityContext, ILogger<DatabaseInitializer> logger)
     {
         try
         {
@@ -57,13 +45,13 @@ public class DatabaseInitializer
         }
     }
 
-    private static async Task SeedStaticData(DataContext dataContext, RoleManager<IdentityRole> roleManager, ILogger<DatabaseInitializer> logger)
+    private static async Task SeedStaticData(ApplicationDatabaseContext dataContext, RoleManager<IdentityRole> roleManager, ILogger<DatabaseInitializer> logger)
     {
         await SeedCountriesAndCities(dataContext, logger);
         await SeedRoles(roleManager, logger);
     }
 
-    private static async Task SeedCountriesAndCities(DataContext dataContext, ILogger<DatabaseInitializer> logger)
+    private static async Task SeedCountriesAndCities(ApplicationDatabaseContext dataContext, ILogger<DatabaseInitializer> logger)
     {
         try
         {
@@ -122,7 +110,7 @@ public class DatabaseInitializer
         }
     }
 
-    private static async Task SeedAdmin(UserManager<IdentityUser> userManager, IConfiguration configuration, DataContext dataContext, ILogger<DatabaseInitializer> logger)
+    private static async Task SeedAdmin(UserManager<IdentityUser> userManager, IConfiguration configuration, ApplicationDatabaseContext dataContext, ILogger<DatabaseInitializer> logger)
     {
         try
         {
@@ -188,7 +176,7 @@ public class DatabaseInitializer
         }
     }
 
-    private static async Task AddTestUsers(UserManager<IdentityUser> userManager, DataContext dataContext, IConfiguration configuration, ILogger<DatabaseInitializer> logger)
+    private static async Task AddTestUsers(UserManager<IdentityUser> userManager, ApplicationDatabaseContext dataContext, IConfiguration configuration, ILogger<DatabaseInitializer> logger)
     {
         try
         {

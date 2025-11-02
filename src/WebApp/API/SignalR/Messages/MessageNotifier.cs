@@ -2,12 +2,12 @@
 
 namespace API.SignalR.Messages;
 
-public class MessageNotifier (IHubContext<PresenceHub> presenceHubContext, IOnlinePresenceManager presenceTracker) : IMessageNotifier
+public class MessageNotifier (IHubContext<PresenceHub> presenceHubContext, IOnlineUsersStore presenceTracker) : IMessageNotifier
 {
     /// <inheritdoc/>
     public async Task NotifyRecipientAsync(UserDTO sender, MessageDTO message)
     {
-        var recipientConnections = await presenceTracker.GetConnectionForUser(message.RecipientId);
+        var recipientConnections = await presenceTracker.GetConnectionsByUserId(message.RecipientId);
         if (recipientConnections != null && recipientConnections.Count != 0)
         {
             await presenceHubContext.Clients.Clients(recipientConnections)
