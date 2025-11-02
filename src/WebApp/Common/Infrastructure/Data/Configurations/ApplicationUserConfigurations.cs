@@ -15,7 +15,7 @@ public class ApplicationUserConfigurations : IEntityTypeConfiguration<Applicatio
         builder.Property(u => u.Created).IsRequired();
         builder.Property(u => u.LastActive).IsRequired();
         builder.Property(u => u.CityId).IsRequired();
-
+        builder.Property(u => u.IdentityId).HasMaxLength(450).IsRequired();
         // Nullable Fields 
         builder.Property(u => u.ProfilePictureUrl).IsRequired(false);
     }
