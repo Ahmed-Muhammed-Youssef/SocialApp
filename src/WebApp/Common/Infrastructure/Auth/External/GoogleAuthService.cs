@@ -2,8 +2,9 @@
 
 namespace Infrastructure.Auth.External;
 
-public class GoogleAuthService(IConfiguration configuration) : IGoogleAuthService
+public class GoogleAuthService(IConfiguration configuration, IHttpClientFactory httpClientFactory) : IGoogleAuthService
 {
+    private readonly HttpClient _client = httpClientFactory.CreateClient("GoogleAuth");
     private readonly string _clientId = configuration["Authentication:Google:ClientId"]!;
     private readonly string _clientSecret = configuration["Authentication:Google:ClientSecret"]!;
     private readonly string _redirectUri = configuration["Authentication:Google:RedirectUri"]!;
@@ -12,29 +13,23 @@ public class GoogleAuthService(IConfiguration configuration) : IGoogleAuthServic
     private readonly string _tokenEndpoint = configuration["Authentication:Google:TokenEndpoint"]!;
     public string BuildGoogleSignInUrl()
     {
-        UriBuilder builder = new(_googleAuthorizationEndpoint);
-        Dictionary<string, string> queryParams = [];
-        queryParams.Add("client_id", _clientId);
-        queryParams.Add("redirect_uri", _redirectUri);
-        queryParams.Add("response_type", "code");
-        queryParams.Add("scope", _scope);
-        queryParams.Add("access_type", "offline"); // Request refresh token for extended access
-
-        builder.Query = string.Join("&", queryParams.Select(p => $"{p.Key}={Uri.EscapeDataString(p.Value)}"));
+        UriBuilder builder = new(_googleAuthorizationEndpoint)
+        {
+            Query = $"client_id={_clientId}&redirect_uri={Uri.EscapeDataString(_redirectUri)}&response_type=code&scope={Uri.EscapeDataString(_scope)}&access_type=offline"
+        };
         return builder.ToString();
     }
 
     public async Task<GoogleUserInfo> GetUserFromGoogleAsync(string code)
     {
-        using var client = new HttpClient();
-        const string userInfoEndpoint = "https://www.googleapis.com/userinfo/v2/me";
-        var tokenResponse = await GetAccessToken(client, code);
+        const string userInfoEndpoint = "userinfo/v2/me";
+        var tokenResponse = await GetAccessToken(code);
 
         // Extract access token from the response
         var accessToken = tokenResponse["access_token"];
 
         // Use the access token to retrieve user information
-        var userInfoResponse = await client.GetAsync($"{userInfoEndpoint}?access_token={accessToken}");
+        var userInfoResponse = await _client.GetAsync($"{userInfoEndpoint}?access_token={accessToken}");
 
         // Check for successful response
         if (!userInfoResponse.IsSuccessStatusCode)
@@ -58,7 +53,7 @@ public class GoogleAuthService(IConfiguration configuration) : IGoogleAuthServic
         return googleUserInfo;
     }
 
-    private async Task<Dictionary<string, string>> GetAccessToken(HttpClient client, string code)
+    private async Task<Dictionary<string, string>> GetAccessToken(string code)
     {
         var formContent = new FormUrlEncodedContent(
         [
@@ -69,7 +64,7 @@ public class GoogleAuthService(IConfiguration configuration) : IGoogleAuthServic
             new KeyValuePair<string, string>("redirect_uri", _redirectUri),
         ]);
 
-        var tokenResponse = await client.PostAsync(_tokenEndpoint, formContent);
+        var tokenResponse = await _client.PostAsync(_tokenEndpoint, formContent);
 
         if (!tokenResponse.IsSuccessStatusCode)
         {

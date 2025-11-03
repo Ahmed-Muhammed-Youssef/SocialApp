@@ -1,8 +1,5 @@
-﻿using API.Common.Filters;
-using API.Features.Messages;
+﻿using API.Features.Messages;
 using Application.Features.Auth;
-using Application.Features.Messages;
-using FluentValidation;
 using Infrastructure.Auth;
 using Infrastructure.Auth.External;
 using Infrastructure.Data.Identity;
@@ -39,6 +36,13 @@ public static class DependecyInjection
         });
         builder.Services.AddValidatorsFromAssemblyContaining<Program>();
         builder.Services.AddScoped<IMessageNotifier, MessageNotifier>();
+
+        builder.Services.AddHttpClient("GoogleAuth", client =>
+        {
+            client.BaseAddress = new Uri("https://www.googleapis.com/");
+            client.DefaultRequestHeaders.Accept
+                .Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+        });
 
         return builder;
     }
