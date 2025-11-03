@@ -1,5 +1,5 @@
 ﻿using API.Common.Filters;
-using API.SignalR.Messages;
+using API.Features.Messages;
 using Application.Features.Auth;
 using Application.Features.Messages;
 using FluentValidation;

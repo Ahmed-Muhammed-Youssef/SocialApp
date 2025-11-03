@@ -1,5 +1,7 @@
 using API;
-using API.SignalR.Messages;
+using API.Common.Middleware;
+using API.Features.Messages;
+using API.Features.Users;
 using Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -31,7 +33,7 @@ app.UseStaticFiles();
 app.MapControllers();
 
 // SignalR Endpooints
-app.MapHub<PresenceHub>("hubs/presence");
+app.MapHub<OnlineUsersHub>("hubs/presence");
 app.MapHub<MessageHub>("hubs/message");
 
 await app.RunAsync();

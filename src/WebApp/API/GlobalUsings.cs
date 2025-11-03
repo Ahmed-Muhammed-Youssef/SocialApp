@@ -8,16 +8,19 @@ global using Microsoft.IdentityModel.Tokens;
 global using Microsoft.OpenApi.Models;
 
 global using Mediator;
+global using FluentValidation;
 
 global using System.Text;
 global using System.Text.Json;
 global using System.Net;
+global using System.ComponentModel.DataAnnotations;
 
 global using Application.Features.Users;
 global using Application.Features.Users.Get;
 global using Application.Features.Users.List;
 global using Application.Features.Users.Update;
 global using Application.Features.Roles;
+global using Application.Features.Roles.List;
 global using Application.Features.Roles.Create;
 global using Application.Features.Roles.Delete;
 global using Application.Features.Posts.Create;
@@ -31,11 +34,26 @@ global using Application.Features.Pictures.Create;
 global using Application.Features.FriendRequests.List;
 global using Application.Features.FriendRequests.Create;
 global using Application.Features.FriendRequests.Delete;
-global using API.Middleware;
-global using API.SignalR;
+global using Application.Features.UserRoles.Get;
+global using Application.Features.UserRoles.AssignRoleToUser;
+global using Application.Features.UserRoles.RemoveRoleFromUser;
+global using Application.Features.Auth.GoogleSignIn;
+global using Application.Features.Auth.Login;
+global using Application.Features.Auth.Register;
+global using Application.Features.Messages;
+global using Application.Features.Messages.ConnectToChat;
+global using Application.Features.Messages.DisconnectFromChat;
+global using Application.Features.Messages.Send;
+
 global using API.Common.Headers;
-global using API.Controllers.Users;
-global using API.Controllers.Users.Requests;
+global using API.Common.Extensions;
+global using API.Common.Filters;
+global using API.Features.Users;
+global using API.Features.Users.Requests;
+global using API.Features.Auth.Requests;
+global using API.Features.Auth.Responses;
+global using API.Features.Messages.Requests;
+global using API.Features.Posts.Requests;
 
 global using Domain;
 global using Domain.Entities;
