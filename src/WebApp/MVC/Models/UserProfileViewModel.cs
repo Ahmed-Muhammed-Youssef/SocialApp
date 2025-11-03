@@ -1,4 +1,4 @@
-﻿using Domain.Constants;
+﻿using Domain.Enums;
 
 namespace MVC.Models;
 

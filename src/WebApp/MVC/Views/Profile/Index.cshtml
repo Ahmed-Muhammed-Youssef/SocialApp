@@ -1,4 +1,5 @@
-﻿@model UserProfileViewModel
+﻿@using Domain.Enums
+@model UserProfileViewModel
 @{
     ViewData["Title"] = Model.FirstName;
 }
@@ -25,19 +26,19 @@
                     </div>
                     <h2 class="display-6 fw-bold mb-2">@Model.FirstName @Model.LastName</h2>
                     <div id="sendBtnContainer" class="mb-3">
-                        @if(Model.Relation == Domain.Constants.SocialRelation.NotFriend)
+                        @if(Model.Relation == SocialRelation.NotFriend)
                         {
                             <button class="btn btn-primary" onclick="addFriend()">Add Friend</button>
                         }
-                        else if (Model.Relation == Domain.Constants.SocialRelation.Friend)
+                        else if (Model.Relation == SocialRelation.Friend)
                         {
                             <button class="btn btn-primary" onclick="removeFriend()">Remove Friend</button>
                         }
-                        else if (Model.Relation == Domain.Constants.SocialRelation.FrinedRequesSent)
+                        else if (Model.Relation == SocialRelation.FrinedRequesSent)
                         {
                             <button class="btn btn-primary" onclick="unsendFriendRequest()">Unsend Friend Request</button>
                         }
-                        else if (Model.Relation == Domain.Constants.SocialRelation.FriendRequestReceived)
+                        else if (Model.Relation == SocialRelation.FriendRequestReceived)
                         {
                             <button class="btn btn-primary" onclick="acceptFriendRequest()">Accept Friend Request</button>
                         }

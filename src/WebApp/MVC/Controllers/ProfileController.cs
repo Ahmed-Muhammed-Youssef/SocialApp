@@ -1,6 +1,6 @@
 ﻿using Application.Common.Interfaces;
-using Domain.Constants;
 using Domain.Entities;
+using Domain.Enums;
 using Microsoft.AspNetCore.Mvc;
 using MVC.Models;
 using Shared.Extensions;
