@@ -32,7 +32,7 @@ public class DateTimeExtensionsTests
     }
 
     [Fact]
-    public void CaculateAge_ShouldReturnCorrectAge_ForValidUncompleteYears()
+    public void CaculateAge_ShouldReturnCorrectAge_ForValidIncompleteYears()
     {
         // Arrange
         int expectedAge = 25;
