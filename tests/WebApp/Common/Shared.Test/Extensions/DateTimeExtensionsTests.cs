@@ -30,4 +30,18 @@ public class DateTimeExtensionsTests
         // Assert
         Assert.Equal(0, age);
     }
+
+    [Fact]
+    public void CaculateAge_ShouldReturnCorrectAge_ForValidUncompleteYears()
+    {
+        // Arrange
+        int expectedAge = 25;
+        DateTime dob = DateTime.UtcNow.AddYears(-expectedAge).AddHours(1);
+
+        // Act
+        int age = dob.CalculateAge();
+
+        // Assert
+        Assert.Equal(expectedAge - 1, age);
+    }
 }
