@@ -11,7 +11,7 @@ namespace Infrastructure.Users;
 public class OnlineUsersStore : IOnlineUsersStore
 {
     // Dictionary to track online users by their user ID and connection IDs.
-    private static readonly ConcurrentDictionary<int, HashSet<string>> OnlineUsers = [];
+    private readonly ConcurrentDictionary<int, HashSet<string>> OnlineUsers = [];
 
     /// <inheritdoc/>
     public Task<bool> AddUserConnection(int userId, string connectionId)
