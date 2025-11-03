@@ -90,7 +90,7 @@ public static class DependecyInjection
             };
         });
 
-        builder.Services.AddScoped<ITokenService, TokenService>();
+        builder.Services.AddScoped<ITokenProvider, TokenProvider>();
         builder.Services.AddScoped<IGoogleAuthService, GoogleAuthService>();
         builder.Services.AddScoped<PasswordGenerationService>();
 

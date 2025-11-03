@@ -1,7 +1,6 @@
 using API;
 using API.Common.Middleware;
 using API.Features.Messages;
-using API.Features.Users;
 using Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);

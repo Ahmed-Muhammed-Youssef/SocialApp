@@ -7,7 +7,7 @@ using Shared.Results;
 
 namespace Application.Features.Auth.Login;
 
-public class LoginHandler(IUnitOfWork unitOfWork, UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, ITokenService tokenService) 
+public class LoginHandler(IUnitOfWork unitOfWork, UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, ITokenProvider tokenService) 
     : ICommandHandler<LoginCommand, Result<LoginDTO>>
 {
     public async ValueTask<Result<LoginDTO>> Handle(LoginCommand command, CancellationToken cancellationToken)
@@ -34,7 +34,13 @@ public class LoginHandler(IUnitOfWork unitOfWork, UserManager<IdentityUser> user
             return Result<LoginDTO>.Unauthorized();
         }
 
-        string token = await tokenService.CreateTokenAsync(user, userData.Id);
+        TokenRequest tokenRequest = new(
+            UserId: userData.Id.ToString(),
+            UserEmail: user.Email ?? string.Empty,
+            Roles: await userManager.GetRolesAsync(user)
+        );
+
+        string token = tokenService.Create(tokenRequest);
 
         return Result<LoginDTO>.Success(new LoginDTO(userData, token));
     }

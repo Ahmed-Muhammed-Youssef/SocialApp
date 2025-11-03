@@ -10,7 +10,7 @@ using Shared.Results;
 
 namespace Application.Features.Auth.Register;
 
-public class RegisterHandler(IUnitOfWork unitOfWork, UserManager<IdentityUser> userManager, ITokenService tokenService) : ICommandHandler<RegisterCommand, Result<RegisterDTO>>
+public class RegisterHandler(IUnitOfWork unitOfWork, UserManager<IdentityUser> userManager, ITokenProvider tokenService) : ICommandHandler<RegisterCommand, Result<RegisterDTO>>
 {
     public async ValueTask<Result<RegisterDTO>> Handle(RegisterCommand command, CancellationToken cancellationToken)
     {
@@ -66,7 +66,14 @@ public class RegisterHandler(IUnitOfWork unitOfWork, UserManager<IdentityUser> u
         }
 
         UserDTO userData = UserMappings.ToDto(newApplicationUser);
-        string token = await tokenService.CreateTokenAsync(newIdentityUser, userData.Id);
+
+        TokenRequest tokenRequest = new(
+            UserId: userData.Id.ToString(),
+            UserEmail: newIdentityUser.Email ?? string.Empty,
+            Roles: await userManager.GetRolesAsync(newIdentityUser)
+        );
+
+        string token = tokenService.Create(tokenRequest);
 
         RegisterDTO dto = new(userData, token);
 

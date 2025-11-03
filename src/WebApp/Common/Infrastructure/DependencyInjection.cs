@@ -1,4 +1,6 @@
-﻿namespace Infrastructure;
+﻿using Infrastructure.Auth.Options;
+
+namespace Infrastructure;
 
 public static class DependencyInjection
 {
@@ -31,6 +33,8 @@ public static class DependencyInjection
 
         // Other Services
         builder.Services.AddSingleton<IOnlineUsersStore, OnlineUsersStore>();
+
+        builder.Services.Configure<JwtAuthOptions>(builder.Configuration.GetSection("Jwt"));
 
         return builder;
     }

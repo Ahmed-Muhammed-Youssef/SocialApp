@@ -10,7 +10,7 @@ using Shared.Results;
 
 namespace Application.Features.Auth.GoogleSignIn;
 
-public class GoogleSignInHandler(IGoogleAuthService googleAuthService, UserManager<IdentityUser> userManager, ITokenService tokenService, PasswordGenerationService passwordGenerationService, IUnitOfWork unitOfWork) : ICommandHandler<GoogleSignInCommand, Result<LoginDTO>>
+public class GoogleSignInHandler(IGoogleAuthService googleAuthService, UserManager<IdentityUser> userManager, ITokenProvider tokenService, PasswordGenerationService passwordGenerationService, IUnitOfWork unitOfWork) : ICommandHandler<GoogleSignInCommand, Result<LoginDTO>>
 {
     public async ValueTask<Result<LoginDTO>> Handle(GoogleSignInCommand command, CancellationToken cancellationToken)
     {
@@ -61,7 +61,13 @@ public class GoogleSignInHandler(IGoogleAuthService googleAuthService, UserManag
             }
         }
 
-        var token = await tokenService.CreateTokenAsync(identityUser, userDTO.Id);
+        TokenRequest tokenRequest = new(
+            UserId: userDTO.Id.ToString(),
+            UserEmail: identityUser.Email ?? string.Empty,
+            Roles: await userManager.GetRolesAsync(identityUser)
+        );
+
+        var token = tokenService.Create(tokenRequest);
 
         return Result<LoginDTO>.Success(new LoginDTO(userDTO, token));
     }
