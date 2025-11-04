@@ -1,4 +1,6 @@
-﻿namespace Shared.RepositoryBase;
+﻿using Shared.Specification;
+
+namespace Shared.RepositoryBase;
 
 /// <summary>
 /// Defines a generic repository interface for performing CRUD operations and querying entities of type <typeparamref
@@ -24,22 +26,24 @@ public interface IRepositoryBase<T> where T : class
     /// <summary>
     /// Returns the first element of a sequence, or a default value if the sequence contains no elements.
     /// </summary>
+    /// <param name="specification">The encapsulated query logic.</param>
     /// <param name="cancellationToken">The cancellation token.</param>
     /// <returns>
     /// A task that represents the asynchronous operation.
     /// The task result contains the <typeparamref name="T" />, or <see langword="null"/>.
     /// </returns>
-    Task<T?> FirstOrDefaultAsync(CancellationToken cancellationToken = default);
+    Task<T?> FirstOrDefaultAsync(ISpecification<T> specification, CancellationToken cancellationToken = default);
 
     /// <summary>
-    /// Returns the only element of a sequence, or a default value if the sequence is empty; this method throws an exception if there is more than one element in the sequence.
+    /// Returns the first element of a sequence, or a default value if the sequence contains no elements.
     /// </summary>
+    /// <param name="specification">The encapsulated query logic.</param>
     /// <param name="cancellationToken">The cancellation token.</param>
     /// <returns>
     /// A task that represents the asynchronous operation.
-    /// The task result contains the <typeparamref name="T" />, or <see langword="null"/>.
+    /// The task result contains the <typeparamref name="TResult" />, or <see langword="null"/>.
     /// </returns>
-    Task<T?> SingleOrDefaultAsync(CancellationToken cancellationToken = default);
+    Task<TResult?> FirstOrDefaultAsync<TResult>(ISpecification<T, TResult> specification, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Finds all entities of <typeparamref name="T" /> from the database.
@@ -52,6 +56,46 @@ public interface IRepositoryBase<T> where T : class
     Task<List<T>> ListAsync(CancellationToken cancellationToken = default);
 
     /// <summary>
+    /// Finds all entities of <typeparamref name="T" />, that matches the encapsulated query logic of the
+    /// <paramref name="specification"/>, from the database.
+    /// </summary>
+    /// <param name="specification">The encapsulated query logic.</param>
+    /// <param name="cancellationToken">The cancellation token.</param>
+    /// <returns>
+    /// A task that represents the asynchronous operation.
+    /// The task result contains a <see cref="List{T}" /> that contains elements from the input sequence.
+    /// </returns>
+    Task<List<T>> ListAsync(ISpecification<T> specification, CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Finds all entities of <typeparamref name="T" />, that matches the encapsulated query logic of the
+    /// <paramref name="specification"/>, from the database.
+    /// <para>
+    /// Projects each entity into a new form, being <typeparamref name="TResult" />.
+    /// </para>
+    /// </summary>
+    /// <typeparam name="TResult">The type of the value returned by the projection.</typeparam>
+    /// <param name="specification">The encapsulated query logic.</param>
+    /// <param name="cancellationToken">The cancellation token.</param>
+    /// <returns>
+    /// A task that represents the asynchronous operation.
+    /// The task result contains a <see cref="List{TResult}" /> that contains elements from the input sequence.
+    /// </returns>
+    Task<List<TResult>> ListAsync<TResult>(ISpecification<T, TResult> specification, CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Returns a number that represents how many entities satisfy the encapsulated query logic
+    /// of the <paramref name="specification"/>.
+    /// </summary>
+    /// <param name="specification">The encapsulated query logic.</param>
+    /// <param name="cancellationToken">The cancellation token.</param>
+    /// <returns>
+    /// A task that represents the asynchronous operation. The task result contains the
+    /// number of elements in the input sequence.
+    /// </returns>
+    Task<int> CountAsync(ISpecification<T> specification, CancellationToken cancellationToken = default);
+
+    /// <summary>
     /// Returns the total number of records.
     /// </summary>
     /// <param name="cancellationToken">The cancellation token.</param>
@@ -60,6 +104,18 @@ public interface IRepositoryBase<T> where T : class
     /// number of elements in the input sequence.
     /// </returns>
     Task<int> CountAsync(CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Returns a boolean that represents whether any entity satisfy the encapsulated query logic
+    /// of the <paramref name="specification"/> or not.
+    /// </summary>
+    /// <param name="specification">The encapsulated query logic.</param>
+    /// <param name="cancellationToken">The cancellation token.</param>
+    /// <returns>
+    /// A task that represents the asynchronous operation. The task result contains true if the 
+    /// source sequence contains any elements; otherwise, false.
+    /// </returns>
+    Task<bool> AnyAsync(ISpecification<T> specification, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns a boolean whether any entity exists or not.

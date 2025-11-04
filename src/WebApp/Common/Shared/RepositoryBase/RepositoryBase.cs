@@ -1,16 +1,44 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Shared.Specification;
 
 namespace Shared.RepositoryBase;
 
+/// <summary>
+/// Provides a base implementation for a repository pattern, offering common data access operations for entities of type
+/// <typeparamref name="T"/>.
+/// </summary>
+/// <remarks>This abstract class implements the <see cref="IRepositoryBase{T}"/> interface, providing asynchronous
+/// methods for adding, updating, deleting, and querying entities. It utilizes a <see cref="DbContext"/> for data access
+/// and an <see cref="ISpecificationEvaluator"/> to apply query specifications.</remarks>
+/// <typeparam name="T">The type of the entity for which this repository is responsible. Must be a class.</typeparam>
 public abstract class RepositoryBase<T> : IRepositoryBase<T> where T : class
 {
     protected DbContext DbContext { get; set; }
+    protected ISpecificationEvaluator SpecificationEvaluator { get; set; }
 
-    /// <inheritdoc/>
+    /// <summary>
+    /// Initializes a new instance of the <see cref="RepositoryBase"/> class with the specified database context.
+    /// </summary>
+    /// <remarks>This constructor uses the default specification evaluator to filter and project data
+    /// queries.</remarks>
+    /// <param name="dbContext">The database context used to interact with the data store. Cannot be null.</param>
     public RepositoryBase(DbContext dbContext)
+       : this(dbContext, Specification.SpecificationEvaluator.Default)
+    {
+    }
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="RepositoryBase"/> class with the specified database context and
+    /// specification evaluator.
+    /// </summary>
+    /// <param name="dbContext">The database context used to interact with the data store. Cannot be null.</param>
+    /// <param name="specificationEvaluator">The specification evaluator used to apply query specifications. Cannot be null.</param>
+    public RepositoryBase(DbContext dbContext, ISpecificationEvaluator specificationEvaluator)
     {
         DbContext = dbContext;
+        SpecificationEvaluator = specificationEvaluator;
     }
+
 
     /// <inheritdoc/>
     public virtual async Task<T> AddAsync(T entity, CancellationToken cancellationToken = default)
@@ -77,19 +105,19 @@ public abstract class RepositoryBase<T> : IRepositoryBase<T> where T : class
     /// <inheritdoc/>
     public virtual async Task<T?> GetByIdAsync<TId>(TId id, CancellationToken cancellationToken = default) where TId : notnull
     {
-        return await DbContext.Set<T>().FindAsync(new object[] { id }, cancellationToken: cancellationToken);
+        return await DbContext.Set<T>().FindAsync([id], cancellationToken: cancellationToken);
     }
 
     /// <inheritdoc/>
-    public virtual async Task<T?> FirstOrDefaultAsync(CancellationToken cancellationToken = default)
+    public virtual async Task<T?> FirstOrDefaultAsync(ISpecification<T> specification, CancellationToken cancellationToken = default)
     {
-        return await DbContext.Set<T>().FirstOrDefaultAsync(cancellationToken);
+        return await ApplySpecification(specification).FirstOrDefaultAsync(cancellationToken);
     }
 
     /// <inheritdoc/>
-    public virtual async Task<T?> SingleOrDefaultAsync(CancellationToken cancellationToken = default)
+    public virtual async Task<TResult?> FirstOrDefaultAsync<TResult>(ISpecification<T, TResult> specification, CancellationToken cancellationToken = default)
     {
-        return await DbContext.Set<T>().SingleOrDefaultAsync(cancellationToken);
+        return await ApplySpecification(specification).FirstOrDefaultAsync(cancellationToken);
     }
 
     /// <inheritdoc/>
@@ -99,14 +127,59 @@ public abstract class RepositoryBase<T> : IRepositoryBase<T> where T : class
     }
 
     /// <inheritdoc/>
+    public virtual async Task<List<T>> ListAsync(ISpecification<T> specification, CancellationToken cancellationToken = default)
+    {
+        return await ApplySpecification(specification).ToListAsync(cancellationToken);
+    }
+
+    /// <inheritdoc/>
+    public virtual async Task<List<TResult>> ListAsync<TResult>(ISpecification<T, TResult> specification, CancellationToken cancellationToken = default)
+    {
+        return await ApplySpecification(specification).ToListAsync(cancellationToken);
+    }
+
+    /// <inheritdoc/>
+    public virtual async Task<int> CountAsync(ISpecification<T> specification, CancellationToken cancellationToken = default)
+    {
+        return await ApplySpecification(specification).CountAsync(cancellationToken);
+    }
+
+    /// <inheritdoc/>
     public virtual async Task<int> CountAsync(CancellationToken cancellationToken = default)
     {
         return await DbContext.Set<T>().CountAsync(cancellationToken);
     }
 
     /// <inheritdoc/>
+    public virtual async Task<bool> AnyAsync(ISpecification<T> specification, CancellationToken cancellationToken = default)
+    {
+        return await ApplySpecification(specification).AnyAsync(cancellationToken);
+    }
+
+    /// <inheritdoc/>
     public virtual async Task<bool> AnyAsync(CancellationToken cancellationToken = default)
     {
         return await DbContext.Set<T>().AnyAsync(cancellationToken);
+    }
+
+    /// <summary>
+    /// Applies the given specification to the queryable set of entities.
+    /// </summary>
+    /// <param name="specification">The specification that defines the criteria and conditions to filter the entities.</param>
+    /// <returns>An <see cref="IQueryable{T}"/> representing the filtered set of entities that match the specification.</returns>
+    protected IQueryable<T> ApplySpecification(ISpecification<T> specification)
+    {
+        return SpecificationEvaluator.GetQuery(DbContext.Set<T>().AsQueryable(), specification);
+    }
+
+    /// <summary>
+    /// Applies the given specification to the current queryable set and returns the resulting query.
+    /// </summary>
+    /// <typeparam name="TResult">The type of the result elements returned by the query.</typeparam>
+    /// <param name="specification">The specification to apply to the query. Cannot be null.</param>
+    /// <returns>An <see cref="IQueryable{TResult}"/> representing the query with the applied specification.</returns>
+    protected IQueryable<TResult> ApplySpecification<TResult>(ISpecification<T, TResult> specification)
+    {
+        return SpecificationEvaluator.GetQuery(DbContext.Set<T>().AsQueryable(), specification);
     }
 }
