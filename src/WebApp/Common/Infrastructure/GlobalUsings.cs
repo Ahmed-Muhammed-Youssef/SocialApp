@@ -3,6 +3,7 @@ global using Domain.Entities;
 global using Domain.Enums;
 
 global using Shared.Pagination;
+global using Shared.RepositoryBase;
 
 global using Application.Common.Mappings;
 global using Application.Common.Interfaces;
@@ -15,6 +16,7 @@ global using Application.Features.Posts;
 global using Application.DTOs.Pagination;
 
 global using Infrastructure.Auth;
+global using Infrastructure.Auth.Options;
 global using Infrastructure.Data;
 global using Infrastructure.Data.Identity;
 global using Infrastructure.Data.Configurations;
@@ -38,6 +40,7 @@ global using Microsoft.Extensions.Hosting;
 global using Microsoft.Data.SqlClient;
 
 global using System.Security.Claims;
+global using System.Collections.Concurrent;
 global using System.IdentityModel.Tokens.Jwt;
 global using System.Text;
 global using System.Data;

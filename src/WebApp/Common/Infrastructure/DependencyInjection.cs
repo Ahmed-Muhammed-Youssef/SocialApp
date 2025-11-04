@@ -1,6 +1,4 @@
-﻿using Infrastructure.Auth.Options;
-
-namespace Infrastructure;
+﻿namespace Infrastructure;
 
 public static class DependencyInjection
 {

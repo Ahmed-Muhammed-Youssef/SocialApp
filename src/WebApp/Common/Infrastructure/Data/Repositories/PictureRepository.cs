@@ -1,6 +1,4 @@
-﻿using Shared.RepositoryBase;
-
-namespace Infrastructure.Data.Repositories;
+﻿namespace Infrastructure.Data.Repositories;
 
 public class PictureRepository(ApplicationDatabaseContext dataContext) : RepositoryBase<Picture>(dataContext), IPictureRepository
 {

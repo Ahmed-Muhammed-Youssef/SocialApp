@@ -1,6 +1,4 @@
-﻿using System.Collections.Concurrent;
-
-namespace Infrastructure.Users;
+﻿namespace Infrastructure.Users;
 
 /// <summary>
 /// Manages the online presence of users by tracking their connection states and IDs.

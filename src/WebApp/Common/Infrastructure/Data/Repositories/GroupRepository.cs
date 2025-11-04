@@ -1,6 +1,4 @@
-﻿using Shared.RepositoryBase;
-
-namespace Infrastructure.Data.Repositories;
+﻿namespace Infrastructure.Data.Repositories;
 
 public class GroupRepository(ApplicationDatabaseContext dataContext) : RepositoryBase<Group>(dataContext), IGroupRepository
 {

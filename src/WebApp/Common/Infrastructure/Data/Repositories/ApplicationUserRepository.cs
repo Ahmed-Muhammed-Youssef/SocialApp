@@ -1,6 +1,4 @@
-﻿using Shared.RepositoryBase;
-
-namespace Infrastructure.Data.Repositories;
+﻿namespace Infrastructure.Data.Repositories;
 
 public class ApplicationUserRepository(ApplicationDatabaseContext dataContext) : RepositoryBase<ApplicationUser>(dataContext), IApplicationUserRepository // using the repository design pattern to isolate the contollers further more from the entity framework. (it may not be neccesary)
 {  

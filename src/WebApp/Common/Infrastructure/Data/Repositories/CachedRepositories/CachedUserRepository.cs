@@ -1,12 +1,4 @@
-﻿using Microsoft.Extensions.Caching.Memory;
-using Domain.Entities;
-using Application.DTOs.Pagination;
-using Application.Features.Users;
-using Application.Common.Interfaces.Repositories;
-using Infrastructure.Data;
-using Shared.RepositoryBase;
-
-namespace Infrastructure.Data.Repositories.CachedRepositories;
+﻿namespace Infrastructure.Data.Repositories.CachedRepositories;
 
 public class CachedUserRepository(IApplicationUserRepository _usersRepository, IMemoryCache _memoryCache, ApplicationDatabaseContext dataContext) : RepositoryBase<ApplicationUser>(dataContext), IApplicationUserRepository
 {
