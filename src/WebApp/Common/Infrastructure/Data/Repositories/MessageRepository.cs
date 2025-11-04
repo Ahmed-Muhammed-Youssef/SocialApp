@@ -1,4 +1,6 @@
-﻿namespace Infrastructure.Data.Repositories;
+﻿using Shared.RepositoryBase;
+
+namespace Infrastructure.Data.Repositories;
 
 public class MessageRepository(ApplicationDatabaseContext dataContext) : RepositoryBase<Message>(dataContext), IMessageRepository
 {

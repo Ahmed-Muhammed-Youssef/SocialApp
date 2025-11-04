@@ -1,6 +1,7 @@
 ﻿using Application.Features.Messages;
 using Application.Features.Users;
 using Domain.Entities;
+using Shared.RepositoryBase;
 
 namespace Application.Common.Interfaces.Repositories;
 

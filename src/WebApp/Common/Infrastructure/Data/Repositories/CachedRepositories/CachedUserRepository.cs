@@ -4,7 +4,7 @@ using Application.DTOs.Pagination;
 using Application.Features.Users;
 using Application.Common.Interfaces.Repositories;
 using Infrastructure.Data;
-using Infrastructure.Data.Repositories;
+using Shared.RepositoryBase;
 
 namespace Infrastructure.Data.Repositories.CachedRepositories;
 

@@ -1,4 +1,6 @@
-﻿namespace Infrastructure.Data.Repositories;
+﻿using Microsoft.EntityFrameworkCore;
+
+namespace Shared.RepositoryBase;
 
 public abstract class RepositoryBase<T> : IRepositoryBase<T> where T : class
 {

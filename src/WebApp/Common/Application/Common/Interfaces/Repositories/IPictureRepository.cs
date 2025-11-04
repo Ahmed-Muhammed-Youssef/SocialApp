@@ -1,5 +1,6 @@
 ﻿using Application.Features.Pictures;
 using Domain.Entities;
+using Shared.RepositoryBase;
 
 namespace Application.Common.Interfaces.Repositories;
 

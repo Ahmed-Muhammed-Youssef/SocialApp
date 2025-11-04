@@ -1,4 +1,4 @@
-﻿namespace Application.Common.Interfaces.Repositories;
+﻿namespace Shared.RepositoryBase;
 
 /// <summary>
 /// Defines a generic repository interface for performing CRUD operations and querying entities of type <typeparamref
