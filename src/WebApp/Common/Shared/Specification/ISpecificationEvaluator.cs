@@ -6,21 +6,11 @@
 public interface ISpecificationEvaluator
 {
     /// <summary>
-    /// Applies a projection-based specification (<see cref="ISpecification{T, TResult}"/>) to the query.
+    /// Applies the specified filter specification to the input query.
     /// </summary>
-    /// <typeparam name="T">The entity type.</typeparam>
-    /// <typeparam name="TResult">The projected result type.</typeparam>
-    /// <param name="inputQuery">The base query.</param>
-    /// <param name="specification">The projection specification.</param>
-    /// <returns>An <see cref="IQueryable{TResult}"/> with the specification and projection applied.</returns>
-    IQueryable<TResult> GetQuery<T, TResult>(IQueryable<T> inputQuery, ISpecification<T, TResult> specification) where T : class;
-
-    /// <summary>
-    /// Applies the given <see cref="ISpecification{T}"/> to the provided queryable source.
-    /// </summary>
-    /// <typeparam name="T">The entity type.</typeparam>
-    /// <param name="inputQuery">The base query.</param>
-    /// <param name="specification">The specification defining filters, ordering, and pagination.</param>
-    /// <returns>A new <see cref="IQueryable{T}"/> with the specification applied.</returns>
-    IQueryable<T> GetQuery<T>(IQueryable<T> inputQuery, ISpecification<T> specification) where T : class;
+    /// <typeparam name="T">The type of elements in the query.</typeparam>
+    /// <param name="inputQuery">The initial query to which the filter will be applied. Cannot be null.</param>
+    /// <param name="specification">The filter specification that defines the criteria for filtering the query. Cannot be null.</param>
+    /// <returns>An <see cref="IQueryable{T}"/> representing the filtered query.</returns>
+    IQueryable<T> GetQuery<T>(IQueryable<T> inputQuery, IFilterSpecification<T> specification) where T : class;
 }
