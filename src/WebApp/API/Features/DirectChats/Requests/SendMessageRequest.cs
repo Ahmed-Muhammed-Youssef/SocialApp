@@ -1,4 +1,4 @@
-﻿namespace API.Features.Chats.Requests;
+﻿namespace API.Features.DirectChats.Requests;
 
 public record SendMessageRequest
 {

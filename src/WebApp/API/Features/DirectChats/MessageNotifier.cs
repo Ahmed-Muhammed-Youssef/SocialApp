@@ -1,4 +1,4 @@
-﻿namespace API.Features.Chats;
+﻿namespace API.Features.DirectChats;
 
 public class MessageNotifier (IHubContext<OnlineUsersHub> presenceHubContext, IOnlineUsersStore presenceTracker) : IMessageNotifier
 {

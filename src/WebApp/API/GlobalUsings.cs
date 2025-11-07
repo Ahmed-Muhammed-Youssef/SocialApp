@@ -46,6 +46,8 @@ global using Application.Features.DirectChats.ConnectToChat;
 global using Application.Features.DirectChats.DisconnectFromChat;
 global using Application.Features.DirectChats.SendMessage;
 
+global using API;
+global using API.Common.Middleware;
 global using API.Common.Headers;
 global using API.Common.Extensions;
 global using API.Common.Filters;
@@ -54,13 +56,14 @@ global using API.Features.Users.Requests;
 global using API.Features.Auth.Requests;
 global using API.Features.Auth.Responses;
 global using API.Features.Posts.Requests;
-global using API.Features.Chats;
-global using API.Features.Chats.Requests;
+global using API.Features.DirectChats;
+global using API.Features.DirectChats.Requests;
 
 global using Domain;
 global using Domain.Entities;
 global using Domain.Common.Constants;
 
+global using Infrastructure;
 global using Infrastructure.Auth;
 global using Infrastructure.Auth.External;
 global using Infrastructure.Data;

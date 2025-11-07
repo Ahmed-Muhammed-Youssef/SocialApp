@@ -1,8 +1,3 @@
-using API;
-using API.Common.Middleware;
-using API.Features.Chats;
-using Infrastructure;
-
 var builder = WebApplication.CreateBuilder(args);
 
 builder
