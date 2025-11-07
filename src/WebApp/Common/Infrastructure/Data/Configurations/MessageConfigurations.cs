@@ -14,6 +14,12 @@ public class MessageConfigurations : IEntityTypeConfiguration<Message>
         builder.Property(m => m.SentDate).IsRequired();
 
         // relationships
+        builder.HasOne<DirectChat>()
+            .WithMany(c => c.Messages)
+            .HasForeignKey(m => m.ChatId)
+            .IsRequired()
+            .OnDelete(DeleteBehavior.Cascade);
+
         // with appuser (sender)
         builder.HasOne<ApplicationUser>()
             .WithMany()

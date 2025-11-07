@@ -1,6 +1,6 @@
 ﻿namespace Domain.ChatAggregate;
 
-public class DirectChat : EntityBase
+public class DirectChat : EntityBase, IAggregateRoot
 {
     private readonly List<Message> _messages = [];
     private DirectChat() { }
@@ -30,7 +30,7 @@ public class DirectChat : EntityBase
             throw new InvalidMessageException("Message content cannot be null or empty.");
         }
 
-        _messages.Add(new Message(senderId, content));
+        _messages.Add(new Message(Id, senderId, content));
     }
 
     private bool Involves(int userId) => userId == User1Id || userId == User2Id;
