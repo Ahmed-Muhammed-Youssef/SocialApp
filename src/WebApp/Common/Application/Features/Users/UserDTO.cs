@@ -8,9 +8,8 @@ public record UserDTO
     public required string FirstName { get; init; }
     [Required, MaxLength(255)]
     public required string LastName { get; init; }
-    public string? ProfilePictureUrl { get; init; }
     [Required]
-    public char Sex { get; init; }
+    public Gender Gender { get; init; }
     [Required]
     public int Age { get; init; }
     [Required]

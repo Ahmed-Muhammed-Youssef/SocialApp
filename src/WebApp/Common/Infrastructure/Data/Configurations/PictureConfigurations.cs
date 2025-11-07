@@ -14,7 +14,7 @@ public class PictureConfigurations : IEntityTypeConfiguration<Picture>
 
         // relationships
         builder.HasOne(p => p.AppUser)
-            .WithMany(u => u.Pictures)
+            .WithMany()
             .HasForeignKey(p => p.AppUserId)
             .IsRequired()
             .OnDelete(DeleteBehavior.Cascade);

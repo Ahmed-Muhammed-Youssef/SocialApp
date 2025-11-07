@@ -8,24 +8,25 @@ public class ApplicationUserRepository(ApplicationDatabaseContext dataContext) :
         DateTime birthDateMin = DateTime.UtcNow.AddYears(-userParams.MinAge - 1);
 
         IQueryable<ApplicationUser> query = dataContext.ApplicationUsers
-            .Include(u => u.Friends)
-            .Include(u => u.FriendRequestsReceived)
             .Where(u => u.Id != userId && u.DateOfBirth >= birthDateMin && (birthDateMax == null || u.DateOfBirth <= birthDateMax))
             .AsQueryable();
 
         // filteration based on relation
         if (userParams.RelationFilter == RelationFilter.OnlyFriends)
         {
-            query = query.Where(u => u.Friends.Any(f => f.FriendId == userId));
+            IQueryable<int> friendsQuery = dataContext.Friends.Where(f => f.UserId == userId).Select(f => f.FriendId);
+            query = query.Where(u => friendsQuery.Contains(u.Id));
         }
         else if (userParams.RelationFilter == RelationFilter.OnlyFriendRequested)
         {
-            query = query.Where(u => u.FriendRequestsReceived.Any(fr => fr.RequesterId == userId));
+            IQueryable<int> friendRequestedQuery = dataContext.FriendRequests.Where(fr => fr.RequesterId == userId).Select(f => f.RequesterId);
+            query = query.Where(u => friendRequestedQuery.Contains(u.Id));
         }
         else if (userParams.RelationFilter == RelationFilter.ExcludeFriendsAndFriendRequested)
         {
-            query = query.Where(u => !u.Friends.Any(f => f.FriendId == userId) &&
-                                     !u.FriendRequestsReceived.Any(fr => fr.RequesterId == userId));
+            IQueryable<int> friendsQuery = dataContext.Friends.Where(f => f.UserId == userId).Select(f => f.FriendId);
+            IQueryable<int> friendRequestedQuery = dataContext.FriendRequests.Where(fr => fr.RequesterId == userId).Select(f => f.RequesterId);
+            query = query.Where(u => !friendsQuery.Contains(u.Id) && !friendRequestedQuery.Contains(u.Id));
         }
 
         // ordering
@@ -72,12 +73,12 @@ public class ApplicationUserRepository(ApplicationDatabaseContext dataContext) :
 
     public async Task<List<SimplifiedUserDTO>> GetListAsync(int[] ids)
     {
-        return await dataContext.ApplicationUsers.Where(u => ids.Contains(u.Id)).Select(u => new SimplifiedUserDTO() { Id = u.Id, FirstName = u.FirstName, LastName = u.LastName, ProfilePictureUrl = u.ProfilePictureUrl }).ToListAsync();
+        return await dataContext.ApplicationUsers.Where(u => ids.Contains(u.Id)).Select(u => new SimplifiedUserDTO() { Id = u.Id, FirstName = u.FirstName, LastName = u.LastName, ProfilePictureUrl = null }).ToListAsync();
     }
 
     public async Task<SimplifiedUserDTO?> GetSimplifiedDTOAsync(int id)
     {
-        return await dataContext.ApplicationUsers.Select(u => new SimplifiedUserDTO() { Id = u.Id, FirstName = u.FirstName, LastName = u.LastName, ProfilePictureUrl = u.ProfilePictureUrl }).FirstOrDefaultAsync(u => u.Id == id);
+        return await dataContext.ApplicationUsers.Select(u => new SimplifiedUserDTO() { Id = u.Id, FirstName = u.FirstName, LastName = u.LastName, ProfilePictureUrl = null }).FirstOrDefaultAsync(u => u.Id == id);
     }
 
     public async Task<PagedList<SimplifiedUserDTO>> SearchAsync(int userId, string search, UserParams userParams)
@@ -88,7 +89,7 @@ public class ApplicationUserRepository(ApplicationDatabaseContext dataContext) :
                 Id = u.Id,
                 FirstName = u.FirstName,
                 LastName = u.LastName,
-                ProfilePictureUrl = u.ProfilePictureUrl
+                ProfilePictureUrl = null
             });
         var count = await query.CountAsync();
         var users = await query.Skip(userParams.SkipValue()).Take(userParams.ItemsPerPage).ToListAsync();

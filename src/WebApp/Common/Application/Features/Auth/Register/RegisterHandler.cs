@@ -34,15 +34,7 @@ public class RegisterHandler(IUnitOfWork unitOfWork, UserManager<IdentityUser> u
 
         // Create application user
 
-        ApplicationUser newApplicationUser = new()
-        {
-            FirstName = command.FirstName,
-            LastName = command.LastName,
-            Sex = command.Sex,
-            DateOfBirth = command.DateOfBirth,
-            CityId = command.CityId,
-            IdentityId = newIdentityUser.Id
-        };
+        ApplicationUser newApplicationUser = new(newIdentityUser.Id, command.FirstName, command.LastName, command.DateOfBirth, command.Gender, command.CityId);
 
         try
         {

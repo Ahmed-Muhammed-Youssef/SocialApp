@@ -36,7 +36,7 @@ public class ProfileController : Controller
             LastActive = userProfile.LastActive,
             Age = userProfile.DateOfBirth.CalculateAge(),
             Bio = userProfile.Bio,
-            Sex = userProfile.Sex,
+            Sex = userProfile.Gender,
             Created = userProfile.Created,
             ProfilePictureUrl = userProfile.ProfilePictureUrl,
             Relation = SocialRelation.NotFriend

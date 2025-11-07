@@ -7,7 +7,7 @@ public record RegisterRequest
     [Required, MaxLength(255)]
     public required string LastName { get; init; }
     [Required]
-    public char Sex { get; init; }
+    public Gender Gender { get; init; }
     [EmailAddress, Required]
     public required string Email { get; init; }
     [Required]

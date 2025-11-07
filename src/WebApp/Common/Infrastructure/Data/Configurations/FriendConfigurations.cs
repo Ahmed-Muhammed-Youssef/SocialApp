@@ -14,7 +14,7 @@ public class FriendConfigurations : IEntityTypeConfiguration<Friend>
         // relationships
         // with app user (user)
         builder.HasOne(f => f.User)
-            .WithMany(u => u.Friends)
+            .WithMany()
             .HasForeignKey(f => f.UserId)
             .IsRequired()
             .OnDelete(DeleteBehavior.ClientCascade);

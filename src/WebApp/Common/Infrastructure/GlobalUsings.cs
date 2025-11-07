@@ -2,6 +2,7 @@
 global using Domain.Common.Constants;
 global using Domain.Enums;
 global using Domain.DirectChatAggregate;
+global using Domain.ApplicationUserAggregate;
 
 global using Shared.Pagination;
 global using Shared.RepositoryBase;

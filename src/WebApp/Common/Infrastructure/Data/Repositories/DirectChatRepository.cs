@@ -47,7 +47,7 @@ public class DirectChatRepository(ApplicationDatabaseContext dataContext) : Repo
             Id = f.FriendId,
             FirstName = f.FriendUser!.FirstName,
             LastName = f.FriendUser.LastName,
-            ProfilePictureUrl =f.FriendUser.ProfilePictureUrl
+            ProfilePictureUrl = null
         }).ToListAsync();
 
         return friends;

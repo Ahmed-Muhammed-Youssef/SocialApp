@@ -21,7 +21,7 @@ public class AuthController(IMediator mediator) : ControllerBase
             LastName = registerRequest.LastName,
             Email = registerRequest.Email,
             Password = registerRequest.Password,
-            Sex = registerRequest.Sex,
+            Gender = registerRequest.Gender,
             DateOfBirth = registerRequest.DateOfBirth,
             CityId = registerRequest.CityId
         };

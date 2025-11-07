@@ -9,16 +9,20 @@ public class PostRepository(ApplicationDatabaseContext dataContext) : Repository
 
     public async Task<PagedList<PostDTO>> GetNewsfeed(int userId, PaginationParams paginationParams)
     {
-        var allPostsQuery = dataContext.Friends
-        .Where(f => f.UserId == userId)
-        .SelectMany(f => f.FriendUser!.Posts, (f, p) => new PostDTO
+        IQueryable<int> friendsQuery = dataContext.Friends
+        .Where(f => f.FriendId == userId).Select(f => f.UserId);
+
+        var allPostsQuery = dataContext.Posts
+        .Include(p => p.ApplicationUser)
+        .Where(p => friendsQuery.Contains(p.UserId))
+        .Select(p => new PostDTO
         {
             Id = p.Id,
             DateEdited = p.DateEdited,
-            OwnerName = f.FriendUser!.FirstName + " " + f.FriendUser.LastName,
-            OwnerId = f.FriendUser.Id,
+            OwnerName = p.ApplicationUser!.FirstName + " " + p.ApplicationUser!.LastName,
+            OwnerId = p.UserId,
             Content = p.Content,
-            OwnerPictureUrl = f.FriendUser!.ProfilePictureUrl ?? "",
+            OwnerPictureUrl = "",
             DatePosted = p.DatePosted
         })
         .OrderByDescending(p => p.DatePosted)

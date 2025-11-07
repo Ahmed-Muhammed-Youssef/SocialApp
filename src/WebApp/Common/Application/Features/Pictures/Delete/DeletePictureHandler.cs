@@ -29,13 +29,8 @@ public class DeletePictureHandler(IUnitOfWork unitOfWork, IPictureService pictur
 
         await unitOfWork.PictureRepository.DeleteAsync(picture, cancellationToken);
 
-        if (user.ProfilePictureUrl == picture.Url)
-        {
-            user.ProfilePictureUrl = "";
-
-            await unitOfWork.ApplicationUserRepository.UpdateAsync(user, cancellationToken);
-        }
-
+        //@TODO: what if the image is a profile picture
+        
         return Result<object?>.NoContent();
     }
 }

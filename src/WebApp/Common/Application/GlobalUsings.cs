@@ -18,6 +18,7 @@ global using Application.Features.Posts;
 
 global using Domain;
 global using Domain.DirectChatAggregate;
+global using Domain.ApplicationUserAggregate;
 global using Domain.Enums;
 global using Domain.Entities;
 global using Domain.Common.Constants;

@@ -12,7 +12,6 @@ public class GoogleSignInHandler(IGoogleAuthService googleAuthService, UserManag
         {
             FirstName = userInfo.Name,
             LastName = "",
-            ProfilePictureUrl = userInfo.PictureUrl,
             Bio = ""
         };
 

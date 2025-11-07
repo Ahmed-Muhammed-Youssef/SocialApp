@@ -1,4 +1,5 @@
 ﻿using Application.Common.Interfaces;
+using Domain.ApplicationUserAggregate;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
 using System.Security.Claims;
@@ -19,7 +20,7 @@ where TRole : IdentityRole
     {
         var identity = await base.GenerateClaimsAsync(user);
 
-        Domain.Entities.ApplicationUser applicationUser = await _unitOfWork.ApplicationUserRepository.GetByIdentity(user.Id) ?? throw new InvalidOperationException("Failed to get user.");
+        ApplicationUser applicationUser = await _unitOfWork.ApplicationUserRepository.GetByIdentity(user.Id) ?? throw new InvalidOperationException("Failed to get user.");
 
         Claim? defaultClaim = identity.FindFirst(ClaimTypes.NameIdentifier);
         

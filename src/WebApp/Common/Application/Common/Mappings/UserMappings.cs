@@ -7,13 +7,11 @@ public static class UserMappings
         Id = user.Id,
         FirstName = user.FirstName,
         LastName = user.LastName,
-        ProfilePictureUrl = user.ProfilePictureUrl,
-        Sex = user.Sex,
+        Gender = user.Gender,
         Age = user.DateOfBirth.CalculateAge(),
         Created = user.Created,
         LastActive = user.LastActive,
         Bio = user.Bio ?? string.Empty,
-        RelationStatus = RelationStatus.None,
-        Pictures = user.Pictures.Select(PictureMappings.ToDto)
+        RelationStatus = RelationStatus.None
     };
 }

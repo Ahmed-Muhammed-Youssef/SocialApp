@@ -1,6 +1,5 @@
 ﻿namespace Domain.Entities;
 
-// dependent entity on AppUser entity
 public class FriendRequest
 {
     public DateTime Date { get; set; } = DateTime.UtcNow;

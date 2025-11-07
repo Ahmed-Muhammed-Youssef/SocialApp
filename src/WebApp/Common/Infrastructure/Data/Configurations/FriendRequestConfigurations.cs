@@ -14,14 +14,14 @@ public class FriendRequestConfigurations : IEntityTypeConfiguration<FriendReques
         // relationships
         // with app user (requester)
         builder.HasOne(fr => fr.Requester)
-            .WithMany(u => u.FriendRequestsSent)
+            .WithMany()
             .HasForeignKey(fr => fr.RequesterId)
             .IsRequired()
             .OnDelete(DeleteBehavior.ClientCascade);
 
         // with app user (requested)
         builder.HasOne(fr => fr.Requested)
-            .WithMany(u => u.FriendRequestsReceived)
+            .WithMany()
             .HasForeignKey(fr => fr.RequestedId)
             .IsRequired()
             .OnDelete(DeleteBehavior.ClientCascade);

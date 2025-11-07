@@ -130,16 +130,7 @@ public class DatabaseInitializer
 
                 City city = await dataContext.Cities.FirstOrDefaultAsync() ?? throw new Exception("No cities found in the database. Please ensure that countries and cities are seeded before seeding the admin user.");
 
-                ApplicationUser adminAppUser = new()
-                {
-                    IdentityId = admin.Id,
-                    FirstName = "Admin",
-                    LastName = "",
-                    ProfilePictureUrl = "",
-                    Sex = 'm',
-                    Bio = "hello there",
-                    CityId = city.Id
-                };
+                ApplicationUser adminAppUser = new(admin.Id, "Admin", "", DateTime.UtcNow.AddYears(-25), Gender.Male, city.Id);
 
                 await dataContext.ApplicationUsers.AddAsync(adminAppUser);
                 await dataContext.SaveChangesAsync();
@@ -205,9 +196,9 @@ public class DatabaseInitializer
 
                 // Generate application user
                 var testApplicationUser = new Faker<ApplicationUser>()
-                            .RuleFor(u => u.ProfilePictureUrl, f => f.Internet.Avatar())
-                            .RuleFor(u => u.Sex, f => f.PickRandom(new List<char>() { 'f', 'm' }))
-                            .RuleFor(u => u.FirstName, (f, u) => f.Name.FirstName((u.Sex == 'm') ? Bogus.DataSets.Name.Gender.Male : Bogus.DataSets.Name.Gender.Female))
+                            .RuleFor(u => u.IdentityId, f => identityUser.Id)
+                            .RuleFor(u => u.Gender, f => f.PickRandom<Gender>())
+                            .RuleFor(u => u.FirstName, (f, u) => f.Name.FirstName((u.Gender == Gender.Male) ? Bogus.DataSets.Name.Gender.Male : Bogus.DataSets.Name.Gender.Female))
                             .RuleFor(u => u.LastName, (f, u) => f.Name.LastName(Bogus.DataSets.Name.Gender.Male))
                             .RuleFor(u => u.Bio, f => f.Lorem.Paragraph())
                             .RuleFor(u => u.CityId, f => f.PickRandom(cities).Id)
@@ -216,7 +207,6 @@ public class DatabaseInitializer
                             .RuleFor(u => u.Created, f => f.Date.Past(refDate: DateTime.UtcNow.AddMonths(-7), yearsToGoBack: 2));
 
                 var applicationUser = testApplicationUser.Generate();
-                applicationUser.IdentityId = identityUser.Id;
 
                 await dataContext.ApplicationUsers.AddAsync(applicationUser);
 

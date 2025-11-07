@@ -15,7 +15,7 @@ public class PostConfigurations : IEntityTypeConfiguration<Post>
 
         // relationships
         builder.HasOne(p => p.ApplicationUser)
-            .WithMany(u => u.Posts)
+            .WithMany()
             .IsRequired()
             .HasForeignKey(p => p.UserId)
             .OnDelete(DeleteBehavior.Cascade);

@@ -11,10 +11,7 @@ public class UpdateUserHandler(IUnitOfWork unitOfWork, ICurrentUserService curre
             return Result<UserDTO>.NotFound();
         }
 
-        appUser.FirstName = command.FirstName;
-        appUser.LastName = command.LastName;
-        appUser.Bio = command.Bio;
-        appUser.CityId = command.CityId;
+        appUser.Update(command.FirstName, command.LastName, command.CityId, command.Bio);
 
         await unitOfWork.ApplicationUserRepository.UpdateAsync(appUser, cancellationToken);
 

@@ -5,7 +5,7 @@
 using System.Text;
 using System.Text.Encodings.Web;
 using Application.Common.Interfaces;
-using Domain.Entities;
+using Domain.ApplicationUserAggregate;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
@@ -88,7 +88,7 @@ namespace MVC.Areas.Identity.Pages.Account
                         IdentityId = userId,
                         FirstName = Input.FirstName,
                         LastName = Input.LastName,
-                        Sex = Input.Sex,
+                        Gender = Input.Sex,
                         DateOfBirth = Input.DateOfBirth,
                         CityId = Input.CityId
                     };

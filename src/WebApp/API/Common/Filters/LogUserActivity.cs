@@ -14,7 +14,7 @@ public class LogUserActivity(IUnitOfWork unitOfWork) : IAsyncActionFilter
         var user = await unitOfWork.ApplicationUserRepository.GetByIdAsync(userId, cancellationToken);
         if (user is null) return;
 
-        user.LastActive = DateTime.UtcNow;
+        user.MarkActive();
         await unitOfWork.ApplicationUserRepository.UpdateAsync(user, cancellationToken);
     }
 }

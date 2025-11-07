@@ -10,13 +10,13 @@ public class ApplicationUserConfigurations : IEntityTypeConfiguration<Applicatio
         // Properties
         builder.Property(u => u.FirstName).IsRequired().HasMaxLength(255);
         builder.Property(u => u.LastName).IsRequired().HasMaxLength(255);
-        builder.Property(u => u.Sex).IsRequired();
+        builder.Property(u => u.Gender).IsRequired();
         builder.Property(u => u.DateOfBirth).IsRequired();
         builder.Property(u => u.Created).IsRequired();
         builder.Property(u => u.LastActive).IsRequired();
         builder.Property(u => u.CityId).IsRequired();
         builder.Property(u => u.IdentityId).HasMaxLength(450).IsRequired();
         // Nullable Fields 
-        builder.Property(u => u.ProfilePictureUrl).IsRequired(false);
+        builder.Property(u => u.ProfilePictureId).IsRequired(false);
     }
 }
