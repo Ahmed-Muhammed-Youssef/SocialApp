@@ -25,6 +25,7 @@ global using Infrastructure.Data.Repositories;
 global using Infrastructure.Data.Repositories.CachedRepositories;
 global using Infrastructure.Media.Cloudinary;
 global using Infrastructure.Users;
+global using Infrastructure.DirectChats;
 
 global using Microsoft.AspNetCore.Http;
 global using Microsoft.AspNetCore.Hosting;

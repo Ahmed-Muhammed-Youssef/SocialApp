@@ -1,7 +1,7 @@
 ﻿namespace Infrastructure.DirectChats;
 
 /// <inheritdoc/>
-public class DirectChatGroupsStore : IDirectChatGroupStore
+public class DirectChatGroupsStore : IDirectChatGroupsStore
 {
     private readonly ConcurrentDictionary<string, Group> _groups = [];
 

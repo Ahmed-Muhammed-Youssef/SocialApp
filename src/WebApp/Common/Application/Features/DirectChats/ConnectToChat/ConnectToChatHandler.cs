@@ -1,8 +1,6 @@
-﻿using Application.Features.DirectChats.Stores;
+﻿namespace Application.Features.DirectChats.ConnectToChat;
 
-namespace Application.Features.DirectChats.ConnectToChat;
-
-public class ConnectToChatHandler(IUnitOfWork unitOfWork, IDirectChatGroupStore usersGroupsStore) : ICommandHandler<ConnectToChatCommand, Result<ConnectToChatResult>>
+public class ConnectToChatHandler(IUnitOfWork unitOfWork, IDirectChatGroupsStore usersGroupsStore) : ICommandHandler<ConnectToChatCommand, Result<ConnectToChatResult>>
 {
     public async ValueTask<Result<ConnectToChatResult>> Handle(ConnectToChatCommand command, CancellationToken cancellationToken)
     {

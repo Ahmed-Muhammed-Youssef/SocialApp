@@ -7,7 +7,7 @@
 /// This store maintains a mapping between generated group names and their associated <see cref="Group"/> instances.
 /// Each <see cref="Group"/> contains one or more active <see cref="Connection"/> objects.
 /// </remarks>
-public interface IDirectChatGroupStore
+public interface IDirectChatGroupsStore
 {
     /// <summary>
     /// Retrieves an existing group shared between two users, if it doesn't exist, it creates a new group.

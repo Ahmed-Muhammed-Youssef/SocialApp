@@ -29,6 +29,7 @@ public static class DependencyInjection
 
         // Other Services
         builder.Services.AddSingleton<IOnlineUsersStore, OnlineUsersStore>();
+        builder.Services.AddSingleton<IDirectChatGroupsStore, DirectChatGroupsStore>();
 
         builder.Services.Configure<JwtAuthOptions>(builder.Configuration.GetSection("Jwt"));
 
