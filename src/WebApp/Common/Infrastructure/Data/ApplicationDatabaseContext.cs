@@ -11,8 +11,6 @@ public class ApplicationDatabaseContext(DbContextOptions<ApplicationDatabaseCont
     public DbSet<Friend> Friends { get; set; }
     public DbSet<Picture> Pictures { get; set; }
     public DbSet<Message> Messages { get; set; }
-    public DbSet<Group> Groups { get; set; }
-    public DbSet<Connection> Connections { get; set; }
     public DbSet<DirectChat> DirectChats { get; set; }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -21,7 +19,6 @@ public class ApplicationDatabaseContext(DbContextOptions<ApplicationDatabaseCont
         // Apply configurations
         modelBuilder.ApplyConfiguration(new PictureConfigurations());
         modelBuilder.ApplyConfiguration(new MessageConfigurations());
-        modelBuilder.ApplyConfiguration(new GroupConfigurations());
         modelBuilder.ApplyConfiguration(new FriendRequestConfigurations());
         modelBuilder.ApplyConfiguration(new FriendConfigurations());
         modelBuilder.ApplyConfiguration(new ApplicationUserConfigurations());

@@ -1,6 +1,8 @@
+using NuGet.Protocol.Plugins;
+
 namespace API.Features.DirectChats;
 
-public class ChatHub(IMediator mediator) : Hub
+public class ChatHub(IMediator mediator, IMessageNotifier messageNotifier) : Hub
 {
     public override async Task OnConnectedAsync()
     {
@@ -27,9 +29,8 @@ public class ChatHub(IMediator mediator) : Hub
 
         if(result.IsSuccess)
         {
-            await Groups.AddToGroupAsync(Context.ConnectionId, result.Value.Group.Name);
-            await Clients.Group(result.Value.Group.Name).SendAsync("UpdatedGroup", result.Value.Group);
-            await Clients.Caller.SendAsync("ReceiveMessages", result.Value.Messages);
+            await Groups.AddToGroupAsync(Context.ConnectionId, result.Value.Group.Name, cancellationToken);
+            await Clients.Caller.SendAsync("ReceiveMessages", result.Value.Messages, cancellationToken);
         }
         else
         {
@@ -42,14 +43,8 @@ public class ChatHub(IMediator mediator) : Hub
         var cancellationToken = Context.ConnectionAborted;
         var result = await mediator.Send(new DisconnectFromChatCommand(ConnectionId: Context.ConnectionId), cancellationToken);
 
-        if (result.IsSuccess) {
-            if (result.Value.Group is not null)
-            {
-                await Clients.Group(result.Value.Group.Name).SendAsync("UpdatedGroup", result.Value.Group);
-            }
-        }
-        else
-        {
+        if (!result.IsSuccess) {
+            
             throw new HubException(string.Join('-', result.Errors));
         }
 
@@ -70,7 +65,8 @@ public class ChatHub(IMediator mediator) : Hub
 
         if(result.IsSuccess)
         {
-            await Clients.Group(result.Value.GroupName).SendAsync("NewMessage", result.Value.MessageDTO);
+            await Clients.Group(result.Value.GroupName).SendAsync("NewMessage", result.Value.MessageDTO, cancellationToken);
+            await messageNotifier.NotifyRecipientAsync(result.Value.UserDTO, result.Value.MessageDTO, cancellationToken);
         }
         else
         {

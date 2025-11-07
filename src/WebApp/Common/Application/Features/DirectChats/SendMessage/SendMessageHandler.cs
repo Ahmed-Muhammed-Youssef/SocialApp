@@ -1,6 +1,6 @@
 ﻿namespace Application.Features.DirectChats.SendMessage;
 
-public class SendMessageHandler(IUnitOfWork unitOfWork, IMessageNotifier messageNotifier) 
+public class SendMessageHandler(IUnitOfWork unitOfWork, IDirectChatGroupStore usersGroupsStore) 
     : ICommandHandler<SendMessageCommand, Result<SendMessageResult>>
 {
     public async ValueTask<Result<SendMessageResult>> Handle(SendMessageCommand command, CancellationToken cancellationToken)
@@ -26,15 +26,9 @@ public class SendMessageHandler(IUnitOfWork unitOfWork, IMessageNotifier message
 
             await unitOfWork.SaveChangesAsync(cancellationToken);
 
-            string groupName = ChatGroupHelper.GetGroupName(sender.Id, recipient.Id);
-            Group? group = await unitOfWork.GroupRepository.GetGroupByName(groupName, cancellationToken);
+            Group group = usersGroupsStore.GetOrAddGroup(sender.Id, recipient.Id);
 
-            if (group is null || !group.Connections.Any(c => c.UserId == recipient.Id))
-            {
-                await messageNotifier.NotifyRecipientAsync(UserMappings.ToDto(sender), MessageMappings.ToDto(newMessage));
-            }
-
-            return Result<SendMessageResult>.Success(new SendMessageResult(MessageMappings.ToDto(newMessage), groupName));
+            return Result<SendMessageResult>.Success(new SendMessageResult(MessageMappings.ToDto(newMessage), UserMappings.ToDto(sender), group.Name));
         }
         catch (Exception)
         {

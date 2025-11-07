@@ -1,4 +1,4 @@
-﻿using Application.Features.DirectChats;
+﻿using Application.Features.DirectChats.Stores;
 
 namespace Application.Features.DirectChats.ConnectToChat;
 

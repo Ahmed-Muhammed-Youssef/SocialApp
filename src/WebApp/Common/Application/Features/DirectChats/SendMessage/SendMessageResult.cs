@@ -1,5 +1,3 @@
-﻿using Application.Features.DirectChats;
+﻿namespace Application.Features.DirectChats.SendMessage;
 
-namespace Application.Features.DirectChats.SendMessage;
-
-public record SendMessageResult(MessageDTO MessageDTO, string GroupName);
+public record SendMessageResult(MessageDTO MessageDTO, UserDTO UserDTO, string GroupName);

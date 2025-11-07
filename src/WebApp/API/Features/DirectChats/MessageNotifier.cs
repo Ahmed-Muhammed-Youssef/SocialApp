@@ -1,15 +1,17 @@
-﻿namespace API.Features.DirectChats;
+﻿using Application.Features.DirectChats.Stores;
 
-public class MessageNotifier (IHubContext<OnlineUsersHub> presenceHubContext, IOnlineUsersStore presenceTracker) : IMessageNotifier
+namespace API.Features.DirectChats;
+
+public class MessageNotifier (IHubContext<OnlineUsersHub> presenceHubContext, IOnlineUsersStore onlineUsersStore) : IMessageNotifier
 {
     /// <inheritdoc/>
-    public async Task NotifyRecipientAsync(UserDTO sender, MessageDTO message)
+    public async Task NotifyRecipientAsync(UserDTO sender, MessageDTO message, CancellationToken cancellationToken = default)
     {
-        var recipientConnections = await presenceTracker.GetConnectionsByUserId(message.RecipientId);
+        var recipientConnections = await onlineUsersStore.GetConnectionsByUserId(message.RecipientId);
         if (recipientConnections != null && recipientConnections.Count != 0)
         {
             await presenceHubContext.Clients.Clients(recipientConnections)
-                .SendAsync("NewMessage", new { sender, message });
+                .SendAsync("NewMessage", new { sender, message }, cancellationToken: cancellationToken);
         }
     }
 }

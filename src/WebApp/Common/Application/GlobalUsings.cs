@@ -11,8 +11,10 @@ global using Application.Common.Mappings;
 global using Application.Common.Interfaces;
 global using Application.Features.Users;
 global using Application.Features.DirectChats;
+global using Application.Features.DirectChats.Stores;
 global using Application.Features.Pictures;
 global using Application.Features.Auth.Login;
+global using Application.Features.Posts;
 
 global using Domain;
 global using Domain.DirectChatAggregate;

@@ -1,4 +1,6 @@
-﻿namespace Infrastructure.Users;
+﻿using Application.Features.DirectChats.Stores;
+
+namespace Infrastructure.Users;
 
 /// <summary>
 /// Manages the online presence of users by tracking their connection states and IDs.

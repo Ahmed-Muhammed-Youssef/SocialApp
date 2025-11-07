@@ -1,4 +1,4 @@
-﻿namespace Application.Features.DirectChats;
+﻿namespace API.Features.DirectChats;
 
 public interface IMessageNotifier
 {
@@ -9,6 +9,7 @@ public interface IMessageNotifier
     /// if the recipient is currently connected.</remarks>
     /// <param name="sender">The user who sent the message.</param>
     /// <param name="message">The message to be delivered to the recipient.</param>
+    /// <param name="cancellationToken">The cancellation token.</param>
     /// <returns></returns>
-    Task NotifyRecipientAsync(UserDTO sender, MessageDTO message);
+    Task NotifyRecipientAsync(UserDTO sender, MessageDTO message, CancellationToken cancellationToken = default);
 }

@@ -1,9 +1,4 @@
-﻿using Application.Features.Posts;
-using Domain.Entities;
-using Shared.Pagination;
-using Shared.RepositoryBase;
-
-namespace Application.Common.Interfaces.Repositories;
+﻿namespace Application.Common.Interfaces.Repositories;
 
 public interface IPostRepository : IRepositoryBase<Post>
 {

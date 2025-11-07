@@ -1,6 +1,8 @@
-﻿namespace Application.Features.DirectChats.ConnectToChat;
+﻿using Application.Features.DirectChats.Stores;
 
-public class ConnectToChatHandler(IUnitOfWork unitOfWork) : ICommandHandler<ConnectToChatCommand, Result<ConnectToChatResult>>
+namespace Application.Features.DirectChats.ConnectToChat;
+
+public class ConnectToChatHandler(IUnitOfWork unitOfWork, IDirectChatGroupStore usersGroupsStore) : ICommandHandler<ConnectToChatCommand, Result<ConnectToChatResult>>
 {
     public async ValueTask<Result<ConnectToChatResult>> Handle(ConnectToChatCommand command, CancellationToken cancellationToken)
     {
@@ -8,17 +10,8 @@ public class ConnectToChatHandler(IUnitOfWork unitOfWork) : ICommandHandler<Conn
         {
             return Result<ConnectToChatResult>.Error("Cannot start a chat with yourself.");
         }
-
-        string groupName = ChatGroupHelper.GetGroupName(command.CurrentUserId, command.OtherUserId);
-        Group? group = await unitOfWork.GroupRepository.GetGroupByName(groupName, cancellationToken);
-        Connection connection = new(command.ConnectionId, command.CurrentUserId);
-
-        if (group == null)
-        {
-            group = new Group(name: groupName);
-            group.Connections.Add(connection);
-            await unitOfWork.GroupRepository.AddAsync(group, cancellationToken);
-        }
+        
+        Group? group = usersGroupsStore.AddConnection(command.CurrentUserId, command.OtherUserId, command.ConnectionId);
 
         IEnumerable<MessageDTO> messages = await unitOfWork.DirectChatRepository
             .GetMessagesDTOThreadAsync(command.CurrentUserId, command.OtherUserId, cancellationToken);

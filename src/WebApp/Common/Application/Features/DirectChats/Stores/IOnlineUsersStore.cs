@@ -1,4 +1,4 @@
-﻿namespace Application.Features.DirectChats;
+﻿namespace Application.Features.DirectChats.Stores;
 
 /// <summary>
 /// Manages user connections and online presence within a system.
