@@ -1,5 +1,5 @@
 ﻿using Application.Features.Messages;
-using Domain.Entities;
+using Domain.ChatAggregate;
 
 namespace Application.Common.Mappings;
 
@@ -9,10 +9,7 @@ public static class MessageMappings
     {
         Id = message.Id,
         Content = message.Content,
-        ReadDate = message.ReadDate,
         SentDate = message.SentDate,
-        SenderPhotoUrl = message.Sender?.ProfilePictureUrl,
         SenderId = message.SenderId,
-        RecipientId = message.RecipientId
     };
 }

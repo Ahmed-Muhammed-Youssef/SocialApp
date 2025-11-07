@@ -2,7 +2,7 @@
 using Application.Features.Auth.Login;
 using Application.Features.Users;
 using Domain;
-using Domain.Constants;
+using Domain.Common.Constants;
 using Mediator;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;

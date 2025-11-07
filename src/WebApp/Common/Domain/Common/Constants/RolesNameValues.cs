@@ -1,4 +1,4 @@
-﻿namespace Domain.Constants;
+﻿namespace Domain.Common.Constants;
 
 public static class RolesNameValues
 {

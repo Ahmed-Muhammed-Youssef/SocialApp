@@ -1,4 +1,6 @@
-﻿namespace Infrastructure.Data.Configurations;
+﻿using Domain.ChatAggregate;
+
+namespace Infrastructure.Data.Configurations;
 
 public class MessageConfigurations : IEntityTypeConfiguration<Message>
 {
@@ -10,23 +12,13 @@ public class MessageConfigurations : IEntityTypeConfiguration<Message>
         builder.Property(m => m.Id).IsRequired();
         builder.Property(m => m.Content).IsRequired();
         builder.Property(m => m.SentDate).IsRequired();
-        builder.Property(m => m.SenderDeleted).IsRequired();
-        builder.Property(m => m.RecipientDeleted).IsRequired();
 
         // relationships
         // with appuser (sender)
-        builder.HasOne(m => m.Sender)
-            .WithMany(u => u.MessagesSent)
+        builder.HasOne<ApplicationUser>()
+            .WithMany()
             .HasForeignKey(m => m.SenderId)
             .IsRequired()
             .OnDelete(DeleteBehavior.Restrict);
-
-        // with appuser (recipient)
-        builder.HasOne(m => m.Recipient)
-            .WithMany(u => u.MessagesReceived)
-            .HasForeignKey(m => m.RecipientId)
-            .IsRequired()
-            .OnDelete(DeleteBehavior.Restrict);
     }
-
 }

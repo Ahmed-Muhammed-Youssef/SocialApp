@@ -1,4 +1,6 @@
-﻿namespace Domain.Entities
+﻿using Domain.ChatAggregate;
+
+namespace Domain.Entities
 {
     public class ApplicationUser
     {

@@ -1,7 +1,7 @@
 ﻿using Application.Common.Interfaces;
 using Application.Common.Mappings;
 using Application.Features.Users;
-using Domain.Constants;
+using Domain.Common.Constants;
 using Domain.Entities;
 using Mediator;
 using Microsoft.AspNetCore.Identity;

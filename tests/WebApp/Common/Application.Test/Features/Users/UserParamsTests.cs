@@ -1,5 +1,5 @@
 ﻿using Application.Features.Users;
-using Domain.Constants;
+using Domain.Common.Constants;
 using Domain.Enums;
 
 namespace Application.Test.Features.Users;

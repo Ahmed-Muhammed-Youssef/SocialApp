@@ -1,9 +1,8 @@
-﻿namespace Domain.Enums
+﻿namespace Domain.Enums;
+
+public enum OrderByOptions
 {
-    public enum OrderByOptions
-    {
-        LastActive = 0,
-        Age = 1,
-        CreationTime = 2
-    }
+    LastActive = 0,
+    Age = 1,
+    CreationTime = 2
 }

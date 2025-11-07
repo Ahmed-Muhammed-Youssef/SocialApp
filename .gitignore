@@ -460,3 +460,4 @@ API/dataingapp.db
 /src/API/API/appsettings.Development.json
 /src/WebApp/Common/Infrastructure/AppSettings.cs
 /src/SocialAppFrontend/.angular/cache
+/TemplateEngineHost/vs

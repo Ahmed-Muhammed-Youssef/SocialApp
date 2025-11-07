@@ -1,4 +1,6 @@
-﻿namespace API.Features.Users.Validators;
+﻿using Domain.Common.Constants;
+
+namespace API.Features.Users.Validators;
 
 public class GetUsersRequestValidator : AbstractValidator<GetUsersRequest>
 {

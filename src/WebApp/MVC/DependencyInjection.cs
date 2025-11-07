@@ -1,4 +1,4 @@
-﻿using Domain.Constants;
+﻿using Domain.Common.Constants;
 using Infrastructure.Data.Identity;
 using Microsoft.AspNetCore.Identity;
 using MVC.Factories;

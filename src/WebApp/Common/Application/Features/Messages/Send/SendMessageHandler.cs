@@ -1,12 +1,13 @@
 ﻿using Application.Common.Interfaces;
 using Application.Common.Mappings;
+using Domain.ChatAggregate;
 using Domain.Entities;
 using Mediator;
 using Shared.Results;
 
 namespace Application.Features.Messages.Send;
 
-public class SendMessageHandler(IUnitOfWork unitOfWork, IMessageNotifier messageNotifier) 
+public class SendMessageHandler(IUnitOfWork unitOfWork) 
     : ICommandHandler<SendMessageCommand, Result<SendMessageResult>>
 {
     public async ValueTask<Result<SendMessageResult>> Handle(SendMessageCommand command, CancellationToken cancellationToken)
@@ -27,38 +28,40 @@ public class SendMessageHandler(IUnitOfWork unitOfWork, IMessageNotifier message
         {
             return Result<SendMessageResult>.Error("You can only send messages to friends");
         }
-        var createdMessage = new Message
-        {
-            SenderId = sender.Id,
-            RecipientId = recipient.Id,
-            Content = command.Content,
-            SenderDeleted = false,
-            RecipientDeleted = false,
-            ReadDate = null,
-            Sender = sender
-        };
 
-        var groupName = ChatGroupHelper.GetGroupName(sender.Id, recipient.Id);
-        var group = await unitOfWork.GroupRepository.GetGroupByName(groupName, cancellationToken);
+        throw new NotImplementedException();
+        //    var createdMessage = new Message()
+        //    {
+        //        SenderId = sender.Id,
+        //        RecipientId = recipient.Id,
+        //        Content = command.Content,
+        //        SenderDeleted = false,
+        //        RecipientDeleted = false,
+        //        ReadDate = null,
+        //        Sender = sender
+        //    };
 
-        if (group is not null && group.Connections.Any(c => c.UserId == recipient.Id))
-        {
-            createdMessage.ReadDate = DateTime.UtcNow;
-        }
-        else
-        {
-            await messageNotifier.NotifyRecipientAsync(UserMappings.ToDto(sender), MessageMappings.ToDto(createdMessage));
-        }
+        //    var groupName = ChatGroupHelper.GetGroupName(sender.Id, recipient.Id);
+        //    var group = await unitOfWork.GroupRepository.GetGroupByName(groupName, cancellationToken);
 
-        try
-        {
-            await unitOfWork.MessageRepository.AddAsync(createdMessage, cancellationToken);
+        //    if (group is not null && group.Connections.Any(c => c.UserId == recipient.Id))
+        //    {
+        //        createdMessage.ReadDate = DateTime.UtcNow;
+        //    }
+        //    else
+        //    {
+        //        await messageNotifier.NotifyRecipientAsync(UserMappings.ToDto(sender), MessageMappings.ToDto(createdMessage));
+        //    }
 
-            return Result<SendMessageResult>.Success(new SendMessageResult(MessageMappings.ToDto(createdMessage), groupName));
-        }
-        catch (Exception)
-        {
-            return Result<SendMessageResult>.Error("Couldn't Send the message");
-        }
+        //    try
+        //    {
+        //        await unitOfWork.MessageRepository.AddAsync(createdMessage, cancellationToken);
+
+        //        return Result<SendMessageResult>.Success(new SendMessageResult(MessageMappings.ToDto(createdMessage), groupName));
+        //    }
+        //    catch (Exception)
+        //    {
+        //        return Result<SendMessageResult>.Error("Couldn't Send the message");
+        //    }
     }
 }

@@ -57,7 +57,6 @@ global using API.Features.Posts.Requests;
 
 global using Domain;
 global using Domain.Entities;
-global using Domain.Constants;
 
 global using Infrastructure.Data;
 

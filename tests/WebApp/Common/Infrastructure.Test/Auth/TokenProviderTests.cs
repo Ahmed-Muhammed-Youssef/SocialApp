@@ -1,5 +1,5 @@
 ﻿using Application.Features.Auth;
-using Domain.Constants;
+using Domain.Common.Constants;
 using Infrastructure.Auth;
 using Infrastructure.Auth.Options;
 using Microsoft.Extensions.Options;

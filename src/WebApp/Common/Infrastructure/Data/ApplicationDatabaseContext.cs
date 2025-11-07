@@ -1,4 +1,6 @@
-﻿namespace Infrastructure.Data;
+﻿using Domain.ChatAggregate;
+
+namespace Infrastructure.Data;
 
 public class ApplicationDatabaseContext(DbContextOptions<ApplicationDatabaseContext> options) : DbContext(options)
 {

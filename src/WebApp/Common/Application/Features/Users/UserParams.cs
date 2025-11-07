@@ -1,4 +1,4 @@
-﻿using Domain.Constants;
+﻿using Domain.Common.Constants;
 using Domain.Enums;
 using Shared.Pagination;
 

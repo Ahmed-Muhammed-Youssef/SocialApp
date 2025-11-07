@@ -1,7 +1,7 @@
 ﻿using Application.Common.Interfaces;
 using Application.Common.Mappings;
 using Application.Features.Messages;
-using Domain.Entities;
+using Domain.ChatAggregate;
 using Microsoft.AspNetCore.SignalR;
 using Shared.Extensions;
 
@@ -35,16 +35,7 @@ public class MessageHub(IUnitOfWork unitOfWork) : Hub
             throw new HubException("You can send messages to friends only");
 
         }
-        Message createdMessage = new Message
-        {
-            SenderId = sender.Id,
-            RecipientId = recipient.Id,
-            Content = message.Content,
-            SenderDeleted = false,
-            RecipientDeleted = false,
-            ReadDate = null,
-            Sender = sender
-        };
+        Message createdMessage = new(sender.Id, message.Content);
 
         await unitOfWork.MessageRepository.AddAsync(createdMessage, cancellationToken);
 

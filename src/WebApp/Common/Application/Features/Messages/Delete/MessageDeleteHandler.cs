@@ -15,16 +15,18 @@ public class MessageDeleteHandler(IUnitOfWork unitOfWork, ICurrentUserService cu
         }
         var issuerId = currentUserService.GetPublicId();
 
+        throw new NotImplementedException();
+
         // Checks if the message is related to the issuer
-        if (message.SenderId != issuerId && message.RecipientId != issuerId)
-        {
-            return Result<object?>.Error("Failed to delete the message");
-        }
+        //if (message.SenderId != issuerId && message.RecipientId != issuerId)
+        //{
+        //    return Result<object?>.Error("Failed to delete the message");
+        //}
 
-        unitOfWork.MessageRepository.DeleteMessage(message, issuerId);
+        //unitOfWork.MessageRepository.DeleteMessage(message, issuerId);
 
-        await unitOfWork.SaveChangesAsync();
+        //await unitOfWork.SaveChangesAsync();
 
-        return Result<object?>.NoContent();
+        //return Result<object?>.NoContent();
     }
 }
