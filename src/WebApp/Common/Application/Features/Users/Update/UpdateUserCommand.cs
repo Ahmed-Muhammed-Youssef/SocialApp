@@ -1,7 +1,4 @@
-﻿using Mediator;
-using Shared.Results;
-
-namespace Application.Features.Users.Update;
+﻿namespace Application.Features.Users.Update;
 
 public record UpdateUserCommand : ICommand<Result<UserDTO>>
 {

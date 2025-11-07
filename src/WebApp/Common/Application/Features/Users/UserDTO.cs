@@ -1,8 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using Application.Features.Pictures;
-using Domain.Enums;
-
-namespace Application.Features.Users;
+﻿namespace Application.Features.Users;
 
 public record UserDTO
 {

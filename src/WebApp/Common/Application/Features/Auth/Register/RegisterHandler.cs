@@ -1,14 +1,4 @@
-﻿using Application.Common.Interfaces;
-using Application.Common.Mappings;
-using Application.Features.Users;
-using Domain.Common.Constants;
-using Domain.Entities;
-using Mediator;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using Shared.Results;
-
-namespace Application.Features.Auth.Register;
+﻿namespace Application.Features.Auth.Register;
 
 public class RegisterHandler(IUnitOfWork unitOfWork, UserManager<IdentityUser> userManager, ITokenProvider tokenService) : ICommandHandler<RegisterCommand, Result<RegisterDTO>>
 {

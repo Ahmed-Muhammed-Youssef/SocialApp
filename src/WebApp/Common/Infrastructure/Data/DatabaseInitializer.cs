@@ -1,6 +1,4 @@
-﻿using Domain.Common.Constants;
-
-namespace Infrastructure.Data;
+﻿namespace Infrastructure.Data;
 
 public class DatabaseInitializer
 {

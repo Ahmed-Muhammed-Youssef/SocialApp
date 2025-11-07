@@ -1,8 +1,4 @@
-﻿using Application.Common.Interfaces;
-using Mediator;
-using Shared.Results;
-
-namespace Application.Features.Users.Get;
+﻿namespace Application.Features.Users.Get;
 
 public class GetUserHandler(IUnitOfWork _unitOfWork) : IQueryHandler<GetUserQuery, Result<UserDTO>>
 {

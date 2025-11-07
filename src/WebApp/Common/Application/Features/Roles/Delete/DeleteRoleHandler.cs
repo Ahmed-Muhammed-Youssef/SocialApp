@@ -1,8 +1,4 @@
-﻿using Mediator;
-using Microsoft.AspNetCore.Identity;
-using Shared.Results;
-
-namespace Application.Features.Roles.Delete;
+﻿namespace Application.Features.Roles.Delete;
 
 public class DeleteRoleHandler(RoleManager<IdentityRole> roleManager) : ICommandHandler<DeleteRoleCommand, Result<object?>>
 {

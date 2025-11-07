@@ -1,10 +1,4 @@
-﻿using Application.Common.Interfaces;
-using Domain.Entities;
-using Mediator;
-using Microsoft.AspNetCore.Identity;
-using Shared.Results;
-
-namespace Application.Features.UserRoles.AssignRoleToUser;
+﻿namespace Application.Features.UserRoles.AssignRoleToUser;
 
 public class AssignRoleToUserHandler(RoleManager<IdentityRole> roleManager, UserManager<IdentityUser> userManager, IUnitOfWork unitOfWork) : ICommandHandler<AssignRoleToUserCommand, Result<object?>>
 {

@@ -1,9 +1,4 @@
-﻿using Application.Common.Interfaces;
-using Domain.Entities;
-using Mediator;
-using Shared.Results;
-
-namespace Application.Features.Posts.Create;
+﻿namespace Application.Features.Posts.Create;
 
 public class CreatePostHandler(IUnitOfWork unitOfWork, ICurrentUserService currentUserService) : ICommandHandler<CreatePostCommand, Result<ulong>>
 {

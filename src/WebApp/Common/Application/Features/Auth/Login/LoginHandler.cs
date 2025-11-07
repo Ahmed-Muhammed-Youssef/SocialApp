@@ -1,11 +1,4 @@
-﻿using Application.Common.Interfaces;
-using Application.Features.Users;
-using Mediator;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using Shared.Results;
-
-namespace Application.Features.Auth.Login;
+﻿namespace Application.Features.Auth.Login;
 
 public class LoginHandler(IUnitOfWork unitOfWork, UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, ITokenProvider tokenService) 
     : ICommandHandler<LoginCommand, Result<LoginDTO>>

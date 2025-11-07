@@ -1,7 +1,4 @@
-﻿using Application.Features.Messages;
-using Domain.ChatAggregate;
-
-namespace Application.Common.Mappings;
+﻿namespace Application.Common.Mappings;
 
 public static class MessageMappings
 {

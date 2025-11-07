@@ -1,7 +1,4 @@
-﻿using Mediator;
-using Shared.Results;
-
-namespace Application.Features.Auth.Register;
+﻿namespace Application.Features.Auth.Register;
 
 public record RegisterCommand : ICommand<Result<RegisterDTO>>
 {

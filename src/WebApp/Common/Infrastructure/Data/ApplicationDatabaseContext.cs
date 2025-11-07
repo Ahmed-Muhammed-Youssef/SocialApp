@@ -1,6 +1,4 @@
-﻿using Domain.ChatAggregate;
-
-namespace Infrastructure.Data;
+﻿namespace Infrastructure.Data;
 
 public class ApplicationDatabaseContext(DbContextOptions<ApplicationDatabaseContext> options) : DbContext(options)
 {
@@ -31,5 +29,6 @@ public class ApplicationDatabaseContext(DbContextOptions<ApplicationDatabaseCont
         modelBuilder.ApplyConfiguration(new CountryConfigurations());
         modelBuilder.ApplyConfiguration(new RegionConfigurations());
         modelBuilder.ApplyConfiguration(new CityConfigurations());
+        modelBuilder.ApplyConfiguration(new DirectChatConfigurations());
     }
 }

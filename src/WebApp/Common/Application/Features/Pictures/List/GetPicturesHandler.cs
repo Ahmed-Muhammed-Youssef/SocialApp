@@ -1,8 +1,4 @@
-﻿using Application.Common.Interfaces;
-using Mediator;
-using Shared.Results;
-
-namespace Application.Features.Pictures.List;
+﻿namespace Application.Features.Pictures.List;
 
 public class GetPicturesHandler(IUnitOfWork unitOfWork, ICurrentUserService currentUserService) : IQueryHandler<GetPicturesQuery, Result<List<PictureDTO>>>
 {

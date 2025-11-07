@@ -1,6 +1,4 @@
-﻿using Domain.ChatAggregate;
-
-namespace Infrastructure.Data.Configurations;
+﻿namespace Infrastructure.Data.Configurations;
 
 public class MessageConfigurations : IEntityTypeConfiguration<Message>
 {

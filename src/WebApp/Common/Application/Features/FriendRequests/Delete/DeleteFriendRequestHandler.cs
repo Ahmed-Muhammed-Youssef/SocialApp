@@ -1,9 +1,4 @@
-﻿using Application.Common.Interfaces;
-using Domain.Entities;
-using Mediator;
-using Shared.Results;
-
-namespace Application.Features.FriendRequests.Delete;
+﻿namespace Application.Features.FriendRequests.Delete;
 
 public class DeleteFriendRequestHandler(IUnitOfWork unitOfWork, ICurrentUserService currentUserService) : ICommandHandler<DeleteFriendRequestCommand, Result<object?>>
 {

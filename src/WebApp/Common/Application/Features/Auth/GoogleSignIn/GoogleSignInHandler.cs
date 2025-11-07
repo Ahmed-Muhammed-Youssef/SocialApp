@@ -1,14 +1,4 @@
-﻿using Application.Common.Interfaces;
-using Application.Features.Auth.Login;
-using Application.Features.Users;
-using Domain;
-using Domain.Common.Constants;
-using Mediator;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using Shared.Results;
-
-namespace Application.Features.Auth.GoogleSignIn;
+﻿namespace Application.Features.Auth.GoogleSignIn;
 
 public class GoogleSignInHandler(IGoogleAuthService googleAuthService, UserManager<IdentityUser> userManager, ITokenProvider tokenService, PasswordGenerationService passwordGenerationService, IUnitOfWork unitOfWork) : ICommandHandler<GoogleSignInCommand, Result<LoginDTO>>
 {

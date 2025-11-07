@@ -1,9 +1,4 @@
-﻿using Application.Common.Interfaces;
-using Application.Features.Users;
-using Mediator;
-using Shared.Results;
-
-namespace Application.Features.FriendRequests.List;
+﻿namespace Application.Features.FriendRequests.List;
 
 public class GetFriendRequestsHandler(IUnitOfWork unitOfWork, ICurrentUserService currentUserService) : IQueryHandler<GetFriendRequstsQuery, Result<List<UserDTO>>>
 {

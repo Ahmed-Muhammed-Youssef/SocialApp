@@ -1,4 +1,4 @@
-﻿using Application.DTOs.Pagination;
+﻿using Shared.Pagination;
 
 namespace Shared.Test.Pagination;
 

@@ -1,7 +1,4 @@
-﻿using CloudinaryDotNet.Actions;
-using Microsoft.AspNetCore.Http;
-
-namespace Application.Features.Pictures;
+﻿namespace Application.Features.Pictures;
 
 public interface IPictureService
 {

@@ -1,5 +1,7 @@
 ﻿global using Domain.Entities;
+global using Domain.Common.Constants;
 global using Domain.Enums;
+global using Domain.DirectChatAggregate;
 
 global using Shared.Pagination;
 global using Shared.RepositoryBase;
@@ -8,11 +10,10 @@ global using Application.Common.Mappings;
 global using Application.Common.Interfaces;
 global using Application.Common.Interfaces.Repositories;
 global using Application.Features.Auth;
-global using Application.Features.Messages;
 global using Application.Features.Users;
 global using Application.Features.Pictures;
 global using Application.Features.Posts;
-global using Application.DTOs.Pagination;
+global using Application.Features.DirectChats;
 
 global using Infrastructure.Auth;
 global using Infrastructure.Auth.Options;

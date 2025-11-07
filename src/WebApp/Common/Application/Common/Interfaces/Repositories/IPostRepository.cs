@@ -1,5 +1,4 @@
-﻿using Application.DTOs.Pagination;
-using Application.Features.Posts;
+﻿using Application.Features.Posts;
 using Domain.Entities;
 using Shared.Pagination;
 using Shared.RepositoryBase;

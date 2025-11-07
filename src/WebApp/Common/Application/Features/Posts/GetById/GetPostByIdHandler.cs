@@ -1,9 +1,4 @@
-﻿using Application.Common.Interfaces;
-using Domain.Entities;
-using Mediator;
-using Shared.Results;
-
-namespace Application.Features.Posts.GetById;
+﻿namespace Application.Features.Posts.GetById;
 
 public class GetPostByIdHandler(IUnitOfWork unitOfWork) : IQueryHandler<GetPostByIdQuery, Result<Post>>
 {

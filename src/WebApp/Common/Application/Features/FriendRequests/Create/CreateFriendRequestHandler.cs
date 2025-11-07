@@ -1,8 +1,4 @@
-﻿using Application.Common.Interfaces;
-using Mediator;
-using Shared.Results;
-
-namespace Application.Features.FriendRequests.Create;
+﻿namespace Application.Features.FriendRequests.Create;
 
 public class CreateFriendRequestHandler(IUnitOfWork unitOfWork, ICurrentUserService currentUserService) : ICommandHandler<CreateFriendRequestCommand, Result<int>>
 {

@@ -1,9 +1,4 @@
-﻿using Mediator;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using Shared.Results;
-
-namespace Application.Features.Roles.List;
+﻿namespace Application.Features.Roles.List;
 
 public class GetRolesHandler(RoleManager<IdentityRole> roleManager) : IQueryHandler<GetRolesQuery, Result<List<string>>>
 {

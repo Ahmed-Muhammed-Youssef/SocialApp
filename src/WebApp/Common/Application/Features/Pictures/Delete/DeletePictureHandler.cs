@@ -1,9 +1,4 @@
-﻿using Application.Common.Interfaces;
-using Domain.Entities;
-using Mediator;
-using Shared.Results;
-
-namespace Application.Features.Pictures.Delete;
+﻿namespace Application.Features.Pictures.Delete;
 
 public class DeletePictureHandler(IUnitOfWork unitOfWork, IPictureService pictureService, ICurrentUserService currentUserService) : ICommandHandler<DeletePictureCommand, Result<object?>>
 {

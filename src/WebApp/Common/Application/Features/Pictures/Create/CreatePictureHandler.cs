@@ -1,10 +1,4 @@
-﻿using Application.Common.Interfaces;
-using CloudinaryDotNet.Actions;
-using Domain.Entities;
-using Mediator;
-using Shared.Results;
-
-namespace Application.Features.Pictures.Create;
+﻿namespace Application.Features.Pictures.Create;
 
 public class CreatePictureHandler(IUnitOfWork unitOfWork, IPictureService pictureService, ICurrentUserService currentUserService) : ICommandHandler<CreatePictureCommand, Result<int>>
 {

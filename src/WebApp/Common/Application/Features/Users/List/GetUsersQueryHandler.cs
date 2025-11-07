@@ -1,9 +1,4 @@
-﻿using Application.Common.Interfaces;
-using Application.DTOs.Pagination;
-using Mediator;
-using Shared.Results;
-
-namespace Application.Features.Users.List;
+﻿namespace Application.Features.Users.List;
 
 public class GetUsersQueryHandler(IUnitOfWork unitOfWork, ICurrentUserService currentUserService) : IQueryHandler<GetUsersQuery, Result<PagedList<UserDTO>>>
 {

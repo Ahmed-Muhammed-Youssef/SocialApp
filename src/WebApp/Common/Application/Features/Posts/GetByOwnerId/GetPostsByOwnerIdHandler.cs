@@ -1,9 +1,4 @@
-﻿using Application.Common.Interfaces;
-using Domain.Entities;
-using Mediator;
-using Shared.Results;
-
-namespace Application.Features.Posts.GetByOwnerId;
+﻿namespace Application.Features.Posts.GetByOwnerId;
 
 public class GetPostsByOwnerIdHandler(IUnitOfWork _unitOfWork, ICurrentUserService currentUserService) : IQueryHandler<GetPostsByOwnerIdQuery, Result<IEnumerable<Post>>>
 {

@@ -1,3 +1,3 @@
 ﻿global using Domain.Common;
 
-global using Domain.ChatAggregate.Exceptions;
+global using Domain.DirectChatAggregate.Exceptions;

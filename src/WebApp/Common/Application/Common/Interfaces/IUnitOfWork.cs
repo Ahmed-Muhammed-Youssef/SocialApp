@@ -6,11 +6,17 @@ public interface IUnitOfWork
 {
     IApplicationUserRepository ApplicationUserRepository { get; }
     IPictureRepository PictureRepository { get; }
-    IMessageRepository MessageRepository { get; }
+    IDirectChatRepository DirectChatRepository { get; }
     IFriendRequestRepository FriendRequestRepository { get; }
     IPostRepository PostRepository { get; }
     IGroupRepository GroupRepository { get; }
     IConnectionRepository ConnectionRepository { get; }
-    Task SaveChangesAsync();
+
+    /// <summary>
+    /// Saves all changes made in this unit of work to the underlying data store.
+    /// </summary>
+    /// <param name="cancellationToken">The cancellation token.</param>
+    /// <returns></returns>
+    Task SaveChangesAsync(CancellationToken cancellationToken = default);
     bool HasChanges();
 }

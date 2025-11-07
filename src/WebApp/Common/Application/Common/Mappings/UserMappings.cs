@@ -1,9 +1,4 @@
-﻿using Application.Features.Users;
-using Domain.Entities;
-using Domain.Enums;
-using Shared.Extensions;
-
-namespace Application.Common.Mappings;
+﻿namespace Application.Common.Mappings;
 
 public static class UserMappings
 {

@@ -1,11 +1,4 @@
-﻿using API.Features.Messages;
-using Application.Features.Auth;
-using Domain.Common.Constants;
-using Infrastructure.Auth;
-using Infrastructure.Auth.External;
-using Infrastructure.Data.Identity;
-
-namespace API;
+﻿namespace API;
 
 public static class DependecyInjection
 {

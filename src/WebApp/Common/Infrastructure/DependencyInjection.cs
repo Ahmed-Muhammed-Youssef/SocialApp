@@ -18,7 +18,7 @@ public static class DependencyInjection
             return new CachedUserRepository(inner, cache, dataContext);
         });
         builder.Services.AddScoped<IPictureRepository, PictureRepository>();
-        builder.Services.AddScoped<IMessageRepository, MessageRepository>();
+        builder.Services.AddScoped<IDirectChatRepository, DirectChatRepository>();
         builder.Services.AddScoped<IFriendRequestRepository, FriendRequestsRepository>();
         builder.Services.AddScoped<IPostRepository, PostRepository>();
         builder.Services.AddScoped<IGroupRepository, GroupRepository>();

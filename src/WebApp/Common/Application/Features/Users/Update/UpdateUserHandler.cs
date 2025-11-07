@@ -1,10 +1,4 @@
-﻿using Application.Common.Interfaces;
-using Application.Common.Mappings;
-using Domain.Entities;
-using Mediator;
-using Shared.Results;
-
-namespace Application.Features.Users.Update;
+﻿namespace Application.Features.Users.Update;
 
 public class UpdateUserHandler(IUnitOfWork unitOfWork, ICurrentUserService currentUserService) : ICommandHandler<UpdateUserCommand, Result<UserDTO>>
 {

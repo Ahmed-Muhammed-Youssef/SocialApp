@@ -1,6 +1,6 @@
 using API;
 using API.Common.Middleware;
-using API.Features.Messages;
+using API.Features.Chats;
 using Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -33,6 +33,6 @@ app.MapControllers();
 
 // SignalR Endpooints
 app.MapHub<OnlineUsersHub>("hubs/presence");
-app.MapHub<MessageHub>("hubs/message");
+app.MapHub<ChatHub>("hubs/message");
 
 await app.RunAsync();

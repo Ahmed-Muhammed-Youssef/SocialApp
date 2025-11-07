@@ -1,9 +1,4 @@
-﻿using Application.Common.Interfaces;
-using Mediator;
-using Microsoft.AspNetCore.Identity;
-using Shared.Results;
-
-namespace Application.Features.UserRoles.RemoveRoleFromUser;
+﻿namespace Application.Features.UserRoles.RemoveRoleFromUser;
 
 public class RemoveRoleFromUserHandler(RoleManager<IdentityRole> roleManager, UserManager<IdentityUser> userManager, IUnitOfWork unitOfWork) : ICommandHandler<RemoveRoleFromUserCommand, Result<object?>>
 {

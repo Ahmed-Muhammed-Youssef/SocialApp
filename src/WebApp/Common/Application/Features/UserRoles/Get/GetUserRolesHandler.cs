@@ -1,10 +1,4 @@
-﻿using Application.Common.Interfaces;
-using Domain.Entities;
-using Mediator;
-using Microsoft.AspNetCore.Identity;
-using Shared.Results;
-
-namespace Application.Features.UserRoles.Get;
+﻿namespace Application.Features.UserRoles.Get;
 
 public class GetUserRolesHandler(IUnitOfWork unitOfWork, UserManager<IdentityUser> userManager) : IQueryHandler<GetUserRolesQuery, Result<List<string>>>
 {

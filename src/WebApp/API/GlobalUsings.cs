@@ -15,6 +15,7 @@ global using System.Text.Json;
 global using System.Net;
 global using System.ComponentModel.DataAnnotations;
 
+global using Application.Common.Interfaces;
 global using Application.Features.Users;
 global using Application.Features.Users.Get;
 global using Application.Features.Users.List;
@@ -26,7 +27,6 @@ global using Application.Features.Roles.Delete;
 global using Application.Features.Posts.Create;
 global using Application.Features.Posts.GetById;
 global using Application.Features.Posts.GetByOwnerId;
-global using Application.Features.Messages.Delete;
 global using Application.Features.Pictures;
 global using Application.Features.Pictures.Delete;
 global using Application.Features.Pictures.List;
@@ -37,13 +37,14 @@ global using Application.Features.FriendRequests.Delete;
 global using Application.Features.UserRoles.Get;
 global using Application.Features.UserRoles.AssignRoleToUser;
 global using Application.Features.UserRoles.RemoveRoleFromUser;
+global using Application.Features.Auth;
 global using Application.Features.Auth.GoogleSignIn;
 global using Application.Features.Auth.Login;
 global using Application.Features.Auth.Register;
-global using Application.Features.Messages;
-global using Application.Features.Messages.ConnectToChat;
-global using Application.Features.Messages.DisconnectFromChat;
-global using Application.Features.Messages.Send;
+global using Application.Features.DirectChats;
+global using Application.Features.DirectChats.ConnectToChat;
+global using Application.Features.DirectChats.DisconnectFromChat;
+global using Application.Features.DirectChats.SendMessage;
 
 global using API.Common.Headers;
 global using API.Common.Extensions;
@@ -52,13 +53,18 @@ global using API.Features.Users;
 global using API.Features.Users.Requests;
 global using API.Features.Auth.Requests;
 global using API.Features.Auth.Responses;
-global using API.Features.Messages.Requests;
 global using API.Features.Posts.Requests;
+global using API.Features.Chats;
+global using API.Features.Chats.Requests;
 
 global using Domain;
 global using Domain.Entities;
+global using Domain.Common.Constants;
 
+global using Infrastructure.Auth;
+global using Infrastructure.Auth.External;
 global using Infrastructure.Data;
+global using Infrastructure.Data.Identity;
 
 global using Shared.Extensions;
 global using Shared.Results;

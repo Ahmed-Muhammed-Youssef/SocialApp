@@ -1,4 +1,4 @@
-﻿namespace Application.DTOs.Pagination;
+﻿namespace Shared.Pagination;
 
 public class PagedList<T>
 {
