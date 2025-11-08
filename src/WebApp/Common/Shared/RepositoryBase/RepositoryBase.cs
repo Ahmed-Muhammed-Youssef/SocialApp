@@ -1,7 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Shared.Specification;
-
-namespace Shared.RepositoryBase;
+﻿namespace Shared.RepositoryBase;
 
 /// <summary>
 /// Provides a base implementation for a repository pattern, offering common data access operations for entities of type

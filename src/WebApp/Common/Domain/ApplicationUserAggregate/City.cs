@@ -1,8 +1,7 @@
-﻿namespace Domain.Entities;
+﻿namespace Domain.ApplicationUserAggregate;
 
-public class City
+public class City: EntityBase
 {
-    public int Id { get; set; }
     public required string Name { get; set; }
 
     // Foreign Key

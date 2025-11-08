@@ -1,4 +1,4 @@
-﻿namespace Domain.Entities;
+﻿namespace Domain.ApplicationUserAggregate;
 
 public class Post
 {

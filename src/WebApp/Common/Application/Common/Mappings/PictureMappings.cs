@@ -1,7 +1,4 @@
-﻿using Application.Features.Pictures;
-using Domain.Entities;
-
-namespace Application.Common.Mappings;
+﻿namespace Application.Common.Mappings;
 
 public static class PictureMappings
 {

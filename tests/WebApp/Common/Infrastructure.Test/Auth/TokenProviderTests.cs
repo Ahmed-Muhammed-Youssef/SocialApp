@@ -1,9 +1,9 @@
 ﻿using Application.Features.Auth;
-using Domain.Common.Constants;
 using Infrastructure.Auth;
 using Infrastructure.Auth.Options;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using Shared.Constants;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;

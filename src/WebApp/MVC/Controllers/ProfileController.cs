@@ -1,6 +1,6 @@
 ﻿using Application.Common.Interfaces;
-using Domain.Entities;
-using Domain.Enums;
+using Domain.ApplicationUserAggregate;
+using Domain.FriendRequestAggregate;
 using Microsoft.AspNetCore.Mvc;
 using MVC.Models;
 using Shared.Extensions;
@@ -36,9 +36,8 @@ public class ProfileController : Controller
             LastActive = userProfile.LastActive,
             Age = userProfile.DateOfBirth.CalculateAge(),
             Bio = userProfile.Bio,
-            Sex = userProfile.Gender,
+            Sex = userProfile.Gender == Gender.Male ? 'm' : userProfile.Gender == Gender.Female ? 'f' : ' ',
             Created = userProfile.Created,
-            ProfilePictureUrl = userProfile.ProfilePictureUrl,
             Relation = SocialRelation.NotFriend
         };
 

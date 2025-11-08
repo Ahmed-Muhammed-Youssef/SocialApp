@@ -1,8 +1,7 @@
-﻿namespace Domain.Entities;
+﻿namespace Domain.ApplicationUserAggregate;
 
-public class Country
+public class Country : EntityBase
 {
-    public int Id { get; set; }
     public required string Name { get; set; }
     public required string Code { get; set; }
     public required string Language { get; set; }

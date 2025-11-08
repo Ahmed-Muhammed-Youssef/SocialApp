@@ -42,11 +42,13 @@ public class DirectChatRepository(ApplicationDatabaseContext dataContext) : Repo
 
     public async Task<List<SimplifiedUserDTO>> GetInboxAsync(int userId)
     {
-        var friends = await dataContext.Friends.Where(fr => fr.UserId == userId).Include(f => f.FriendUser).Select(f => new SimplifiedUserDTO
+        var friendsQuery = dataContext.Friends.Where(fr => fr.FriendId == userId).Select(f => f.UserId);
+
+        var friends = await dataContext.ApplicationUsers.Where(u => friendsQuery.Contains(u.Id)).Select(u => new SimplifiedUserDTO
         {
-            Id = f.FriendId,
-            FirstName = f.FriendUser!.FirstName,
-            LastName = f.FriendUser.LastName,
+            Id = u.Id,
+            FirstName = u.FirstName,
+            LastName = u.LastName,
             ProfilePictureUrl = null
         }).ToListAsync();
 

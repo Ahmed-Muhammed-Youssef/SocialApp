@@ -1,8 +1,7 @@
-﻿global using Domain.Entities;
-global using Domain.Common.Constants;
-global using Domain.Enums;
+﻿global using Domain.FriendRequestAggregate;
 global using Domain.DirectChatAggregate;
 global using Domain.ApplicationUserAggregate;
+global using Domain.MediaAggregate;
 
 global using Shared.Pagination;
 global using Shared.RepositoryBase;
@@ -28,6 +27,8 @@ global using Infrastructure.Media.Cloudinary;
 global using Infrastructure.Users;
 global using Infrastructure.DirectChats;
 
+global using Shared.Constants;
+
 global using Microsoft.AspNetCore.Http;
 global using Microsoft.AspNetCore.Hosting;
 global using Microsoft.AspNetCore.Identity;
@@ -40,6 +41,7 @@ global using Microsoft.Extensions.Logging;
 global using Microsoft.Extensions.Configuration;
 global using Microsoft.Extensions.Options;
 global using Microsoft.Extensions.Hosting;
+global using Microsoft.Extensions.Caching.Memory;
 global using Microsoft.Data.SqlClient;
 
 global using System.Security.Claims;
@@ -52,5 +54,3 @@ global using Bogus;
 global using Dapper;
 global using CloudinaryDotNet;
 global using CloudinaryDotNet.Actions;
-
-global using Microsoft.Extensions.Caching.Memory;

@@ -11,13 +11,6 @@ public class PictureConfigurations : IEntityTypeConfiguration<Picture>
         builder.Property(p => p.Url).IsRequired();
         builder.Property(p => p.Created).IsRequired();
         builder.Property(p => p.PublicId).IsRequired();
-
-        // relationships
-        builder.HasOne(p => p.AppUser)
-            .WithMany()
-            .HasForeignKey(p => p.AppUserId)
-            .IsRequired()
-            .OnDelete(DeleteBehavior.Cascade);
     }
 
 }

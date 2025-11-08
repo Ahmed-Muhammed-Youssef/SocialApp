@@ -1,4 +1,4 @@
-﻿namespace Domain.Enums;
+﻿namespace MVC.Models;
 
 public enum SocialRelation
 {

@@ -17,11 +17,11 @@ global using Application.Features.Auth.Login;
 global using Application.Features.Posts;
 
 global using Domain;
+global using Domain.MediaAggregate;
+global using Domain.FriendRequestAggregate;
 global using Domain.DirectChatAggregate;
 global using Domain.ApplicationUserAggregate;
-global using Domain.Enums;
-global using Domain.Entities;
-global using Domain.Common.Constants;
+global using Shared.Constants;
 
 global using Shared.Results;
 global using Shared.RepositoryBase;

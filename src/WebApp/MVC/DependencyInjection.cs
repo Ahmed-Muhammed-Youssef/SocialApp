@@ -1,7 +1,7 @@
-﻿using Domain.Common.Constants;
-using Infrastructure.Data.Identity;
+﻿using Infrastructure.Data.Identity;
 using Microsoft.AspNetCore.Identity;
 using MVC.Factories;
+using Shared.Constants;
 
 namespace MVC;
 

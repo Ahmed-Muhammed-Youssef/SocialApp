@@ -19,7 +19,6 @@ public class CreatePictureHandler(IUnitOfWork unitOfWork, IPictureService pictur
 
         Picture picture = new()
         {
-            AppUserId = user.Id,
             Url = result.SecureUrl.AbsoluteUri,
             PublicId = result.PublicId
         };

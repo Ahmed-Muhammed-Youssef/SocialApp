@@ -1,4 +1,4 @@
-﻿namespace Domain.Common.Constants;
+﻿namespace Shared.Constants;
 
 public static class RolesNameValues
 {

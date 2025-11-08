@@ -1,8 +1,7 @@
-﻿namespace Domain.Entities;
+﻿namespace Domain.ApplicationUserAggregate;
 
-public class Region
+public class Region : EntityBase
 {
-    public int Id { get; set; }
     public required string Name { get; set; }
     public int CountryId { get; set; }
     public ICollection<City> Cities { get; set; } = [];

@@ -1,4 +1,4 @@
-﻿namespace Domain.Common;
+﻿namespace Shared;
 
 /// <summary>
 /// Represents an aggregate root in the domain-driven design pattern.

@@ -83,15 +83,9 @@ namespace MVC.Areas.Identity.Pages.Account
 
                     var userId = await _userManager.GetUserIdAsync(user);
 
-                    ApplicationUser applicationUser = new()
-                    {
-                        IdentityId = userId,
-                        FirstName = Input.FirstName,
-                        LastName = Input.LastName,
-                        Gender = Input.Sex,
-                        DateOfBirth = Input.DateOfBirth,
-                        CityId = Input.CityId
-                    };
+                    Gender gender = Input.Sex == 'f' ? Gender.Female : (Input.Sex == 'm' ? Gender.Male : Gender.NotSpecified);
+
+                    ApplicationUser applicationUser = new(userId, Input.FirstName, Input.LastName, Input.DateOfBirth, gender, Input.CityId);
 
                     await _unitOfWork.ApplicationUserRepository.AddAsync(applicationUser);
 

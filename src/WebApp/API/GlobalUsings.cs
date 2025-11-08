@@ -60,8 +60,6 @@ global using API.Features.DirectChats;
 global using API.Features.DirectChats.Requests;
 
 global using Domain;
-global using Domain.Entities;
-global using Domain.Common.Constants;
 global using Domain.ApplicationUserAggregate;
 
 global using Infrastructure;
@@ -70,5 +68,7 @@ global using Infrastructure.Auth.External;
 global using Infrastructure.Data;
 global using Infrastructure.Data.Identity;
 
+global using Shared;
 global using Shared.Extensions;
 global using Shared.Results;
+global using Shared.Constants;

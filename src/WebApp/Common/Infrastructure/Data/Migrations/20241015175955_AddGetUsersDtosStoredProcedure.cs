@@ -1,12 +1,4 @@
-﻿using CloudinaryDotNet.Actions;
-using CloudinaryDotNet;
-using Domain.Entities;
-using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using Microsoft.EntityFrameworkCore.Migrations;
-using static System.Net.Mime.MediaTypeNames;
-using static System.Runtime.InteropServices.JavaScript.JSType;
-using System;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 

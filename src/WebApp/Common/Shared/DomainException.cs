@@ -1,4 +1,4 @@
-﻿namespace Domain.Common;
+﻿namespace Shared;
 
 public abstract class DomainException : Exception
 {

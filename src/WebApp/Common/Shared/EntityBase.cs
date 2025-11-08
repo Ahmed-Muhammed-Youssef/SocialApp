@@ -1,4 +1,4 @@
-﻿namespace Domain.Common;
+﻿namespace Shared;
 
 /// <summary>
 /// Represents the base class for entities with a unique identifier.

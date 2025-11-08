@@ -1,6 +1,4 @@
-﻿using Domain.Enums;
-
-namespace MVC.Models;
+﻿namespace MVC.Models;
 
 public class UserProfileViewModel
 {

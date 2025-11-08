@@ -1,6 +1,6 @@
-﻿namespace Domain.Entities;
+﻿namespace Domain.FriendRequestAggregate;
 
-public class FriendRequest
+public class FriendRequest: IAggregateRoot
 {
     public DateTime Date { get; set; } = DateTime.UtcNow;
 

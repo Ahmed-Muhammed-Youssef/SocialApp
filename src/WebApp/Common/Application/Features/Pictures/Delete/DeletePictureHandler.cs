@@ -17,10 +17,7 @@ public class DeletePictureHandler(IUnitOfWork unitOfWork, IPictureService pictur
         {
             return Result<object?>.NotFound($"{command.PictureId} doesn't exist.");
         }
-        if (picture.AppUserId != user.Id)
-        {
-            return Result<object?>.Unauthorized();
-        }
+
         var result = await pictureService.DeletePictureAsync(picture.PublicId);
         if (result.Error != null)
         {

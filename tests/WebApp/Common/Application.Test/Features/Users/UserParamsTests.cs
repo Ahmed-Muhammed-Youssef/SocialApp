@@ -1,6 +1,6 @@
 ﻿using Application.Features.Users;
 using Domain.ApplicationUserAggregate;
-using Domain.Common.Constants;
+using Shared.Constants;
 
 namespace Application.Test.Features.Users;
 

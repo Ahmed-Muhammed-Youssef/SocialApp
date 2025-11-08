@@ -1,4 +1,4 @@
-﻿namespace Domain.Enums;
+﻿namespace Application.Features.Users;
 
 public enum RelationFilter
 {
