@@ -2,13 +2,23 @@
 
 public class FriendRequest: IAggregateRoot
 {
-    public DateTime Date { get; set; } = DateTime.UtcNow;
+    public DateTime Date { get; private set; }
+    public int RequesterId { get; private set; }
+    public int RequestedId { get; private set; }
 
-    // Foreign Keys (they are both a composite primary key)
-    public int RequesterId { get; set; }
-    public int RequestedId { get; set; }
+    private FriendRequest() { }  // For EF
 
-    // navigation properties
-    public ApplicationUser? Requester { get; set; }
-    public ApplicationUser? Requested { get; set; }
+    // Factory: Send request
+    public static FriendRequest Create(int requesterId, int requestedId)
+    {
+        if (requesterId == requestedId)
+            throw new InvalidFriendRequestException("Cannot request self");
+
+        return new FriendRequest
+        {
+            RequesterId = requesterId,
+            RequestedId = requestedId,
+            Date = DateTime.UtcNow
+        };
+    }
 }

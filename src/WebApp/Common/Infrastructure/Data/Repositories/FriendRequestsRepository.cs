@@ -15,11 +15,7 @@ public class FriendRequestsRepository(ApplicationDatabaseContext dataContext) : 
         }
         else
         {
-            await dataContext.FriendRequests.AddAsync(new FriendRequest()
-            {
-                RequesterId = senderId,
-                RequestedId = targetId
-            });
+            await dataContext.FriendRequests.AddAsync(FriendRequest.Create(senderId, targetId));
         }
         return frFromTarget != null;
     }
@@ -50,9 +46,13 @@ public class FriendRequestsRepository(ApplicationDatabaseContext dataContext) : 
     {
         return await dataContext.FriendRequests
             .AsNoTracking()
-            .Include(fr => fr.Requester)
             .Where(fr => fr.RequestedId == targetId)
-            .Select(fr => UserMappings.ToDto(fr.Requester!))
+            .Join(
+                dataContext.ApplicationUsers,
+                fr => fr.RequesterId,
+                user => user.Id,
+                (fr, user) => user)
+            .Select(u => UserMappings.ToDto(u))
             .ToListAsync();
     }
     public async Task<IEnumerable<UserDTO>> GetFriendRequestedUsersDTOAsync(int senderId)
