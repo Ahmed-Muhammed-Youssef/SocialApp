@@ -2,24 +2,6 @@
 
 public class FriendRequestsRepository(ApplicationDatabaseContext dataContext) : RepositoryBase<FriendRequest>(dataContext), IFriendRequestRepository
 {
-    public async Task<bool> SendFriendRequest(int senderId, int targetId)
-    {
-        var frFromTarget = await dataContext.FriendRequests
-            .AsNoTracking()
-            .FirstOrDefaultAsync(fr => fr.RequesterId == targetId && fr.RequestedId == senderId);
-        if (frFromTarget != null)
-        {
-            await dataContext.Friends.AddAsync(new Friend { UserId = senderId, FriendId = targetId });
-            await dataContext.Friends.AddAsync(new Friend { UserId = targetId, FriendId = senderId });
-            dataContext.FriendRequests.Remove(frFromTarget);
-        }
-        else
-        {
-            await dataContext.FriendRequests.AddAsync(FriendRequest.Create(senderId, targetId));
-        }
-        return frFromTarget != null;
-    }
-
     public async Task<bool> IsFriend(int userId, int targetId)
     {
         return await dataContext.Friends

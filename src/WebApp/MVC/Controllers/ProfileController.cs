@@ -89,11 +89,11 @@ public class ProfileController : Controller
         {
             return BadRequest("You already are friends.");
         }
-        bool isFriend = await _unitOfWork.FriendRequestRepository.SendFriendRequest(sender.Id, target.Id);
-        
-        await _unitOfWork.SaveChangesAsync();
 
-        return Ok(isFriend);
+        var fr = FriendRequest.Create(sender.Id, target.Id);
+
+        await _unitOfWork.FriendRequestRepository.AddAsync(fr, cancellationToken);
+        return Ok(fr);
     }
 
     [HttpPost]

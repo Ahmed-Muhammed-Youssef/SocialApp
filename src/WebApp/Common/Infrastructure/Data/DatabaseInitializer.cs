@@ -242,18 +242,9 @@ public class DatabaseInitializer
                 {
                     if (user.IdentityId != firstIdentityUser?.Id)
                     {
+                        Friend fr = Friend.CreateFromAcceptedRequest(firstUser.Id, user.Id);
 
-                        await dataContext.Friends.AddAsync(new Friend()
-                        {
-                            UserId = firstUser.Id,
-                            FriendId = user.Id
-                        });
-
-                        await dataContext.Friends.AddAsync(new Friend()
-                        {
-                            UserId = user.Id,
-                            FriendId = firstUser.Id
-                        });
+                        await dataContext.Friends.AddAsync(fr);
                     }
                 }
 

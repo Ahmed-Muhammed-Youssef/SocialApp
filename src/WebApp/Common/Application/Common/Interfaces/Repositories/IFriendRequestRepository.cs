@@ -3,20 +3,6 @@
 public interface IFriendRequestRepository : IRepositoryBase<FriendRequest>
 {
     /// <summary>
-    /// Sends a friend request from one user to another.
-    /// If the target user has already sent a friend request to the sender,
-    /// both users are added as friends, and the target user's friend request is removed.
-    /// Otherwise, a new friend request is created.
-    /// </summary>
-    /// <param name="senderId">The ID of the user sending the friend request.</param>
-    /// <param name="targetId">The ID of the target user receiving the friend request.</param>
-    /// <returns>
-    /// A boolean value indicating whether the target user had already sent a friend request
-    /// to the sender (true if they were already added as friends, false otherwise).
-    /// </returns>
-    public Task<bool> SendFriendRequest(int senderId, int targetId);
-
-    /// <summary>
     /// Retrieves a friend request sent by a specific user to a target user.
     /// </summary>
     /// <param name="senderId">The ID of the user who sent the friend request.</param>
