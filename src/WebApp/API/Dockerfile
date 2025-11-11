@@ -13,11 +13,12 @@ FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["SocialApp/Directory.Packages.props", "SocialApp/"]
+COPY ["SocialApp/Directory.Build.props", "SocialApp/"]
 COPY ["SocialApp/src/WebApp/API/API.csproj", "SocialApp/src/WebApp/API/"]
+COPY ["SocialApp/src/WebApp/Common/Infrastructure/Infrastructure.csproj", "SocialApp/src/WebApp/Common/Infrastructure/"]
 COPY ["SocialApp/src/WebApp/Common/Application/Application.csproj", "SocialApp/src/WebApp/Common/Application/"]
 COPY ["SocialApp/src/WebApp/Common/Domain/Domain.csproj", "SocialApp/src/WebApp/Common/Domain/"]
 COPY ["SocialApp/src/WebApp/Common/Shared/Shared.csproj", "SocialApp/src/WebApp/Common/Shared/"]
-COPY ["SocialApp/src/WebApp/Common/Infrastructure/Infrastructure.csproj", "SocialApp/src/WebApp/Common/Infrastructure/"]
 RUN dotnet restore "./SocialApp/src/WebApp/API/API.csproj"
 COPY . .
 WORKDIR "/src/SocialApp/src/WebApp/API"
