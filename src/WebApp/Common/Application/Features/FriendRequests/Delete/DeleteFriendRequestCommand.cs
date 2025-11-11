@@ -1,3 +1,3 @@
 ﻿namespace Application.Features.FriendRequests.Delete;
 
-public record DeleteFriendRequestCommand(int UserId) : ICommand<Result<object?>>;
+public record DeleteFriendRequestCommand(int Id) : ICommand<Result<object?>>;

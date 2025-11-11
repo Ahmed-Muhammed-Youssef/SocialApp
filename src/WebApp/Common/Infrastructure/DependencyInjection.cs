@@ -20,6 +20,7 @@ public static class DependencyInjection
         builder.Services.AddScoped<IPictureRepository, PictureRepository>();
         builder.Services.AddScoped<IDirectChatRepository, DirectChatRepository>();
         builder.Services.AddScoped<IFriendRequestRepository, FriendRequestsRepository>();
+        builder.Services.AddScoped<IFriendRepository, FriendRepository>();
         builder.Services.AddScoped<IPostRepository, PostRepository>();
 
         // Cloudinary

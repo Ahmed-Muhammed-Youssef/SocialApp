@@ -9,6 +9,7 @@ public interface IUnitOfWork
     IDirectChatRepository DirectChatRepository { get; }
     IFriendRequestRepository FriendRequestRepository { get; }
     IPostRepository PostRepository { get; }
+    IFriendRepository FriendRepository { get; }
 
     /// <summary>
     /// Saves all changes made in this unit of work to the underlying data store.

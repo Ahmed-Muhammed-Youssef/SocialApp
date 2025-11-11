@@ -19,10 +19,13 @@ global using Application.Features.Posts;
 global using Domain;
 global using Domain.MediaAggregate;
 global using Domain.FriendRequestAggregate;
+global using Domain.FriendAggregate;
 global using Domain.DirectChatAggregate;
 global using Domain.ApplicationUserAggregate;
+
 global using Shared.Constants;
 
+global using Shared;
 global using Shared.Results;
 global using Shared.RepositoryBase;
 global using Shared.Extensions;

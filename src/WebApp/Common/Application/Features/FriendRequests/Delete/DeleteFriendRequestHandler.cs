@@ -6,14 +6,9 @@ public class DeleteFriendRequestHandler(IUnitOfWork unitOfWork, ICurrentUserServ
     {
         var senderId = currentUserService.GetPublicId();
 
-        // check if the api issuer is the freind request sender first.
-
-        FriendRequest? fr = await unitOfWork.FriendRequestRepository.GetFriendRequestAsync(senderId, command.UserId);
+        FriendRequest? fr = await unitOfWork.FriendRequestRepository.GetByIdAsync(command.Id, cancellationToken);
         
-        // check if the api issuer is the freind requested user
-        fr ??= await unitOfWork.FriendRequestRepository.GetFriendRequestAsync(command.UserId, senderId);
-
-        if (fr is null)
+        if (fr is null || fr.RequesterId != senderId || fr.Status != RequestStatus.Pending)
         {
             return Result<object?>.Error("You didn't sent a friend request.");
         }

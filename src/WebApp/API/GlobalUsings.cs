@@ -34,6 +34,7 @@ global using Application.Features.Pictures.Create;
 global using Application.Features.FriendRequests.List;
 global using Application.Features.FriendRequests.Create;
 global using Application.Features.FriendRequests.Delete;
+global using Application.Features.FriendRequests.Accept;
 global using Application.Features.UserRoles.Get;
 global using Application.Features.UserRoles.AssignRoleToUser;
 global using Application.Features.UserRoles.RemoveRoleFromUser;

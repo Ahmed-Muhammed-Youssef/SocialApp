@@ -46,7 +46,7 @@ public class FriendRequestsRepository(ApplicationDatabaseContext dataContext) : 
     {
         return await dataContext.FriendRequests
             .AsNoTracking()
-            .Where(fr => fr.RequestedId == targetId)
+            .Where(fr => fr.RequestedId == targetId && fr.Status == RequestStatus.Pending)
             .Join(
                 dataContext.ApplicationUsers,
                 fr => fr.RequesterId,

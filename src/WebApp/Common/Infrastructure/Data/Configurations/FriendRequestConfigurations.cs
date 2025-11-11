@@ -4,7 +4,7 @@ public class FriendRequestConfigurations : IEntityTypeConfiguration<FriendReques
 {
     public void Configure(EntityTypeBuilder<FriendRequest> builder)
     {
-        builder.HasKey(fr => new { fr.RequesterId, fr.RequestedId });
+        builder.HasKey(fr => fr.Id);
 
         // properties
         builder.Property(fr => fr.RequestedId).IsRequired();

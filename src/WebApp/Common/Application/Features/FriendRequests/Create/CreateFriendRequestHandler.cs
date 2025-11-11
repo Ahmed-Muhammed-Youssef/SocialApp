@@ -4,32 +4,36 @@ public class CreateFriendRequestHandler(IUnitOfWork unitOfWork, ICurrentUserServ
 {
     public async ValueTask<Result<int>> Handle(CreateFriendRequestCommand command, CancellationToken cancellationToken)
     {
-        // retuns true if the user has become a frined
-        var senderId = currentUserService.GetPublicId();
-        var targetId = command.UserId;
-
-        if (senderId == targetId)
+        try
         {
-            return Result<int>.Error("You can't send friend requests to yourself.");
-        }
+            int senderId = currentUserService.GetPublicId();
+            int targetId = command.UserId;
 
-        if (await unitOfWork.FriendRequestRepository.GetFriendRequestAsync(senderId, targetId) != null)
+            FriendRequest friendRequest = FriendRequest.Create(senderId, targetId);
+            var receivedFr = await unitOfWork.FriendRequestRepository.GetFriendRequestAsync(targetId, senderId);
+
+            if (receivedFr is not null && receivedFr.Status == RequestStatus.Pending)
+            {
+                return Result<int>.Error("You already have a pending frient request from this user.");
+            }
+
+            if (await unitOfWork.FriendRequestRepository.GetFriendRequestAsync(senderId, targetId) != null)
+            {
+                return Result<int>.Error("You already sent a frient request to this user.");
+            }
+
+            if (await unitOfWork.FriendRequestRepository.IsFriend(senderId, targetId) == true)
+            {
+                return Result<int>.Error("You already are friends.");
+            }
+
+            await unitOfWork.FriendRequestRepository.AddAsync(friendRequest, cancellationToken);
+
+            return Result<int>.Created(friendRequest.Id);
+        }
+        catch (DomainException ex)
         {
-            return Result<int>.Error("You already sent a frient request to this user.");
+            return Result<int>.Error(ex.Message);
         }
-
-        if (await unitOfWork.FriendRequestRepository.IsFriend(senderId, targetId) == true)
-        {
-            return Result<int>.Error("You already are friends.");
-        }
-
-        // must pervent user from sending friend request if the target user already sent him a friend request
-        bool isFriend = await unitOfWork.FriendRequestRepository.SendFriendRequest(senderId, targetId);
-
-        await unitOfWork.SaveChangesAsync();
-
-        // @todo: must return the friend request id instead of 1 or 0
-
-        return Result<int>.Created(isFriend ? 1 : 0);
     }
 }

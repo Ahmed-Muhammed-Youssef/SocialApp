@@ -21,11 +21,11 @@ public class FriendRequestsController(IMediator mediator) : ControllerBase
         }
     }
 
-    // DELETE: api/friendrequests/{userId}
-    [HttpDelete("{userId}")]
-    public async Task<IActionResult> Delete(int userId, CancellationToken cancellationToken)
+    // DELETE: api/friendrequests/{id}
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> Delete(int id, CancellationToken cancellationToken)
     {
-        Result<object?> result = await mediator.Send(new DeleteFriendRequestCommand(userId), cancellationToken);
+        Result<object?> result = await mediator.Send(new DeleteFriendRequestCommand(id), cancellationToken);
 
         if (result.IsSuccess)
         {
@@ -42,6 +42,21 @@ public class FriendRequestsController(IMediator mediator) : ControllerBase
     public async Task<ActionResult> Create(int userId, CancellationToken cancellationToken)
     {
         Result<int> result = await mediator.Send(new CreateFriendRequestCommand(userId), cancellationToken);
+        if (result.IsSuccess)
+        {
+            return Ok(result.Value);
+        }
+        else
+        {
+            return BadRequest(result.Errors);
+        }
+    }
+
+    // PUT: api/friendrequests/{id}/accept
+    [HttpPut("{id}/accept")]
+    public async Task<ActionResult> Accept(int id, CancellationToken cancellationToken)
+    {
+        Result<FriendCreatedResponse> result = await mediator.Send(new AcceptFriendRequestCommand(id), cancellationToken);
         if (result.IsSuccess)
         {
             return Ok(result.Value);
