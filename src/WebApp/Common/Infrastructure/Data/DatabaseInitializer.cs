@@ -130,7 +130,7 @@ public class DatabaseInitializer
 
                 City city = await dataContext.Cities.FirstOrDefaultAsync() ?? throw new Exception("No cities found in the database. Please ensure that countries and cities are seeded before seeding the admin user.");
 
-                ApplicationUser adminAppUser = new(admin.Id, "Admin", "", DateTime.UtcNow.AddYears(-25), Gender.Male, city.Id);
+                ApplicationUser adminAppUser = new(admin.Id, "Admin", "Admin", DateTime.UtcNow.AddYears(-25), Gender.Male, city.Id);
 
                 await dataContext.ApplicationUsers.AddAsync(adminAppUser);
                 await dataContext.SaveChangesAsync();
@@ -196,21 +196,22 @@ public class DatabaseInitializer
 
                 // Generate application user
                 var testApplicationUser = new Faker<ApplicationUser>()
-                            .RuleFor(u => u.IdentityId, f => identityUser.Id)
-                            .RuleFor(u => u.Gender, f => f.PickRandom<Gender>())
-                            .RuleFor(u => u.FirstName, (f, u) => f.Name.FirstName((u.Gender == Gender.Male) ? Bogus.DataSets.Name.Gender.Male : Bogus.DataSets.Name.Gender.Female))
-                            .RuleFor(u => u.LastName, (f, u) => f.Name.LastName(Bogus.DataSets.Name.Gender.Male))
-                            .RuleFor(u => u.Bio, f => f.Lorem.Paragraph())
-                            .RuleFor(u => u.CityId, f => f.PickRandom(cities).Id)
-                            .RuleFor(u => u.DateOfBirth, f => f.Date.Past(refDate: DateTime.UtcNow.AddYears(-18), yearsToGoBack: 70))
-                            .RuleFor(u => u.LastActive, f => f.Date.BetweenOffset(DateTimeOffset.UtcNow, DateTimeOffset.UtcNow.AddDays(-30)).DateTime)
-                            .RuleFor(u => u.Created, f => f.Date.Past(refDate: DateTime.UtcNow.AddMonths(-7), yearsToGoBack: 2));
+                    .CustomInstantiator(f =>
+                    {
+                        var gender = f.PickRandom<Gender>();
 
+                        var user =  new ApplicationUser(identityUser.Id,
+                            f.Name.FirstName((gender == Gender.Male) ? Bogus.DataSets.Name.Gender.Male : Bogus.DataSets.Name.Gender.Female),
+                            f.Name.LastName(Bogus.DataSets.Name.Gender.Male),
+                            f.Date.Past(refDate: DateTime.UtcNow.AddYears(-18), yearsToGoBack: 70),
+                            gender,
+                            f.PickRandom(cities).Id);
+                        return user;
+                    }); 
+                    
                 var applicationUser = testApplicationUser.Generate();
 
                 await dataContext.ApplicationUsers.AddAsync(applicationUser);
-
-                await dataContext.SaveChangesAsync();
 
                 // Add some posts to that user
                 Faker<Post> postsFaker = new Faker<Post>()
@@ -227,7 +228,6 @@ public class DatabaseInitializer
                     dataContext.Posts.Add(post);
                     dataContext.SaveChanges();
                 }
-
             }
 
             // add all users as friends to user1
