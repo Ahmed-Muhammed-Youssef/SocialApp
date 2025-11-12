@@ -1,6 +1,4 @@
-﻿using System.Linq.Expressions;
-
-namespace Shared.Specification;
+﻿namespace Shared.Specification;
 
 /// <summary>
 /// Defines the basic contract for a specification that filters, orders, and paginates entities of type <typeparamref name="T"/>.
@@ -11,5 +9,5 @@ public interface IFilterSpecification<T>
     /// <summary>
     /// Gets the filter criteria used to select matching entities.
     /// </summary>
-    Expression<Func<T, bool>>? Criteria { get; }
+    Expression<Func<T, bool>> Criteria { get; }
 }

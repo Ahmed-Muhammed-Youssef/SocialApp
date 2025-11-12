@@ -31,7 +31,7 @@ public interface IRepositoryBase<T> where T : class
     /// <param name="cancellationToken">A token to monitor for cancellation requests.</param>
     /// <returns>A task that represents the asynchronous operation. The task result contains the first element that matches the
     /// filter criteria, or the default value for the type <typeparamref name="T"/> if no such element is found.</returns>
-    Task<T?> FirstOrDefaultAsync(IFilterSpecification<T> specification, CancellationToken cancellationToken = default);
+    Task<T?> FirstOrDefaultAsync(ISpecification<T> specification, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Finds all entities of <typeparamref name="T" /> from the database.
@@ -50,7 +50,7 @@ public interface IRepositoryBase<T> where T : class
     /// <param name="cancellationToken">A token to monitor for cancellation requests. The default value is <see cref="CancellationToken.None"/>.</param>
     /// <returns>A task that represents the asynchronous operation. The task result contains a list of items that match the
     /// filter criteria.</returns>
-    Task<List<T>> ListAsync(IFilterSpecification<T> specification, CancellationToken cancellationToken = default);
+    Task<List<T>> ListAsync(ISpecification<T> specification, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns a number that represents how many entities satisfy the encapsulated query logic
@@ -62,7 +62,7 @@ public interface IRepositoryBase<T> where T : class
     /// A task that represents the asynchronous operation. The task result contains the
     /// number of elements in the input sequence.
     /// </returns>
-    Task<int> CountAsync(IFilterSpecification<T> specification, CancellationToken cancellationToken = default);
+    Task<int> CountAsync(ISpecification<T> specification, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns the total number of records.
@@ -81,7 +81,7 @@ public interface IRepositoryBase<T> where T : class
     /// <param name="cancellationToken">A token to monitor for cancellation requests. The default value is <see cref="CancellationToken.None"/>.</param>
     /// <returns>A task that represents the asynchronous operation. The task result contains <see langword="true"/> if any
     /// entities satisfy the specified criteria; otherwise, <see langword="false"/>.</returns>
-    Task<bool> AnyAsync(IFilterSpecification<T> specification, CancellationToken cancellationToken = default);
+    Task<bool> AnyAsync(ISpecification<T> specification, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns a boolean whether any entity exists or not.

@@ -105,7 +105,7 @@ public abstract class RepositoryBase<T> : IRepositoryBase<T> where T : class
     }
 
     /// <inheritdoc/>
-    public virtual async Task<T?> FirstOrDefaultAsync(IFilterSpecification<T> specification, CancellationToken cancellationToken = default)
+    public virtual async Task<T?> FirstOrDefaultAsync(ISpecification<T> specification, CancellationToken cancellationToken = default)
     {
         return await ApplySpecification(specification).FirstOrDefaultAsync(cancellationToken);
     }
@@ -117,13 +117,13 @@ public abstract class RepositoryBase<T> : IRepositoryBase<T> where T : class
     }
 
     /// <inheritdoc/>
-    public virtual async Task<List<T>> ListAsync(IFilterSpecification<T> specification, CancellationToken cancellationToken = default)
+    public virtual async Task<List<T>> ListAsync(ISpecification<T> specification, CancellationToken cancellationToken = default)
     {
         return await ApplySpecification(specification).ToListAsync(cancellationToken);
     }
 
     /// <inheritdoc/>
-    public virtual async Task<int> CountAsync(IFilterSpecification<T> specification, CancellationToken cancellationToken = default)
+    public virtual async Task<int> CountAsync(ISpecification<T> specification, CancellationToken cancellationToken = default)
     {
         return await ApplySpecification(specification).CountAsync(cancellationToken);
     }
@@ -135,7 +135,7 @@ public abstract class RepositoryBase<T> : IRepositoryBase<T> where T : class
     }
 
     /// <inheritdoc/>
-    public virtual async Task<bool> AnyAsync(IFilterSpecification<T> specification, CancellationToken cancellationToken = default)
+    public virtual async Task<bool> AnyAsync(ISpecification<T> specification, CancellationToken cancellationToken = default)
     {
         return await ApplySpecification(specification).AnyAsync(cancellationToken);
     }
@@ -151,7 +151,7 @@ public abstract class RepositoryBase<T> : IRepositoryBase<T> where T : class
     /// </summary>
     /// <param name="specification">The specification that defines the criteria and conditions to filter the entities.</param>
     /// <returns>An <see cref="IQueryable{T}"/> representing the filtered set of entities that match the specification.</returns>
-    protected IQueryable<T> ApplySpecification(IFilterSpecification<T> specification)
+    protected IQueryable<T> ApplySpecification(ISpecification<T> specification)
     {
         return SpecificationEvaluator.GetQuery(DbContext.Set<T>().AsQueryable(), specification);
     }
