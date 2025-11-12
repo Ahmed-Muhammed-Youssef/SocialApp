@@ -31,10 +31,6 @@ public class CachedUserRepository(IApplicationUserRepository _usersRepository, I
     // Caching this mehtod will need a complex implemention
     public Task<PagedList<UserDTO>> GetUsersDTOAsync(int userId, UserParams userParams) => _usersRepository.GetUsersDTOAsync(userId, userParams);
 
-    public Task<UserDTO?> GetDtoByIdentityId(string identityId) => _usersRepository.GetDtoByIdentityId(identityId);
-
-    public Task<ApplicationUser?> GetByIdentity(string identity) => _usersRepository.GetByIdentity(identity);
-
     public Task<List<SimplifiedUserDTO>> GetListAsync(int[] ids) => _usersRepository.GetListAsync(ids);
     
     public Task<SimplifiedUserDTO?> GetSimplifiedDTOAsync(int id) => _usersRepository.GetSimplifiedDTOAsync(id);

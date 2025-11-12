@@ -34,7 +34,7 @@ public class FriendRequestsRepository(ApplicationDatabaseContext dataContext) : 
                 fr => fr.RequesterId,
                 user => user.Id,
                 (fr, user) => user)
-            .Select(u => UserMappings.ToDto(u))
+            .Select(UserMappings.ToDtoExpression)
             .ToListAsync();
     }
     public async Task<IEnumerable<UserDTO>> GetFriendRequestedUsersDTOAsync(int senderId)

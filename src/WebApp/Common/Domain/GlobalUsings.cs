@@ -1,4 +1,5 @@
 ﻿global using Shared;
+global using Shared.Specification;
 
 global using Domain.DirectChatAggregate.Exceptions;
 global using Domain.FriendRequestAggregate.Exceptions;

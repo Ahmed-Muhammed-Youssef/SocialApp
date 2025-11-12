@@ -39,7 +39,7 @@ public class ApplicationUserRepository(ApplicationDatabaseContext dataContext) :
         };
 
         // projection
-        var projectedQuery = query.Select(u => UserMappings.ToDto(u));
+        var projectedQuery = query.Select(UserMappings.ToDtoExpression);
 
         var count = await projectedQuery.CountAsync();
 
@@ -50,18 +50,6 @@ public class ApplicationUserRepository(ApplicationDatabaseContext dataContext) :
             .ToListAsync();
 
         return new PagedList<UserDTO>(users, count, userParams.PageNumber, userParams.ItemsPerPage);
-    }
-
-    public async Task<ApplicationUser?> GetByIdentity(string identity)
-    {
-        return await dataContext.ApplicationUsers.FirstOrDefaultAsync(u => u.IdentityId == identity);
-    }
-
-    public async Task<UserDTO?> GetDtoByIdentityId(string identityId)
-    {
-        ApplicationUser? appUser = await dataContext.ApplicationUsers.FirstOrDefaultAsync(u => u.IdentityId == identityId);
-
-        return appUser is null ? null : UserMappings.ToDto(appUser);
     }
 
     public async Task<UserDTO?> GetDtoByIdAsync(int id)

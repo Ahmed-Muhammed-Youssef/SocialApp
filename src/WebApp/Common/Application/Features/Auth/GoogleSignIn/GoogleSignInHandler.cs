@@ -42,7 +42,9 @@ public class GoogleSignInHandler(IGoogleAuthService googleAuthService, UserManag
         }
         else
         {
-            userDTO = await unitOfWork.ApplicationUserRepository.GetDtoByIdentityId(identityUser.Id);
+            var userDtoByIdentitySpec = new UserDtoByIdentitySpecification(identityUser.Id);
+
+            userDTO = await unitOfWork.ApplicationUserRepository.FirstOrDefaultAsync(userDtoByIdentitySpec, cancellationToken);
 
             if (userDTO is null)
             {

@@ -14,4 +14,18 @@ public static class UserMappings
         Bio = user.Bio ?? string.Empty,
         RelationStatus = RelationStatus.None
     };
+
+    public static Expression<Func<ApplicationUser, UserDTO>> ToDtoExpression => user => new UserDTO()
+    {
+        Id = user.Id,
+        FirstName = user.FirstName,
+        LastName = user.LastName,
+        Gender = user.Gender,
+        Age = DateTime.UtcNow.Year - user.DateOfBirth.Year
+              - (DateTime.UtcNow < user.DateOfBirth.AddYears(DateTime.UtcNow.Year - user.DateOfBirth.Year) ? 1 : 0),
+        Created = user.Created,
+        LastActive = user.LastActive,
+        Bio = user.Bio ?? string.Empty,
+        RelationStatus = RelationStatus.None
+    };
 }
