@@ -111,6 +111,12 @@ public abstract class RepositoryBase<T> : IRepositoryBase<T> where T : class
     }
 
     /// <inheritdoc/>
+    public virtual async Task<TResult?> FirstOrDefaultAsync<TResult>(ISpecification<T, TResult> specification, CancellationToken cancellationToken = default)
+    {
+        return await ApplySpecification(specification).FirstOrDefaultAsync(cancellationToken);
+    }
+
+    /// <inheritdoc/>
     public virtual async Task<List<T>> ListAsync(CancellationToken cancellationToken = default)
     {
         return await DbContext.Set<T>().ToListAsync(cancellationToken);
@@ -118,6 +124,12 @@ public abstract class RepositoryBase<T> : IRepositoryBase<T> where T : class
 
     /// <inheritdoc/>
     public virtual async Task<List<T>> ListAsync(ISpecification<T> specification, CancellationToken cancellationToken = default)
+    {
+        return await ApplySpecification(specification).ToListAsync(cancellationToken);
+    }
+
+    /// <inheritdoc/>
+    public virtual async Task<List<TResult>> ListAsync<TResult>(ISpecification<T, TResult> specification, CancellationToken cancellationToken = default)
     {
         return await ApplySpecification(specification).ToListAsync(cancellationToken);
     }
@@ -152,6 +164,21 @@ public abstract class RepositoryBase<T> : IRepositoryBase<T> where T : class
     /// <param name="specification">The specification that defines the criteria and conditions to filter the entities.</param>
     /// <returns>An <see cref="IQueryable{T}"/> representing the filtered set of entities that match the specification.</returns>
     protected IQueryable<T> ApplySpecification(ISpecification<T> specification)
+    {
+        return SpecificationEvaluator.GetQuery(DbContext.Set<T>().AsQueryable(), specification);
+    }
+
+    /// <summary>
+    /// Filters all entities of <typeparamref name="T" />, that matches the encapsulated query logic of the
+    /// <paramref name="specification"/>, from the database.
+    /// <para>
+    /// Projects each entity into a new form, being <typeparamref name="TResult" />.
+    /// </para>
+    /// </summary>
+    /// <typeparam name="TResult">The type of the value returned by the projection.</typeparam>
+    /// <param name="specification">The encapsulated query logic.</param>
+    /// <returns>The filtered projected entities as an <see cref="IQueryable{T}"/>.</returns>
+    protected IQueryable<TResult> ApplySpecification<TResult>(ISpecification<T, TResult> specification)
     {
         return SpecificationEvaluator.GetQuery(DbContext.Set<T>().AsQueryable(), specification);
     }

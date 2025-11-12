@@ -19,6 +19,28 @@ public class SpecificationEvaluator : ISpecificationEvaluator
         {
             query = query.Where(specification.Filter.Criteria);
         }
+
+        if (specification.Skip is not null)
+        {
+            query = query.Skip(specification.Skip.Value);
+        }
+
+        if (specification.Take is not null)
+        {
+            query = query.Take(specification.Take.Value);
+        }
+
+        if(specification.OrderBy is not null)
+        {
+            if(specification.IsDescending)
+            {
+                query = query.OrderByDescending(specification.OrderBy).AsQueryable();
+            }
+            else
+            {
+                query = query.OrderBy(specification.OrderBy).AsQueryable();
+            }
+        }
         
         return query;
     }
