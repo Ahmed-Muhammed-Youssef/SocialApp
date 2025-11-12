@@ -38,7 +38,7 @@ public class Specification<T> : ISpecification<T>
 }
 
 /// <inheritdoc/>
-public class Specification<T, TResult>(Expression<Func<T, TResult>> selectors) : Specification<T>
+public class Specification<T, TResult>(Expression<Func<T, TResult>> selectors) : Specification<T>, ISpecification<T, TResult>
 {
     /// <inheritdoc/>
     public Expression<Func<T, TResult>> Selectors { get; protected set; } = selectors;
