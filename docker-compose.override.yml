@@ -7,8 +7,8 @@ services:
       - ConnectionStrings__AppConnection=Server=app-db,1433;Database=AppDb;User Id=sa;Password=Password123!;TrustServerCertificate=True;
       - ConnectionStrings__IdentityConnection=Server=app-db,1433;Database=IdentityDb;User Id=sa;Password=Password123!;TrustServerCertificate=True;
     ports:
-      - "8080"
-      - "8081"
+      - "5000:8080"
+      - "5001:8081"
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
