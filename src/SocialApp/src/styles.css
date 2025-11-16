@@ -1,1 +1,38 @@
-/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+:root {
+  --color-primary: #6A0DAD;
+  --color-secondary: #9966CC;
+  --color-background: #F8F8F8;
+  --color-accent: #FFD700;
+  --color-text: #333333;
+  --color-text-secondary: #f0f0f0;
+  --color-secondary-text: #666666;
+}
+
+.dark-theme {
+  --color-primary: #90caf9;
+  --color-background: #1A1A2E;
+  --color-text: #E0E0E0;
+  --color-secondary-text: #B0B0B0;
+}
+
+body{
+    margin: 0;
+    font-family: "Roboto", sans-serif;
+    background-color: var(--color-background);
+}
+
+a:focus {
+  outline: none; 
+}
+
+a:focus-visible {
+  outline: 2px solid rgba(0, 0, 0, 0.2);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+a:active {
+  color: var(--color-primary);
+}
