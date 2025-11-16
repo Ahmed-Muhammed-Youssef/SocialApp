@@ -3,22 +3,11 @@ services:
     image: ${DOCKER_REGISTRY-}api
     build:
       context: .
-      dockerfile: src/WebApp/API/Dockerfile
+      dockerfile: src/API/API/Dockerfile
     depends_on:
       - app-db
     networks:
       - app-network
-
-  mvc:
-    image: ${DOCKER_REGISTRY-}mvc
-    build:
-      context: .
-      dockerfile: src/WebApp/MVC/Dockerfile
-    depends_on:
-      - app-db
-    networks:
-      - app-network
-
   app-db:
     image: mcr.microsoft.com/mssql/server:2022-latest
     environment:
