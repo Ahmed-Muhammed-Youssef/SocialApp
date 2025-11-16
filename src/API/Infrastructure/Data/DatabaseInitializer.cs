@@ -128,7 +128,9 @@ public class DatabaseInitializer
                 await userManager.AddToRoleAsync(admin, RolesNameValues.User);
                 await userManager.AddToRoleAsync(admin, RolesNameValues.Moderator);
 
-                City city = await dataContext.Cities.FirstOrDefaultAsync() ?? throw new Exception("No cities found in the database. Please ensure that countries and cities are seeded before seeding the admin user.");
+                City city = await dataContext.Cities
+                    .OrderBy(c => c.Id)
+                    .FirstOrDefaultAsync() ?? throw new Exception("No cities found in the database. Please ensure that countries and cities are seeded before seeding the admin user.");
 
                 ApplicationUser adminAppUser = new(admin.Id, "Admin", "Admin", DateTime.UtcNow.AddYears(-25), Gender.Male, city.Id);
 
@@ -211,10 +213,12 @@ public class DatabaseInitializer
                     
                 var applicationUser = testApplicationUser.Generate();
 
-                await dataContext.ApplicationUsers.AddAsync(applicationUser);
+                dataContext.ApplicationUsers.Add(applicationUser);
+                await dataContext.SaveChangesAsync();
 
                 // Add some posts to that user
                 Faker<Post> postsFaker = new Faker<Post>()
+                    .RuleFor(p => p.UserId, f => applicationUser.Id)
                     .RuleFor(p => p.Content, f => f.Lorem.Paragraph())
                     .RuleFor(p => p.DatePosted, f => f.Date.Past(3))
                     .RuleFor(p => p.DateEdited, f => f.Date.Recent(30));
@@ -222,32 +226,29 @@ public class DatabaseInitializer
                 int randomNumber = random.Next(0, 101);
                 List<Post> fakePosts = postsFaker.Generate(randomNumber);
 
-                foreach (var post in fakePosts)
-                {
-                    post.UserId = applicationUser.Id;
-                    dataContext.Posts.Add(post);
-                    dataContext.SaveChanges();
-                }
+                dataContext.Posts.AddRange(fakePosts);
+                await dataContext.SaveChangesAsync();
             }
 
             // add all users as friends to user1
             if (dataContext.Friends.Any()) return;
-            var firstIdentityUser = await userManager.Users.Where(u => u.Email == "user1@test").FirstOrDefaultAsync();
-            var applicationUsers = await dataContext.ApplicationUsers.ToListAsync();
-            var firstUser = applicationUsers.Where(u => u.IdentityId == firstIdentityUser?.Id).FirstOrDefault();
+            IdentityUser? firstIdentityUser = await userManager.Users.Where(u => u.Email == "user1@test").FirstOrDefaultAsync();
+            List<ApplicationUser> applicationUsers = await dataContext.ApplicationUsers.ToListAsync();
+            ApplicationUser? firstUser = applicationUsers.Where(u => u.IdentityId == firstIdentityUser?.Id).FirstOrDefault();
 
             if (firstUser is not null)
             {
+                List<Friend> friends = [];
                 foreach (var user in applicationUsers)
                 {
                     if (user.IdentityId != firstIdentityUser?.Id)
                     {
                         Friend fr = Friend.CreateFromAcceptedRequest(firstUser.Id, user.Id);
-
-                        await dataContext.Friends.AddAsync(fr);
+                        friends.Add(fr);
                     }
                 }
 
+                dataContext.Friends.AddRange(friends);
                 await dataContext.SaveChangesAsync();
             }
         }
