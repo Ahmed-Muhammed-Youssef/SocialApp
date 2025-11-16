@@ -12,16 +12,16 @@ EXPOSE 8081
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["SocialApp/Directory.Packages.props", "SocialApp/"]
-COPY ["SocialApp/Directory.Build.props", "SocialApp/"]
-COPY ["SocialApp/src/API/API/API.csproj", "SocialApp/src/API/API/"]
-COPY ["SocialApp/src/API/Infrastructure/Infrastructure.csproj", "SocialApp/src/API/Infrastructure/"]
-COPY ["SocialApp/src/API/Application/Application.csproj", "SocialApp/src/API/Application/"]
-COPY ["SocialApp/src/API/Domain/Domain.csproj", "SocialApp/src/API/Domain/"]
-COPY ["SocialApp/src/API/Shared/Shared.csproj", "SocialApp/src/API/Shared/"]
-RUN dotnet restore "./SocialApp/src/API/API/API.csproj"
+COPY ["Directory.Packages.props", "."]
+COPY ["Directory.Build.props", "."]
+COPY ["src/API/API/API.csproj", "src/API/API/"]
+COPY ["src/API/Infrastructure/Infrastructure.csproj", "src/API/Infrastructure/"]
+COPY ["src/API/Application/Application.csproj", "src/API/Application/"]
+COPY ["src/API/Domain/Domain.csproj", "src/API/Domain/"]
+COPY ["src/API/Shared/Shared.csproj", "src/API/Shared/"]
+RUN dotnet restore "./src/API/API/API.csproj"
 COPY . .
-WORKDIR "/src/SocialApp/src/API/API"
+WORKDIR "/src/src/API/API"
 RUN dotnet build "./API.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 # This stage is used to publish the service project to be copied to the final stage
