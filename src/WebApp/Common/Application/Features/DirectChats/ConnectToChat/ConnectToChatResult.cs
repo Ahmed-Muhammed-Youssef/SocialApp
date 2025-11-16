@@ -1,5 +1,3 @@
-﻿using Application.Features.DirectChats.Stores;
+﻿namespace Application.Features.DirectChats.ConnectToChat;
 
-namespace Application.Features.DirectChats.ConnectToChat;
-
-public record ConnectToChatResult(Group Group, IEnumerable<MessageDTO> Messages);
+public record ConnectToChatResult(Group Group, List<MessageDTO> Messages);

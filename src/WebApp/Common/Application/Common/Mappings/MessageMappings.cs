@@ -7,6 +7,14 @@ public static class MessageMappings
         Id = message.Id,
         Content = message.Content,
         SentDate = message.SentDate,
-        SenderId = message.SenderId,
+        SenderId = message.SenderId
+    };
+
+    public static Expression<Func<Message, MessageDTO>> ToDtoExpression = message => new MessageDTO
+    {
+        Id = message.Id,
+        Content = message.Content,
+        SentDate = message.SentDate,
+        SenderId = message.SenderId
     };
 }

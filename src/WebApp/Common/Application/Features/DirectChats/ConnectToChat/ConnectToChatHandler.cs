@@ -11,7 +11,7 @@ public class ConnectToChatHandler(IUnitOfWork unitOfWork, IDirectChatGroupsStore
         
         Group? group = usersGroupsStore.AddConnection(command.CurrentUserId, command.OtherUserId, command.ConnectionId);
 
-        IEnumerable<MessageDTO> messages = await unitOfWork.DirectChatRepository
+        List<MessageDTO> messages = await unitOfWork.DirectChatRepository
             .GetMessagesDTOThreadAsync(command.CurrentUserId, command.OtherUserId, cancellationToken);
         
         return Result<ConnectToChatResult>.Success(new ConnectToChatResult(group, messages));

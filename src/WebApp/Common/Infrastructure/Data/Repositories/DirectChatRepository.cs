@@ -19,39 +19,17 @@ public class DirectChatRepository(ApplicationDatabaseContext dataContext) : Repo
 
         return chat;
     }
-    public Task<IEnumerable<MessageDTO>> GetMessagesDTOThreadAsync(int issuerId, int theOtherUserId, CancellationToken cancellationToken = default)
+    public async Task<List<MessageDTO>> GetMessagesDTOThreadAsync(int issuerId, int theOtherUserId, CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
-        //var query = dataContext.Messages
-        //    .AsNoTracking()
-        //    .Where(m => m.SenderId == issuerId && m.RecipientId == theOtherUserId && !m.SenderDeleted || m.SenderId == theOtherUserId && m.RecipientId == issuerId && !m.RecipientDeleted)
-        //    .OrderBy(m => m.SentDate);
 
-        //// update unread messages state to read
-        //var unreadMessages = query.Where(m => m.ReadDate == null && m.RecipientId == issuerId);
-        //if (unreadMessages.Any())
-        //{
-        //    foreach (var message in unreadMessages)
-        //    {
-        //        message.ReadDate = DateTime.UtcNow;
-        //    }
-        //}
+        (int user1Id, int user2Id) = DirectChat.OrderIds(issuerId, theOtherUserId);
 
-        //return await query.Select(m => MessageMappings.ToDto(m)).ToListAsync(cancellationToken: cancellationToken);
-    }
-
-    public async Task<List<SimplifiedUserDTO>> GetInboxAsync(int userId)
-    {
-        var friendsQuery = dataContext.Friends.Where(fr => fr.FriendId == userId).Select(f => f.UserId);
-
-        var friends = await dataContext.ApplicationUsers.Where(u => friendsQuery.Contains(u.Id)).Select(u => new SimplifiedUserDTO
-        {
-            Id = u.Id,
-            FirstName = u.FirstName,
-            LastName = u.LastName,
-            ProfilePictureUrl = null
-        }).ToListAsync();
-
-        return friends;
+        List<MessageDTO> messages = await dataContext.DirectChats.Where(c => c.User1Id == user1Id && c.User2Id == user2Id)
+            .SelectMany(c => c.Messages)
+            .Select(MessageMappings.ToDtoExpression)
+            .OrderBy(m => m.SentDate)
+            .ToListAsync(cancellationToken: cancellationToken) ?? [];
+            
+        return messages;
     }
 }
