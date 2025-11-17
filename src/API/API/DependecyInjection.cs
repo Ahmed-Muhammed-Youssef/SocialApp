@@ -14,8 +14,10 @@ public static class DependecyInjection
 
         builder.Services.AddCors(options =>
         {
-            options.AddPolicy("AllowSpecificOrigin", policy => policy.AllowAnyMethod()
-            .AllowAnyHeader().WithOrigins("https://localhost:4200").AllowCredentials());
+            options.AddPolicy("AllowSpecificOrigin", policy => policy.WithOrigins("https://localhost:4200", "http://localhost:4200")
+            .AllowAnyMethod()
+            .AllowAnyHeader()
+            .AllowCredentials());
         });
 
         builder.Services.AddSingleton(new JsonSerializerOptions

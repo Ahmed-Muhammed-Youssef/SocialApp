@@ -1,6 +1,4 @@
-﻿using Infrastructure.Auth.Options;
-
-namespace Infrastructure.Auth;
+﻿namespace Infrastructure.Auth;
 
 public class TokenProvider(IOptions<JwtAuthOptions> options) : ITokenProvider
 {

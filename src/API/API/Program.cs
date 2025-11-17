@@ -13,10 +13,10 @@ await DatabaseInitializer.InitializeAsync(app.Services);
 if (app.Environment.IsDevelopment())
 {
     app.UseCors("AllowSpecificOrigin");
+    app.UseSwagger();
+    app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "API v1"));
 }
 
-app.UseSwagger();
-app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "API v1"));
 app.UseMiddleware<ExceptionMiddleware>();
 app.UseHttpsRedirection();
 app.UseAuthentication();
