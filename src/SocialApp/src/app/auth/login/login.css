@@ -137,6 +137,12 @@ input:focus {
   text-decoration: underline;
 }
 
+.error {
+  margin-top: 10px;
+  color: #e63946;
+  font-size: 0.9rem;
+}
+
 
 @media (max-width: 600px) {
   .login-card {

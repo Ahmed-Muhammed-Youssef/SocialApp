@@ -3,15 +3,21 @@
     <h2>Welcome Back</h2>
     <p class="subtitle">Log in to continue</p>
 
-    <form>
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
       <div class="form-group">
-        <input type="email" placeholder="Email" required />
+        <input formControlName="email" type="email" placeholder="Email" required />
       </div>
+      
       <div class="form-group">
-        <input type="password" placeholder="Password" required />
+        <input formControlName="password" type="password" placeholder="Password" required />
       </div>
 
       <button type="submit" class="primary-button">Log In</button>
+      @if (errorMessage()) {
+        <p class="error">
+          {{ errorMessage() }}
+        </p>
+      }
     </form>
 
     <div class="divider">
