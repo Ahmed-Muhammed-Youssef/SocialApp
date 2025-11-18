@@ -5,10 +5,14 @@ import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { LoaderService } from '../../shared/services/loader';
 import { delay } from 'rxjs';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-login',
-  imports: [ReactiveFormsModule, CommonModule, RouterModule],
+  imports: [ReactiveFormsModule, CommonModule, RouterModule, MatFormFieldModule, MatInputModule, MatIconModule, MatButtonModule],
   templateUrl: './login.html',
   styleUrl: './login.css',
 })
@@ -31,29 +35,35 @@ export class Login {
     this.loader.show();
 
     this.auth.login(this.loginForm.value)
-    .pipe(delay(500))
-    .subscribe({
-      next: (res) => {
-        console.log('Logged in', res);
-        this.errorMessage.set(null);
-        this.router.navigate(['/newsfeed']);
+      .pipe(delay(500))
+      .subscribe({
+        next: (res) => {
+          console.log('Logged in', res);
+          this.errorMessage.set(null);
+          this.router.navigate(['/newsfeed']);
 
-        this.loader.hide();
-      },
-      error: (err) => {
-        console.error('Login failed', err);
-        if (err.status === 0) {
-          this.errorMessage.set('Unable to reach server. Please try again.');
-        } else if (err.status === 401) {
-          this.errorMessage.set('Incorrect email or password.');
-        } else if (err.status === 400) {
-          this.errorMessage.set('Invalid request. Please check your input.');
-        } else {
-          this.errorMessage.set('Unexpected error. Please try again later.');
-        }
+          this.loader.hide();
+        },
+        error: (err) => {
+          console.error('Login failed', err);
+          if (err.status === 0) {
+            this.errorMessage.set('Unable to reach server. Please try again.');
+          } else if (err.status === 401) {
+            this.errorMessage.set('Incorrect email or password.');
+          } else if (err.status === 400) {
+            this.errorMessage.set('Invalid request. Please check your input.');
+          } else {
+            this.errorMessage.set('Unexpected error. Please try again later.');
+          }
 
-        this.loader.hide();
-      },
-    });
+          this.loader.hide();
+        },
+      });
+  }
+
+  hide = signal(true);
+  clickEvent(event: MouseEvent) {
+    this.hide.set(!this.hide());
+    event.stopPropagation();
   }
 }

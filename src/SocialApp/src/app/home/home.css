@@ -6,7 +6,7 @@
 
 .hero {
   padding: 6rem 1.5rem;
-  background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+  background: linear-gradient(135deg, var(--mat-sys-primary), var(--color-secondary));
   color: var(--color-text-secondary);
 }
 
