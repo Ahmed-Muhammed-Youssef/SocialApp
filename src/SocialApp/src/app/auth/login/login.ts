@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { AuthService } from '../services/auth';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
+import { LoaderService } from '../../shared/services/loader';
+import { delay } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -13,22 +15,30 @@ import { Router, RouterModule } from '@angular/router';
 export class Login {
   private fb = inject(FormBuilder);
   private auth = inject(AuthService);
-   private router = inject(Router);
+  private router = inject(Router);
+  private loader = inject(LoaderService);
 
   loginForm: FormGroup = this.fb.group({
     email: ['', [Validators.required, Validators.email]],
-    password: ['', [Validators.required, Validators.minLength(6)]]
+    password: ['', [Validators.required, Validators.minLength(6)]],
   });
 
   errorMessage = signal<string | null>(null);
   onSubmit() {
     if (this.loginForm.invalid) return;
     this.errorMessage.set(null);
-    this.auth.login(this.loginForm.value).subscribe({
+
+    this.loader.show();
+
+    this.auth.login(this.loginForm.value)
+    .pipe(delay(500))
+    .subscribe({
       next: (res) => {
         console.log('Logged in', res);
         this.errorMessage.set(null);
         this.router.navigate(['/newsfeed']);
+
+        this.loader.hide();
       },
       error: (err) => {
         console.error('Login failed', err);
@@ -41,7 +51,9 @@ export class Login {
         } else {
           this.errorMessage.set('Unexpected error. Please try again later.');
         }
-      }
+
+        this.loader.hide();
+      },
     });
   }
 }
