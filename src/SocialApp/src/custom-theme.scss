@@ -5,12 +5,13 @@
 // Learn more about theming and how to use it for your application's
 // custom components at https://material.angular.dev/guide/theming
 @use '@angular/material' as mat;
+@use '../_theme-colors' as my-theme; // location of generated file
 
 html {
   @include mat.theme((
     color: (
-      primary: mat.$magenta-palette,
-      tertiary: mat.$violet-palette,
+      primary: my-theme.$primary-palette,
+      tertiary: my-theme.$tertiary-palette,
     ),
     typography: Roboto,
     density: 0,
