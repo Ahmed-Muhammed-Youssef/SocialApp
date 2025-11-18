@@ -36,3 +36,5 @@ a:focus-visible {
 a:active {
   color: var(--color-primary);
 }
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
