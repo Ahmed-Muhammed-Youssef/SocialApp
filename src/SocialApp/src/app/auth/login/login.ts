@@ -2,20 +2,22 @@ import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../services/auth';
 import { CommonModule } from '@angular/common';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-login',
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [ReactiveFormsModule, CommonModule, RouterModule],
   templateUrl: './login.html',
   styleUrl: './login.css',
 })
 export class Login {
   private fb = inject(FormBuilder);
   private auth = inject(AuthService);
+   private router = inject(Router);
 
   loginForm: FormGroup = this.fb.group({
     email: ['', [Validators.required, Validators.email]],
-    password: ['', Validators.required, Validators.minLength(6)]
+    password: ['', [Validators.required, Validators.minLength(6)]]
   });
 
   errorMessage = signal<string | null>(null);
@@ -26,6 +28,7 @@ export class Login {
       next: (res) => {
         console.log('Logged in', res);
         this.errorMessage.set(null);
+        this.router.navigate(['/newsfeed']);
       },
       error: (err) => {
         console.error('Login failed', err);
