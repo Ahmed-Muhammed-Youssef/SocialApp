@@ -17,9 +17,6 @@
       <TreatAsUsed>true</TreatAsUsed>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design">
-      <TreatAsUsed>true</TreatAsUsed>
-    </PackageReference>
     <PackageReference Include="Swashbuckle.AspNetCore" />
 	<PackageReference Include="Mediator.SourceGenerator">
 		<PrivateAssets>all</PrivateAssets>
