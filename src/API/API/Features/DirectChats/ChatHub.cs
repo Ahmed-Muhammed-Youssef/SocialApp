@@ -1,5 +1,3 @@
-using NuGet.Protocol.Plugins;
-
 namespace API.Features.DirectChats;
 
 public class ChatHub(IMediator mediator, IMessageNotifier messageNotifier) : Hub

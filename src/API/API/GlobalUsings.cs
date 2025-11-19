@@ -5,7 +5,7 @@ global using Microsoft.AspNetCore.Mvc;
 global using Microsoft.AspNetCore.Mvc.Filters;
 global using Microsoft.AspNetCore.Identity;
 global using Microsoft.IdentityModel.Tokens;
-global using Microsoft.OpenApi.Models;
+global using Microsoft.OpenApi;
 
 global using Mediator;
 global using FluentValidation;
