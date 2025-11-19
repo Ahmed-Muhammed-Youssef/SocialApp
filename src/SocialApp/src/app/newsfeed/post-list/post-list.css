@@ -1,0 +1,20 @@
+.empty {
+  text-align: center;
+  padding: 2rem;
+  color: var(--mat-sys-on-surface-variant);
+}
+
+.empty-icon {
+  color: var(--mat-sys-primary);
+}
+
+.empty-text {
+  font-size: 1.1rem;
+  color: var(--mat-sys-on-surface-variant);
+}
+
+.posts {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}

@@ -1,1 +1,19 @@
-<p>post-item works!</p>
+<mat-card class="post-card">
+  <mat-card-header>
+    <div mat-card-avatar>
+      <img class="avatar" [src]="post.ownerPictureUrl" alt="User" />
+    </div>
+    <mat-card-title>{{ post.ownerName }}</mat-card-title>
+    <mat-card-subtitle>
+      {{ post.datePosted | date:'medium' }}
+      @if(post.dateEdited)
+      {
+        <span> • edited</span>
+      }
+    </mat-card-subtitle>
+  </mat-card-header>
+
+  <mat-card-content>
+    <p>{{ post.content }}</p>
+  </mat-card-content>
+</mat-card>

@@ -1,1 +1,19 @@
-<p>post-list works!</p>
+<!-- Empty State -->
+@if(posts.length === 0)
+{
+    <div class="empty">
+      <p class="empty-text">No posts yet.</p>
+    </div>
+}
+
+<!-- Posts List -->
+@if(posts.length > 0)
+{
+    <div class="posts">
+      <app-post-item
+        *ngFor="let post of posts"
+        [post]="post">
+      </app-post-item>
+    </div>
+}
+
