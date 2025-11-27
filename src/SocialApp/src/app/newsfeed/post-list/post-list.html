@@ -1,5 +1,5 @@
 <!-- Empty State -->
-@if(posts.length === 0)
+@if(posts().length === 0)
 {
     <div class="empty">
       <p class="empty-text">No posts yet.</p>
@@ -7,13 +7,13 @@
 }
 
 <!-- Posts List -->
-@if(posts.length > 0)
+@if(posts().length > 0)
 {
     <div class="posts">
-      <app-post-item
-        *ngFor="let post of posts"
-        [post]="post">
-      </app-post-item>
+      @for (post of posts(); track post.id)
+      {
+        <app-post-item [post]="post"></app-post-item>
+      }
     </div>
 }
 

@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { NewsfeedService } from '../services/newsfeed';
 import { PostDTO } from '../models/post-dto';
 import { AuthService } from '../../auth/services/auth';
@@ -15,15 +15,15 @@ export class PostList {
   private newsfeedService = inject(NewsfeedService);
   private authService = inject(AuthService);
 
-  posts: PostDTO[] = [];
+  posts = signal<PostDTO[]>([]);
 
   constructor() {
     const currentUser = this.authService.getUserData();
 
     if (currentUser) {
       this.newsfeedService.getUserPosts(currentUser.id).subscribe({
-        next: posts => this.posts = posts,
-        error: () => this.posts = []
+        next: posts => {this.posts.set(posts); console.log(posts)},
+        error: (err) => {this.posts.set([]); console.error(err)}
       });
     }
   }
