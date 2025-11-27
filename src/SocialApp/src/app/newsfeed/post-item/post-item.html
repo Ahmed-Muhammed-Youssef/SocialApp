@@ -1,5 +1,5 @@
 <mat-card class="post-card">
-  <mat-card-header>
+  <mat-card-header class="card-header" [routerLink]="['/profile', post.ownerId]">
     <div mat-card-avatar>
       <img class="avatar"
         [src]="post.ownerPictureUrl && post.ownerPictureUrl.trim() !== '' ? post.ownerPictureUrl : 'imgs/default-user.png'"
@@ -10,7 +10,7 @@
       {{ post.datePosted | date:'medium' }}
       @if(post.dateEdited)
       {
-        <span> • edited</span>
+      <span> • edited</span>
       }
     </mat-card-subtitle>
   </mat-card-header>

@@ -2,10 +2,11 @@ import { Component, Input } from '@angular/core';
 import { PostDTO } from '../models/post-dto';
 import { MatCardModule } from '@angular/material/card';
 import { DatePipe } from '@angular/common';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-post-item',
-  imports: [MatCardModule, DatePipe],
+  imports: [MatCardModule, DatePipe, RouterModule],
   templateUrl: './post-item.html',
   styleUrl: './post-item.css',
 })
