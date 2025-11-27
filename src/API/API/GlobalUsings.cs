@@ -24,6 +24,7 @@ global using Application.Features.Roles;
 global using Application.Features.Roles.List;
 global using Application.Features.Roles.Create;
 global using Application.Features.Roles.Delete;
+global using Application.Features.Posts;
 global using Application.Features.Posts.Create;
 global using Application.Features.Posts.GetById;
 global using Application.Features.Posts.GetByOwnerId;

@@ -1,11 +1,11 @@
 ﻿namespace Application.Features.Posts.GetByOwnerId;
 
-public class GetPostsByOwnerIdHandler(IUnitOfWork _unitOfWork, ICurrentUserService currentUserService) : IQueryHandler<GetPostsByOwnerIdQuery, Result<IEnumerable<Post>>>
+public class GetPostsByOwnerIdHandler(IUnitOfWork _unitOfWork, ICurrentUserService currentUserService) : IQueryHandler<GetPostsByOwnerIdQuery, Result<List<PostDTO>>>
 {
-    public async ValueTask<Result<IEnumerable<Post>>> Handle(GetPostsByOwnerIdQuery query, CancellationToken cancellationToken)
+    public async ValueTask<Result<List<PostDTO>>> Handle(GetPostsByOwnerIdQuery query, CancellationToken cancellationToken)
     {
-        IEnumerable<Post> posts = await _unitOfWork.PostRepository.GetUserPostsAsync(query.UserId, currentUserService.GetPublicId());
+        List<PostDTO> posts = await _unitOfWork.PostRepository.GetUserPostsAsync(query.UserId, currentUserService.GetPublicId());
 
-        return Result<IEnumerable<Post>>.Success(posts);
+        return Result<List<PostDTO>>.Success(posts);
     }
 }

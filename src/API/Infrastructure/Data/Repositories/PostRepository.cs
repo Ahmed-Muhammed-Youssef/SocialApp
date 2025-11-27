@@ -2,9 +2,11 @@
 
 public class PostRepository(ApplicationDatabaseContext dataContext) : RepositoryBase<Post>(dataContext), IPostRepository
 {
-    public async Task<IEnumerable<Post>> GetUserPostsAsync(int userId, int requesterId)
+    public async Task<List<PostDTO>> GetUserPostsAsync(int userId, int requesterId)
     {
-        return await dataContext.Posts.Where(p => p.UserId == userId).ToListAsync();
+        return await dataContext.Posts.Where(p => p.UserId == userId)
+            .Select(PostMappings.ToPostDTOExpression)
+            .ToListAsync();
     }
 
     public async Task<PagedList<PostDTO>> GetNewsfeed(int userId, PaginationParams paginationParams)
@@ -15,16 +17,7 @@ public class PostRepository(ApplicationDatabaseContext dataContext) : Repository
         var allPostsQuery = dataContext.Posts
         .Include(p => p.ApplicationUser)
         .Where(p => friendsQuery.Contains(p.UserId))
-        .Select(p => new PostDTO
-        {
-            Id = p.Id,
-            DateEdited = p.DateEdited,
-            OwnerName = p.ApplicationUser!.FirstName + " " + p.ApplicationUser!.LastName,
-            OwnerId = p.UserId,
-            Content = p.Content,
-            OwnerPictureUrl = "",
-            DatePosted = p.DatePosted
-        })
+        .Select(PostMappings.ToPostDTOExpression)
         .OrderByDescending(p => p.DatePosted)
         .AsNoTracking();
 
