@@ -1,7 +1,9 @@
 <mat-card class="post-card">
   <mat-card-header>
     <div mat-card-avatar>
-      <img class="avatar" [src]="post.ownerPictureUrl" alt="User" />
+      <img class="avatar"
+        [src]="post.ownerPictureUrl && post.ownerPictureUrl.trim() !== '' ? post.ownerPictureUrl : 'imgs/default-user.png'"
+        alt="User" />
     </div>
     <mat-card-title>{{ post.ownerName }}</mat-card-title>
     <mat-card-subtitle>

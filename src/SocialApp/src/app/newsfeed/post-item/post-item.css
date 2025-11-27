@@ -1,0 +1,44 @@
+.post-card {
+  margin: 12px 0;
+  border-radius: 12px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+  transition: box-shadow 0.3s ease, transform 0.2s ease;
+  cursor: default;
+  background-color: var(--mat-sys-surface);
+}
+
+/* Header clickable area */
+.post-card .card-header {
+  cursor: pointer;
+}
+
+/* Avatar image */
+.post-card .avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid rgba(0,0,0,0.12); /* subtle fallback */
+  transition: border-color 0.2s ease;
+}
+
+/* Avatar hover border */
+.post-card .card-header:hover .avatar {
+  border-color: var(--mat-sys-primary);
+}
+
+/* Subtitle styling */
+.post-card .card-header mat-card-subtitle {
+  font-size: 13px;            /* smaller, more subtle */
+  font-weight: 400;           /* normal weight */
+  color: var(--mat-sys-on-surface-variant); /* optional subtle color */
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+
+.post-card .card-header mat-card-subtitle span {
+  font-style: italic;
+  font-size: 12px;
+  color: var(--mat-sys-on-surface-variant);
+}

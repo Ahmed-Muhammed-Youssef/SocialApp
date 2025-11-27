@@ -1,0 +1,14 @@
+/* Feed container: adds responsive margins/padding */
+.feed-container {
+  max-width: 800px;        /* restricts content width on large screens */
+  margin: 16px auto;       /* vertical 16px, horizontally centered */
+  padding: 0 12px;         /* horizontal padding on small screens */
+  box-sizing: border-box;
+}
+
+/* Optional: ensure posts inside have spacing */
+.feed-container app-post-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;               /* spacing between post cards */
+}
