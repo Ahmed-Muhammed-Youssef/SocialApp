@@ -54,33 +54,10 @@ public class ApplicationUserRepository(ApplicationDatabaseContext dataContext) :
 
     public async Task<UserDTO?> GetDtoByIdAsync(int id)
     {
-        var connectionString = dataContext.Database.GetConnectionString();
-        using IDbConnection db = new SqlConnection(connectionString);
-        return (await db.QueryAsync<UserDTO>("GetUserDtoById", new { Id = id }, commandType: CommandType.StoredProcedure)).FirstOrDefault();
-    }
+        UserDTO? userDTO = await dataContext.ApplicationUsers.Where(u => u.Id == id)
+            .Select(UserMappings.ToDtoExpression)
+            .FirstOrDefaultAsync();
 
-    public async Task<List<SimplifiedUserDTO>> GetListAsync(int[] ids)
-    {
-        return await dataContext.ApplicationUsers.Where(u => ids.Contains(u.Id)).Select(u => new SimplifiedUserDTO() { Id = u.Id, FirstName = u.FirstName, LastName = u.LastName, ProfilePictureUrl = null }).ToListAsync();
-    }
-
-    public async Task<SimplifiedUserDTO?> GetSimplifiedDTOAsync(int id)
-    {
-        return await dataContext.ApplicationUsers.Select(u => new SimplifiedUserDTO() { Id = u.Id, FirstName = u.FirstName, LastName = u.LastName, ProfilePictureUrl = null }).FirstOrDefaultAsync(u => u.Id == id);
-    }
-
-    public async Task<PagedList<SimplifiedUserDTO>> SearchAsync(int userId, string search, UserParams userParams)
-    {
-        var query = dataContext.ApplicationUsers.Where(u => (u.FirstName.ToLower() + " " + u.LastName.ToLower()).Contains(search))
-            .Select(u => new SimplifiedUserDTO()
-            {
-                Id = u.Id,
-                FirstName = u.FirstName,
-                LastName = u.LastName,
-                ProfilePictureUrl = null
-            });
-        var count = await query.CountAsync();
-        var users = await query.Skip(userParams.SkipValue()).Take(userParams.ItemsPerPage).ToListAsync();
-        return new PagedList<SimplifiedUserDTO>(users, count, userParams.PageNumber, userParams.ItemsPerPage);
+        return userDTO;
     }
 }
