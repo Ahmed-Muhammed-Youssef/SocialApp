@@ -17,7 +17,17 @@ public class UsersController(JsonSerializerOptions jsonSerializerOptions, IMedia
             return BadRequest(validationResult.Errors);
         }
 
-        var result = await mediator.Send(new GetUsersQuery(request.UserParams), cancellationToken);
+        UserParams userParam = new()
+        {
+            MinAge = request.MinAge,
+            MaxAge = request.MaxAge,
+            OrderBy = request.OrderBy,
+            RelationFilter = request.RelationFilter,
+            PageNumber = request.PageNumber,
+            ItemsPerPage = request.ItemsPerPage
+        };
+
+        var result = await mediator.Send(new GetUsersQuery(userParam), cancellationToken);
 
         if (result.IsSuccess)
         {

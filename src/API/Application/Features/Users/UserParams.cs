@@ -1,6 +1,9 @@
 ﻿namespace Application.Features.Users;
 
-public record UserParams(int MinAge = SystemPolicy.UsersMinimumAge,
-    int? MaxAge = null,
-    OrderByOptions OrderBy = OrderByOptions.LastActive, 
-    RelationFilter RelationFilter = RelationFilter.All) : PaginationParams;
+public record UserParams: PaginationParams
+{
+    public int MinAge { get; init; } = SystemPolicy.UsersMinimumAge;
+    public int? MaxAge { get; init; } = null;
+    public OrderByOptions OrderBy { get; init; } = OrderByOptions.LastActive;
+    public RelationFilter RelationFilter { get; init; } = RelationFilter.All;
+}
