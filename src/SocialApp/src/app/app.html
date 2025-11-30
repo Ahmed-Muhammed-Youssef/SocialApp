@@ -8,10 +8,18 @@
   <div class="nav-link-container">
     <!-- <a class="nav-link" aria-current="page" href="#">Home</a>   -->
   </div>
-
-  <div>
-    <a matButton="filled" routerLink="/login">Log in</a>
-  </div>
+  @if(authService.isLoggedIn())
+  {
+    <div>
+      <a matButton="filled">Log out</a>
+    </div>
+  }
+  @else
+  {
+    <div>
+      <a matButton="filled" routerLink="/login">Log in</a>
+    </div>
+  }
 </nav>
 <app-global-loader />
 <router-outlet />

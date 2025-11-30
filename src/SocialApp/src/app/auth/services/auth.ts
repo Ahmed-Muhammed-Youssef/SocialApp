@@ -62,6 +62,6 @@ export class AuthService {
   }
 
   isLoggedIn(): boolean {
-    return !!this.token;
+    return !!sessionStorage.getItem('access_token');
   }
 }
