@@ -18,5 +18,10 @@ public class ApplicationUserConfigurations : IEntityTypeConfiguration<Applicatio
         builder.Property(u => u.IdentityId).HasMaxLength(450).IsRequired();
         // Nullable Fields 
         builder.Property(u => u.ProfilePictureId).IsRequired(false);
+
+        builder.HasOne<Picture>()
+            .WithOne()
+            .HasForeignKey<ApplicationUser>(u => u.ProfilePictureId)
+            .IsRequired(false);
     }
 }
