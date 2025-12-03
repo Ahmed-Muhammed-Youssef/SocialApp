@@ -26,8 +26,10 @@ public class TokenProviderTests
             RefreshTokenExpirationDays = 7
         });
 
+        var identityDatabaseContext = Helpers.IdentityContextHelper.CreateInMemoryDbContext();
+
         // Act
-        string token = new TokenProvider(options).Create(tokenRequest);
+        string token = new TokenProvider(options, identityDatabaseContext).CreateAccessToken(tokenRequest);
 
         // Assert
         Assert.False(string.IsNullOrWhiteSpace(token));

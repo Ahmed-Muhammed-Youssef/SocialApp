@@ -1,6 +1,6 @@
 ﻿namespace Application.Features.Auth.Login;
 
-public class LoginHandler(IUnitOfWork unitOfWork, UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, ITokenProvider tokenService) 
+public class LoginHandler(IUnitOfWork unitOfWork, UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, ITokenProvider tokenService)
     : ICommandHandler<LoginCommand, Result<LoginDTO>>
 {
     public async ValueTask<Result<LoginDTO>> Handle(LoginCommand command, CancellationToken cancellationToken)
@@ -35,8 +35,9 @@ public class LoginHandler(IUnitOfWork unitOfWork, UserManager<IdentityUser> user
             Roles: await userManager.GetRolesAsync(user)
         );
 
-        string token = tokenService.Create(tokenRequest);
+        string accessToken = tokenService.CreateAccessToken(tokenRequest);
+        string refreshToken = await tokenService.CreateRefreshToken(user.Id);
 
-        return Result<LoginDTO>.Success(new LoginDTO(userData, token));
+        return Result<LoginDTO>.Success(new LoginDTO(userData, accessToken, refreshToken));
     }
 }

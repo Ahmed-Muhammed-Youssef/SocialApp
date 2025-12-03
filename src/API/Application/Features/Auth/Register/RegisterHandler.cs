@@ -55,9 +55,10 @@ public class RegisterHandler(IUnitOfWork unitOfWork, UserManager<IdentityUser> u
             Roles: await userManager.GetRolesAsync(newIdentityUser)
         );
 
-        string token = tokenService.Create(tokenRequest);
+        string accessToken = tokenService.CreateAccessToken(tokenRequest);
+        string refreshToken = await tokenService.CreateRefreshToken(newIdentityUser.Id);
 
-        RegisterDTO dto = new(userData, token);
+        RegisterDTO dto = new(userData, accessToken, refreshToken);
 
         return Result<RegisterDTO>.Created(dto);
     }

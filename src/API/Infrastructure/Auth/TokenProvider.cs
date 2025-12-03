@@ -1,9 +1,11 @@
-﻿namespace Infrastructure.Auth;
+﻿using System.Security.Cryptography;
 
-public class TokenProvider(IOptions<JwtAuthOptions> options) : ITokenProvider
+namespace Infrastructure.Auth;
+
+public class TokenProvider(IOptions<JwtAuthOptions> options, IdentityDatabaseContext identityDatabaseContext) : ITokenProvider
 {
     private readonly JwtAuthOptions _jwtAuthOptions = options.Value;
-    public string Create(TokenRequest tokenRequest)
+    public string CreateAccessToken(TokenRequest tokenRequest)
     {
         var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtAuthOptions.Key));
         var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha512Signature);
@@ -31,4 +33,26 @@ public class TokenProvider(IOptions<JwtAuthOptions> options) : ITokenProvider
         var token = tokenHandler.CreateToken(tokenDescriptor);
         return tokenHandler.WriteToken(token);
     }
+
+    public async Task<string> CreateRefreshToken(string userId)
+    {
+        byte[] randomBytes = RandomNumberGenerator.GetBytes(32);
+        string refreshToken = Convert.ToBase64String(randomBytes);
+
+        RefreshToken refreshTokenEntity = new()
+        {
+            Id = Guid.CreateVersion7(),
+            UserId = userId,
+            Token = refreshToken,
+            ExpiresAtUtc = DateTime.UtcNow.AddDays(_jwtAuthOptions.RefreshTokenExpirationDays)
+        };
+
+        identityDatabaseContext.RefreshTokens.Add(refreshTokenEntity);
+
+        await identityDatabaseContext.SaveChangesAsync();
+
+        return refreshToken;
+    }
+
+
 }

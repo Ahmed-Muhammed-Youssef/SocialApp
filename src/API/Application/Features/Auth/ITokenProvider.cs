@@ -2,5 +2,6 @@
 
 public interface ITokenProvider
 {
-    string Create(TokenRequest tokenRequest);
+    string CreateAccessToken(TokenRequest tokenRequest);
+    Task<string> CreateRefreshToken(string userId);
 }

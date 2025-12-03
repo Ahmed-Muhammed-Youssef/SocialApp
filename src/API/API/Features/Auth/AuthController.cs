@@ -9,7 +9,6 @@ public class AuthController(IMediator mediator) : ControllerBase
     [HttpPost("register")]
     public async Task<ActionResult> Register(RegisterRequest registerRequest, CancellationToken cancellationToken)
     {
-
         if (!ModelState.IsValid)
         {
             return BadRequest(ModelState);
@@ -35,7 +34,8 @@ public class AuthController(IMediator mediator) : ControllerBase
                 new AuthResponse()
                 {
                     UserData = result.Value.UserData,
-                    Token = result.Value.Token
+                    Token = result.Value.Token,
+                    RefreshToken = result.Value.RefreshToken
                 });
         }
         else
@@ -61,7 +61,8 @@ public class AuthController(IMediator mediator) : ControllerBase
             return Ok(new AuthResponse()
             {
                 UserData = result.Value.UserData,
-                Token = result.Value.Token
+                Token = result.Value.Token,
+                RefreshToken = result.Value.RefreshToken
             });
         }
         else
@@ -80,7 +81,8 @@ public class AuthController(IMediator mediator) : ControllerBase
             return Ok(new AuthResponse()
             {
                 UserData = result.Value.UserData,
-                Token = result.Value.Token
+                Token = result.Value.Token,
+                RefreshToken = result.Value.RefreshToken
             });
         }
         else

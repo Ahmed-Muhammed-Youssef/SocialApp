@@ -58,8 +58,9 @@ public class GoogleSignInHandler(IGoogleAuthService googleAuthService, UserManag
             Roles: await userManager.GetRolesAsync(identityUser)
         );
 
-        var token = tokenService.Create(tokenRequest);
+        string accessToken = tokenService.CreateAccessToken(tokenRequest);
+        string refreshToken = await tokenService.CreateRefreshToken(identityUser.Id);
 
-        return Result<LoginDTO>.Success(new LoginDTO(userDTO, token));
+        return Result<LoginDTO>.Success(new LoginDTO(userDTO, accessToken, refreshToken));
     }
 }
