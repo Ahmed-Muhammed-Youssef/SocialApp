@@ -12,6 +12,14 @@ public interface ISpecification<T>
     IFilterSpecification<T>? Filter { get; }
 
     /// <summary>
+    /// Gets the collection of navigation property expressions to include in query results.
+    /// </summary>
+    /// <remarks>Use this property to specify related entities that should be eagerly loaded as part of the
+    /// query. Each expression identifies a navigation property to include. This is commonly used in data access
+    /// scenarios to reduce the number of database queries by retrieving related data in a single operation.</remarks>
+    List<Expression<Func<T, object>>> Includes { get; }
+
+    /// <summary>
     /// Gets the maximum number of records to take (page size).
     /// </summary>
     int? Take { get; }
@@ -29,7 +37,7 @@ public interface ISpecification<T>
     /// <summary>
     /// Gets a value indicating whether the ordering should be descending.
     /// </summary>
-    public bool IsDescending { get; }
+    bool IsDescending { get; }
 
     /// <summary>
     /// Applies pagination and ascending ordering to the specification.
@@ -58,7 +66,16 @@ public interface ISpecification<T>
     /// <exception cref="ArgumentNullException">
     /// Thrown if <paramref name="orderBy"/> is <see langword="null"/>.
     /// </exception>
-    public void ApplyPagination(int skip, int take, Func<T, object> orderBy, bool isDescending);
+    void ApplyPagination(int skip, int take, Func<T, object> orderBy, bool isDescending);
+
+    /// <summary>
+    /// Specifies a related entity or navigation property to include in the query results.
+    /// </summary>
+    /// <remarks>Use this method to eagerly load related data as part of the query. Multiple calls to this
+    /// method can be used to include multiple related entities.</remarks>
+    /// <param name="includeExpression">An expression that identifies the related entity or navigation property to include. Typically a lambda
+    /// expression such as 'entity => entity.Property'. Cannot be null.</param>
+    void AddInclude(Expression<Func<T, object>> includeExpression);
 }
 
 /// <summary>

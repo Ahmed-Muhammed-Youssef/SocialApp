@@ -41,6 +41,14 @@ public class SpecificationEvaluator : ISpecificationEvaluator
                 query = query.OrderBy(specification.OrderBy).AsQueryable();
             }
         }
+
+        if(specification.Includes.Count != 0)
+        {
+            foreach(var includeExpression in specification.Includes)
+            {
+                query = query.Include(includeExpression);
+            }
+        }
         
         return query;
     }

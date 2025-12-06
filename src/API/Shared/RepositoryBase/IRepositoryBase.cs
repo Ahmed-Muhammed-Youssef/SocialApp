@@ -1,6 +1,4 @@
-﻿using Shared.Specification;
-
-namespace Shared.RepositoryBase;
+﻿namespace Shared.RepositoryBase;
 
 /// <summary>
 /// Defines a generic repository interface for performing CRUD operations and querying entities of type <typeparamref

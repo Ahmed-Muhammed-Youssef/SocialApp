@@ -19,6 +19,15 @@ public class Specification<T> : ISpecification<T>
     public bool IsDescending { get; private set; }
 
     /// <inheritdoc/>
+    public List<Expression<Func<T, object>>> Includes { get; private set; } = [];
+
+    /// <inheritdoc/>
+    public void AddInclude(Expression<Func<T, object>> includeExpression)
+    {
+        Includes.Add(includeExpression);
+    }
+
+    /// <inheritdoc/>
     public void ApplyPagination(int skip, int take, Func<T, object> orderBy) => ApplyPagination(skip, take, orderBy, isDescending: false);
 
     /// <inheritdoc/>
