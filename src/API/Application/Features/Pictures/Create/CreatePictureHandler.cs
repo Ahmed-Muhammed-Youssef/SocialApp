@@ -23,7 +23,9 @@ public class CreatePictureHandler(IUnitOfWork unitOfWork, IPictureService pictur
             PublicId = result.PublicId
         };
 
-        picture = await unitOfWork.PictureRepository.AddAsync(picture, cancellationToken);
+        unitOfWork.PictureRepository.Add(picture);
+        await unitOfWork.CommitAsync(cancellationToken);
+
         return Result<int>.Created(picture.Id);
     }
 }

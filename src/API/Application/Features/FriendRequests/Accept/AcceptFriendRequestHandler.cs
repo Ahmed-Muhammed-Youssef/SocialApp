@@ -17,11 +17,13 @@ public class AcceptFriendRequestHandler(IUnitOfWork unitOfWork, ICurrentUserServ
 
             friendRequest.Accept(userId);
 
-            await unitOfWork.FriendRequestRepository.UpdateAsync(friendRequest, cancellationToken);
+            unitOfWork.FriendRequestRepository.Update(friendRequest);
 
             Friend friend = Friend.CreateFromAcceptedRequest(friendRequest.RequesterId, friendRequest.RequestedId);
 
-            await unitOfWork.FriendRepository.AddAsync(friend, cancellationToken);
+            unitOfWork.FriendRepository.Add(friend);
+
+            await unitOfWork.CommitAsync(cancellationToken);
 
             return Result<FriendCreatedResponse>.Created(new FriendCreatedResponse(command.Id, friend.Created));
         }

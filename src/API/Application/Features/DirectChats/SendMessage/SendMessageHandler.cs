@@ -24,7 +24,7 @@ public class SendMessageHandler(IUnitOfWork unitOfWork, IDirectChatGroupsStore u
 
             Message newMessage = chat.AddMessage(sender.Id, command.Content);
 
-            await unitOfWork.SaveChangesAsync(cancellationToken);
+            await unitOfWork.CommitAsync(cancellationToken);
 
             Group group = usersGroupsStore.GetOrAddGroup(sender.Id, recipient.Id);
 

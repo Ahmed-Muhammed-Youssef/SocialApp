@@ -22,7 +22,6 @@ global using Infrastructure.Auth;
 global using Infrastructure.Auth.Options;
 global using Infrastructure.Data;
 global using Infrastructure.Data.Identity;
-global using Infrastructure.Data.Configurations;
 global using Infrastructure.Data.Repositories;
 global using Infrastructure.Data.Repositories.CachedRepositories;
 global using Infrastructure.Media.Cloudinary;

@@ -12,12 +12,31 @@ public class UnitOfWork(ApplicationDatabaseContext _dataContext, IApplicationUse
     public IFriendRequestRepository FriendRequestRepository { get; } = friendRequestRepository;
 
     /// <inheritdoc/>
-    public async Task SaveChangesAsync(CancellationToken cancellationToken = default)
+    public async Task BeginTransactionAsync(CancellationToken cancellationToken = default)
     {
-        await _dataContext.SaveChangesAsync(cancellationToken);
+        await _dataContext.Database.BeginTransactionAsync(cancellationToken);
     }
+
+    /// <inheritdoc/>
+    public async Task<int> CommitAsync(CancellationToken cancellationToken = default)
+    {
+        return await _dataContext.SaveChangesAsync(cancellationToken);
+    }
+
+    /// <inheritdoc/>
+    public async Task CommitTransactionAsync(CancellationToken cancellationToken = default)
+    {
+        await _dataContext.Database.CommitTransactionAsync(cancellationToken);
+    }
+
     public bool HasChanges()
     {
         return _dataContext.ChangeTracker.HasChanges();
+    }
+
+    /// <inheritdoc/>
+    public async Task RollbackTransactionAsync(CancellationToken cancellationToken = default)
+    {
+        await _dataContext.Database.RollbackTransactionAsync(cancellationToken);
     }
 }

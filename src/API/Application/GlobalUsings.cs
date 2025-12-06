@@ -10,6 +10,7 @@ global using Microsoft.EntityFrameworkCore;
 
 global using Application.Common.Mappings;
 global using Application.Common.Interfaces;
+global using Application.Common.Interfaces.Repositories;
 global using Application.Features.Users;
 global using Application.Features.Users.Specifications;
 global using Application.Features.DirectChats;
@@ -24,7 +25,9 @@ global using Domain.FriendRequestAggregate;
 global using Domain.FriendAggregate;
 global using Domain.DirectChatAggregate;
 global using Domain.ApplicationUserAggregate;
+global using Domain.ApplicationUserAggregate.Exceptions;
 global using Domain.ApplicationUserAggregate.FilterSpecifications;
+global using Domain.ApplicationUserAggregate.Specifications;
 
 global using Shared.Constants;
 

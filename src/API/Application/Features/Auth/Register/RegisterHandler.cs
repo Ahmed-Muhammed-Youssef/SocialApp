@@ -38,7 +38,8 @@ public class RegisterHandler(IUnitOfWork unitOfWork, UserManager<IdentityUser> u
 
         try
         {
-            await unitOfWork.ApplicationUserRepository.AddAsync(newApplicationUser, cancellationToken);
+            unitOfWork.ApplicationUserRepository.Add(newApplicationUser);
+            await unitOfWork.CommitAsync(cancellationToken);
         }
         catch (Exception)
         {

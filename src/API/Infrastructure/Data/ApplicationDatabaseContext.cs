@@ -17,15 +17,6 @@ public class ApplicationDatabaseContext(DbContextOptions<ApplicationDatabaseCont
         base.OnModelCreating(modelBuilder);
 
         // Apply configurations
-        modelBuilder.ApplyConfiguration(new PictureConfigurations());
-        modelBuilder.ApplyConfiguration(new MessageConfigurations());
-        modelBuilder.ApplyConfiguration(new FriendRequestConfigurations());
-        modelBuilder.ApplyConfiguration(new FriendConfigurations());
-        modelBuilder.ApplyConfiguration(new ApplicationUserConfigurations());
-        modelBuilder.ApplyConfiguration(new PostConfigurations());
-        modelBuilder.ApplyConfiguration(new CountryConfigurations());
-        modelBuilder.ApplyConfiguration(new RegionConfigurations());
-        modelBuilder.ApplyConfiguration(new CityConfigurations());
-        modelBuilder.ApplyConfiguration(new DirectChatConfigurations());
+        modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDatabaseContext).Assembly);
     }
 }

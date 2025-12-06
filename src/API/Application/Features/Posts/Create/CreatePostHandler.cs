@@ -11,7 +11,8 @@ public class CreatePostHandler(IUnitOfWork unitOfWork, ICurrentUserService curre
             UserId = currentUserService.GetPublicId()
         };
 
-        await unitOfWork.PostRepository.AddAsync(post, cancellationToken);
+        unitOfWork.PostRepository.Add(post);
+        await unitOfWork.CommitAsync(cancellationToken);
         return Result<ulong>.Created(post.Id);
     }
 }

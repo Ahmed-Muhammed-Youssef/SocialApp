@@ -27,7 +27,8 @@ public class CreateFriendRequestHandler(IUnitOfWork unitOfWork, ICurrentUserServ
                 return Result<int>.Error("You already are friends.");
             }
 
-            await unitOfWork.FriendRequestRepository.AddAsync(friendRequest, cancellationToken);
+            unitOfWork.FriendRequestRepository.Add(friendRequest);
+            await unitOfWork.CommitAsync(cancellationToken);
 
             return Result<int>.Created(friendRequest.Id);
         }

@@ -13,7 +13,8 @@ public class DeleteFriendRequestHandler(IUnitOfWork unitOfWork, ICurrentUserServ
             return Result<object?>.Error("You didn't sent a friend request.");
         }
 
-        await unitOfWork.FriendRequestRepository.DeleteAsync(fr, cancellationToken);
+        unitOfWork.FriendRequestRepository.Delete(fr);
+        await unitOfWork.CommitAsync(cancellationToken);
 
         return Result<object?>.NoContent();
     }

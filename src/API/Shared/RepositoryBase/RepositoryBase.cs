@@ -37,59 +37,43 @@ public abstract class RepositoryBase<T> : IRepositoryBase<T> where T : class
     }
 
     /// <inheritdoc/>
-    public virtual async Task<T> AddAsync(T entity, CancellationToken cancellationToken = default)
+    public virtual T Add(T entity)
     {
         DbContext.Set<T>().Add(entity);
-
-        await SaveChangesAsync(cancellationToken);
 
         return entity;
     }
 
     /// <inheritdoc/>
-    public virtual async Task<IEnumerable<T>> AddRangeAsync(IEnumerable<T> entities, CancellationToken cancellationToken = default)
+    public virtual IEnumerable<T> AddRange(IEnumerable<T> entities)
     {
         DbContext.Set<T>().AddRange(entities);
-
-        await SaveChangesAsync(cancellationToken);
 
         return entities;
     }
 
     /// <inheritdoc/>
-    public virtual async Task<int> UpdateAsync(T entity, CancellationToken cancellationToken = default)
+    public virtual void Update(T entity)
     {
         DbContext.Set<T>().Update(entity);
-
-        var result = await SaveChangesAsync(cancellationToken);
-        return result;
     }
 
     /// <inheritdoc/>
-    public virtual async Task<int> UpdateRangeAsync(IEnumerable<T> entities, CancellationToken cancellationToken = default)
+    public virtual void UpdateRange(IEnumerable<T> entities)
     {
         DbContext.Set<T>().UpdateRange(entities);
-
-        var result = await SaveChangesAsync(cancellationToken);
-        return result;
     }
 
     /// <inheritdoc/>
-    public virtual async Task<int> DeleteAsync(T entity, CancellationToken cancellationToken = default)
+    public virtual void Delete(T entity)
     {
         DbContext.Set<T>().Remove(entity);
-
-        var result = await SaveChangesAsync(cancellationToken);
-        return result;
     }
 
     /// <inheritdoc/>
-    public virtual async Task<int> DeleteRangeAsync(IEnumerable<T> entities, CancellationToken cancellationToken = default)
+    public virtual void DeleteRange(IEnumerable<T> entities)
     {
         DbContext.Set<T>().RemoveRange(entities);
-
-        var result = await SaveChangesAsync(cancellationToken);
-        return result;
     }
 
     /// <inheritdoc/>

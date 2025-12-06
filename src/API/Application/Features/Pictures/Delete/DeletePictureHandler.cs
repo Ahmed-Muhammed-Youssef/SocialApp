@@ -24,10 +24,12 @@ public class DeletePictureHandler(IUnitOfWork unitOfWork, IPictureService pictur
             return Result<object?>.Error(result.Error.Message);
         }
 
-        await unitOfWork.PictureRepository.DeleteAsync(picture, cancellationToken);
+        unitOfWork.PictureRepository.Add(picture);
+
+        await unitOfWork.CommitAsync(cancellationToken);
 
         //@TODO: what if the image is a profile picture
-        
+
         return Result<object?>.NoContent();
     }
 }

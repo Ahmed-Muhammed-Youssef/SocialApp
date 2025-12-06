@@ -13,7 +13,8 @@ public class UpdateUserHandler(IUnitOfWork unitOfWork, ICurrentUserService curre
 
         appUser.Update(command.FirstName, command.LastName, command.CityId, command.Bio);
 
-        await unitOfWork.ApplicationUserRepository.UpdateAsync(appUser, cancellationToken);
+        unitOfWork.ApplicationUserRepository.Update(appUser);
+        await unitOfWork.CommitAsync(cancellationToken);
 
         return Result<UserDTO>.Success(UserMappings.ToDto(appUser));
     }

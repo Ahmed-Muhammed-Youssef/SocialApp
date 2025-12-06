@@ -15,6 +15,7 @@ public class LogUserActivity(IUnitOfWork unitOfWork) : IAsyncActionFilter
         if (user is null) return;
 
         user.MarkActive();
-        await unitOfWork.ApplicationUserRepository.UpdateAsync(user, cancellationToken);
+        unitOfWork.ApplicationUserRepository.Update(user);
+        await unitOfWork.CommitAsync(cancellationToken);
     }
 }
