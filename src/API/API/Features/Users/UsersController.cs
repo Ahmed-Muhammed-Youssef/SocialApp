@@ -84,4 +84,23 @@ public class UsersController(JsonSerializerOptions jsonSerializerOptions, IMedia
             return NotFound();
         }
     }
+
+    [HttpPost]
+    [Route("set-profile-picture/{pictureId}")]
+    public async Task<ActionResult> SetProfilePicture(int pictureId, CancellationToken cancellationToken)
+    {
+        Result<object?> result = await mediator.Send(new SetProfilePictureCommand(pictureId), cancellationToken);
+        if (result.IsSuccess)
+        {
+            return NoContent();
+        }
+        else if (result.Status == ResultStatus.NotFound)
+        {
+            return NotFound(result.Errors);
+        }
+        else
+        {
+            return BadRequest(result.Errors);
+        }
+    }
 }

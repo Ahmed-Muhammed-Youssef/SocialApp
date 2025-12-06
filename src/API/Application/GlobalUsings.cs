@@ -25,9 +25,7 @@ global using Domain.FriendRequestAggregate;
 global using Domain.FriendAggregate;
 global using Domain.DirectChatAggregate;
 global using Domain.ApplicationUserAggregate;
-global using Domain.ApplicationUserAggregate.Exceptions;
 global using Domain.ApplicationUserAggregate.FilterSpecifications;
-global using Domain.ApplicationUserAggregate.Specifications;
 
 global using Shared.Constants;
 

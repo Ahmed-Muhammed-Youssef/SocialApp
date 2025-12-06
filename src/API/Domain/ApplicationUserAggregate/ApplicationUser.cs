@@ -12,10 +12,11 @@ public class ApplicationUser : EntityBase, IAggregateRoot
     public DateTime LastActive { get; private set; }
     public string? Bio { get; private set; }
     public int CityId { get; private set; }
+    public ICollection<UserPicture> Pictures { get; private set; } = [];
 
     private ApplicationUser() { } 
 
-    public ApplicationUser(string identityId, string firstName, string lastName, DateTime dateOfBirth, Gender gender, int cityId, int? profilePictureId = null)
+    public ApplicationUser(string identityId, string firstName, string lastName, DateTime dateOfBirth, Gender gender, int cityId)
     {
         if (string.IsNullOrWhiteSpace(firstName)) throw new ArgumentException("First name is required.");
         if (string.IsNullOrWhiteSpace(lastName)) throw new ArgumentException("Last name is required.");
@@ -27,19 +28,23 @@ public class ApplicationUser : EntityBase, IAggregateRoot
         DateOfBirth = dateOfBirth;
         Gender = gender;
         CityId = cityId;
-        ProfilePictureId = profilePictureId;
 
         Created = DateTime.UtcNow;
         LastActive = Created;
     }
 
-    public void Update(string firstName, string lastName, int cityId, string? bio, int? profilePictureId = null)
+    public void Update(string firstName, string lastName, int cityId, string? bio)
     {
         FirstName = firstName;
         LastName = lastName;
         Bio = bio?.Trim();
         CityId = cityId;
-        ProfilePictureId = profilePictureId;
+        MarkActive();
+    }
+
+    public void SetProfilePicture(int pictureId)
+    {
+        ProfilePictureId = pictureId;
         MarkActive();
     }
 

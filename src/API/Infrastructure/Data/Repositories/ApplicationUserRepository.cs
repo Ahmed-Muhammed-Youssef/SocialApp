@@ -60,4 +60,11 @@ public class ApplicationUserRepository(ApplicationDatabaseContext dataContext) :
 
         return userDTO;
     }
+
+    public Task<int> SetProfilePictureIfOwnedAsync(int userId, int pictureId)
+    {
+        return dataContext.ApplicationUsers
+        .Where(u => u.Id == userId && dataContext.UserPictures.Any(up => up.UserId == userId && up.PictureId == pictureId))
+        .ExecuteUpdateAsync(s => s.SetProperty(u => u.ProfilePictureId, pictureId));
+    }
 }

@@ -20,6 +20,7 @@ global using Application.Features.Users;
 global using Application.Features.Users.Get;
 global using Application.Features.Users.List;
 global using Application.Features.Users.Update;
+global using Application.Features.Users.SetProfilePciture;
 global using Application.Features.Roles;
 global using Application.Features.Roles.List;
 global using Application.Features.Roles.Create;
@@ -70,7 +71,6 @@ global using Infrastructure.Auth.External;
 global using Infrastructure.Data;
 global using Infrastructure.Data.Identity;
 
-global using Shared;
 global using Shared.Extensions;
 global using Shared.Results;
 global using Shared.Constants;
