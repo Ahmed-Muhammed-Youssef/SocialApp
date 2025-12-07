@@ -27,6 +27,7 @@ global using Application.Features.Roles.List;
 global using Application.Features.Roles.Create;
 global using Application.Features.Roles.Delete;
 global using Application.Features.Posts;
+global using Application.Features.Posts.List;
 global using Application.Features.Posts.Create;
 global using Application.Features.Posts.GetById;
 global using Application.Features.Pictures;
@@ -74,4 +75,5 @@ global using Infrastructure.Data.Identity;
 
 global using Shared.Extensions;
 global using Shared.Results;
+global using Shared.Pagination;
 global using Shared.Constants;

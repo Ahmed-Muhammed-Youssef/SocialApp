@@ -22,5 +22,7 @@ public class PagedList<T>
     public int CurrentPage { get; private set; }
     public int TotalPages { get; private set; }
     public int ItemsPerPage { get; private set; }
-    public int Count { get; private set; } 
+    public int Count { get; private set; }
+    public bool HasPrevious => CurrentPage > 1;
+    public bool HasNext => CurrentPage < TotalPages;
 }

@@ -17,3 +17,10 @@
     </div>
 }
 
+<!-- anchor for infinite scroll -->
+<div #scrollAnchor class="scroll-anchor"></div>
+
+@if (loading()) {
+  <p class="loading">Loading more...</p>
+}
+

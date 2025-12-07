@@ -1,7 +1,6 @@
-import { Component, inject, signal } from '@angular/core';
+import { afterRenderEffect, Component, ElementRef, inject, signal, viewChild } from '@angular/core';
 import { NewsfeedService } from '../services/newsfeed';
 import { PostDTO } from '../models/post-dto';
-import { AuthService } from '../../auth/services/auth';
 import { MatIconModule } from '@angular/material/icon';
 import { PostItem } from '../post-item/post-item';
 
@@ -13,18 +12,56 @@ import { PostItem } from '../post-item/post-item';
 })
 export class PostList {
   private newsfeedService = inject(NewsfeedService);
-  private authService = inject(AuthService);
-
   posts = signal<PostDTO[]>([]);
+  pageNumber = 1;
+
+  readonly itemsPerPage = 10;
+  loading = signal(false);
+  hasNext = signal(true);
+
+
+  // anchor element reference
+  scrollAnchor = viewChild<ElementRef>('scrollAnchor');
 
   constructor() {
-    const currentUser = this.authService.getUserData();
+    this.loadPosts();
 
-    if (currentUser) {
-      this.newsfeedService.getUserPosts(currentUser.id).subscribe({
-        next: posts => {this.posts.set(posts); console.log(posts)},
-        error: (err) => {this.posts.set([]); console.error(err)}
+    // attach intersection observer AFTER DOM renders
+    afterRenderEffect(() => {
+      const anchor = this.scrollAnchor()?.nativeElement;
+      if (!anchor) return;
+
+      const observer = new IntersectionObserver(entries => {
+        if (entries.some(e => e.isIntersecting)) {
+          this.loadPosts();
+        }
       });
-    }
+
+      observer.observe(anchor);
+
+      // cleanup automatically when component is destroyed
+      return () => observer.disconnect();
+    });
+  }
+
+  private loadPosts() {
+    if (this.loading() || !this.hasNext()) return;
+
+    this.loading.set(true);
+
+    this.newsfeedService.getPosts(this.pageNumber, this.itemsPerPage).subscribe({
+      next: paged => {
+        this.posts.update(cur => [...cur, ...paged.items]);
+
+        this.hasNext.set(paged.hasNext);
+        if (paged.hasNext) this.pageNumber++;
+
+        this.loading.set(false);
+      },
+      error: err => {
+        console.error(err);
+        this.loading.set(false);
+      }
+    });
   }
 }

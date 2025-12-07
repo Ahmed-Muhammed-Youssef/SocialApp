@@ -1,8 +1,9 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { PostDTO } from '../models/post-dto';
 import { CreatePostRequest } from '../models/create-post-request';
+import { PagedList } from '../../shared/models/paged-list';
 
 @Injectable({
   providedIn: 'root',
@@ -15,6 +16,14 @@ export class NewsfeedService {
   getUserPosts(userId: number): Observable<PostDTO[]> {
     return this.http.get<PostDTO[]>(`${this.baseUrl}?userId=${userId}`);
   }
+
+  getPosts(pageNumber: number, itemsPerPage: number): Observable<PagedList<PostDTO>> {
+  const params = new HttpParams()
+    .set('pageNumber', pageNumber)
+    .set('itemsPerPage', itemsPerPage);
+
+  return this.http.get<PagedList<PostDTO>>(this.baseUrl, { params });
+}
 
   // GET /api/posts/{postId}
   getPostById(postId: number): Observable<PostDTO> {

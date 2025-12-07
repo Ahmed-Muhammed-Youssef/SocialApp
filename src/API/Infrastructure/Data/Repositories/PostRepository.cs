@@ -9,7 +9,7 @@ public class PostRepository(ApplicationDatabaseContext dataContext) : Repository
             .ToListAsync();
     }
 
-    public async Task<PagedList<PostDTO>> GetNewsfeed(int userId, PaginationParams paginationParams)
+    public async Task<PagedList<PostDTO>> GetNewsfeed(int userId, PaginationParams paginationParams, CancellationToken cancellationToken = default)
     {
         IQueryable<int> friendsQuery = dataContext.Friends
         .Where(f => f.FriendId == userId).Select(f => f.UserId);
@@ -21,10 +21,10 @@ public class PostRepository(ApplicationDatabaseContext dataContext) : Repository
             .OrderByDescending(p => p.DatePosted)
             .AsNoTracking();
 
-        int count = await allPostsQuery.CountAsync();
+        int count = await allPostsQuery.CountAsync(cancellationToken: cancellationToken);
 
         List<PostDTO> posts = await allPostsQuery.Skip(paginationParams.SkipValue())
-            .Take(paginationParams.ItemsPerPage).ToListAsync();
+            .Take(paginationParams.ItemsPerPage).ToListAsync(cancellationToken: cancellationToken);
 
         return new PagedList<PostDTO>(posts, count, paginationParams.PageNumber, paginationParams.ItemsPerPage);
     }

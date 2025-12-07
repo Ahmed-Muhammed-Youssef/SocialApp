@@ -18,3 +18,13 @@
   flex-direction: column;
   gap: 1rem;
 }
+
+.scroll-anchor {
+  height: 1px;
+}
+
+.loading {
+  text-align: center;
+  margin: 1rem 0;
+  opacity: 0.7;
+}

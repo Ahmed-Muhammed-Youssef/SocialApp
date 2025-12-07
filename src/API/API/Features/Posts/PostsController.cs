@@ -6,9 +6,9 @@
 public class PostsController(IMediator mediator) : ControllerBase
 {
     [HttpGet]
-    public async Task<ActionResult<List<PostDTO>>> GetUserPostsAsync([FromQuery]int userId, CancellationToken cancellationToken)
+    public async Task<ActionResult<PagedList<PostDTO>>> Get([FromQuery]PaginationParams paginationParams, CancellationToken cancellationToken)
     {
-        Result<List<PostDTO>> result = await mediator.Send(new GetUserPostsQuery(userId), cancellationToken);
+        Result<PagedList<PostDTO>> result = await mediator.Send(new GetPostsQuery(paginationParams), cancellationToken);
 
         if (result.IsSuccess)
         {
@@ -21,7 +21,7 @@ public class PostsController(IMediator mediator) : ControllerBase
     }
 
     [HttpGet("{postId}")]
-    public async Task<ActionResult<Post>> GetPostById(ulong postId, CancellationToken cancellationToken)
+    public async Task<ActionResult<Post>> GetById(ulong postId, CancellationToken cancellationToken)
     {
         Result<Post> result = await mediator.Send(new GetPostByIdQuery(postId), cancellationToken);
 
@@ -46,7 +46,7 @@ public class PostsController(IMediator mediator) : ControllerBase
         Result<ulong> result = await mediator.Send(new CreatePostCommand(request.Content), cancellationToken);
         if (result.IsSuccess)
         {
-            return CreatedAtAction(nameof(GetPostById), new { postId = result.Value});
+            return CreatedAtAction(nameof(GetById), new { postId = result.Value});
         }
         else
         {
