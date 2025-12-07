@@ -1,6 +1,4 @@
-﻿using Application.Features.DirectChats.Stores;
-
-namespace API.Features.DirectChats;
+﻿namespace API.Features.DirectChats;
 
 public class MessageNotifier (IHubContext<OnlineUsersHub> presenceHubContext, IOnlineUsersStore onlineUsersStore) : IMessageNotifier
 {
