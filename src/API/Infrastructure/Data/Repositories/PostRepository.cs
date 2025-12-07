@@ -2,11 +2,12 @@
 
 public class PostRepository(ApplicationDatabaseContext dataContext) : RepositoryBase<Post>(dataContext), IPostRepository
 {
-    public async Task<List<PostDTO>> GetUserPostsAsync(int userId)
+    public async Task<List<PostDTO>> GetUserPostsAsync(int userId, CancellationToken cancellationToken = default)
     {
         return await dataContext.Posts.Where(p => p.UserId == userId)
             .Select(PostMappings.ToPostDTOExpression)
-            .ToListAsync();
+            .OrderByDescending(p => p.DatePosted)
+            .ToListAsync(cancellationToken: cancellationToken);
     }
 
     public async Task<PagedList<PostDTO>> GetNewsfeed(int userId, PaginationParams paginationParams, CancellationToken cancellationToken = default)

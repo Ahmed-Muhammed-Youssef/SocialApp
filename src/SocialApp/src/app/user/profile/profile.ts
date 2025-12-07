@@ -4,10 +4,12 @@ import { ActivatedRoute } from '@angular/router';
 import { UserDTO } from '../../auth/models/user-dto';
 import { MatCardModule } from '@angular/material/card';
 import { DatePipe } from '@angular/common';
+import { PostItem } from '../../newsfeed/post-item/post-item';
+import { PostDTO } from '../../newsfeed/models/post-dto';
 
 @Component({
   selector: 'app-profile',
-  imports: [MatCardModule, DatePipe],
+  imports: [MatCardModule, DatePipe, PostItem],
   templateUrl: './profile.html',
   styleUrl: './profile.css',
 })
@@ -16,6 +18,7 @@ export class Profile {
   private route = inject(ActivatedRoute);
 
   user = signal<UserDTO | null>(null);
+  posts = signal<PostDTO[]>([]);
   defaultImage = 'imgs/default-user.png';
 
   constructor()
@@ -25,6 +28,12 @@ export class Profile {
     this.userService.getUserById(id).subscribe({
       next: (res) => this.user.set(res),
       error: (err) => console.error(err)
+    });
+
+    // Get user posts
+    this.userService.getUserPosts(id).subscribe({
+      next: res => this.posts.set(res),
+      error: err => console.error(err)
     });
   }
 

@@ -11,14 +11,13 @@ export class UsersService {
   private readonly baseUrl = 'https://localhost:5001/api/users';
   private httpClient = inject(HttpClient);
 
-  
   getUserById(userId : number) : Observable<UserDTO>
   {
     return this.httpClient.get<UserDTO>(`${this.baseUrl}/${userId}`)
   }
 
-  getUserPosts(userId: number) : Observable<PostDTO>
+  getUserPosts(userId: number) : Observable<PostDTO[]>
   {
-    return this.httpClient.get<PostDTO>(`${this.baseUrl}/${userId}/posts`)
+    return this.httpClient.get<PostDTO[]>(`${this.baseUrl}/${userId}/posts`)
   }
 }

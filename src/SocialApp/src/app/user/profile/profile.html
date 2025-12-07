@@ -27,4 +27,18 @@
     </mat-card-content>
 
 </mat-card>
+
+ <!-- User Posts Section -->
+  <div class="posts-section">
+
+    <h3 class="posts-title">Posts</h3>
+
+    @if(posts().length === 0) {
+      <p class="empty">This user has not posted anything yet.</p>
+    }
+
+    @for (post of posts(); track post.id) {
+      <app-post-item [post]="post"></app-post-item>
+    }
+  </div>
 }
