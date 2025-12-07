@@ -1,7 +1,7 @@
 import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../services/auth';
-import { CommonModule } from '@angular/common';
+
 import { Router, RouterModule } from '@angular/router';
 import { LoaderService } from '../../shared/services/loader';
 import { delay } from 'rxjs';
@@ -12,7 +12,7 @@ import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-login',
-  imports: [ReactiveFormsModule, CommonModule, RouterModule, MatFormFieldModule, MatInputModule, MatIconModule, MatButtonModule],
+  imports: [ReactiveFormsModule, RouterModule, MatFormFieldModule, MatInputModule, MatIconModule, MatButtonModule],
   templateUrl: './login.html',
   styleUrl: './login.css',
 })
