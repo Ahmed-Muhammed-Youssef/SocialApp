@@ -2,6 +2,6 @@
 
 public interface IPostRepository : IRepositoryBase<Post>
 {
-    Task<List<PostDTO>> GetUserPostsAsync(int userId, int requesterId);
+    Task<List<PostDTO>> GetUserPostsAsync(int userId);
     Task<PagedList<PostDTO>> GetNewsfeed(int userId, PaginationParams paginationParams);
 }

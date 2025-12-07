@@ -1,5 +1,3 @@
-using Application.Features.DirectChats.Stores;
-
 namespace API.Features.Users;
 
 [Authorize]

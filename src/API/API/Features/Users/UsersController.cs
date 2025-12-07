@@ -103,4 +103,18 @@ public class UsersController(JsonSerializerOptions jsonSerializerOptions, IMedia
             return BadRequest(result.Errors);
         }
     }
+
+    [HttpGet("{userId}/posts")]
+    public async Task<ActionResult<List<PostDTO>>> GetUserPostsAsync(int userId, CancellationToken cancellationToken)
+    {
+        Result<List<PostDTO>> result = await mediator.Send(new GetUserPostsQuery(userId), cancellationToken);
+        if (result.IsSuccess)
+        {
+            return Ok(result.Value);
+        }
+        else
+        {
+            return BadRequest(result.Errors);
+        }
+    }
 }

@@ -8,7 +8,7 @@ public class PostsController(IMediator mediator) : ControllerBase
     [HttpGet]
     public async Task<ActionResult<List<PostDTO>>> GetUserPostsAsync([FromQuery]int userId, CancellationToken cancellationToken)
     {
-        Result<List<PostDTO>> result = await mediator.Send(new GetPostsByOwnerIdQuery(userId), cancellationToken);
+        Result<List<PostDTO>> result = await mediator.Send(new GetUserPostsQuery(userId), cancellationToken);
 
         if (result.IsSuccess)
         {
