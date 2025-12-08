@@ -1,0 +1,57 @@
+@if(otherUser()) {
+  <mat-card class="chat-card mat-elevation-z4">
+    
+    <mat-card-header class="modern-header">
+      <img mat-card-avatar src="imgs/default-user.png" alt="Avatar">
+      <mat-card-title>{{ otherUser()?.firstName }} {{ otherUser()?.lastName }}</mat-card-title>
+      <mat-card-subtitle>Online</mat-card-subtitle>
+      </mat-card-header>
+    
+    <mat-card-content #scrollContainer class="chat-content">
+      
+      @for (msg of messages(); track msg.id) {
+        <div class="msg-row" 
+             [class.me]="msg.senderId === userId()"
+             [class.them]="msg.senderId !== userId()">
+
+          @if (msg.senderId !== userId()) {
+            <img class="msg-avatar" src="imgs/default-user.png" alt="Sender Avatar">
+          }
+
+          <div class="bubble mat-elevation-z1">
+            <div>{{ msg.content }}</div>
+            <div class="time">{{ msg.sentDate | date:'shortTime' }}</div>
+          </div>
+          
+          @if (msg.senderId === userId()) {
+            <div class="msg-avatar-spacer"></div> 
+          }
+        </div>
+      }
+  
+      @if (messages().length === 0) {
+        <div class="empty-state">
+          <mat-icon>chat_bubble_outline</mat-icon>
+          <p>Start chatting with {{ otherUser()?.firstName }}!</p>
+        </div>
+      }
+  
+    </mat-card-content>
+  
+    <mat-card-actions class="chat-input">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Type your message...</mat-label>
+        <input matInput 
+              [ngModel]="newMessage()" 
+              (ngModelChange)="newMessage.set($event)" 
+              (keyup.enter)="sendMessage()"
+              autocomplete="off">
+        
+        <button mat-icon-button matSuffix (click)="sendMessage()" [disabled]="!newMessage()">
+          <mat-icon>send</mat-icon>
+        </button>
+      </mat-form-field>
+    </mat-card-actions>
+
+  </mat-card>
+}

@@ -6,11 +6,13 @@ import { NewsfeedPage } from './newsfeed/newsfeed-page/newsfeed-page';
 import { Profile } from './user/profile/profile';
 import { authenticatedGuard } from './auth/guards/authenticated-guard';
 import { notAuthenticatedGuard } from './auth/guards/not-authenticated-guard';
+import { Chat } from './direct-chat/chat/chat';
 
 export const routes: Routes = [
     {path: '', component: Home, canActivate: [notAuthenticatedGuard]},
     {path: 'login', component: Login, canActivate: [notAuthenticatedGuard]},
     {path: 'signup', component: Signup, canActivate: [notAuthenticatedGuard]},
     {path: 'newsfeed', component: NewsfeedPage, canActivate: [authenticatedGuard]},
-    {path: 'profile/:id', component: Profile, canActivate: [authenticatedGuard]}
+    {path: 'profile/:id', component: Profile, canActivate: [authenticatedGuard]},
+    {path: 'chat/:id', component: Chat, canActivate: [authenticatedGuard]}
 ];

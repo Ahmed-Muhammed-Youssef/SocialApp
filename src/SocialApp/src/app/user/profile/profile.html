@@ -1,36 +1,41 @@
-@if(user())
-{
-<mat-card class="profile-card">
+@if(user()) {
+  <mat-card class="profile-card">
 
     <div class="header">
-        <img class="avatar" [src]="defaultImage" />
+      <img class="avatar" [src]="defaultImage" alt="User Avatar" />
 
-        <div>
-            <h2>{{ user()?.firstName }} {{ user()?.lastName }}</h2>
-            <p class="sub">Age: {{ user()?.age }}</p>
-            <p class="sub"> Gender: {{ user()?.gender == 0 ? 'Male' : 'Female' }}</p>
-        </div>
+      <div class="user-info">
+        <h2>{{ user()?.firstName }} {{ user()?.lastName }}</h2>
+        <p class="sub">Age: {{ user()?.age }}</p>
+        <p class="sub">Gender: {{ user()?.gender == 0 ? 'Male' : 'Female' }}</p>
+      </div>
     </div>
 
     <mat-card-content>
-        <div class="section">
-            <h3>Bio</h3>
-            <p>{{ user()?.bio || 'No bio provided.' }}</p>
-        </div>
+      <div class="section">
+        <h3>Bio</h3>
+        <p>{{ user()?.bio || 'No bio provided.' }}</p>
+      </div>
 
-        <div class="section">
-            <h3>Activity</h3>
-            <p>Created: {{ user()?.created | date:'medium' }}</p>
-            <p>Last Active: {{ user()?.lastActive | date:'medium' }}</p>
-        </div>
-
+      <div class="section">
+        <h3>Activity</h3>
+        <p>Created: {{ user()?.created | date:'mediumDate' }}</p>
+        <p>Last Active: {{ user()?.lastActive | date:'relative' }}</p>
+      </div>
     </mat-card-content>
 
-</mat-card>
+    <mat-card-actions align="end">
+      <a mat-flat-button 
+         color="primary" 
+         [routerLink]="['/chat', user()?.id]">
+        <mat-icon>send</mat-icon>
+        Send Message
+      </a>
+    </mat-card-actions>
 
- <!-- User Posts Section -->
+  </mat-card>
+
   <div class="posts-section">
-
     <h3 class="posts-title">Posts</h3>
 
     @if(posts().length === 0) {

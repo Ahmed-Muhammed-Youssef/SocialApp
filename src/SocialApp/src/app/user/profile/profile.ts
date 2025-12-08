@@ -1,15 +1,17 @@
 import { Component, inject, signal } from '@angular/core';
 import { UsersService } from '../services/users';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { UserDTO } from '../../auth/models/user-dto';
 import { MatCardModule } from '@angular/material/card';
 import { DatePipe } from '@angular/common';
 import { PostItem } from '../../newsfeed/post-item/post-item';
 import { PostDTO } from '../../newsfeed/models/post-dto';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-profile',
-  imports: [MatCardModule, DatePipe, PostItem],
+  imports: [MatCardModule, DatePipe, PostItem, RouterModule, MatIconModule, MatButtonModule],
   templateUrl: './profile.html',
   styleUrl: './profile.css',
 })
