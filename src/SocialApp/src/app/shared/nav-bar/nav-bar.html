@@ -1,23 +1,89 @@
 <nav class="nav-bar">
-  <div>
-    <a class="nav-logo" href="/">
-      <img src="conn.png" alt="logo" />
-    </a>
-  </div>
 
-  <div class="nav-link-container">
-    <!-- <a class="nav-link" aria-current="page" href="#">Home</a>   -->
-  </div>
-  @if(authService.isLoggedIn())
-  {
-    <div>
-      <a matButton="filled" (click)="logOut()">Log out</a>
-    </div>
+  <!-- Left: Logo -->
+  <a class="nav-logo" href="/">
+    <img src="conn.png" alt="logo" />
+  </a>
+
+  <!-- Grow -->
+  <div class="spacer"></div>
+
+
+  <!-- If not logged in -->
+  @if (!authService.isLoggedIn()) {
+    <button mat-flat-button color="primary" routerLink="/login">
+      Log in
+    </button>
   }
-  @else
-  {
-    <div>
-      <a matButton="filled" routerLink="/login">Log in</a>
+
+  <!-- If logged in -->
+  @if (authService.isLoggedIn()) {
+
+    <!-- Message icon: menu (desktop) / page (mobile) -->
+    <div class="messages-container">
+
+      <!-- Desktop -->
+      <button
+        mat-icon-button
+        class="messages-desktop"
+        [matMenuTriggerFor]="messagesMenu">
+        <mat-icon>chat</mat-icon>
+        @if(unreadCount() > 0) {
+          <span class="badge">{{ unreadCount() }}</span>
+        }
+      </button>
+
+      <!-- Mobile (whole icon navigates to messages page) -->
+      <button
+        mat-icon-button
+        class="messages-mobile"
+        routerLink="/messages">
+        <mat-icon>chat</mat-icon>
+        @if(unreadCount() > 0) {
+          <span class="badge">{{ unreadCount() }}</span>
+        }
+      </button>
+
+      <!-- Desktop dropdown menu -->
+      <mat-menu #messagesMenu="matMenu">
+        <div class="menu-title">Recent Chats</div>
+
+        @for (chat of chats(); track chat.id) {
+          <button mat-menu-item (click)="openChat(chat.id)">
+            <img class="chat-avatar" [src]="chat.avatar" />
+            <span>{{ chat.name }}</span>
+          </button>
+        }
+
+        @if (chats().length === 0) {
+          <div class="empty-state">No recent chats</div>
+        }
+      </mat-menu>
     </div>
+
+
+    <!-- User avatar + dropdown -->
+    <button
+      mat-button
+      [matMenuTriggerFor]="userMenu"
+      class="user-menu-trigger">
+
+      <img class="avatar" [src]="avatar()" />
+      <span>{{ username() }}</span>
+      <mat-icon>expand_more</mat-icon>
+    </button>
+
+    <mat-menu #userMenu="matMenu">
+      <button mat-menu-item routerLink="/profile/{{ userId() }}">
+        <mat-icon>person</mat-icon>
+        <span>Profile</span>
+      </button>
+
+      <button mat-menu-item (click)="logOut()">
+        <mat-icon>logout</mat-icon>
+        <span>Log out</span>
+      </button>
+    </mat-menu>
   }
+
 </nav>

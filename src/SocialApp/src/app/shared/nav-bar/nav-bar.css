@@ -1,40 +1,89 @@
-.nav-bar{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    align-content: center;
-    justify-content: space-between;
-    height: 64px;
-    padding: 0 1.5rem;
-    background-color: var(--color-background);
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+.nav-bar {
+  display: flex;
+  align-items: center;
+  height: 64px;
+  padding: 0 1.5rem;
+  background: var(--mat-sys-surface);
+  color: var(--mat-sys-on-surface);
+  box-shadow: var(--mat-sys-level1);
 }
 
-.nav-logo{
-    margin: 0 1rem 0 0;
+.spacer {
+  flex: 1;
+}
+
+.nav-logo img {
+  height: 36px;
+}
+
+.avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 8px;
+}
+
+.user-menu-trigger {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  text-transform: none;
+}
+
+.messages-container {
+  position: relative;
+  margin-right: 1rem;
+}
+
+/* Red unread badge */
+.badge {
+  background: var(--mat-sys-error);
+  color: var(--mat-sys-on-error);
+  border-radius: 999px;
+  padding: 0 6px;
+  font-size: 0.7rem;
+  position: absolute;
+  top: -2px;
+  right: -2px;
+}
+
+/* Desktop vs mobile controls */
+.messages-desktop {
+  display: block;
+}
+
+.messages-mobile {
+  display: none;
+}
+
+/* Breakpoint for mobile behavior */
+@media (max-width: 720px) {
+  .messages-desktop {
+    display: none;
+  }
+
+  .messages-mobile {
     display: block;
+  }
 }
 
-.nav-logo img
-{
-    height: 36px;
+.chat-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 12px;
 }
 
-.nav-link-container{
-    flex-grow: 1;
+.menu-title {
+  padding: 12px 16px;
+  font-weight: 500;
+  opacity: 0.8;
 }
 
-.nav-link{
-    text-decoration: none;
-    color: var(--color-text);
-    font-size: 1rem;
-}
-
-.nav-link:hover {
-  color: var(--mat-sys-primary);
-}
-
-.secondary-button
-{
-    border: 1px solid var(--mat-sys-primary);
+.empty-state {
+  padding: 12px;
+  opacity: 0.6;
+  font-style: italic;
 }
