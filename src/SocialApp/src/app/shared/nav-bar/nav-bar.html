@@ -63,16 +63,14 @@
 
 
     <!-- User avatar + dropdown -->
-    <button
-      mat-button
-      [matMenuTriggerFor]="userMenu"
-      class="user-menu-trigger">
-
-      <img class="avatar" [src]="avatar()" />
-      <span>{{ username() }}</span>
+    <button mat-button [matMenuTriggerFor]="userMenu">
       <mat-icon>expand_more</mat-icon>
+      <div class="avatar-card">
+        <img class="avatar" [src]="avatar()" />
+        <span>{{ username() }}</span>
+      </div>
     </button>
-
+    
     <mat-menu #userMenu="matMenu">
       <button mat-menu-item routerLink="/profile/{{ userId() }}">
         <mat-icon>person</mat-icon>

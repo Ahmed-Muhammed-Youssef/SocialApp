@@ -5,7 +5,6 @@
   padding: 0 1.5rem;
   background: var(--mat-sys-surface);
   color: var(--mat-sys-on-surface);
-  box-shadow: var(--mat-sys-level1);
 }
 
 .spacer {
@@ -24,11 +23,10 @@
   margin-right: 8px;
 }
 
-.user-menu-trigger {
+.avatar-card {
   display: flex;
   align-items: center;
-  gap: 6px;
-  text-transform: none;
+  justify-content: center;
 }
 
 .messages-container {

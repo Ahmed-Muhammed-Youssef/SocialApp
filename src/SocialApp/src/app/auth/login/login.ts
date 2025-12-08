@@ -38,14 +38,12 @@ export class Login {
       .pipe(delay(500))
       .subscribe({
         next: (res) => {
-          console.log('Logged in', res);
           this.errorMessage.set(null);
           this.router.navigate(['/newsfeed']);
 
           this.loader.hide();
         },
         error: (err) => {
-          console.error('Login failed', err);
           if (err.status === 0) {
             this.errorMessage.set('Unable to reach server. Please try again.');
           } else if (err.status === 401) {
