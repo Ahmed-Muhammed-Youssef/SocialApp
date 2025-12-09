@@ -1,38 +1,39 @@
 @if(user()) {
-<mat-card class="profile-card">
-
-  <div class="header">
-    <img class="avatar" [src]="defaultImage" alt="User Avatar" />
-
-    <div class="user-info">
-      <h2>{{ user()?.firstName }} {{ user()?.lastName }}</h2>
-      <p class="sub">Age: {{ user()?.age }}</p>
-      <p class="sub">Gender: {{ user()?.gender == 0 ? 'Male' : 'Female' }}</p>
-    </div>
+  <div class="profile-card">
+    <mat-card >
+      <div class="header">
+        <img class="avatar" [src]="defaultImage" alt="User Avatar" />
+    
+        <div class="user-info">
+          <h2>{{ user()?.firstName }} {{ user()?.lastName }}</h2>
+          <p class="sub">Age: {{ user()?.age }}</p>
+          <p class="sub">Gender: {{ user()?.gender == 0 ? 'Male' : 'Female' }}</p>
+        </div>
+      </div>
+    
+      <mat-card-content>
+        <div class="section">
+          <h3>Bio</h3>
+          <p>{{ user()?.bio || 'No bio provided.' }}</p>
+        </div>
+    
+        <div class="section">
+          <h3>Activity</h3>
+          <p>Created: {{ user()?.created | date:'mediumDate' }}</p>
+          <p>Last Active: {{ user()?.lastActive | date:'short' }}</p>
+        </div>
+      </mat-card-content>
+      @if(currentUserId() !== user()?.id) {
+      <mat-card-actions align="end">
+        <a mat-flat-button color="primary" [routerLink]="['/chat', user()?.id]">
+          <mat-icon>send</mat-icon>
+          Send Message
+        </a>
+      </mat-card-actions>
+      }
+    
+    </mat-card>
   </div>
-
-  <mat-card-content>
-    <div class="section">
-      <h3>Bio</h3>
-      <p>{{ user()?.bio || 'No bio provided.' }}</p>
-    </div>
-
-    <div class="section">
-      <h3>Activity</h3>
-      <p>Created: {{ user()?.created | date:'mediumDate' }}</p>
-      <p>Last Active: {{ user()?.lastActive | date:'relative' }}</p>
-    </div>
-  </mat-card-content>
-  @if(currentUserId() !== user()?.id) {
-  <mat-card-actions align="end">
-    <a mat-flat-button color="primary" [routerLink]="['/chat', user()?.id]">
-      <mat-icon>send</mat-icon>
-      Send Message
-    </a>
-  </mat-card-actions>
-  }
-
-</mat-card>
 
 <div class="posts-section">
   <h3 class="posts-title">Posts</h3>

@@ -1,63 +1,101 @@
+/* --- CARD BASE --- */
 .profile-card {
-    max-width: 700px;
-    margin: 24px auto;
-    padding: 24px;
-    border-radius: 16px;
-    background: var(--md-sys-color-surface-container-high);
+  max-width: 700px;
+  margin: 24px auto;
+  padding: 24px;
 }
 
+.profile-card mat-card {
+  padding: 24px;
+}
+
+/* --- HEADER --- */
 .header {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
 }
 
 .avatar {
-    width: 120px;
-    height: 120px;
-    border-radius: 50%;
-    object-fit: cover;
-    background-color: var(--md-sys-color-surface-container);
-    border: 3px solid var(--md-sys-color-primary);
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  object-fit: cover;
+  background-color: var(--mat-sys-surface-container);
+  border: 3px solid var(--mat-sys-primary);
 }
 
+/* Makes avatar smaller on very small screens */
+@media (max-width: 480px) {
+  .avatar {
+    width: 72px;
+    height: 72px;
+  }
+}
+
+@media (max-width: 480px) {
+  .header {
+    justify-content: center;
+    text-align: center;
+  }
+}
+
+/* --- TYPOGRAPHY --- */
 h2 {
-    color: var(--md-sys-color-on-surface);
-    margin-bottom: 8px;
+  margin: 0;
+  color: var(--mat-sys-on-surface);
+  font-size: 1.4rem;
+  line-height: 1.2;
 }
 
 .sub {
-    margin: 0px;
-    color: var(--md-sys-color-on-surface-variant);
+  margin: 0;
+  color: var(--mat-sys-on-surface-variant);
 }
 
+/* --- CONTENT SECTIONS --- */
 .section {
-    margin: 24px 0;
+  margin: 24px 0;
 }
 
 .section h3 {
-    margin-bottom: 6px;
-    color: var(--md-sys-color-primary);
+  margin-bottom: 6px;
+  color: var(--mat-sys-primary);
 }
 
+/* --- POSTS SECTION --- */
 .posts-section {
   max-width: 700px;
   margin: 32px auto;
+  padding: 0 16px;
 }
 
 .posts-title {
   margin-bottom: 16px;
-  color: var(--md-sys-color-primary);
+  color: var(--mat-sys-primary);
 }
 
 .empty {
   margin: 24px 0;
   text-align: center;
-  color: var(--md-sys-color-on-surface-variant);
+  color: var(--mat-sys-on-surface-variant);
 }
 
+/* child component spacing */
 app-post-item {
   margin-bottom: 16px;
   display: block;
+}
+
+/* --- Buttons alignment fix for mobile --- */
+mat-card-actions {
+  padding-top: 8px;
+}
+
+mat-card-actions a {
+  display: flex;
+  align-items: center;
+  gap: 4px;
 }
