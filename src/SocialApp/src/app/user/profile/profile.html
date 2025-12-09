@@ -1,49 +1,48 @@
 @if(user()) {
-  <mat-card class="profile-card">
+<mat-card class="profile-card">
 
-    <div class="header">
-      <img class="avatar" [src]="defaultImage" alt="User Avatar" />
+  <div class="header">
+    <img class="avatar" [src]="defaultImage" alt="User Avatar" />
 
-      <div class="user-info">
-        <h2>{{ user()?.firstName }} {{ user()?.lastName }}</h2>
-        <p class="sub">Age: {{ user()?.age }}</p>
-        <p class="sub">Gender: {{ user()?.gender == 0 ? 'Male' : 'Female' }}</p>
-      </div>
+    <div class="user-info">
+      <h2>{{ user()?.firstName }} {{ user()?.lastName }}</h2>
+      <p class="sub">Age: {{ user()?.age }}</p>
+      <p class="sub">Gender: {{ user()?.gender == 0 ? 'Male' : 'Female' }}</p>
+    </div>
+  </div>
+
+  <mat-card-content>
+    <div class="section">
+      <h3>Bio</h3>
+      <p>{{ user()?.bio || 'No bio provided.' }}</p>
     </div>
 
-    <mat-card-content>
-      <div class="section">
-        <h3>Bio</h3>
-        <p>{{ user()?.bio || 'No bio provided.' }}</p>
-      </div>
+    <div class="section">
+      <h3>Activity</h3>
+      <p>Created: {{ user()?.created | date:'mediumDate' }}</p>
+      <p>Last Active: {{ user()?.lastActive | date:'relative' }}</p>
+    </div>
+  </mat-card-content>
+  @if(currentUserId() !== user()?.id) {
+  <mat-card-actions align="end">
+    <a mat-flat-button color="primary" [routerLink]="['/chat', user()?.id]">
+      <mat-icon>send</mat-icon>
+      Send Message
+    </a>
+  </mat-card-actions>
+  }
 
-      <div class="section">
-        <h3>Activity</h3>
-        <p>Created: {{ user()?.created | date:'mediumDate' }}</p>
-        <p>Last Active: {{ user()?.lastActive | date:'relative' }}</p>
-      </div>
-    </mat-card-content>
+</mat-card>
 
-    <mat-card-actions align="end">
-      <a mat-flat-button 
-         color="primary" 
-         [routerLink]="['/chat', user()?.id]">
-        <mat-icon>send</mat-icon>
-        Send Message
-      </a>
-    </mat-card-actions>
+<div class="posts-section">
+  <h3 class="posts-title">Posts</h3>
 
-  </mat-card>
+  @if(posts().length === 0) {
+  <p class="empty">This user has not posted anything yet.</p>
+  }
 
-  <div class="posts-section">
-    <h3 class="posts-title">Posts</h3>
-
-    @if(posts().length === 0) {
-      <p class="empty">This user has not posted anything yet.</p>
-    }
-
-    @for (post of posts(); track post.id) {
-      <app-post-item [post]="post"></app-post-item>
-    }
-  </div>
+  @for (post of posts(); track post.id) {
+  <app-post-item [post]="post"></app-post-item>
+  }
+</div>
 }

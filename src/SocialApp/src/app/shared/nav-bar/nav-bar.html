@@ -72,7 +72,7 @@
     </button>
     
     <mat-menu #userMenu="matMenu">
-      <button mat-menu-item routerLink="/profile/{{ userId() }}">
+      <button mat-menu-item [routerLink]="['/profile/', userId()]">
         <mat-icon>person</mat-icon>
         <span>Profile</span>
       </button>
