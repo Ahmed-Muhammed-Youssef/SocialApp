@@ -1,0 +1,22 @@
+<Solution>
+  <Folder Name="/benchmarks/" />
+  <Folder Name="/Solution Items/">
+    <File Path="Directory.Build.props" />
+    <File Path="Directory.Packages.props" />
+  </Folder>
+  <Folder Name="/src/">
+    <Project Path="src/API/API/API.csproj" />
+    <Project Path="src/API/Application/Application.csproj" />
+    <Project Path="src/API/Domain/Domain.csproj" />
+    <Project Path="src/API/Infrastructure/Infrastructure.csproj" />
+    <Project Path="src/API/Shared/Shared.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/Application.Test/Application.Test.csproj" />
+    <Project Path="tests/Infrastructure.Test/Infrastructure.Test.csproj" />
+    <Project Path="tests/Shared.Test/Shared.Test.csproj" />
+  </Folder>
+  <Project Path="docker-compose.dcproj">
+    <Build />
+  </Project>
+</Solution>
