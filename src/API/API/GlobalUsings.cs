@@ -45,6 +45,7 @@ global using Application.Features.Auth;
 global using Application.Features.Auth.GoogleSignIn;
 global using Application.Features.Auth.Login;
 global using Application.Features.Auth.Register;
+global using Application.Features.Auth.RefreshToken;
 global using Application.Features.DirectChats;
 global using Application.Features.DirectChats.Stores;
 global using Application.Features.DirectChats.ConnectToChat;

@@ -10,6 +10,7 @@ global using Microsoft.EntityFrameworkCore;
 
 global using Application.Common.Mappings;
 global using Application.Common.Interfaces;
+global using Application.Common.Interfaces.Identity;
 global using Application.Common.Interfaces.Repositories;
 global using Application.Features.Users;
 global using Application.Features.Users.Specifications;
@@ -20,6 +21,7 @@ global using Application.Features.Auth.Login;
 global using Application.Features.Posts;
 
 global using Domain;
+global using Domain.AuthUserAggregate;
 global using Domain.MediaAggregate;
 global using Domain.FriendRequestAggregate;
 global using Domain.FriendAggregate;

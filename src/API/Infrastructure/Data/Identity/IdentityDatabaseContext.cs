@@ -1,6 +1,6 @@
 ﻿namespace Infrastructure.Data.Identity;
 
-public class IdentityDatabaseContext(DbContextOptions<IdentityDatabaseContext> options) : IdentityDbContext(options)
+public class IdentityDatabaseContext(DbContextOptions<IdentityDatabaseContext> options) : IdentityDbContext(options), IIdentityDbContext
 {
     public DbSet<RefreshToken> RefreshTokens { get; set; }
 

@@ -10,6 +10,7 @@ global using Shared.RepositoryBase;
 
 global using Application.Common.Mappings;
 global using Application.Common.Interfaces;
+global using Application.Common.Interfaces.Identity;
 global using Application.Common.Interfaces.Repositories;
 global using Application.Features.Auth;
 global using Application.Features.Users;
