@@ -2,7 +2,7 @@
 
 namespace Infrastructure.Auth;
 
-public class TokenProvider(IOptions<JwtAuthOptions> options, IdentityDatabaseContext identityDatabaseContext) : ITokenProvider
+public class TokenProvider(IOptions<JwtAuthOptions> options) : ITokenProvider
 {
     private readonly JwtAuthOptions _jwtAuthOptions = options.Value;
     public string CreateAccessToken(TokenRequest tokenRequest)
@@ -34,7 +34,7 @@ public class TokenProvider(IOptions<JwtAuthOptions> options, IdentityDatabaseCon
         return tokenHandler.WriteToken(token);
     }
 
-    public async Task<string> CreateRefreshToken(string userId)
+    public RefreshToken CreateRefreshToken(string userId)
     {
         byte[] randomBytes = RandomNumberGenerator.GetBytes(32);
         string refreshToken = Convert.ToBase64String(randomBytes);
@@ -47,12 +47,6 @@ public class TokenProvider(IOptions<JwtAuthOptions> options, IdentityDatabaseCon
             ExpiresAtUtc = DateTime.UtcNow.AddDays(_jwtAuthOptions.RefreshTokenExpirationDays)
         };
 
-        identityDatabaseContext.RefreshTokens.Add(refreshTokenEntity);
-
-        await identityDatabaseContext.SaveChangesAsync();
-
-        return refreshToken;
+        return refreshTokenEntity;
     }
-
-
 }

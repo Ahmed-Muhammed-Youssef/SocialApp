@@ -33,17 +33,7 @@ public class AuthController(IMediator mediator) : ControllerBase
             return BadRequest(result.Errors);
         }
 
-        Response.Cookies.Append(
-            "refreshToken",
-            result.Value.RefreshToken,
-            new CookieOptions
-            {
-                HttpOnly = true,
-                Secure = true,
-                SameSite = SameSiteMode.Strict,
-                Path = "/api/auth/refresh",
-                Expires = DateTimeOffset.UtcNow.AddDays(7)
-            });
+        Response.AppendRefreshTokenCookie(result.Value.RefreshToken, result.Value.RefreshTokenExpiresAtUtc);
 
         return CreatedAtAction(nameof(UsersController.GetUser), "Users", new { id = result.Value.UserData.Id },
             new AuthResponse()
@@ -70,17 +60,7 @@ public class AuthController(IMediator mediator) : ControllerBase
             return Unauthorized();
         }
 
-        Response.Cookies.Append(
-            "refreshToken",
-            result.Value.RefreshToken,
-            new CookieOptions
-            {
-                HttpOnly = true,
-                Secure = true,
-                SameSite = SameSiteMode.Strict,
-                Path = "/api/auth/refresh",
-                Expires = DateTimeOffset.UtcNow.AddDays(7)
-            });
+        Response.AppendRefreshTokenCookie(result.Value.RefreshToken, result.Value.RefreshTokenExpiresAtUtc);
 
         return Ok(new AuthResponse()
         {
@@ -107,18 +87,7 @@ public class AuthController(IMediator mediator) : ControllerBase
             return Unauthorized();
         }
 
-        // Rotate refresh token
-        Response.Cookies.Append(
-            "refreshToken",
-            result.Value.NewRefreshToken,
-            new CookieOptions
-            {
-                HttpOnly = true,
-                Secure = true,
-                SameSite = SameSiteMode.Strict,
-                Path = "/api/auth/refresh",
-                Expires = DateTimeOffset.UtcNow.AddDays(7)
-            });
+        Response.AppendRefreshTokenCookie(result.Value.NewRefreshToken, result.Value.RefreshTokenExpiresAtUtc);
 
         return Ok(new RefreshTokenResponse(Token: result.Value.AccessToken, RefreshToken: result.Value.NewRefreshToken));
     }
@@ -133,6 +102,9 @@ public class AuthController(IMediator mediator) : ControllerBase
         {
             return BadRequest(result.Errors);
         }
+
+        Response.AppendRefreshTokenCookie(result.Value.RefreshToken, result.Value.RefreshTokenExpiresAtUtc);
+
         return Ok(new AuthResponse()
         {
             UserData = result.Value.UserData,

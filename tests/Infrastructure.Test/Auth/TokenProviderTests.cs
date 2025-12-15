@@ -26,10 +26,8 @@ public class TokenProviderTests
             RefreshTokenExpirationDays = 7
         });
 
-        var identityDatabaseContext = Helpers.IdentityContextHelper.CreateInMemoryDbContext();
-
         // Act
-        string token = new TokenProvider(options, identityDatabaseContext).CreateAccessToken(tokenRequest);
+        string token = new TokenProvider(options).CreateAccessToken(tokenRequest);
 
         // Assert
         Assert.False(string.IsNullOrWhiteSpace(token));
@@ -63,5 +61,27 @@ public class TokenProviderTests
         Assert.Contains(claims, c => c.Type == ClaimTypes.NameIdentifier && c.Value == "user123");
         Assert.Contains(claims, c => c.Type == ClaimTypes.Role && c.Value == RolesNameValues.Admin);
         Assert.Contains(claims, c => c.Type == ClaimTypes.Role && c.Value == RolesNameValues.User);
+    }
+
+    [Fact]
+    public void CreateRefreshToken_ValidInput_ReturnsRefreshToken()
+    {
+        // Arrange
+        IOptions<JwtAuthOptions> options = Options.Create(new JwtAuthOptions
+        {
+            Key = new string('-', 64),
+            Issuer = "TestIssuer",
+            Audience = "TestAudience",
+            ExpirationInMinutes = 60,
+            RefreshTokenExpirationDays = 7
+        });
+        string userId = "user123";
+        // Act
+        var refreshToken = new TokenProvider(options).CreateRefreshToken(userId);
+        // Assert
+        Assert.NotNull(refreshToken);
+        Assert.Equal(userId, refreshToken.UserId);
+        Assert.False(string.IsNullOrWhiteSpace(refreshToken.Token));
+        Assert.True(refreshToken.ExpiresAtUtc > DateTime.UtcNow.AddDays(6)); // Should be valid for at least 6 days
     }
 }

@@ -3,5 +3,5 @@
 public interface ITokenProvider
 {
     string CreateAccessToken(TokenRequest tokenRequest);
-    Task<string> CreateRefreshToken(string userId);
+    Domain.AuthUserAggregate.RefreshToken CreateRefreshToken(string userId);
 }

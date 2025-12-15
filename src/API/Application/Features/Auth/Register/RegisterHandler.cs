@@ -1,6 +1,9 @@
-﻿namespace Application.Features.Auth.Register;
+﻿
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
-public class RegisterHandler(IUnitOfWork unitOfWork, UserManager<IdentityUser> userManager, ITokenProvider tokenService) : ICommandHandler<RegisterCommand, Result<RegisterDTO>>
+namespace Application.Features.Auth.Register;
+
+public class RegisterHandler(IUnitOfWork unitOfWork, UserManager<IdentityUser> userManager, ITokenProvider tokenService, IIdentityDbContext identityDbContext) : ICommandHandler<RegisterCommand, Result<RegisterDTO>>
 {
     public async ValueTask<Result<RegisterDTO>> Handle(RegisterCommand command, CancellationToken cancellationToken)
     {
@@ -57,9 +60,13 @@ public class RegisterHandler(IUnitOfWork unitOfWork, UserManager<IdentityUser> u
         );
 
         string accessToken = tokenService.CreateAccessToken(tokenRequest);
-        string refreshToken = await tokenService.CreateRefreshToken(newIdentityUser.Id);
+        Domain.AuthUserAggregate.RefreshToken refreshToken = tokenService.CreateRefreshToken(newIdentityUser.Id);
 
-        RegisterDTO dto = new(userData, accessToken, refreshToken);
+        identityDbContext.RefreshTokens.Add(refreshToken);
+
+        await identityDbContext.SaveChangesAsync(cancellationToken);
+
+        RegisterDTO dto = new(userData, accessToken, refreshToken.Token, refreshToken.ExpiresAtUtc);
 
         return Result<RegisterDTO>.Created(dto);
     }

@@ -1,6 +1,9 @@
-﻿namespace Application.Features.Auth.GoogleSignIn;
+﻿
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
-public class GoogleSignInHandler(IGoogleAuthService googleAuthService, UserManager<IdentityUser> userManager, ITokenProvider tokenService, PasswordGenerationService passwordGenerationService, IUnitOfWork unitOfWork) : ICommandHandler<GoogleSignInCommand, Result<LoginDTO>>
+namespace Application.Features.Auth.GoogleSignIn;
+
+public class GoogleSignInHandler(IGoogleAuthService googleAuthService, UserManager<IdentityUser> userManager, ITokenProvider tokenService, PasswordGenerationService passwordGenerationService, IUnitOfWork unitOfWork, IIdentityDbContext identityDbContext) : ICommandHandler<GoogleSignInCommand, Result<LoginDTO>>
 {
     public async ValueTask<Result<LoginDTO>> Handle(GoogleSignInCommand command, CancellationToken cancellationToken)
     {
@@ -59,8 +62,12 @@ public class GoogleSignInHandler(IGoogleAuthService googleAuthService, UserManag
         );
 
         string accessToken = tokenService.CreateAccessToken(tokenRequest);
-        string refreshToken = await tokenService.CreateRefreshToken(identityUser.Id);
+        Domain.AuthUserAggregate.RefreshToken refreshToken = tokenService.CreateRefreshToken(identityUser.Id);
 
-        return Result<LoginDTO>.Success(new LoginDTO(userDTO, accessToken, refreshToken));
+        identityDbContext.RefreshTokens.Add(refreshToken);
+
+        await identityDbContext.SaveChangesAsync(cancellationToken);
+
+        return Result<LoginDTO>.Success(new LoginDTO(userDTO, accessToken, refreshToken.Token, refreshToken.ExpiresAtUtc));
     }
 }
