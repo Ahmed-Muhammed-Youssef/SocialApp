@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { AfterViewInit, Component, inject, signal } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../services/auth';
 
@@ -9,14 +9,14 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-
+import { GoogleCredentialResponse, GooglePromptNotification } from '../models/google-identity';
 @Component({
   selector: 'app-login',
   imports: [ReactiveFormsModule, RouterModule, MatFormFieldModule, MatInputModule, MatIconModule, MatButtonModule],
   templateUrl: './login.html',
   styleUrl: './login.css',
 })
-export class Login {
+export class Login implements AfterViewInit {
   private fb = inject(FormBuilder);
   private auth = inject(AuthService);
   private router = inject(Router);
@@ -28,6 +28,20 @@ export class Login {
   });
 
   errorMessage = signal<string | null>(null);
+
+  async ngAfterViewInit(): Promise<void> {
+    await this.loadGoogleIdentityScript();
+    this.initializeGoogleSignIn();
+    this.renderGoogleButton();
+  }
+
+  private initializeGoogleSignIn(): void {
+    window.google.accounts.id.initialize({
+      client_id: '640969805450-3ailvii3einnh7ruuncpo8k20kbk9slr.apps.googleusercontent.com',
+      callback: this.handleCredentialResponse.bind(this),
+      cancel_on_tap_outside: true,
+    });
+  }
   onSubmit() {
     if (this.loginForm.invalid) return;
     this.errorMessage.set(null);
@@ -64,4 +78,67 @@ export class Login {
     this.hide.set(!this.hide());
     event.stopPropagation();
   }
+
+   private renderGoogleButton(): void {
+    const container = document.getElementById('googleLoginButton');
+    if (!container) {
+      throw new Error('Google button container not found');
+    }
+
+    window.google.accounts.id.renderButton(container, {
+      theme: 'outline',
+      size: 'large',
+      text: 'continue_with',
+      shape: 'pill',
+    });
+  }
+
+  triggerGoogleOneTap(): void {
+    window.google.accounts.id.prompt(
+      (notification: GooglePromptNotification) => {
+        if (notification.isNotDisplayed()) {
+          console.warn(
+            'One Tap not displayed:',
+            notification.getNotDisplayedReason()
+          );
+        }
+      }
+    );
+  }
+
+ private handleCredentialResponse(
+    response: GoogleCredentialResponse
+  ): void {
+    console.log('Google Credential Response:', response);
+    this.auth.googleLogin(response.credential).subscribe({
+      next: () => {
+        console.log('Google login successful');
+        // navigate or handle success
+      },
+      error: () => {
+        console.error('Google login failed');
+        // handle error
+      },
+    });
+  }
+
+  loadGoogleIdentityScript(): Promise<void> {
+  return new Promise((resolve, reject) => {
+    if (window.google?.accounts?.id) {
+      resolve();
+      return;
+    }
+
+    const script = document.createElement('script');
+    script.src = 'https://accounts.google.com/gsi/client';
+    script.async = true;
+    script.defer = true;
+
+    script.onload = () => resolve();
+    script.onerror = () => reject('Failed to load Google Identity script');
+
+    document.head.appendChild(script);
+  });
+}
+
 }

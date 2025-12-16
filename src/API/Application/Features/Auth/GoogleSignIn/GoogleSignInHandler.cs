@@ -1,35 +1,48 @@
-﻿
+﻿using Google.Apis.Auth;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace Application.Features.Auth.GoogleSignIn;
 
-public class GoogleSignInHandler(IGoogleAuthService googleAuthService, UserManager<IdentityUser> userManager, ITokenProvider tokenService, PasswordGenerationService passwordGenerationService, IUnitOfWork unitOfWork, IIdentityDbContext identityDbContext) : ICommandHandler<GoogleSignInCommand, Result<LoginDTO>>
+public class GoogleSignInHandler(UserManager<IdentityUser> userManager, ITokenProvider tokenService, IUnitOfWork unitOfWork, IIdentityDbContext identityDbContext) : ICommandHandler<GoogleSignInCommand, Result<LoginDTO>>
 {
     public async ValueTask<Result<LoginDTO>> Handle(GoogleSignInCommand command, CancellationToken cancellationToken)
     {
-        GoogleUserInfo userInfo = await googleAuthService.GetUserFromGoogleAsync(command.Code);
+        GoogleJsonWebSignature.Payload payload;
 
-        IdentityUser? identityUser = await userManager.Users.Where(u => u.Email == userInfo.Email).FirstOrDefaultAsync(cancellationToken: cancellationToken);
-
-        UserDTO? userDTO = new()
+        try
         {
-            FirstName = userInfo.Name,
-            LastName = "",
-            Bio = ""
-        };
+            payload = await GoogleJsonWebSignature.ValidateAsync(command.Credential);
+        }
+        catch
+        {
+            return Result<LoginDTO>.Unauthorized("Invalid Google credential.");
+        }
+
+        if(!payload.EmailVerified)
+        {
+            return Result<LoginDTO>.Unauthorized("Invalid Google credential.");
+        }
+
+        string googleUserId = payload.Subject;
+
+        UserLoginInfo loginInfo = new(
+            loginProvider: "Google",
+            providerKey: payload.Subject,
+            providerDisplayName: "Google"
+        );
+
+        IdentityUser? identityUser = await userManager.Users.FirstOrDefaultAsync(u => u.Email == payload.Email, cancellationToken);
 
         if (identityUser is null)
         {
             identityUser = new()
             {
-                Email = userInfo.Email,
-                UserName = userInfo.Email,
-                EmailConfirmed = userInfo.VerifiedEmail
+                Email = payload.Email,
+                UserName = payload.Email,
+                EmailConfirmed = payload.EmailVerified
             };
 
-            var password = passwordGenerationService.GenerateRandomPassword();
-            var result = await userManager.CreateAsync(identityUser, password);
-
+            var result = await userManager.CreateAsync(identityUser);
 
             if (!result.Succeeded)
             {
@@ -41,22 +54,42 @@ public class GoogleSignInHandler(IGoogleAuthService googleAuthService, UserManag
                 return Result<LoginDTO>.Error("Failed to assign role to the user.");
             }
 
-            // @ToDo: add the new user data [NEED PLANNING]
+            await userManager.AddLoginAsync(identityUser, loginInfo);
         }
         else
         {
-            var userDtoByIdentitySpec = new UserDtoByIdentitySpecification(identityUser.Id);
+            var identityWithLogin = await userManager.FindByLoginAsync(loginInfo.LoginProvider, loginInfo.ProviderKey);
 
-            userDTO = await unitOfWork.ApplicationUserRepository.FirstOrDefaultAsync(userDtoByIdentitySpec, cancellationToken);
-
-            if (userDTO is null)
+            if(identityWithLogin is null || identityWithLogin.Id == identityUser.Id)
             {
-                return Result<LoginDTO>.Error("Failed to retrieve the user data.");
+                return Result<LoginDTO>.Error("A user with the same email already exists.");
+            }
+            else
+            {
+                await userManager.AddLoginAsync(identityUser, loginInfo);
             }
         }
 
+        UserByIdentitySpecification spec = new(identityUser.Id);
+
+        ApplicationUser? appUser = await unitOfWork.ApplicationUserRepository.FirstOrDefaultAsync(spec, cancellationToken);
+
+        if (appUser is null)
+        {
+            appUser = new ApplicationUser(
+                identityId: identityUser.Id,
+                firstName: payload.GivenName ?? string.Empty,
+                lastName: payload.FamilyName ?? string.Empty,
+                dateOfBirth: DateTime.UtcNow.AddYears(-20),
+                gender: Gender.NotSpecified,
+                cityId: 1);
+
+            unitOfWork.ApplicationUserRepository.Add(appUser);
+            await unitOfWork.CommitAsync(cancellationToken);
+        }
+
         TokenRequest tokenRequest = new(
-            UserId: userDTO.Id.ToString(),
+            UserId: appUser.Id.ToString(),
             UserEmail: identityUser.Email ?? string.Empty,
             Roles: await userManager.GetRolesAsync(identityUser)
         );
@@ -68,6 +101,6 @@ public class GoogleSignInHandler(IGoogleAuthService googleAuthService, UserManag
 
         await identityDbContext.SaveChangesAsync(cancellationToken);
 
-        return Result<LoginDTO>.Success(new LoginDTO(userDTO, accessToken, refreshToken.Token, refreshToken.ExpiresAtUtc));
+        return Result<LoginDTO>.Success(new LoginDTO(UserMappings.ToDto(appUser), accessToken, refreshToken.Token, refreshToken.ExpiresAtUtc));
     }
 }

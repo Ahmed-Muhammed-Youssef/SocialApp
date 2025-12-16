@@ -35,6 +35,10 @@ export class AuthService {
       );
   }
 
+  googleLogin(token: string): Observable<any> {
+    return this.http.post<any>(`${this.baseUrl}/google-signin`, { 'credential': token });
+  }
+
   getToken(): string | null {
     return this.token;
   }

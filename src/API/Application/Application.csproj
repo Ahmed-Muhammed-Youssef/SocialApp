@@ -2,6 +2,7 @@
 
   <ItemGroup>
     <PackageReference Include="CloudinaryDotNet" />
+    <PackageReference Include="Google.Apis.Auth" />
     <PackageReference Include="Mediator.Abstractions" />
   </ItemGroup>
 
