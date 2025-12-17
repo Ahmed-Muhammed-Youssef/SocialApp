@@ -1,4 +1,4 @@
-﻿namespace Domain.ApplicationUserAggregate;
+﻿namespace Domain.ReferenceData;
 
 public class Region : EntityBase
 {

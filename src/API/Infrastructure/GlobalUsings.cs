@@ -4,6 +4,7 @@ global using Domain.ApplicationUserAggregate;
 global using Domain.MediaAggregate;
 global using Domain.FriendAggregate;
 global using Domain.AuthUserAggregate;
+global using Domain.ReferenceData;
 
 global using Shared.Pagination;
 global using Shared.RepositoryBase;
