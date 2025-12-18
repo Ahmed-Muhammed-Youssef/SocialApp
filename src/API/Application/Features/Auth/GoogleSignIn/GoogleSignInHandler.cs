@@ -1,83 +1,90 @@
 ﻿using Google.Apis.Auth;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 namespace Application.Features.Auth.GoogleSignIn;
 
-public class GoogleSignInHandler(UserManager<IdentityUser> userManager, ITokenProvider tokenService, IUnitOfWork unitOfWork, IIdentityDbContext identityDbContext) : ICommandHandler<GoogleSignInCommand, Result<LoginDTO>>
+public class GoogleSignInHandler(UserManager<IdentityUser> userManager, ITokenProvider tokenService, IUnitOfWork unitOfWork, IIdentityDbContext identityDbContext, IConfiguration configuration) : ICommandHandler<GoogleSignInCommand, Result<LoginDTO>>
 {
+    private readonly string googleClientId = configuration["Authentication:Google:ClientId"]!;
     public async ValueTask<Result<LoginDTO>> Handle(GoogleSignInCommand command, CancellationToken cancellationToken)
     {
         GoogleJsonWebSignature.Payload payload;
 
         try
         {
-            payload = await GoogleJsonWebSignature.ValidateAsync(command.Credential);
+            payload = await GoogleJsonWebSignature.ValidateAsync(command.Credential,
+                new GoogleJsonWebSignature.ValidationSettings
+                {
+                    Audience = [googleClientId],
+                });
         }
         catch
         {
             return Result<LoginDTO>.Unauthorized("Invalid Google credential.");
         }
 
+
         if(!payload.EmailVerified)
         {
             return Result<LoginDTO>.Unauthorized("Invalid Google credential.");
         }
 
-        string googleUserId = payload.Subject;
 
         UserLoginInfo loginInfo = new(
-            loginProvider: "Google",
+            loginProvider: LoginProviders.Google,
             providerKey: payload.Subject,
-            providerDisplayName: "Google"
+            providerDisplayName: LoginProviders.Google
         );
 
-        IdentityUser? identityUser = await userManager.Users.FirstOrDefaultAsync(u => u.Email == payload.Email, cancellationToken);
+        IdentityUser? existingLoginUser = await userManager.FindByLoginAsync(LoginProviders.Google, payload.Subject);
 
-        if (identityUser is null)
+
+        if (existingLoginUser is null)
         {
-            identityUser = new()
-            {
-                Email = payload.Email,
-                UserName = payload.Email,
-                EmailConfirmed = payload.EmailVerified
-            };
+            IdentityUser? identityUser = await userManager.FindByEmailAsync(payload.Email);
 
-            var result = await userManager.CreateAsync(identityUser);
-
-            if (!result.Succeeded)
+            if (identityUser is null) // new user
             {
-                return Result<LoginDTO>.Error("Failed to register the user.");
-            }
-            var adddRoleresult = await userManager.AddToRoleAsync(identityUser, RolesNameValues.User);
-            if (!adddRoleresult.Succeeded)
-            {
-                return Result<LoginDTO>.Error("Failed to assign role to the user.");
-            }
+                identityUser = new()
+                {
+                    Email = payload.Email,
+                    UserName = payload.Email,
+                    EmailConfirmed = payload.EmailVerified
+                };
 
-            await userManager.AddLoginAsync(identityUser, loginInfo);
-        }
-        else
-        {
-            var identityWithLogin = await userManager.FindByLoginAsync(loginInfo.LoginProvider, loginInfo.ProviderKey);
+                var result = await userManager.CreateAsync(identityUser);
 
-            if(identityWithLogin is null || identityWithLogin.Id == identityUser.Id)
-            {
-                return Result<LoginDTO>.Error("A user with the same email already exists.");
+                if (!result.Succeeded)
+                {
+                    return Result<LoginDTO>.Error("Failed to register the user.");
+                }
+                var adddRoleresult = await userManager.AddToRoleAsync(identityUser, RolesNameValues.User);
+                if (!adddRoleresult.Succeeded)
+                {
+                    return Result<LoginDTO>.Error("Failed to assign role to the user.");
+                }
             }
             else
             {
-                await userManager.AddLoginAsync(identityUser, loginInfo);
+                if (await userManager.HasPasswordAsync(identityUser))
+                {
+                    return Result<LoginDTO>.Error("Please sign in with email/password and link Google manually.");
+                }
             }
+
+            await userManager.AddLoginAsync(identityUser, loginInfo);
+            existingLoginUser = identityUser;
         }
 
-        UserByIdentitySpecification spec = new(identityUser.Id);
+        UserByIdentitySpecification spec = new(existingLoginUser.Id);
 
         ApplicationUser? appUser = await unitOfWork.ApplicationUserRepository.FirstOrDefaultAsync(spec, cancellationToken);
 
         if (appUser is null)
         {
             appUser = new ApplicationUser(
-                identityId: identityUser.Id,
+                identityId: existingLoginUser.Id,
                 firstName: payload.GivenName ?? string.Empty,
                 lastName: payload.FamilyName ?? string.Empty,
                 dateOfBirth: DateTime.UtcNow.AddYears(-20),
@@ -90,12 +97,12 @@ public class GoogleSignInHandler(UserManager<IdentityUser> userManager, ITokenPr
 
         TokenRequest tokenRequest = new(
             UserId: appUser.Id.ToString(),
-            UserEmail: identityUser.Email ?? string.Empty,
-            Roles: await userManager.GetRolesAsync(identityUser)
+            UserEmail: existingLoginUser.Email ?? string.Empty,
+            Roles: await userManager.GetRolesAsync(existingLoginUser)
         );
 
         string accessToken = tokenService.CreateAccessToken(tokenRequest);
-        Domain.AuthUserAggregate.RefreshToken refreshToken = tokenService.CreateRefreshToken(identityUser.Id);
+        Domain.AuthUserAggregate.RefreshToken refreshToken = tokenService.CreateRefreshToken(existingLoginUser.Id);
 
         identityDbContext.RefreshTokens.Add(refreshToken);
 
