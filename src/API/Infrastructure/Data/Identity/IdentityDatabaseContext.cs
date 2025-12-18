@@ -8,6 +8,11 @@ public class IdentityDatabaseContext(DbContextOptions<IdentityDatabaseContext> o
     {
         base.OnModelCreating(builder);
 
+        builder.Entity<IdentityUser>(entity =>
+        {
+            entity.HasIndex(u => u.Email).IsUnique();
+        });
+
         builder.Entity<RefreshToken>(entity =>
         {
             entity.HasKey(rt => rt.Id);

@@ -48,6 +48,7 @@ public static class DependecyInjection
         {
             opt.Password.RequireNonAlphanumeric = false;
             opt.SignIn.RequireConfirmedAccount = false;
+            opt.User.RequireUniqueEmail = true;
         })
         .AddRoles<IdentityRole>()
         .AddRoleManager<RoleManager<IdentityRole>>()
