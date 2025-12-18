@@ -33,6 +33,8 @@ public static class DependencyInjection
         builder.Services.AddSingleton<IOnlineUsersStore, OnlineUsersStore>();
         builder.Services.AddSingleton<IDirectChatGroupsStore, DirectChatGroupsStore>();
 
+        builder.Services.AddScoped<IUserProvisioningService, UserProvisioningService>();
+
         builder.Services.Configure<JwtAuthOptions>(builder.Configuration.GetSection("Jwt"));
 
         return builder;

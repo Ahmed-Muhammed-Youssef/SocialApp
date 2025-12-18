@@ -13,6 +13,7 @@ global using Application.Common.Mappings;
 global using Application.Common.Interfaces;
 global using Application.Common.Interfaces.Identity;
 global using Application.Common.Interfaces.Repositories;
+global using Application.Common.Interfaces.Orchestration;
 global using Application.Features.Auth;
 global using Application.Features.Users;
 global using Application.Features.Pictures;
@@ -29,6 +30,7 @@ global using Infrastructure.Data.Repositories.CachedRepositories;
 global using Infrastructure.Media.Cloudinary;
 global using Infrastructure.Users;
 global using Infrastructure.DirectChats;
+global using Infrastructure.Orchestration.UserProvisioning;
 
 global using Shared.Constants;
 
