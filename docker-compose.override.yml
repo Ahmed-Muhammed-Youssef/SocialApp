@@ -5,7 +5,6 @@ services:
       - ASPNETCORE_HTTP_PORTS=8080
       - ASPNETCORE_HTTPS_PORTS=8081
       - ConnectionStrings__AppConnection=Server=app-db,1433;Database=AppDb;User Id=sa;Password=Password123!;TrustServerCertificate=True;
-      - ConnectionStrings__IdentityConnection=Server=app-db,1433;Database=IdentityDb;User Id=sa;Password=Password123!;TrustServerCertificate=True;
     ports:
       - "5000:8080"
       - "5001:8081"

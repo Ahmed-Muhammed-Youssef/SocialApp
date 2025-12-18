@@ -6,7 +6,7 @@ public static class DependencyInjection
     {
         // Database Contexts
         builder.Services.AddDbContext<ApplicationDatabaseContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("AppConnection")));
-        builder.Services.AddDbContext<IdentityDatabaseContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("IdentityConnection")));
+        builder.Services.AddDbContext<IdentityDatabaseContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("AppConnection")));
         builder.Services.AddScoped<IIdentityDbContext>(sp => sp.GetRequiredService<IdentityDatabaseContext>());
 
         // Repositories
