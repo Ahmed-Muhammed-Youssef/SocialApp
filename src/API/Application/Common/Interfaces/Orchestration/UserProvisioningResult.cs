@@ -1,17 +1,8 @@
 ﻿namespace Application.Common.Interfaces.Orchestration;
 
-public sealed class UserProvisioningResult
+public sealed class UserProvisioningResult(IdentityUser identityUser, ApplicationUser applicationUser)
 {
-    public IdentityUser IdentityUser { get; }
-    public ApplicationUser ApplicationUser { get; }
-
-    public bool IsNewIdentityUser { get; }
-    public bool IsNewApplicationUser { get; }
-
-    public UserProvisioningResult(IdentityUser identityUser, ApplicationUser applicationUser)
-    {
-        IdentityUser = identityUser;
-        ApplicationUser = applicationUser;
-    }
+    public IdentityUser IdentityUser { get; } = identityUser;
+    public ApplicationUser ApplicationUser { get; } = applicationUser;
 }
 

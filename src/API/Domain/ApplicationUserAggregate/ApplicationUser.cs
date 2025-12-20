@@ -16,13 +16,12 @@ public class ApplicationUser : EntityBase, IAggregateRoot
 
     private ApplicationUser() { } 
 
-    public ApplicationUser(string identityId, string firstName, string lastName, DateTime dateOfBirth, Gender gender, int cityId)
+    public ApplicationUser(string firstName, string lastName, DateTime dateOfBirth, Gender gender, int cityId)
     {
         if (string.IsNullOrWhiteSpace(firstName)) throw new ArgumentException("First name is required.");
         if (string.IsNullOrWhiteSpace(lastName)) throw new ArgumentException("Last name is required.");
         if (dateOfBirth > DateTime.UtcNow) throw new ArgumentException("Date of birth cannot be in the future.");
 
-        IdentityId = identityId;
         FirstName = firstName;
         LastName = lastName;
         DateOfBirth = dateOfBirth;
@@ -33,18 +32,18 @@ public class ApplicationUser : EntityBase, IAggregateRoot
         LastActive = Created;
     }
 
+    public void AssociateWithIdentity(string identityId)
+    {
+        if(!string.IsNullOrWhiteSpace(IdentityId)) throw new InvalidOperationException("Identity cannot be changed once assigned.");
+        IdentityId = identityId;
+    }
+
     public void Update(string firstName, string lastName, int cityId, string? bio)
     {
         FirstName = firstName;
         LastName = lastName;
         Bio = bio?.Trim();
         CityId = cityId;
-        MarkActive();
-    }
-
-    public void SetProfilePicture(int pictureId)
-    {
-        ProfilePictureId = pictureId;
         MarkActive();
     }
 

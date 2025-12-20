@@ -122,20 +122,13 @@ public class DatabaseInitializer
                     Email = configuration["AdminCred:Email"]
                 };
 
-                await userManager.CreateAsync(admin, configuration["AdminCred:Password"]!);
-
-                await userManager.AddToRoleAsync(admin, RolesNameValues.Admin);
-                await userManager.AddToRoleAsync(admin, RolesNameValues.User);
-                await userManager.AddToRoleAsync(admin, RolesNameValues.Moderator);
-
                 City city = await dataContext.Cities
                     .OrderBy(c => c.Id)
                     .FirstOrDefaultAsync() ?? throw new Exception("No cities found in the database. Please ensure that countries and cities are seeded before seeding the admin user.");
 
-                ApplicationUser adminAppUser = new(admin.Id, "Admin", "Admin", DateTime.UtcNow.AddYears(-25), Gender.Male, city.Id);
+                ApplicationUser adminAppUser = new("Admin", "Admin", DateTime.UtcNow.AddYears(-25), Gender.Male, city.Id);
 
-                await dataContext.ApplicationUsers.AddAsync(adminAppUser);
-                await dataContext.SaveChangesAsync();
+                await CreateUser(admin, adminAppUser, configuration["AdminCred:Password"]!, [RolesNameValues.Admin, RolesNameValues.User, RolesNameValues.Moderator], userManager, dataContext);
             }
         }
         catch (Exception ex)
@@ -193,8 +186,6 @@ public class DatabaseInitializer
                     .RuleFor(u => u.SecurityStamp, (f, u) => Guid.NewGuid().ToString());
 
                 var identityUser = testIdentityUsers.Generate();
-                await userManager.CreateAsync(identityUser, "Pwd12345");
-                await userManager.AddToRoleAsync(identityUser, RolesNameValues.User);
 
                 // Generate application user
                 var testApplicationUser = new Faker<ApplicationUser>()
@@ -202,38 +193,30 @@ public class DatabaseInitializer
                     {
                         var gender = f.PickRandom<Gender>();
 
-                        var user =  new ApplicationUser(identityUser.Id,
-                            f.Name.FirstName((gender == Gender.Male) ? Bogus.DataSets.Name.Gender.Male : Bogus.DataSets.Name.Gender.Female),
+                        var user = new ApplicationUser(f.Name.FirstName((gender == Gender.Male) ? Bogus.DataSets.Name.Gender.Male : Bogus.DataSets.Name.Gender.Female),
                             f.Name.LastName(Bogus.DataSets.Name.Gender.Male),
                             f.Date.Past(refDate: DateTime.UtcNow.AddYears(-18), yearsToGoBack: 70),
                             gender,
                             f.PickRandom(cities).Id);
                         return user;
-                    }); 
-                    
+                    });
+
                 var applicationUser = testApplicationUser.Generate();
 
-                dataContext.ApplicationUsers.Add(applicationUser);
-                await dataContext.SaveChangesAsync();
+                await CreateUser(identityUser, applicationUser, "Pwd12345", [RolesNameValues.User], userManager, dataContext);
 
                 // Add some posts to that user
-                Faker<Post> postsFaker = new Faker<Post>()
-                    .RuleFor(p => p.UserId, f => applicationUser.Id)
-                    .RuleFor(p => p.Content, f => f.Lorem.Paragraph())
-                    .RuleFor(p => p.DatePosted, f => f.Date.Past(3))
-                    .RuleFor(p => p.DateEdited, f => f.Date.Recent(30));
-
-                int randomNumber = random.Next(0, 101);
-                List<Post> fakePosts = postsFaker.Generate(randomNumber);
-
-                dataContext.Posts.AddRange(fakePosts);
-                await dataContext.SaveChangesAsync();
+                await AddPostsToUser(dataContext, random, applicationUser);
             }
 
             // add all users as friends to user1
             if (dataContext.Friends.Any()) return;
             IdentityUser? firstIdentityUser = await userManager.Users.Where(u => u.Email == "user1@test").FirstOrDefaultAsync();
-            List<ApplicationUser> applicationUsers = await dataContext.ApplicationUsers.ToListAsync();
+
+            List<ApplicationUser> applicationUsers = await dataContext.ApplicationUsers
+                .Take(100).
+                ToListAsync();
+
             ApplicationUser? firstUser = applicationUsers.Where(u => u.IdentityId == firstIdentityUser?.Id).FirstOrDefault();
 
             if (firstUser is not null)
@@ -256,5 +239,34 @@ public class DatabaseInitializer
         {
             logger.LogError(ex, "An error occurred while adding test users.");
         }
+    }
+
+    private static async Task AddPostsToUser(ApplicationDatabaseContext dataContext, Random random, ApplicationUser applicationUser)
+    {
+        Faker<Post> postsFaker = new Faker<Post>()
+                            .RuleFor(p => p.UserId, f => applicationUser.Id)
+                            .RuleFor(p => p.Content, f => f.Lorem.Paragraph())
+                            .RuleFor(p => p.DatePosted, f => f.Date.Past(3))
+                            .RuleFor(p => p.DateEdited, f => f.Date.Recent(30));
+
+        int randomNumber = random.Next(0, 101);
+        List<Post> fakePosts = postsFaker.Generate(randomNumber);
+
+        dataContext.Posts.AddRange(fakePosts);
+        await dataContext.SaveChangesAsync();
+    }
+
+    private static async Task CreateUser(IdentityUser identityUser, ApplicationUser appUser, string password, List<string> roles, UserManager<IdentityUser> userManager, ApplicationDatabaseContext dataContext)
+    {
+        await userManager.CreateAsync(identityUser, password);
+        foreach(var role in roles)
+        {
+            await userManager.AddToRoleAsync(identityUser, role);
+        }
+
+        appUser.AssociateWithIdentity(identityUser.Id);
+
+        await dataContext.ApplicationUsers.AddAsync(appUser);
+        await dataContext.SaveChangesAsync();
     }
 }

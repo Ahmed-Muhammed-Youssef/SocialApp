@@ -37,7 +37,9 @@ public class RegisterHandler(IUnitOfWork unitOfWork, UserManager<IdentityUser> u
 
         // Create application user
 
-        ApplicationUser newApplicationUser = new(newIdentityUser.Id, command.FirstName, command.LastName, command.DateOfBirth, command.Gender, command.CityId);
+        ApplicationUser newApplicationUser = new(command.FirstName, command.LastName, command.DateOfBirth, command.Gender, command.CityId);
+
+        newApplicationUser.AssociateWithIdentity(newIdentityUser.Id);
 
         try
         {

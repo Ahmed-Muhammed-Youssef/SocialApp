@@ -4,25 +4,43 @@ namespace Infrastructure.Orchestration.UserProvisioning;
 
 public class UserProvisioningService(UserManager<IdentityUser> userManager, ApplicationDatabaseContext applicationDatabaseContext, IdentityDatabaseContext identityDatabaseContext) : IUserProvisioningService
 {
-    public Task<UserProvisioningResult> CreateUserAsync(string email, string firstName, string lastName, CancellationToken cancellationToken)
+    // <inheritdoc />
+    public Task<UserProvisioningResult> CreateUserAsync(string email, string firstName, string lastName, CancellationToken cancellationToken = default)
     {
         return CreateUserAsync(email, true, firstName, lastName, null, Gender.NotSpecified, DateTime.UtcNow.AddYears(-20), 1, cancellationToken);
     }
 
-    public async Task<UserProvisioningResult> CreateUserAsync(string email, bool emailVerified, string firstName, string lastName, string? password, Gender gender, DateTime dateOfBirth, int cityId,  CancellationToken cancellationToken)
+    // <inheritdoc />
+    public Task<UserProvisioningResult> CreateUserAsync(string email, bool emailVerified, string firstName, string lastName, string? password, Gender gender, DateTime dateOfBirth, int cityId,  CancellationToken cancellationToken = default)
     {
-        await using var transaction = await applicationDatabaseContext.Database.BeginTransactionAsync(cancellationToken);
+        IdentityUser identityUser = new()
+        {
+            Email = email,
+            UserName = email,
+            EmailConfirmed = emailVerified
+        };
+
+        ApplicationUser appUser = new(
+            firstName: firstName,
+            lastName: lastName,
+            dateOfBirth: dateOfBirth,
+            gender: gender,
+            cityId: cityId);
+
+        return CreateUserAsync(identityUser, appUser, [RolesNameValues.User], password, cancellationToken);
+    }
+
+    // <inheritdoc />
+    public async Task<UserProvisioningResult> CreateUserAsync(IdentityUser identityUser, ApplicationUser appUser, IReadOnlyList<string> roles, string? password, CancellationToken cancellationToken = default)
+    {
+        using var transaction = await identityDatabaseContext.Database.BeginTransactionAsync(cancellationToken);
+
+        applicationDatabaseContext.Database.SetDbConnection(identityDatabaseContext.Database.GetDbConnection());
+        await applicationDatabaseContext.Database.UseTransactionAsync(transaction.GetDbTransaction(), cancellationToken: cancellationToken);
 
         try
         {
             identityDatabaseContext.Database.UseTransaction(transaction.GetDbTransaction());
-
-            IdentityUser identityUser = new()
-            {
-                Email = email,
-                UserName = email,
-                EmailConfirmed = emailVerified
-            };
 
             IdentityResult result = password != null ? await userManager.CreateAsync(identityUser, password)
                 : await userManager.CreateAsync(identityUser);
@@ -30,19 +48,16 @@ public class UserProvisioningService(UserManager<IdentityUser> userManager, Appl
             if (!result.Succeeded)
                 throw new InvalidOperationException("Identity creation failed.");
 
-            var adddRoleresult = await userManager.AddToRoleAsync(identityUser, RolesNameValues.User);
+            foreach (var role in roles)
+            {
+                var adddRoleresult = await userManager.AddToRoleAsync(identityUser, role);
 
-            if (!adddRoleresult.Succeeded)
-                throw new InvalidOperationException("Identity creation failed.");
+                if (!adddRoleresult.Succeeded)
+                    throw new InvalidOperationException("Identity creation failed.");
+            }
 
-            ApplicationUser appUser = new(
-                identityId: identityUser.Id,
-                firstName: firstName,
-                lastName: lastName,
-                dateOfBirth: dateOfBirth,
-                gender: gender,
-                cityId: cityId);
-        
+            appUser.AssociateWithIdentity(identityUser.Id);
+
             applicationDatabaseContext.ApplicationUsers.Add(appUser);
 
             await applicationDatabaseContext.SaveChangesAsync(cancellationToken);
