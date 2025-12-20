@@ -13,7 +13,7 @@ public class PostRepository(ApplicationDatabaseContext dataContext) : Repository
     public async Task<PagedList<PostDTO>> GetNewsfeed(int userId, PaginationParams paginationParams, CancellationToken cancellationToken = default)
     {
         IQueryable<int> friendsQuery = dataContext.Friends
-        .Where(f => f.FriendId == userId).Select(f => f.UserId);
+        .Where(f => f.FriendId == userId || f.UserId == userId).Select(f => f.UserId == userId ? f.FriendId : f.UserId);
 
         var allPostsQuery = dataContext.Posts
             .Include(p => p.ApplicationUser)
