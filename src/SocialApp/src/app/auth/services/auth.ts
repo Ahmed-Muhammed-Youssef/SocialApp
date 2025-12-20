@@ -36,7 +36,12 @@ export class AuthService {
   }
 
   googleLogin(token: string): Observable<any> {
-    return this.http.post<any>(`${this.baseUrl}/google-signin`, { 'credential': token });
+    return this.http.post<AuthResponse>(`${this.baseUrl}/google-signin`, { 'credential': token }).pipe(
+      tap(res => {
+        this.setToken(res.token);
+        this.setUserData(res.userData);
+      })
+    );;
   }
 
   getToken(): string | null {
