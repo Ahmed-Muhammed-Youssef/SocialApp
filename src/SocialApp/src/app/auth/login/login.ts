@@ -30,9 +30,20 @@ export class Login implements AfterViewInit {
   errorMessage = signal<string | null>(null);
 
   async ngAfterViewInit(): Promise<void> {
-    await this.loadGoogleIdentityScript();
-    this.initializeGoogleSignIn();
-    this.renderGoogleButton();
+    this.loader.show();
+
+    try {
+      await this.loadGoogleIdentityScript();
+      this.initializeGoogleSignIn();
+      this.renderGoogleButton();
+    }
+    catch (err) {
+      console.error('Google SDK initialization failed', err);
+      this.errorMessage.set('Failed to initialize Google Sign-In.');
+    }
+    finally {
+      this.loader.hide();
+    }
   }
 
   private initializeGoogleSignIn(): void {
@@ -79,7 +90,7 @@ export class Login implements AfterViewInit {
     event.stopPropagation();
   }
 
-   private renderGoogleButton(): void {
+  private renderGoogleButton(): void {
     const container = document.getElementById('googleLoginButton');
     if (!container) {
       throw new Error('Google button container not found');
@@ -106,39 +117,42 @@ export class Login implements AfterViewInit {
     );
   }
 
- private handleCredentialResponse(
+  private handleCredentialResponse(
     response: GoogleCredentialResponse
   ): void {
-    console.log('Google Credential Response:', response);
-    this.auth.googleLogin(response.credential).subscribe({
-      next: () => {
-        console.log('Google login successful');
-        // navigate or handle success
-      },
-      error: () => {
-        console.error('Google login failed');
-        // handle error
-      },
-    });
+    this.errorMessage.set(null);
+    this.loader.show();
+    this.auth.googleLogin(response.credential)
+      .pipe(delay(500)) // optional UX smoothing
+      .subscribe({
+        next: () => {
+          this.router.navigate(['/newsfeed']);
+          this.loader.hide();
+        },
+        error: (err) => {
+          console.error('Google login failed', err);
+          this.errorMessage.set('Google sign-in failed. Please try again.');
+          this.loader.hide();
+        },
+      });
   }
 
   loadGoogleIdentityScript(): Promise<void> {
-  return new Promise((resolve, reject) => {
-    if (window.google?.accounts?.id) {
-      resolve();
-      return;
-    }
+    return new Promise((resolve, reject) => {
+      if (window.google?.accounts?.id) {
+        resolve();
+        return;
+      }
 
-    const script = document.createElement('script');
-    script.src = 'https://accounts.google.com/gsi/client';
-    script.async = true;
-    script.defer = true;
+      const script = document.createElement('script');
+      script.src = 'https://accounts.google.com/gsi/client';
+      script.async = true;
+      script.defer = true;
 
-    script.onload = () => resolve();
-    script.onerror = () => reject('Failed to load Google Identity script');
+      script.onload = () => resolve();
+      script.onerror = () => reject('Failed to load Google Identity script');
 
-    document.head.appendChild(script);
-  });
-}
-
+      document.head.appendChild(script);
+    });
+  }
 }
