@@ -7,7 +7,7 @@ public class AuthController(IMediator mediator) : ControllerBase
 {
     // POST: api/auth/register
     [HttpPost("register")]
-    public async Task<ActionResult> Register(RegisterRequest registerRequest, CancellationToken cancellationToken)
+    public async Task<ActionResult<AuthResponse>> Register(RegisterRequest registerRequest, CancellationToken cancellationToken)
     {
         if (!ModelState.IsValid)
         {
