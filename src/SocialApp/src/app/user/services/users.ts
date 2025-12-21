@@ -18,6 +18,6 @@ export class UsersService {
 
   getUserPosts(userId: number) : Observable<PostDTO[]>
   {
-    return this.httpClient.get<PostDTO[]>(`${this.baseUrl}/${userId}/posts`)
+    return this.httpClient.get<PostDTO[]>(`${this.baseUrl}/${userId}/posts`);
   }
 }

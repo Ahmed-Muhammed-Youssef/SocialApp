@@ -1,1 +1,85 @@
-<p>signup works!</p>
+<div class="signup-page">
+  <div class="signup-card">
+    <h2>Create Account</h2>
+    <p class="subtitle">Join us to start sharing</p>
+
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="form-layout">
+      
+      <div class="row">
+        <mat-form-field appearance="outline">
+          <mat-label>First Name</mat-label>
+          <input matInput formControlName="firstName">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Last Name</mat-label>
+          <input matInput formControlName="lastName">
+        </mat-form-field>
+      </div>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Email</mat-label>
+        <input matInput formControlName="email" type="email">
+      </mat-form-field>
+
+      <div class="row">
+        <mat-form-field appearance="outline">
+          <mat-label>Gender</mat-label>
+          <mat-select formControlName="gender">
+            @for (g of genderOptions; track g.value) {
+              <mat-option [value]="g.value">{{g.label}}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Date of Birth</mat-label>
+          <input matInput [matDatepicker]="picker" formControlName="dateOfBirth">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+      </div>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Search City</mat-label>
+        <input type="text" matInput formControlName="cityName" [matAutocomplete]="auto"
+               (input)="citySearchQuery.set(cityInput.value)" #cityInput>
+        <mat-autocomplete #auto="matAutocomplete" 
+                        (optionSelected)="onCitySelected($event.option.value)">
+          @for (city of filteredCities(); track city.id) {
+            <mat-option [value]="city">{{ city.name }}</mat-option>
+          }
+        </mat-autocomplete>
+      </mat-form-field>
+
+      <div class="row">
+        <mat-form-field appearance="outline">
+          <mat-label>Password</mat-label>
+          <input matInput [type]="hidePassword() ? 'password' : 'text'" formControlName="password">
+          <button type="button" mat-icon-button matSuffix (click)="hidePassword.set(!hidePassword())">
+            <mat-icon>{{hidePassword() ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Confirm Password</mat-label>
+          <input matInput [type]="hideConfirm() ? 'password' : 'text'" formControlName="confirmPassword">
+          <button type="button" mat-icon-button matSuffix (click)="hideConfirm.set(!hideConfirm())">
+            <mat-icon>{{hideConfirm() ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
+          @if (registerForm.hasError('mismatch') && registerForm.get('confirmPassword')?.touched) {
+            <mat-error>Passwords don't match</mat-error>
+          }
+        </mat-form-field>
+      </div>
+
+      <button mat-flat-button color="primary" class="submit-btn" type="submit">
+        Register Now
+      </button>
+
+      @if (errorMessage()) {
+        <p class="error-msg">{{ errorMessage() }}</p>
+      }
+    </form>
+  </div>
+</div>

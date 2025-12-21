@@ -4,6 +4,7 @@ import { LoginRequest } from '../models/login-request';
 import { Observable, tap } from 'rxjs';
 import { AuthResponse } from '../models/auth-response';
 import { UserDTO } from '../models/user-dto';
+import { RegisterRequst } from '../models/register-request';
 
 @Injectable({
   providedIn: 'root',
@@ -35,7 +36,7 @@ export class AuthService {
       );
   }
 
-  googleLogin(token: string): Observable<any> {
+  googleLogin(token: string): Observable<AuthResponse> {
     return this.http.post<AuthResponse>(`${this.baseUrl}/google-signin`, { 'credential': token }).pipe(
       tap(res => {
         this.setToken(res.token);
@@ -52,6 +53,15 @@ export class AuthService {
     return this.userData;
   }
 
+  registerUser(request: RegisterRequst) : Observable<AuthResponse>{
+    return this.http.post<AuthResponse>(`${this.baseUrl}/register`, request)
+    .pipe(
+      tap(res => {
+        this.setToken(res.token);
+        this.setUserData(res.userData);
+      })
+    );;
+  }
   private setUserData(userData: UserDTO) {
     this.userData = userData;
     sessionStorage.setItem('user_data', JSON.stringify(userData));
