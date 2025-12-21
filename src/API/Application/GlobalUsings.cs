@@ -20,6 +20,7 @@ global using Application.Features.DirectChats.Stores;
 global using Application.Features.Pictures;
 global using Application.Features.Auth.Login;
 global using Application.Features.Posts;
+global using Application.Features.ReferenceData.ListCities.Specifications;
 
 global using Domain.AuthUserAggregate;
 global using Domain.MediaAggregate;
@@ -28,6 +29,7 @@ global using Domain.FriendAggregate;
 global using Domain.DirectChatAggregate;
 global using Domain.ApplicationUserAggregate;
 global using Domain.ApplicationUserAggregate.FilterSpecifications;
+global using Domain.ReferenceData;
 
 global using Shared;
 global using Shared.Results;

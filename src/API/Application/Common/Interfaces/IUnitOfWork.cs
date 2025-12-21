@@ -8,6 +8,7 @@ public interface IUnitOfWork
     IFriendRequestRepository FriendRequestRepository { get; }
     IPostRepository PostRepository { get; }
     IFriendRepository FriendRepository { get; }
+    ICityRepository CityRepository { get; }
 
     /// <summary>
     /// Begins a new database transaction asynchronously.

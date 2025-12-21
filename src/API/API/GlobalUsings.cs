@@ -51,6 +51,8 @@ global using Application.Features.DirectChats.Stores;
 global using Application.Features.DirectChats.ConnectToChat;
 global using Application.Features.DirectChats.DisconnectFromChat;
 global using Application.Features.DirectChats.SendMessage;
+global using Application.Features.ReferenceData;
+global using Application.Features.ReferenceData.ListCities;
 
 global using API;
 global using API.Common.Middleware;

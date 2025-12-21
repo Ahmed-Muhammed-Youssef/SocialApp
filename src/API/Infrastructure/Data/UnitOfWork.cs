@@ -2,7 +2,7 @@ namespace Infrastructure.Data;
 
 public class UnitOfWork(ApplicationDatabaseContext _dataContext, IApplicationUserRepository userRepository, IPictureRepository pictureRepository,
     IDirectChatRepository directChatRepository, IFriendRequestRepository friendRequestRepository,
-    IPostRepository postRepository, IFriendRepository friendRepository) : IUnitOfWork
+    IPostRepository postRepository, IFriendRepository friendRepository, ICityRepository cityRepository) : IUnitOfWork
 {
     public IPostRepository PostRepository { get; } = postRepository;
     public IFriendRepository FriendRepository { get; } = friendRepository;
@@ -10,6 +10,7 @@ public class UnitOfWork(ApplicationDatabaseContext _dataContext, IApplicationUse
     public IPictureRepository PictureRepository { get; } = pictureRepository;
     public IDirectChatRepository DirectChatRepository { get; } = directChatRepository;
     public IFriendRequestRepository FriendRequestRepository { get; } = friendRequestRepository;
+    public ICityRepository CityRepository { get; } = cityRepository;
 
     /// <inheritdoc/>
     public async Task BeginTransactionAsync(CancellationToken cancellationToken = default)
