@@ -1,6 +1,6 @@
 ﻿namespace API;
 
-public static class DependecyInjection
+public static class DependencyInjection
 {
     public static IHostApplicationBuilder AddGenericServices(this IHostApplicationBuilder builder)
     {
