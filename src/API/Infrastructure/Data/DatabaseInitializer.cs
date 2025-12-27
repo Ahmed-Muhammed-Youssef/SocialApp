@@ -10,13 +10,12 @@ public class DatabaseInitializer
         try
         {
             ApplicationDatabaseContext dataContext = services.GetRequiredService<ApplicationDatabaseContext>();
-            IdentityDatabaseContext identityContext = services.GetRequiredService<IdentityDatabaseContext>();
             IWebHostEnvironment environment = services.GetRequiredService<IWebHostEnvironment>();
             UserManager<IdentityUser> userManager = services.GetRequiredService<UserManager<IdentityUser>>();
             RoleManager<IdentityRole> roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
             IConfiguration configuration = services.GetRequiredService<IConfiguration>();
 
-            await MigrateDatabaseAsync(dataContext, identityContext, logger);
+            await MigrateDatabaseAsync(dataContext, logger);
             await SeedStaticData(dataContext, roleManager, logger);
             await SeedAdmin(userManager, configuration, dataContext, logger);
 
@@ -32,12 +31,11 @@ public class DatabaseInitializer
         }
     }
 
-    private static async Task MigrateDatabaseAsync(ApplicationDatabaseContext dataContext, IdentityDatabaseContext identityContext, ILogger<DatabaseInitializer> logger)
+    private static async Task MigrateDatabaseAsync(ApplicationDatabaseContext dataContext, ILogger<DatabaseInitializer> logger)
     {
         try
         {
             await dataContext.Database.MigrateAsync();
-            await identityContext.Database.MigrateAsync();
         }
         catch (Exception ex)
         {

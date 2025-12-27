@@ -54,7 +54,7 @@ public static class DependencyInjection
         .AddRoleManager<RoleManager<IdentityRole>>()
         .AddSignInManager<SignInManager<IdentityUser>>()
         .AddRoleValidator<RoleValidator<IdentityRole>>()
-        .AddEntityFrameworkStores<IdentityDatabaseContext>();
+        .AddEntityFrameworkStores<ApplicationDatabaseContext>();
 
         builder.Services.AddAuthorizationBuilder()
         .AddPolicy("RequireAdminRole", policy => policy.RequireRole(RolesNameValues.Admin))

@@ -74,7 +74,6 @@ global using Infrastructure;
 global using Infrastructure.Auth;
 global using Infrastructure.Auth.External;
 global using Infrastructure.Data;
-global using Infrastructure.Data.Identity;
 
 global using Shared.Extensions;
 global using Shared.Results;

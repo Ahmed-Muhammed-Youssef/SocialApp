@@ -10,7 +10,6 @@ global using Microsoft.EntityFrameworkCore;
 
 global using Application.Common.Mappings;
 global using Application.Common.Interfaces;
-global using Application.Common.Interfaces.Identity;
 global using Application.Common.Interfaces.Repositories;
 global using Application.Common.Interfaces.Orchestration;
 global using Application.Features.Users;

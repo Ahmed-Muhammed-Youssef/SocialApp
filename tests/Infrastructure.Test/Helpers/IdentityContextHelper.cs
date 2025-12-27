@@ -1,17 +1,17 @@
-﻿using Infrastructure.Data.Identity;
+﻿using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Test.Helpers;
 
 public static class IdentityContextHelper
 {
-    public static IdentityDatabaseContext CreateInMemoryDbContext()
+    public static ApplicationDatabaseContext CreateInMemoryDbContext()
     {
-        var options = new DbContextOptionsBuilder<IdentityDatabaseContext>()
+        var options = new DbContextOptionsBuilder<ApplicationDatabaseContext>()
             .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
             .Options;
 
-        var context = new IdentityDatabaseContext(options);
+        var context = new ApplicationDatabaseContext(options);
 
         context.Database.EnsureCreated();
 

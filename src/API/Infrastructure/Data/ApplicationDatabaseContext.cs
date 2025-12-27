@@ -1,6 +1,6 @@
 ﻿namespace Infrastructure.Data;
 
-public class ApplicationDatabaseContext(DbContextOptions<ApplicationDatabaseContext> options) : DbContext(options)
+public class ApplicationDatabaseContext(DbContextOptions<ApplicationDatabaseContext> options) : IdentityDbContext(options), IApplicationDatabaseContext
 {
     public DbSet<ApplicationUser> ApplicationUsers { get; set; }
     public DbSet<UserPicture> UserPictures { get; set; }
@@ -13,6 +13,7 @@ public class ApplicationDatabaseContext(DbContextOptions<ApplicationDatabaseCont
     public DbSet<Picture> Pictures { get; set; }
     public DbSet<Message> Messages { get; set; }
     public DbSet<DirectChat> DirectChats { get; set; }
+    public DbSet<RefreshToken> RefreshTokens { get; set; }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);

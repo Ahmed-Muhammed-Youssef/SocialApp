@@ -1,8 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore.Storage;
+﻿namespace Infrastructure.Orchestration.UserProvisioning;
 
-namespace Infrastructure.Orchestration.UserProvisioning;
-
-public class UserProvisioningService(UserManager<IdentityUser> userManager, ApplicationDatabaseContext applicationDatabaseContext, IdentityDatabaseContext identityDatabaseContext) : IUserProvisioningService
+public class UserProvisioningService(UserManager<IdentityUser> userManager, ApplicationDatabaseContext applicationDatabaseContext) : IUserProvisioningService
 {
     // <inheritdoc />
     public Task<UserProvisioningResult> CreateUserAsync(string email, string firstName, string lastName, CancellationToken cancellationToken = default)
@@ -33,15 +31,10 @@ public class UserProvisioningService(UserManager<IdentityUser> userManager, Appl
     // <inheritdoc />
     public async Task<UserProvisioningResult> CreateUserAsync(IdentityUser identityUser, ApplicationUser appUser, IReadOnlyList<string> roles, string? password, CancellationToken cancellationToken = default)
     {
-        using var transaction = await identityDatabaseContext.Database.BeginTransactionAsync(cancellationToken);
-
-        applicationDatabaseContext.Database.SetDbConnection(identityDatabaseContext.Database.GetDbConnection());
-        await applicationDatabaseContext.Database.UseTransactionAsync(transaction.GetDbTransaction(), cancellationToken: cancellationToken);
+        using var transaction = await applicationDatabaseContext.Database.BeginTransactionAsync(cancellationToken);
 
         try
         {
-            identityDatabaseContext.Database.UseTransaction(transaction.GetDbTransaction());
-
             IdentityResult result = password != null ? await userManager.CreateAsync(identityUser, password)
                 : await userManager.CreateAsync(identityUser);
 

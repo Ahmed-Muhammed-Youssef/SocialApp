@@ -11,7 +11,6 @@ global using Shared.RepositoryBase;
 
 global using Application.Common.Mappings;
 global using Application.Common.Interfaces;
-global using Application.Common.Interfaces.Identity;
 global using Application.Common.Interfaces.Repositories;
 global using Application.Common.Interfaces.Orchestration;
 global using Application.Features.Auth;
@@ -24,7 +23,6 @@ global using Application.Features.DirectChats.Stores;
 global using Infrastructure.Auth;
 global using Infrastructure.Auth.Options;
 global using Infrastructure.Data;
-global using Infrastructure.Data.Identity;
 global using Infrastructure.Data.Repositories;
 global using Infrastructure.Data.Repositories.CachedRepositories;
 global using Infrastructure.Media.Cloudinary;

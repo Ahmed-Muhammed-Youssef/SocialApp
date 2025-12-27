@@ -1,6 +1,6 @@
 ﻿namespace Application.Features.Auth.RefreshToken;
 
-public class RefreshTokenHandler(ITokenProvider tokenProvider, IIdentityDbContext identityDbContext, UserManager<IdentityUser> userManager, IUnitOfWork unitOfWork) : ICommandHandler<RefreshTokenCommand, Result<RefreshTokenResult>>
+public class RefreshTokenHandler(ITokenProvider tokenProvider, IApplicationDatabaseContext identityDbContext, UserManager<IdentityUser> userManager, IUnitOfWork unitOfWork) : ICommandHandler<RefreshTokenCommand, Result<RefreshTokenResult>>
 {
     // @TODO: Add Session-wide revocation on breach
 

@@ -1,9 +1,8 @@
-﻿
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace Application.Features.Auth.Register;
 
-public class RegisterHandler(IUnitOfWork unitOfWork, UserManager<IdentityUser> userManager, ITokenProvider tokenService, IIdentityDbContext identityDbContext) : ICommandHandler<RegisterCommand, Result<RegisterDTO>>
+public class RegisterHandler(IUnitOfWork unitOfWork, UserManager<IdentityUser> userManager, ITokenProvider tokenService, IApplicationDatabaseContext identityDbContext) : ICommandHandler<RegisterCommand, Result<RegisterDTO>>
 {
     public async ValueTask<Result<RegisterDTO>> Handle(RegisterCommand command, CancellationToken cancellationToken)
     {

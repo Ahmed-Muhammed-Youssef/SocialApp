@@ -1,7 +1,6 @@
-﻿
-namespace Application.Features.Auth.Login;
+﻿namespace Application.Features.Auth.Login;
 
-public class LoginHandler(IUnitOfWork unitOfWork, UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, ITokenProvider tokenService, IIdentityDbContext identityDbContext)
+public class LoginHandler(IUnitOfWork unitOfWork, UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, ITokenProvider tokenService, IApplicationDatabaseContext identityDbContext)
     : ICommandHandler<LoginCommand, Result<LoginDTO>>
 {
     public async ValueTask<Result<LoginDTO>> Handle(LoginCommand command, CancellationToken cancellationToken)
