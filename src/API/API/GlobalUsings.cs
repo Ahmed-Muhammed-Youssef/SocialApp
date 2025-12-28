@@ -4,6 +4,8 @@ global using Microsoft.AspNetCore.Authorization;
 global using Microsoft.AspNetCore.Mvc;
 global using Microsoft.AspNetCore.Mvc.Filters;
 global using Microsoft.AspNetCore.Identity;
+global using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+global using Microsoft.Extensions.Diagnostics.HealthChecks;
 global using Microsoft.IdentityModel.Tokens;
 global using Microsoft.OpenApi;
 
@@ -59,6 +61,7 @@ global using API.Common.Middleware;
 global using API.Common.Headers;
 global using API.Common.Extensions;
 global using API.Common.Filters;
+global using API.Common.Formatters;
 global using API.Features.Users;
 global using API.Features.Users.Requests;
 global using API.Features.Auth.Requests;

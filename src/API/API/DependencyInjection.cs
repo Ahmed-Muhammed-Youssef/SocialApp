@@ -22,11 +22,23 @@ public static class DependencyInjection
 
         builder.Services.AddCors(options =>
         {
-            options.AddPolicy("AllowSpecificOrigin", policy => policy.WithOrigins("https://localhost:4200", "http://localhost:4200")
-            .AllowAnyMethod()
-            .AllowAnyHeader()
-            .AllowCredentials());
+            string[] origins = builder.Configuration.GetSection("Cors:AllowedOrigins").Get<string[]>()!;
+            options.AddPolicy("AllowSpecificOrigin", policy => policy.WithOrigins(origins)
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .AllowCredentials());
         });
+
+        // Health checks (database liveness)
+        builder.Services.AddHealthChecks()
+            .AddDbContextCheck<ApplicationDatabaseContext>(
+                name: "database",
+                failureStatus: HealthStatus.Unhealthy,
+                tags: ["ready"])
+            .AddCheck(
+                "self",
+                () => HealthCheckResult.Healthy(),
+                tags: ["live"]);
 
         builder.Services.AddSingleton(new JsonSerializerOptions
         {
