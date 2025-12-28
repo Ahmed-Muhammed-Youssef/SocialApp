@@ -19,7 +19,7 @@ public class Friend : IAggregateRoot
         {
             UserId = user1Id,
             FriendId = user2Id,
-            Created = DateTime.Now,
+            Created = DateTime.UtcNow,
         };
     }
 
