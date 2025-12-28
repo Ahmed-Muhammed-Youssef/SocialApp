@@ -8,15 +8,8 @@ public class UsersController(JsonSerializerOptions jsonSerializerOptions, IMedia
 {
     // GET: api/users
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<UserDTO>>> GetUsers([FromQuery] GetUsersRequest request, IValidator<GetUsersRequest> validator, CancellationToken cancellationToken)
+    public async Task<ActionResult<IEnumerable<UserDTO>>> GetUsers([FromQuery] GetUsersRequest request, CancellationToken cancellationToken)
     {
-        var validationResult = validator.Validate(request);
-
-        if(!validationResult.IsValid)
-        {
-            return BadRequest(validationResult.Errors);
-        }
-
         UserParams userParam = new()
         {
             MinAge = request.MinAge,

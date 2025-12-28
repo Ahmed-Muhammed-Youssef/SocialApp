@@ -4,7 +4,15 @@ public static class DependencyInjection
 {
     public static IHostApplicationBuilder AddGenericServices(this IHostApplicationBuilder builder)
     {
-        builder.Services.AddControllers();
+        // Add validation filter (FluentValidation validators are registered below)
+        builder.Services.AddScoped<ValidationFilter>();
+        builder.Services.AddControllers(options =>
+        {
+            options.Filters.AddService<ValidationFilter>();
+        });
+
+        builder.Services.AddProblemDetails();
+
         builder.Services.AddMemoryCache();
         builder.Services.AddHttpContextAccessor();
         builder.Services.AddSwaggerGen(c =>
@@ -94,7 +102,7 @@ public static class DependencyInjection
         builder.Services.AddScoped<ITokenProvider, TokenProvider>();
         builder.Services.AddScoped<IGoogleAuthService, GoogleAuthService>();
         builder.Services.AddScoped<PasswordGenerationService>();
-
+  
         return builder;
     }
 }
