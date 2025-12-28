@@ -13,6 +13,7 @@
   </Folder>
   <Folder Name="/tests/">
     <Project Path="tests/Application.Test/Application.Test.csproj" />
+    <Project Path="tests/Domain.Test/Domain.Test.csproj" Id="653b78e5-337d-48c8-a958-663c42acc402" />
     <Project Path="tests/Infrastructure.Test/Infrastructure.Test.csproj" />
     <Project Path="tests/Shared.Test/Shared.Test.csproj" />
   </Folder>
