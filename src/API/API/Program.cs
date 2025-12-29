@@ -2,6 +2,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder
     .AddGenericServices()
+    .AddObservability()
     .AddIdentity()
     .AddInfrastructureServices();
 

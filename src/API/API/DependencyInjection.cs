@@ -1,4 +1,9 @@
-﻿namespace API;
+﻿using OpenTelemetry.Resources;
+using OpenTelemetry.Trace;
+using OpenTelemetry;
+using OpenTelemetry.Metrics;
+
+namespace API;
 
 public static class DependencyInjection
 {
@@ -62,6 +67,31 @@ public static class DependencyInjection
 
         return builder;
     }
+
+    public static IHostApplicationBuilder AddObservability(this IHostApplicationBuilder builder)
+    {
+        builder.Services
+            .AddOpenTelemetry()
+            .ConfigureResource(resource => resource.AddService(builder.Environment.ApplicationName))
+            .WithTracing(tracing => tracing
+                .AddHttpClientInstrumentation()
+                .AddAspNetCoreInstrumentation()
+                .AddEntityFrameworkCoreInstrumentation())
+            .WithMetrics(metrics => metrics
+                .AddHttpClientInstrumentation()
+                .AddAspNetCoreInstrumentation()
+                .AddRuntimeInstrumentation())
+            .UseOtlpExporter();
+
+        builder.Logging.AddOpenTelemetry(options =>
+        {
+            options.IncludeScopes = true;
+            options.IncludeFormattedMessage = true;
+        });
+
+        return builder;
+    }
+
     public static IHostApplicationBuilder AddIdentity(this IHostApplicationBuilder builder)
     {
         builder.Services.AddIdentityCore<IdentityUser>(opt =>

@@ -8,6 +8,10 @@ services:
       - app-db
     networks:
       - app-network
+    environment:
+      # Aspire Dashboard
+      - OTEL_EXPORTER_OTLP_ENDPOINT=http://api.aspire-dashboard:18889
+      - OTEL_EXPORTER_OTLP_PROTOCOL=grpc
   app-db:
     image: mcr.microsoft.com/mssql/server:2022-latest
     environment:
@@ -17,6 +21,14 @@ services:
       - "1433:1433"  # Expose app DB on localhost:1433
     volumes:
       - app-db-data:/var/opt/mssql
+    networks:
+      - app-network
+  api.aspire-dashboard:
+    image: mcr.microsoft.com/dotnet/aspire-dashboard:13
+    environment:
+      DOTNET_DASHBOARD_UNSECURED_ALLOW_ANONYMOUS: true
+    ports:
+      - 18888:18888
     networks:
       - app-network
 networks:
