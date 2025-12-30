@@ -143,7 +143,6 @@ public static class DependencyInjection
 
         builder.Services.AddScoped<ITokenProvider, TokenProvider>();
         builder.Services.AddScoped<IGoogleAuthService, GoogleAuthService>();
-        builder.Services.AddScoped<PasswordGenerationService>();
   
         return builder;
     }
