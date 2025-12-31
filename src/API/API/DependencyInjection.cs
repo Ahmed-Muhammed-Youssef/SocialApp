@@ -9,15 +9,6 @@ public static class DependencyInjection
 {
     public static IHostApplicationBuilder AddGenericServices(this IHostApplicationBuilder builder)
     {
-        // Add validation filter (FluentValidation validators are registered below)
-        builder.Services.AddScoped<ValidationFilter>();
-        builder.Services.AddControllers(options =>
-        {
-            options.Filters.AddService<ValidationFilter>();
-        });
-
-        builder.Services.AddProblemDetails();
-
         builder.Services.AddMemoryCache();
         builder.Services.AddHttpContextAccessor();
         builder.Services.AddSwaggerGen(c =>
@@ -55,7 +46,6 @@ public static class DependencyInjection
         {
             config.ServiceLifetime = ServiceLifetime.Scoped;
         });
-        builder.Services.AddValidatorsFromAssemblyContaining<Program>();
         builder.Services.AddScoped<IMessageNotifier, MessageNotifier>();
 
         builder.Services.AddHttpClient("GoogleAuth", client =>
@@ -144,6 +134,30 @@ public static class DependencyInjection
         builder.Services.AddScoped<ITokenProvider, TokenProvider>();
         builder.Services.AddScoped<IGoogleAuthService, GoogleAuthService>();
   
+        return builder;
+    }
+
+    public static IHostApplicationBuilder AddErrorHandling(this IHostApplicationBuilder builder)
+    {
+        builder.Services.AddProblemDetails(options =>
+        {
+            options.CustomizeProblemDetails = context =>
+            {
+                context.ProblemDetails.Extensions.TryAdd("requestId", context.HttpContext.TraceIdentifier);
+            };
+        });
+
+        builder.Services.AddValidatorsFromAssemblyContaining<Program>();
+
+        // Add validation filter (FluentValidation validators are registered below)
+        builder.Services.AddScoped<ValidationFilter>();
+        builder.Services.AddControllers(options =>
+        {
+            options.Filters.AddService<ValidationFilter>();
+        });
+
+        builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
+
         return builder;
     }
 }

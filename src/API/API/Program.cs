@@ -2,6 +2,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder
     .AddGenericServices()
+    .AddErrorHandling()
     .AddObservability()
     .AddIdentity()
     .AddInfrastructureServices();
@@ -16,7 +17,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "API v1"));
 }
-app.UseMiddleware<ExceptionMiddleware>();
+
+app.UseExceptionHandler();
 
 app.UseHttpsRedirection();
 
