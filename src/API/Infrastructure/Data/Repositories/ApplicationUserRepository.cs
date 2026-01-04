@@ -67,4 +67,10 @@ public class ApplicationUserRepository(ApplicationDatabaseContext dataContext) :
         .Where(u => u.Id == userId && dataContext.UserPictures.Any(up => up.UserId == userId && up.PictureId == pictureId))
         .ExecuteUpdateAsync(s => s.SetProperty(u => u.ProfilePictureId, pictureId));
     }
+
+    public void AddUserPictureAsync(int userId, int pictureId)
+    {
+        UserPicture userPicture = new() { UserId = userId, PictureId = pictureId };
+        dataContext.UserPictures.Add(userPicture);
+    }
 }

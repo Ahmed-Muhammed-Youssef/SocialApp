@@ -15,20 +15,18 @@ public class DeletePictureHandler(IUnitOfWork unitOfWork, IPictureService pictur
         var picture = pictures.FirstOrDefault(p => p.Id == command.PictureId);
         if (picture == null)
         {
-            return Result<object?>.NotFound($"{command.PictureId} doesn't exist.");
+            return Result<object?>.NotFound($"Picture {command.PictureId} doesn't exist or is not owned by the user.");
         }
 
         var result = await pictureService.DeletePictureAsync(picture.PublicId);
-        if (result.Error != null)
+        if (result == null || result.Error != null)
         {
-            return Result<object?>.Error(result.Error.Message);
+            return Result<object?>.Error(result?.Error?.Message ?? "Failed to delete image from storage.");
         }
 
-        unitOfWork.PictureRepository.Add(picture);
+        unitOfWork.PictureRepository.Delete(picture);
 
         await unitOfWork.CommitAsync(cancellationToken);
-
-        //@TODO: what if the image is a profile picture
 
         return Result<object?>.NoContent();
     }

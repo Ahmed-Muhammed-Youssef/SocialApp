@@ -51,4 +51,9 @@ public class ApplicationUser : EntityBase, IAggregateRoot
     {
         LastActive = DateTime.UtcNow;
     }
+
+    public void SetProfilePicture(int? pictureId)
+    {
+        ProfilePictureId = pictureId;
+    }
 }

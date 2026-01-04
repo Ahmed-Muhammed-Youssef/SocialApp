@@ -4,23 +4,20 @@ public class CreatePictureHandler(IUnitOfWork unitOfWork, IPictureService pictur
 {
     public async ValueTask<Result<int>> Handle(CreatePictureCommand command, CancellationToken cancellationToken)
     {
-        var user = await unitOfWork.ApplicationUserRepository.GetByIdAsync(currentUserService.GetPublicId(), cancellationToken);
+        if (command.File == null)
+            return Result<int>.Error("No file provided.");
 
-        if (user is null)
+        ImageUploadResult uploadResult = await pictureService.AddPictureAsync(command.File);
+        if (uploadResult == null || uploadResult.Error != null)
         {
-            return Result<int>.Unauthorized();
+            return Result<int>.Error(uploadResult?.Error?.Message ?? "Failed to upload image.");
         }
 
-        ImageUploadResult result = await pictureService.AddPictureAsync(command.File);
-        if (result.Error != null)
-        {
-            return Result<int>.Error(result.Error.Message);
-        }
 
         Picture picture = new()
         {
-            Url = result.SecureUrl.AbsoluteUri,
-            PublicId = result.PublicId
+            Url = uploadResult.SecureUrl.AbsoluteUri,
+            PublicId = uploadResult.PublicId
         };
 
         unitOfWork.PictureRepository.Add(picture);
