@@ -110,4 +110,61 @@ public class UsersController(JsonSerializerOptions jsonSerializerOptions, IMedia
             return BadRequest(result.Errors);
         }
     }
+
+    // POST: api/users/userpictures
+    [HttpPost("user-pictures")]
+    public async Task<ActionResult<PictureDTO>> CreateUserPicture(IFormFile file, CancellationToken cancellationToken)
+    {
+        Result<int> result = await mediator.Send(new CreateUserPictureCommand(file), cancellationToken);
+
+        if (result.IsSuccess)
+        {
+            return Created();
+        }
+        else if (result.Status == ResultStatus.Unauthorized)
+        {
+            return Unauthorized(result.Errors);
+        }
+        else
+        {
+            return BadRequest(result.Errors);
+        }
+    }
+
+    // DELETE: api/users/user-pictures/{pictureId}
+    [HttpDelete("user-pictures/{pictureId}")]
+    public async Task<ActionResult<PictureDTO>> DeleteUserPicture(int pictureId, CancellationToken cancellationToken)
+    {
+        Result<object?> result = await mediator.Send(new DeleteUserPictureCommand(pictureId), cancellationToken);
+
+        if (result.IsSuccess)
+        {
+            return NoContent();
+        }
+        else if (result.Status == ResultStatus.NotFound)
+        {
+            return NotFound(result.Errors);
+        }
+        else if (result.Status == ResultStatus.Unauthorized)
+        {
+            return Unauthorized(result.Errors);
+        }
+        else
+        {
+            return BadRequest(result.Errors);
+        }
+    }
+
+    // GET: api/users/user-pictures
+    [HttpGet("user-pictures")]
+    public async Task<ActionResult<PictureDTO>> GetUserPictures(CancellationToken cancellationToken)
+    {
+        var result = await mediator.Send(new GetUserPicturesQuery(), cancellationToken);
+
+        if (result.IsSuccess)
+        {
+            return Ok(result.Value);
+        }
+        return BadRequest(result.Errors);
+    }
 }
