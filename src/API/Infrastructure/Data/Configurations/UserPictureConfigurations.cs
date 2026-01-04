@@ -6,6 +6,7 @@ public class UserPictureConfigurations : IEntityTypeConfiguration<UserPicture>
     {
         builder.HasOne<Picture>()
             .WithOne()
-            .HasForeignKey<UserPicture>(up => up.PictureId);
+            .HasForeignKey<UserPicture>(up => up.PictureId)
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }

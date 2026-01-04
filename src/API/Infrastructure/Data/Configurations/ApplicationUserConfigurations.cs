@@ -22,6 +22,7 @@ public class ApplicationUserConfigurations : IEntityTypeConfiguration<Applicatio
         builder.HasOne<Picture>()
             .WithOne()
             .HasForeignKey<ApplicationUser>(u => u.ProfilePictureId)
+            .OnDelete(DeleteBehavior.SetNull)
             .IsRequired(false);
 
         builder.HasMany(u => u.Pictures)
