@@ -1,4 +1,4 @@
-﻿namespace Application.Features.Pictures;
+﻿namespace Application.Features.Users;
 
 public interface IPictureService
 {

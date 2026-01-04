@@ -1,15 +1,15 @@
-﻿namespace API.Features.Pictures;
+﻿namespace API.Features.Users;
 
 [Route("api/[controller]")]
 [ApiController]
 [Authorize]
-public class PicturesController(IMediator mediator) : ControllerBase
+public class UserPicturesController(IMediator mediator) : ControllerBase
 {
-    // POST: api/pictures
+    // POST: api/userpictures
     [HttpPost]
     public async Task<ActionResult<PictureDTO>> Create(IFormFile file, CancellationToken cancellationToken)
     {
-        Result<int> result = await mediator.Send(new CreatePictureCommand(file), cancellationToken);
+        Result<int> result = await mediator.Send(new CreateUserPictureCommand(file), cancellationToken);
 
         if (result.IsSuccess)
         {
@@ -25,11 +25,11 @@ public class PicturesController(IMediator mediator) : ControllerBase
         }
     }
 
-    // DELETE: api/pictures/{pictureId}
+    // DELETE: api/userpictures/{pictureId}
     [HttpDelete("{pictureId}")]
     public async Task<ActionResult<PictureDTO>> Delete(int pictureId, CancellationToken cancellationToken)
     {
-        Result<object?> result = await mediator.Send(new DeletePictureCommand(pictureId), cancellationToken);
+        Result<object?> result = await mediator.Send(new DeleteUserPictureCommand(pictureId), cancellationToken);
 
         if(result.IsSuccess)
         {
@@ -49,11 +49,11 @@ public class PicturesController(IMediator mediator) : ControllerBase
         }
     }
 
-    // GET: api/pictures
+    // GET: api/userpictures
     [HttpGet]
     public async Task<ActionResult<PictureDTO>> Get(CancellationToken cancellationToken)
     {
-        var result = await mediator.Send(new GetPicturesQuery(), cancellationToken);
+        var result = await mediator.Send(new GetUserPicturesQuery(), cancellationToken);
 
         if(result.IsSuccess)
         {

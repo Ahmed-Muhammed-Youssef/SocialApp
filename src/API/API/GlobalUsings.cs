@@ -14,7 +14,6 @@ global using FluentValidation;
 
 global using System.Text;
 global using System.Text.Json;
-global using System.Net;
 global using System.ComponentModel.DataAnnotations;
 
 global using Application.Common.Interfaces;
@@ -24,6 +23,9 @@ global using Application.Features.Users.List;
 global using Application.Features.Users.Update;
 global using Application.Features.Users.SetProfilePciture;
 global using Application.Features.Users.GetPosts;
+global using Application.Features.Users.CreateUserPicture;
+global using Application.Features.Users.DeleteUserPicture;
+global using Application.Features.Users.GetUserPictures;
 global using Application.Features.Roles;
 global using Application.Features.Roles.List;
 global using Application.Features.Roles.Create;
@@ -32,10 +34,6 @@ global using Application.Features.Posts;
 global using Application.Features.Posts.List;
 global using Application.Features.Posts.Create;
 global using Application.Features.Posts.GetById;
-global using Application.Features.Pictures;
-global using Application.Features.Pictures.Delete;
-global using Application.Features.Pictures.List;
-global using Application.Features.Pictures.Create;
 global using Application.Features.FriendRequests.List;
 global using Application.Features.FriendRequests.Create;
 global using Application.Features.FriendRequests.Delete;
@@ -70,7 +68,6 @@ global using API.Features.Posts.Requests;
 global using API.Features.DirectChats;
 global using API.Features.DirectChats.Requests;
 
-global using Domain;
 global using Domain.ApplicationUserAggregate;
 
 global using Infrastructure;

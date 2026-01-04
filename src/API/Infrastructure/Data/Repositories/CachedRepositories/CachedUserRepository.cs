@@ -28,8 +28,9 @@ public class CachedUserRepository(IApplicationUserRepository _usersRepository, I
         return result;
     }
 
-    // Caching this mehtod will need a complex implemention
     public Task<PagedList<UserDTO>> GetUsersDTOAsync(int userId, UserParams userParams) => _usersRepository.GetUsersDTOAsync(userId, userParams);
 
     public Task<int> SetProfilePictureIfOwnedAsync(int userId, int pictureId) => _usersRepository.SetProfilePictureIfOwnedAsync(userId, pictureId);
+
+    public void AddUserPicture(int userId, int pictureId) => _usersRepository.AddUserPicture(userId, pictureId);
 }

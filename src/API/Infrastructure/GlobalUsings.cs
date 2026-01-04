@@ -15,7 +15,6 @@ global using Application.Common.Interfaces.Repositories;
 global using Application.Common.Interfaces.Orchestration;
 global using Application.Features.Auth;
 global using Application.Features.Users;
-global using Application.Features.Pictures;
 global using Application.Features.Posts;
 global using Application.Features.DirectChats;
 global using Application.Features.DirectChats.Stores;

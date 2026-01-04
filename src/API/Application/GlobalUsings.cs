@@ -16,7 +16,6 @@ global using Application.Features.Users;
 global using Application.Features.Users.Specifications;
 global using Application.Features.DirectChats;
 global using Application.Features.DirectChats.Stores;
-global using Application.Features.Pictures;
 global using Application.Features.Auth.Login;
 global using Application.Features.Posts;
 global using Application.Features.ReferenceData.ListCities.Specifications;

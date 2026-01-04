@@ -1,8 +1,8 @@
-﻿namespace Application.Features.Pictures.Create;
+﻿namespace Application.Features.Users.CreateUserPicture;
 
-public class CreatePictureHandler(IUnitOfWork unitOfWork, IPictureService pictureService, ICurrentUserService currentUserService) : ICommandHandler<CreatePictureCommand, Result<int>>
+public class CreateUserPictureHandler(IUnitOfWork unitOfWork, IPictureService pictureService, ICurrentUserService currentUserService) : ICommandHandler<CreateUserPictureCommand, Result<int>>
 {
-    public async ValueTask<Result<int>> Handle(CreatePictureCommand command, CancellationToken cancellationToken)
+    public async ValueTask<Result<int>> Handle(CreateUserPictureCommand command, CancellationToken cancellationToken)
     {
         if (command.File == null)
             return Result<int>.Error("No file provided.");
@@ -13,7 +13,6 @@ public class CreatePictureHandler(IUnitOfWork unitOfWork, IPictureService pictur
             return Result<int>.Error(uploadResult?.Error?.Message ?? "Failed to upload image.");
         }
 
-
         Picture picture = new()
         {
             Url = uploadResult.SecureUrl.AbsoluteUri,
@@ -21,6 +20,13 @@ public class CreatePictureHandler(IUnitOfWork unitOfWork, IPictureService pictur
         };
 
         unitOfWork.PictureRepository.Add(picture);
+
+        await unitOfWork.CommitAsync(cancellationToken);
+
+        var publicId = currentUserService.GetPublicId();
+
+        unitOfWork.ApplicationUserRepository.AddUserPicture(publicId, picture.Id);
+
         await unitOfWork.CommitAsync(cancellationToken);
 
         return Result<int>.Created(picture.Id);

@@ -68,7 +68,7 @@ public class ApplicationUserRepository(ApplicationDatabaseContext dataContext) :
         .ExecuteUpdateAsync(s => s.SetProperty(u => u.ProfilePictureId, pictureId));
     }
 
-    public void AddUserPictureAsync(int userId, int pictureId)
+    public void AddUserPicture(int userId, int pictureId)
     {
         UserPicture userPicture = new() { UserId = userId, PictureId = pictureId };
         dataContext.UserPictures.Add(userPicture);

@@ -1,8 +1,8 @@
-﻿namespace Application.Features.Pictures.Delete;
+﻿namespace Application.Features.Users.DeleteUserPicture;
 
-public class DeletePictureHandler(IUnitOfWork unitOfWork, IPictureService pictureService, ICurrentUserService currentUserService) : ICommandHandler<DeletePictureCommand, Result<object?>>
+public class DeleteUserPictureHandler(IUnitOfWork unitOfWork, IPictureService pictureService, ICurrentUserService currentUserService) : ICommandHandler<DeleteUserPictureCommand, Result<object?>>
 {
-    public async ValueTask<Result<object?>> Handle(DeletePictureCommand command, CancellationToken cancellationToken)
+    public async ValueTask<Result<object?>> Handle(DeleteUserPictureCommand command, CancellationToken cancellationToken)
     {
         ApplicationUser? user = await unitOfWork.ApplicationUserRepository.GetByIdAsync(currentUserService.GetPublicId(), cancellationToken);
 
