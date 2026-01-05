@@ -12,7 +12,8 @@ public static class UserMappings
         Created = user.Created,
         LastActive = user.LastActive,
         Bio = user.Bio ?? string.Empty,
-        RelationStatus = RelationStatus.None
+        RelationStatus = RelationStatus.None,
+        ProfilePictureUrl = null
     };
 
     public static Expression<Func<ApplicationUser, UserDTO>> ToDtoExpression => user => new UserDTO()
@@ -26,6 +27,22 @@ public static class UserMappings
         Created = user.Created,
         LastActive = user.LastActive,
         Bio = user.Bio ?? string.Empty,
-        RelationStatus = RelationStatus.None
+        RelationStatus = RelationStatus.None,
+        ProfilePictureUrl = null
+    };
+
+    public static Expression<Func<ApplicationUser, Picture?, UserDTO>> ToDtoWithPictureExpression => (user, picture) => new UserDTO()
+    {
+        Id = user.Id,
+        FirstName = user.FirstName,
+        LastName = user.LastName,
+        Gender = user.Gender,
+        Age = DateTime.UtcNow.Year - user.DateOfBirth.Year
+              - (DateTime.UtcNow < user.DateOfBirth.AddYears(DateTime.UtcNow.Year - user.DateOfBirth.Year) ? 1 : 0),
+        Created = user.Created,
+        LastActive = user.LastActive,
+        Bio = user.Bio ?? string.Empty,
+        RelationStatus = RelationStatus.None,
+        ProfilePictureUrl = picture == null ? null : picture.Url
     };
 }

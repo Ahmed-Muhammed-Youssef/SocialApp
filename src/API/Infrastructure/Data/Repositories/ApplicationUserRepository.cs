@@ -38,10 +38,12 @@ public class ApplicationUserRepository(ApplicationDatabaseContext dataContext) :
             _ => query.OrderByDescending(u => u.LastActive)
         };
 
-        // projection
-        var projectedQuery = query.Select(UserMappings.ToDtoExpression);
-
-        var count = await projectedQuery.CountAsync();
+        var count = await query.CountAsync();
+        
+        var projectedQuery = query.LeftJoin(dataContext.Pictures,
+                                u => u.ProfilePictureId,
+                                p => p.Id,
+                                UserMappings.ToDtoWithPictureExpression);
 
         // pagination and execution
         List<UserDTO> users = await projectedQuery
@@ -54,8 +56,12 @@ public class ApplicationUserRepository(ApplicationDatabaseContext dataContext) :
 
     public async Task<UserDTO?> GetDtoByIdAsync(int id)
     {
-        UserDTO? userDTO = await dataContext.ApplicationUsers.Where(u => u.Id == id)
-            .Select(UserMappings.ToDtoExpression)
+        UserDTO? userDTO = await dataContext.ApplicationUsers
+            .Where(u => u.Id == id)
+            .LeftJoin(dataContext.Pictures, 
+                u => u.ProfilePictureId, 
+                p => p.Id, 
+                UserMappings.ToDtoWithPictureExpression)
             .FirstOrDefaultAsync();
 
         return userDTO;
