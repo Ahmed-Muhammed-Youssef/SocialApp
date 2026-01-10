@@ -28,7 +28,8 @@ public static class TestHelpers
             Age = 34,
             Created = DateTime.UtcNow,
             LastActive = DateTime.UtcNow,
-            Bio = "Test bio"
+            Bio = "Test bio",
+            ProfilePictureUrl = null
         };
     }
 
