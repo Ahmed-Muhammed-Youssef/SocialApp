@@ -92,26 +92,7 @@ public class AuthController(IMediator mediator) : ControllerBase
         return Ok(new RefreshTokenResponse(Token: result.Value.AccessToken, RefreshToken: result.Value.NewRefreshToken));
     }
 
-
     // GET: api/auth/google-signin
-    //[HttpGet("google-signin")]
-    //public async Task<IActionResult> GoogleSignIn(string code, CancellationToken cancellationToken)
-    //{
-    //    Result<LoginDTO> result = await mediator.Send(new GoogleSignInCommand(code), cancellationToken);
-    //    if (!result.IsSuccess)
-    //    {
-    //        return BadRequest(result.Errors);
-    //    }
-
-    //    Response.AppendRefreshTokenCookie(result.Value.RefreshToken, result.Value.RefreshTokenExpiresAtUtc);
-
-    //    return Ok(new AuthResponse()
-    //    {
-    //        UserData = result.Value.UserData,
-    //        Token = result.Value.Token,
-    //    });
-    //}
-
     [HttpPost("google-signin")]
     public async Task<IActionResult> GoogleSignIn(GoogleSignInRequest googleSignInRequest, CancellationToken cancellationToken)
     {
