@@ -14,7 +14,6 @@ global using FluentValidation;
 
 global using System.Text;
 global using System.Text.Json;
-global using System.ComponentModel.DataAnnotations;
 
 global using Application.Common.Interfaces;
 global using Application.Features.Users;
