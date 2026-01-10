@@ -2,6 +2,5 @@
 
 public record CreatePostRequest
 {
-    [Required]
     public required string Content { get; init; }
 }
