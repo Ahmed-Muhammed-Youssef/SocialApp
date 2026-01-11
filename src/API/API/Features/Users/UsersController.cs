@@ -1,4 +1,6 @@
-﻿namespace API.Features.Users;
+﻿using Application.Features.Users.GetUserPictureById;
+
+namespace API.Features.Users;
 
 [Route("api/[controller]")]
 [ApiController]
@@ -113,13 +115,13 @@ public class UsersController(JsonSerializerOptions jsonSerializerOptions, IMedia
 
     // POST: api/users/userpictures
     [HttpPost("user-pictures")]
-    public async Task<ActionResult<PictureDTO>> CreateUserPicture(IFormFile file, CancellationToken cancellationToken)
+    public async Task<ActionResult> CreateUserPicture(IFormFile file, CancellationToken cancellationToken)
     {
         Result<int> result = await mediator.Send(new CreateUserPictureCommand(file), cancellationToken);
 
         if (result.IsSuccess)
         {
-            return Created();
+            return Ok(new { pictureId = result.Value });
         }
         else if (result.Status == ResultStatus.Unauthorized)
         {
@@ -166,5 +168,25 @@ public class UsersController(JsonSerializerOptions jsonSerializerOptions, IMedia
             return Ok(result.Value);
         }
         return BadRequest(result.Errors);
+    }
+
+    // GET: api/users/user-pictures/{pictureId}
+    [HttpGet("user-pictures/{pictureId}")]
+    public async Task<ActionResult<PictureDTO>> GetUserPictureById(int pictureId, CancellationToken cancellationToken)
+    {
+        Result<PictureDTO> result = await mediator.Send(new GetUserPictureByIdQuery(pictureId), cancellationToken);
+
+        if (result.IsSuccess)
+        {
+            return Ok(result.Value);
+        }
+        else if (result.Status == ResultStatus.NotFound)
+        {
+            return NotFound(result.Errors);
+        }
+        else
+        {
+            return BadRequest(result.Errors);
+        }
     }
 }

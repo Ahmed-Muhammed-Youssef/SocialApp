@@ -2,6 +2,7 @@
 
 public interface IPictureRepository : IRepositoryBase<Picture>
 {
-    public Task<List<Picture>> GetUserPictureAsync(int id);
-    public Task<List<PictureDTO>> GetUserPictureDTOsAsync(int id);
+    Task<List<Picture>> GetUserPictureAsync(int id, CancellationToken cancellationToken = default);
+    Task<List<PictureDTO>> GetUserPictureDTOsAsync(int id, CancellationToken cancellationToken = default);
+    Task<PictureDTO?> GetUserPictureDTOAsync(int userId, int pictureId, CancellationToken cancellationToken = default);
 }
