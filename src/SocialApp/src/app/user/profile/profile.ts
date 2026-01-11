@@ -9,6 +9,7 @@ import { PostDTO } from '../../newsfeed/models/post-dto';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { AuthService } from '../../auth/services/auth';
+import { UserPicturesService } from '../services/user-pictures';
 
 @Component({
   selector: 'app-profile',
@@ -20,6 +21,7 @@ export class Profile {
   private userService = inject(UsersService);
   private route = inject(ActivatedRoute);
   private authService = inject(AuthService);
+  private userPicturesService = inject(UserPicturesService);
 
   user = signal<UserDTO | null>(null);
   currentUserId = signal(this.authService.getUserData()?.id);
@@ -51,6 +53,24 @@ export class Profile {
         error: err => console.error(err)
       });
     }
+  }
+
+  onFileSelected(event: Event) {
+    const input = event.target as HTMLInputElement;
+
+    if (!input.files || input.files.length === 0) {
+      return;
+    }
+    this.userPicturesService.uploadUserPicture(input.files[0]).subscribe({
+      next: (res) => {
+        console.log(res);
+        input.value = '';
+      },
+      error: (err) => {
+        console.error(err);
+        input.value = '';
+      }
+    });   
   }
 
 }
