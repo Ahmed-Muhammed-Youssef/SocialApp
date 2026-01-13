@@ -24,7 +24,7 @@ export class NavBar {
   unreadCount = signal(2);
 
   userId = () => this.authService.getUserData()?.id ?? 0;
-  avatar = () => this.authService.getUserData()?.pictures[0] ?? 'imgs/default-user.png';
+  avatar = () => this.authService.getUserData()?.profilePictureUrl ?? 'imgs/default-user.png';
   username = () => this.authService.getUserData()?.firstName ?? 'User';
 
   logOut(){

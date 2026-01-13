@@ -15,4 +15,12 @@ export class UserPicturesService {
     formData.append('file', file);
     return this.httpClient.post<number>(`${this.baseUrl}/user-pictures`, formData);
   }
+
+  setProfilePicture(pictureId: number) : Observable<void> {
+    return this.httpClient.post<void>(`${this.baseUrl}/set-profile-picture/${pictureId}`, null);
+  }
+  
+  GetUserPictures() : Observable<PictureDTO[]> {
+    return this.httpClient.get<PictureDTO[]>(`${this.baseUrl}/user-pictures`);
+  }
 }

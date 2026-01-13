@@ -10,10 +10,11 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { AuthService } from '../../auth/services/auth';
 import { UserPicturesService } from '../services/user-pictures';
+import { UserPictures } from '../user-pictures/user-pictures';
 
 @Component({
   selector: 'app-profile',
-  imports: [MatCardModule, DatePipe, PostItem, RouterModule, MatIconModule, MatButtonModule],
+  imports: [MatCardModule, DatePipe, PostItem, RouterModule, MatIconModule, MatButtonModule, UserPictures],
   templateUrl: './profile.html',
   styleUrl: './profile.css',
 })
@@ -26,6 +27,7 @@ export class Profile {
   user = signal<UserDTO | null>(null);
   currentUserId = signal(this.authService.getUserData()?.id);
   posts = signal<PostDTO[]>([]);
+  userId = signal<number | null>(null);
   defaultImage = 'imgs/default-user.png';
 
   constructor()
@@ -34,6 +36,7 @@ export class Profile {
 
     this.route.paramMap.subscribe(params => {
         const id = Number(params.get('id'));
+        this.userId.set(id);
         this.loadUser(id);
       });
 

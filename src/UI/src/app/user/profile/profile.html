@@ -2,7 +2,7 @@
 <div class="profile-card">
   <mat-card>
     <div class="header">
-      <img class="avatar" [src]="defaultImage" alt="User Avatar" />
+      <img class="avatar" [src]="user()?.profilePictureUrl || defaultImage" alt="User Avatar" />
 
       <div class="user-info">
         <h2>{{ user()?.firstName }} {{ user()?.lastName }}</h2>
@@ -40,6 +40,11 @@
     </mat-card-actions>
 
   </mat-card>
+
+  <!-- User Images Section -->
+  @if(currentUserId() === user()?.id) {
+    <app-user-pictures [userId]="userId()"></app-user-pictures>
+  }
 </div>
 
 <div class="posts-section">

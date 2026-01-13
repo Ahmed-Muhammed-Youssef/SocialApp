@@ -9,6 +9,7 @@ export interface UserDTO {
   bio: string;
   relationStatus: RelationStatus;
   pictures: PictureDTO[];
+  profilePictureUrl?: string;
 }
 
 export enum Gender {

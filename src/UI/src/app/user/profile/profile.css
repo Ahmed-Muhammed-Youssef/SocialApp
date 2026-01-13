@@ -65,6 +65,12 @@ h2 {
   color: var(--mat-sys-primary);
 }
 
+/* --- USER PICTURES SECTION --- */
+.profile-card app-user-pictures {
+  display: block;
+  margin: 24px 0;
+}
+
 /* --- POSTS SECTION --- */
 .posts-section {
   max-width: 700px;

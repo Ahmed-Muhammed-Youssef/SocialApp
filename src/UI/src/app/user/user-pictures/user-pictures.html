@@ -1,0 +1,103 @@
+@if(pictures().length > 0) {
+<div class="pictures-section">
+  <button mat-flat-button color="primary" (click)="openCarousel()" class="view-images-btn">
+    <mat-icon>collections</mat-icon>
+    View {{ pictures().length }} Images
+  </button>
+</div>
+}
+
+@if(isLoading()) {
+<div class="loading">
+  <mat-spinner diameter="40"></mat-spinner>
+</div>
+}
+
+@if(error()) {
+<div class="error-message">
+  {{ error() }}
+</div>
+}
+
+<!-- CAROUSEL MODAL -->
+@if(isCarouselOpen() && currentImage) {
+<div class="carousel-overlay" (click)="closeCarousel()">
+  <div class="carousel-container" (click)="$event.stopPropagation()">
+    <!-- Close Button -->
+    <button mat-icon-button class="close-btn" (click)="closeCarousel()" aria-label="Close carousel">
+      <mat-icon>close</mat-icon>
+    </button>
+
+    <!-- Image Display -->
+    <div class="image-wrapper">
+      <img 
+        [src]="currentImage.url" 
+        [alt]="'User image ' + (currentImageIndex() + 1)"
+        class="carousel-image"
+      />
+    </div>
+
+    <!-- Navigation Controls -->
+    <div class="carousel-controls">
+      <button 
+        mat-icon-button 
+        (click)="previousImage()" 
+        class="nav-btn prev-btn"
+        aria-label="Previous image"
+      >
+        <mat-icon>chevron_left</mat-icon>
+      </button>
+
+      <div class="image-counter">{{ imageProgress }}</div>
+
+      <button 
+        mat-icon-button 
+        (click)="nextImage()" 
+        class="nav-btn next-btn"
+        aria-label="Next image"
+      >
+        <mat-icon>chevron_right</mat-icon>
+      </button>
+    </div>
+
+    <!-- Set as Profile Picture Button -->
+    <button 
+      mat-flat-button 
+      color="accent"
+      (click)="setCurrentAsProfilePicture()"
+      [disabled]="isSettingProfilePicture()"
+      class="set-profile-btn"
+      aria-label="Set as profile picture"
+    >
+      @if(isSettingProfilePicture()) {
+        <ng-container>
+          <mat-icon>hourglass_empty</mat-icon>
+          <span>Setting...</span>
+        </ng-container>
+      } @else if(profilePictureSuccess()) {
+        <ng-container>
+          <mat-icon>check_circle</mat-icon>
+          <span>Set as Profile Picture</span>
+        </ng-container>
+      } @else {
+        <ng-container>
+          <mat-icon>account_circle</mat-icon>
+          <span>Set as Profile Picture</span>
+        </ng-container>
+      }
+    </button>
+
+    <!-- Thumbnail Indicators -->
+    <div class="thumbnail-indicators">
+      @for(pic of pictures(); track pic.id; let i = $index) {
+        <div 
+          class="indicator" 
+          [class.active]="currentImageIndex() === i"
+          (click)="currentImageIndex.set(i)"
+          [attr.aria-label]="'Go to image ' + (i + 1)"
+        ></div>
+      }
+    </div>
+  </div>
+</div>
+}
