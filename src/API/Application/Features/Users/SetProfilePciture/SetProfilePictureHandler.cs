@@ -6,7 +6,7 @@ public class SetProfilePictureHandler(IUnitOfWork unitOfWork, ICurrentUserServic
     {
         int userId = currentUserService.GetPublicId();
 
-        var nChanges = await unitOfWork.ApplicationUserRepository.SetProfilePictureIfOwnedAsync(userId, command.PictureId);
+        var nChanges = await unitOfWork.ApplicationUserRepository.SetProfilePictureIfOwnedAsync(userId, command.PictureId, cancellationToken);
 
         if(nChanges == 0)
         {

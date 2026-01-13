@@ -4,7 +4,7 @@ public class GetUserHandler(IUnitOfWork _unitOfWork) : IQueryHandler<GetUserQuer
 {
     public async ValueTask<Result<UserDTO>> Handle(GetUserQuery query, CancellationToken cancellationToken)
     {
-        UserDTO? user = await _unitOfWork.ApplicationUserRepository.GetDtoByIdAsync(query.Id);
+        UserDTO? user = await _unitOfWork.ApplicationUserRepository.GetDtoByIdAsync(query.Id, cancellationToken);
 
         if (user == null)
         {

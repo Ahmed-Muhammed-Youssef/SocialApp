@@ -2,7 +2,7 @@
 
 public class ApplicationUserRepository(ApplicationDatabaseContext dataContext) : RepositoryBase<ApplicationUser>(dataContext), IApplicationUserRepository // using the repository design pattern to isolate the contollers further more from the entity framework. (it may not be neccesary)
 {  
-    public async Task<PagedList<UserDTO>> GetUsersDTOAsync(int userId, UserParams userParams)
+    public async Task<PagedList<UserDTO>> GetUsersDTOAsync(int userId, UserParams userParams, CancellationToken cancellationToken = default)
     {
         DateTime? birthDateMax = userParams.MaxAge != null ? DateTime.UtcNow.AddYears(-userParams.MaxAge.Value - 1) : null;
         DateTime birthDateMin = DateTime.UtcNow.AddYears(-userParams.MinAge - 1);
@@ -38,7 +38,7 @@ public class ApplicationUserRepository(ApplicationDatabaseContext dataContext) :
             _ => query.OrderByDescending(u => u.LastActive)
         };
 
-        var count = await query.CountAsync();
+        var count = await query.CountAsync(cancellationToken: cancellationToken);
         
         var projectedQuery = query.LeftJoin(dataContext.Pictures,
                                 u => u.ProfilePictureId,
@@ -49,29 +49,42 @@ public class ApplicationUserRepository(ApplicationDatabaseContext dataContext) :
         List<UserDTO> users = await projectedQuery
             .Skip(userParams.SkipValue())
             .Take(userParams.ItemsPerPage)
-            .ToListAsync();
+            .ToListAsync(cancellationToken: cancellationToken);
 
         return new PagedList<UserDTO>(users, count, userParams.PageNumber, userParams.ItemsPerPage);
     }
 
-    public async Task<UserDTO?> GetDtoByIdAsync(int id)
+    public async Task<UserDTO?> GetDtoByIdAsync(int id, CancellationToken cancellationToken = default)
     {
         UserDTO? userDTO = await dataContext.ApplicationUsers
             .Where(u => u.Id == id)
-            .LeftJoin(dataContext.Pictures, 
+            .LeftJoin(dataContext.Pictures,
                 u => u.ProfilePictureId, 
                 p => p.Id, 
                 UserMappings.ToDtoWithPictureExpression)
-            .FirstOrDefaultAsync();
+            .FirstOrDefaultAsync(cancellationToken: cancellationToken);
 
         return userDTO;
     }
 
-    public Task<int> SetProfilePictureIfOwnedAsync(int userId, int pictureId)
+    public async Task<UserDTO?> GetDtoByIdentityAsync(string identityId, CancellationToken cancellationToken = default)
+    {
+        UserDTO? userDTO = await dataContext.ApplicationUsers
+            .Where(u => u.IdentityId == identityId)
+            .LeftJoin(dataContext.Pictures,
+                u => u.ProfilePictureId,
+                p => p.Id,
+                UserMappings.ToDtoWithPictureExpression)
+            .FirstOrDefaultAsync(cancellationToken: cancellationToken);
+
+        return userDTO;
+    }
+
+    public Task<int> SetProfilePictureIfOwnedAsync(int userId, int pictureId, CancellationToken cancellationToken = default)
     {
         return dataContext.ApplicationUsers
         .Where(u => u.Id == userId && dataContext.UserPictures.Any(up => up.UserId == userId && up.PictureId == pictureId))
-        .ExecuteUpdateAsync(s => s.SetProperty(u => u.ProfilePictureId, pictureId));
+        .ExecuteUpdateAsync(s => s.SetProperty(u => u.ProfilePictureId, pictureId), cancellationToken: cancellationToken);
     }
 
     public void AddUserPicture(int userId, int pictureId)

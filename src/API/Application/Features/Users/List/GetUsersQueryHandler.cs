@@ -4,7 +4,7 @@ public class GetUsersQueryHandler(IUnitOfWork unitOfWork, ICurrentUserService cu
 {
     public async ValueTask<Result<PagedList<UserDTO>>> Handle(GetUsersQuery query, CancellationToken cancellationToken)
     {
-        PagedList<UserDTO> users = await unitOfWork.ApplicationUserRepository.GetUsersDTOAsync(currentUserService.GetPublicId(), query.UserParams);
+        PagedList<UserDTO> users = await unitOfWork.ApplicationUserRepository.GetUsersDTOAsync(currentUserService.GetPublicId(), query.UserParams, cancellationToken);
 
         return Result<PagedList<UserDTO>>.Success(users);
     }

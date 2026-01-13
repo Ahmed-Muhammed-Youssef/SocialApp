@@ -20,9 +20,7 @@ public class LoginHandler(IUnitOfWork unitOfWork, UserManager<IdentityUser> user
             return Result<LoginDTO>.Unauthorized();
         }
 
-        var userDtoByIdentitySpec = new UserDtoByIdentitySpecification(user.Id);
-
-        UserDTO? userData = await unitOfWork.ApplicationUserRepository.FirstOrDefaultAsync(userDtoByIdentitySpec, cancellationToken);
+        UserDTO? userData = await unitOfWork.ApplicationUserRepository.GetDtoByIdentityAsync(user.Id, cancellationToken);
 
         if(userData is null)
         {
