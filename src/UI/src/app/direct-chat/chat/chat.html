@@ -2,7 +2,7 @@
   <mat-card class="chat-card mat-elevation-z4">
     
     <mat-card-header class="modern-header">
-      <img mat-card-avatar src="imgs/default-user.png" alt="Avatar">
+      <img mat-card-avatar [src]="otherUser()?.profilePictureUrl || 'imgs/default-user.png'" alt="Avatar">
       <mat-card-title>{{ otherUser()?.firstName }} {{ otherUser()?.lastName }}</mat-card-title>
       <mat-card-subtitle>Online</mat-card-subtitle>
       </mat-card-header>
@@ -15,7 +15,7 @@
              [class.them]="msg.senderId !== userId()">
 
           @if (msg.senderId !== userId()) {
-            <img class="msg-avatar" src="imgs/default-user.png" alt="Sender Avatar">
+            <img class="msg-avatar" [src]="otherUser()?.profilePictureUrl || 'imgs/default-user.png'" alt="Sender Avatar">
           }
 
           <div class="bubble mat-elevation-z1">
