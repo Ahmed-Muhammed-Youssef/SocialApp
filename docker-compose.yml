@@ -1,5 +1,6 @@
 services:
   api:
+    container_name: socialapp_api
     image: ${DOCKER_REGISTRY-}api
     build:
       context: .
@@ -13,6 +14,7 @@ services:
       - OTEL_EXPORTER_OTLP_ENDPOINT=http://api.aspire-dashboard:18889
       - OTEL_EXPORTER_OTLP_PROTOCOL=grpc
   app-db:
+    container_name: socialapp_db
     image: mcr.microsoft.com/mssql/server:2022-latest
     environment:
       SA_PASSWORD: "Password123!"  # Strong password for app DB
@@ -24,6 +26,7 @@ services:
     networks:
       - app-network
   api.aspire-dashboard:
+    container_name: aspire_dashboard
     image: mcr.microsoft.com/dotnet/aspire-dashboard:13
     environment:
       DOTNET_DASHBOARD_UNSECURED_ALLOW_ANONYMOUS: true
