@@ -1,0 +1,56 @@
+/* Mobile-first design */
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 1rem;
+  background: var(--mat-sys-surface);
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.example-full-width {
+  width: 100%;
+}
+
+mat-form-field textarea {
+  min-height: 80px;
+  resize: none;
+}
+
+button {
+  align-self: flex-end;
+  min-width: 100px;
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Tablet and up */
+@media (min-width: 600px) {
+  .container {
+    gap: 1rem;
+    padding: 1.25rem;
+  }
+
+  mat-form-field textarea {
+    min-height: 100px;
+  }
+}
+
+/* Desktop and up */
+@media (min-width: 900px) {
+  .container {
+    gap: 1.25rem;
+    padding: 1.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  mat-form-field textarea {
+    min-height: 110px;
+  }
+}

@@ -1,6 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { PostDTO } from '../models/post-dto';
 import { CreatePostRequest } from '../models/create-post-request';
 import { PagedList } from '../../shared/models/paged-list';
@@ -31,7 +32,18 @@ export class NewsfeedService {
   }
 
   // POST /api/posts
-  createPost(request: CreatePostRequest): Observable<void> {
-    return this.http.post<void>(this.baseUrl, request);
+  // Returns the ID extracted from the Location header (RESTful best practice)
+  createPost(request: CreatePostRequest): Observable<number> {
+    return this.http.post(this.baseUrl, request, { observe: 'response' }).pipe(
+      map(response => {
+        const locationHeader = response.headers.get('Location');
+        if (!locationHeader) {
+          throw new Error('Location header missing from POST response');
+        }
+        // Extract ID from Location header (e.g., "/api/posts/123" -> 123)
+        const postId = parseInt(locationHeader.split('/').pop()!, 10);
+        return postId;
+      })
+    );
   }
 }

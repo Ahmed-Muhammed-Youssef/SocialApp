@@ -1,0 +1,19 @@
+<form class="container" (ngSubmit)="createPost()">
+    <mat-form-field class="example-full-width" appearance="outline">
+        <mat-label>What's on your mind?</mat-label>
+        <textarea matInput [(ngModel)]="postContent" name="postContent" 
+                  placeholder="Share your thoughts..."
+                  [disabled]="isSubmitting()"
+                  rows="4"></textarea>
+        @if (postContent().length > 0) {
+          <mat-hint>{{ postContent().length }} characters</mat-hint>
+        }
+    </mat-form-field>
+    <button mat-flat-button color="primary" type="submit" [disabled]="!postContent().trim() || isSubmitting()">
+        @if (!isSubmitting()) {
+          <span>Post</span>
+        } @else {
+          <span>Posting...</span>
+        }
+    </button>
+</form>

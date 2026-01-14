@@ -1,14 +1,34 @@
-/* Feed container: adds responsive margins/padding */
+/* Mobile-first responsive design */
 .feed-container {
-  max-width: 800px;        /* restricts content width on large screens */
-  margin: 16px auto;       /* vertical 16px, horizontally centered */
-  padding: 0 12px;         /* horizontal padding on small screens */
+  width: 100%;
+  max-width: 600px;        /* Single column design */
+  margin: 0 auto;          /* Center horizontally */
+  padding: 0.75rem;        /* Mobile padding */
   box-sizing: border-box;
-}
-
-/* Optional: ensure posts inside have spacing */
-.feed-container app-post-list {
   display: flex;
   flex-direction: column;
-  gap: 16px;               /* spacing between post cards */
+  gap: 1rem;               /* Spacing between components */
+}
+
+/* Tablet and up */
+@media (min-width: 600px) {
+  .feed-container {
+    padding: 1rem;
+    gap: 1.5rem;
+  }
+}
+
+/* Desktop and up */
+@media (min-width: 900px) {
+  .feed-container {
+    max-width: 700px;
+    padding: 1.5rem;
+    gap: 2rem;
+  }
+}
+
+/* Ensure components take full width */
+.feed-container app-create-post,
+.feed-container app-post-list {
+  width: 100%;
 }
