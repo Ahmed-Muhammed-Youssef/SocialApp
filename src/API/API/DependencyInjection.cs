@@ -22,6 +22,7 @@ public static class DependencyInjection
             options.AddPolicy("AllowSpecificOrigin", policy => policy.WithOrigins(origins)
                 .AllowAnyMethod()
                 .AllowAnyHeader()
+                .WithExposedHeaders("Location")
                 .AllowCredentials());
         });
 
