@@ -53,7 +53,7 @@ public class LoginHandlerTests
         signInManager.CheckPasswordSignInAsync(identityUser, command.Password, false)
             .Returns(SignInResult.Success);
         
-        _unitOfWork.ApplicationUserRepository.FirstOrDefaultAsync(Arg.Any<ISpecification<ApplicationUser, UserDTO>>(), Arg.Any<CancellationToken>())
+        _unitOfWork.ApplicationUserRepository.GetDtoByIdentityAsync(Arg.Any<string>(), Arg.Any<CancellationToken>())
             .Returns(userDto);
         
         _tokenProvider.CreateAccessToken(Arg.Any<TokenRequest>()).Returns("access-token");
