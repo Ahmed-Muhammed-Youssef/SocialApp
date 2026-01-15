@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc.Infrastructure;
-
-namespace API.Features.Posts;
+﻿namespace API.Features.Posts;
 
 [Route("api/[controller]")]
 [ApiController]

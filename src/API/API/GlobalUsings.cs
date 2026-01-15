@@ -2,6 +2,7 @@
 global using Microsoft.AspNetCore.Authentication.JwtBearer;
 global using Microsoft.AspNetCore.Authorization;
 global using Microsoft.AspNetCore.Mvc;
+global using Microsoft.AspNetCore.Mvc.Infrastructure;
 global using Microsoft.AspNetCore.Mvc.Filters;
 global using Microsoft.AspNetCore.Identity;
 global using Microsoft.AspNetCore.Diagnostics.HealthChecks;
@@ -14,7 +15,6 @@ global using FluentValidation;
 
 global using System.Text;
 global using System.Text.Json;
-
 global using Application.Common.Interfaces;
 global using Application.Features.Users;
 global using Application.Features.Users.Get;
@@ -46,6 +46,7 @@ global using Application.Features.Auth.Login;
 global using Application.Features.Auth.Register;
 global using Application.Features.Auth.RefreshToken;
 global using Application.Features.DirectChats;
+global using Application.Features.DirectChats.List;
 global using Application.Features.DirectChats.Stores;
 global using Application.Features.DirectChats.ConnectToChat;
 global using Application.Features.DirectChats.DisconnectFromChat;

@@ -19,6 +19,46 @@ public class DirectChatRepository(ApplicationDatabaseContext dataContext) : Repo
 
         return chat;
     }
+
+    public async Task<PagedList<DirectChatDTO>> GetChatsDtoAsync(int userId, PaginationParams paginationParams, CancellationToken cancellationToken = default)
+    {
+        IQueryable<DirectChat> query = dataContext.DirectChats
+        .Where(c => (c.User1Id == userId || c.User2Id == userId) &&
+                    dataContext.Messages.Any(m => m.ChatId == c.Id))
+        .AsNoTracking();
+
+        int count = await query.CountAsync(cancellationToken);
+
+        List<DirectChatDTO> chats = await query
+        .OrderByDescending(c => dataContext.Messages
+            .Where(m => m.ChatId == c.Id)
+            .Max(m => m.SentDate))
+        .Skip(paginationParams.SkipValue())
+        .Take(paginationParams.ItemsPerPage)
+        .Select(c => new
+        {
+            Chat = c,
+            PeerId = c.User1Id == userId ? c.User2Id : c.User1Id,
+            PeerUser = dataContext.ApplicationUsers
+                .Where(u => u.Id == (c.User1Id == userId ? c.User2Id : c.User1Id))
+                .Select(u => new { u.FirstName, u.LastName })
+                .FirstOrDefault(),
+            LastMessage = dataContext.Messages
+                .Where(m => m.ChatId == c.Id)
+                .OrderByDescending(m => m.SentDate)
+                .Select(MessageMappings.ToDtoExpression)
+                .FirstOrDefault()
+        })
+        .Select(x => new DirectChatDTO
+        (
+            UserId: x.PeerId,
+            UserFirstName: x.PeerUser != null ? x.PeerUser.FirstName : "",
+            UserLastName: x.PeerUser != null ? x.PeerUser.LastName : "",
+            LastMessage: x.LastMessage!
+        ))
+        .ToListAsync(cancellationToken);
+        return new PagedList<DirectChatDTO>(chats, count, paginationParams.PageNumber, paginationParams.ItemsPerPage);
+    }
     public async Task<List<MessageDTO>> GetMessagesDTOThreadAsync(int issuerId, int theOtherUserId, CancellationToken cancellationToken = default)
     {
 
