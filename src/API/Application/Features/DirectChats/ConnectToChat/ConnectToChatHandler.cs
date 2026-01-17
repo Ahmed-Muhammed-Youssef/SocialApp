@@ -8,12 +8,12 @@ public class ConnectToChatHandler(IUnitOfWork unitOfWork, IDirectChatGroupsStore
         {
             return Result<ConnectToChatResult>.Error("Cannot start a chat with yourself.");
         }
-        
+
         Group? group = usersGroupsStore.AddConnection(command.CurrentUserId, command.OtherUserId, command.ConnectionId);
 
         List<MessageDTO> messages = await unitOfWork.DirectChatRepository
             .GetMessagesDTOThreadAsync(command.CurrentUserId, command.OtherUserId, cancellationToken);
-        
+
         return Result<ConnectToChatResult>.Success(new ConnectToChatResult(group, messages));
     }
 }

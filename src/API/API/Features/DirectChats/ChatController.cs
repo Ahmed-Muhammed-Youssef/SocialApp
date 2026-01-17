@@ -7,11 +7,11 @@ public class ChatController(IMediator mediator, ProblemDetailsFactory problemDet
 {
     // GET: api/Chat
     [HttpGet]
-    public async Task<ActionResult<PagedList<DirectChatDTO>>> GetAsync([FromQuery]PaginationParams paginationParams, CancellationToken cancellationToken)
+    public async Task<ActionResult<PagedList<DirectChatDTO>>> GetAsync([FromQuery] PaginationParams paginationParams, CancellationToken cancellationToken)
     {
         Result<PagedList<DirectChatDTO>> result = await mediator.Send(new GetChatsQuery(paginationParams), cancellationToken);
 
-        if(result.IsSuccess)
+        if (result.IsSuccess)
         {
             return Ok(result.Value);
         }

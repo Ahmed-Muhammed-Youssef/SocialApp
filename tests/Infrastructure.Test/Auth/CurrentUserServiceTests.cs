@@ -1,6 +1,6 @@
-﻿using Infrastructure.Auth;
+﻿using System.Security.Claims;
+using Infrastructure.Auth;
 using Microsoft.AspNetCore.Http;
-using System.Security.Claims;
 
 namespace Infrastructure.Test.Auth;
 

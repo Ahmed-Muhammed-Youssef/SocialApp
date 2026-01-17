@@ -2,15 +2,15 @@
 
 #nullable disable
 
-namespace Infrastructure.Migrations
+namespace Infrastructure.Migrations;
+
+/// <inheritdoc />
+public partial class AddGetUserByIdStoredProcedure : Migration
 {
     /// <inheritdoc />
-    public partial class AddGetUserByIdStoredProcedure : Migration
+    protected override void Up(MigrationBuilder migrationBuilder)
     {
-        /// <inheritdoc />
-        protected override void Up(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.Sql(@"CREATE PROCEDURE GetUserById
+        migrationBuilder.Sql(@"CREATE PROCEDURE GetUserById
     @id int
 AS
 BEGIN
@@ -20,12 +20,11 @@ BEGIN
             WHERE Id = @id;
 END");
 
-        }
+    }
 
-        /// <inheritdoc />
-        protected override void Down(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.Sql("DROP PROCEDURE GetUserById");
-        }
+    /// <inheritdoc />
+    protected override void Down(MigrationBuilder migrationBuilder)
+    {
+        migrationBuilder.Sql("DROP PROCEDURE GetUserById");
     }
 }

@@ -34,7 +34,7 @@ public static class UserManagerTestHelper
         var options = new DbContextOptionsBuilder<TestIdentityDbContext>()
             .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
             .Options;
-        
+
         var context = new TestIdentityDbContext(options);
         if (users.Count > 0)
         {
@@ -68,7 +68,7 @@ public static class UserManagerTestHelper
                 RequireConfirmedAccount = false
             }
         });
-        
+
         var store = new UserStore<IdentityUser>(context);
         var userManager = new UserManager<IdentityUser>(
             store,
@@ -81,10 +81,10 @@ public static class UserManagerTestHelper
             null!, // services
             null!  // logger
         );
-        
+
         return userManager;
     }
-    
+
     private class TestIdentityDbContext(DbContextOptions<UserManagerTestHelper.TestIdentityDbContext> options) : IdentityDbContext<IdentityUser>(options)
     {
     }

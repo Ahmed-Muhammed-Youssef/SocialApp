@@ -19,7 +19,7 @@ public class AcceptFriendRequestHandler(IUnitOfWork unitOfWork, ICurrentUserServ
 
             unitOfWork.FriendRequestRepository.Update(friendRequest);
 
-            Friend friend = Friend.CreateFromAcceptedRequest(friendRequest.RequesterId, friendRequest.RequestedId);
+            var friend = Friend.CreateFromAcceptedRequest(friendRequest.RequesterId, friendRequest.RequestedId);
 
             unitOfWork.FriendRepository.Add(friend);
 

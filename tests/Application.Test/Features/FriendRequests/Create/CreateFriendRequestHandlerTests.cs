@@ -29,13 +29,13 @@ public class CreateFriendRequestHandlerTests
 
         _unitOfWork.FriendRequestRepository.GetFriendRequestAsync(2, 1)
             .Returns((FriendRequest?)null);
-        
+
         _unitOfWork.FriendRequestRepository.GetFriendRequestAsync(1, 2)
             .Returns((FriendRequest?)null);
-        
+
         _unitOfWork.FriendRequestRepository.IsFriend(1, 2)
             .Returns(false);
-        
+
         _unitOfWork.CommitAsync(Arg.Any<CancellationToken>()).Returns(1);
 
         // Act
@@ -76,7 +76,7 @@ public class CreateFriendRequestHandlerTests
 
         _unitOfWork.FriendRequestRepository.GetFriendRequestAsync(2, 1)
             .Returns((FriendRequest?)null);
-        
+
         _unitOfWork.FriendRequestRepository.GetFriendRequestAsync(1, 2)
             .Returns(existingRequest);
 
@@ -96,10 +96,10 @@ public class CreateFriendRequestHandlerTests
 
         _unitOfWork.FriendRequestRepository.GetFriendRequestAsync(2, 1)
             .Returns((FriendRequest?)null);
-        
+
         _unitOfWork.FriendRequestRepository.GetFriendRequestAsync(1, 2)
             .Returns((FriendRequest?)null);
-        
+
         _unitOfWork.FriendRequestRepository.IsFriend(1, 2)
             .Returns(true);
 

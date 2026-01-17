@@ -9,7 +9,7 @@ public class UserProvisioningService(UserManager<IdentityUser> userManager, Appl
     }
 
     // <inheritdoc />
-    public Task<UserProvisioningResult> CreateUserAsync(string email, bool emailVerified, string firstName, string lastName, string? password, Gender gender, DateTime dateOfBirth, int cityId,  CancellationToken cancellationToken = default)
+    public Task<UserProvisioningResult> CreateUserAsync(string email, bool emailVerified, string firstName, string lastName, string? password, Gender gender, DateTime dateOfBirth, int cityId, CancellationToken cancellationToken = default)
     {
         IdentityUser identityUser = new()
         {
@@ -39,14 +39,18 @@ public class UserProvisioningService(UserManager<IdentityUser> userManager, Appl
                 : await userManager.CreateAsync(identityUser);
 
             if (!result.Succeeded)
+            {
                 throw new InvalidOperationException("Identity creation failed.");
+            }
 
             foreach (var role in roles)
             {
                 var adddRoleresult = await userManager.AddToRoleAsync(identityUser, role);
 
                 if (!adddRoleresult.Succeeded)
+                {
                     throw new InvalidOperationException("Identity creation failed.");
+                }
             }
 
             appUser.AssociateWithIdentity(identityUser.Id);

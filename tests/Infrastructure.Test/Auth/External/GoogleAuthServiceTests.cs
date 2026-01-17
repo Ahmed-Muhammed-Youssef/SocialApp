@@ -1,9 +1,9 @@
-﻿using Infrastructure.Auth.External;
+﻿using System.Net;
+using Infrastructure.Auth.External;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using NSubstitute;
 using RichardSzalay.MockHttp;
-using System.Net;
 
 namespace Infrastructure.Test.Auth.External;
 

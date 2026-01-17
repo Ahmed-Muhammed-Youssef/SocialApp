@@ -8,7 +8,7 @@ public class SetProfilePictureHandler(IUnitOfWork unitOfWork, ICurrentUserServic
 
         var nChanges = await unitOfWork.ApplicationUserRepository.SetProfilePictureIfOwnedAsync(userId, command.PictureId, cancellationToken);
 
-        if(nChanges == 0)
+        if (nChanges == 0)
         {
             return Result<object?>.Error("Picture not found or does not belong to the user.");
         }

@@ -15,7 +15,7 @@ public class FriendRequestsController(IMediator mediator) : ControllerBase
         {
             return Ok(result.Value);
         }
-        else 
+        else
         {
             return BadRequest();
         }

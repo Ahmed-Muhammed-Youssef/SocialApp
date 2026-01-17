@@ -36,7 +36,7 @@ public class UpdateUserHandlerTests
 
         _unitOfWork.ApplicationUserRepository.GetByIdAsync(1, Arg.Any<CancellationToken>())
             .Returns(user);
-        
+
         _unitOfWork.CommitAsync(Arg.Any<CancellationToken>()).Returns(1);
 
         // Act

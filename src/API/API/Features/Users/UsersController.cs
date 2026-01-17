@@ -43,7 +43,7 @@ public class UsersController(JsonSerializerOptions jsonSerializerOptions, IMedia
     {
         Result<UserDTO> result = await mediator.Send(new GetUserQuery(id), cancellationToken);
 
-        if(result.IsSuccess)
+        if (result.IsSuccess)
         {
             return Ok(result.Value);
         }

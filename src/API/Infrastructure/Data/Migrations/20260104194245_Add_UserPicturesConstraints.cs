@@ -2,40 +2,39 @@
 
 #nullable disable
 
-namespace Infrastructure.Data.Migrations
+namespace Infrastructure.Data.Migrations;
+
+/// <inheritdoc />
+public partial class Add_UserPicturesConstraints : Migration
 {
     /// <inheritdoc />
-    public partial class Add_UserPicturesConstraints : Migration
+    protected override void Up(MigrationBuilder migrationBuilder)
     {
-        /// <inheritdoc />
-        protected override void Up(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.DropForeignKey(
-                name: "FK_ApplicationUsers_Pictures_ProfilePictureId",
-                table: "ApplicationUsers");
+        migrationBuilder.DropForeignKey(
+            name: "FK_ApplicationUsers_Pictures_ProfilePictureId",
+            table: "ApplicationUsers");
 
-            migrationBuilder.AddForeignKey(
-                name: "FK_ApplicationUsers_Pictures_ProfilePictureId",
-                table: "ApplicationUsers",
-                column: "ProfilePictureId",
-                principalTable: "Pictures",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.SetNull);
-        }
+        migrationBuilder.AddForeignKey(
+            name: "FK_ApplicationUsers_Pictures_ProfilePictureId",
+            table: "ApplicationUsers",
+            column: "ProfilePictureId",
+            principalTable: "Pictures",
+            principalColumn: "Id",
+            onDelete: ReferentialAction.SetNull);
+    }
 
-        /// <inheritdoc />
-        protected override void Down(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.DropForeignKey(
-                name: "FK_ApplicationUsers_Pictures_ProfilePictureId",
-                table: "ApplicationUsers");
+    /// <inheritdoc />
+    protected override void Down(MigrationBuilder migrationBuilder)
+    {
+        migrationBuilder.DropForeignKey(
+            name: "FK_ApplicationUsers_Pictures_ProfilePictureId",
+            table: "ApplicationUsers");
 
-            migrationBuilder.AddForeignKey(
-                name: "FK_ApplicationUsers_Pictures_ProfilePictureId",
-                table: "ApplicationUsers",
-                column: "ProfilePictureId",
-                principalTable: "Pictures",
-                principalColumn: "Id");
-        }
+        migrationBuilder.AddForeignKey(
+            name: "FK_ApplicationUsers_Pictures_ProfilePictureId",
+            table: "ApplicationUsers",
+            column: "ProfilePictureId",
+            principalTable: "Pictures",
+            principalColumn: "Id");
     }
 }

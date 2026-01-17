@@ -1,6 +1,6 @@
 ﻿namespace Application.Features.DirectChats.List;
 
-public class GetChatsHandler(ICurrentUserService currentUserService, IUnitOfWork unitOfWork): IQueryHandler<GetChatsQuery, Result<PagedList<DirectChatDTO>>>
+public class GetChatsHandler(ICurrentUserService currentUserService, IUnitOfWork unitOfWork) : IQueryHandler<GetChatsQuery, Result<PagedList<DirectChatDTO>>>
 {
     public async ValueTask<Result<PagedList<DirectChatDTO>>> Handle(GetChatsQuery query, CancellationToken cancellationToken)
     {

@@ -9,14 +9,7 @@ public class PagedList<T>
         ItemsPerPage = itemsPerPage;
         TotalPages = (int)Math.Ceiling(count / (double)itemsPerPage);
         Count = count;
-        if (items is not null)
-        {
-            Items = items;
-        }
-        else
-        {
-            Items = [];
-        }
+        Items = items is not null ? items : [];
     }
 
     public int CurrentPage { get; private set; }

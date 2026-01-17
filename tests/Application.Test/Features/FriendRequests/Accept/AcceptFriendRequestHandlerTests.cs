@@ -31,7 +31,7 @@ public class AcceptFriendRequestHandlerTests
 
         _unitOfWork.FriendRequestRepository.GetByIdAsync(command.Id, Arg.Any<CancellationToken>())
             .Returns(friendRequest);
-        
+
         _unitOfWork.CommitAsync(Arg.Any<CancellationToken>()).Returns(1);
 
         // Act

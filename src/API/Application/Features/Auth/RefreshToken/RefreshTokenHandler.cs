@@ -12,7 +12,7 @@ public class RefreshTokenHandler(ITokenProvider tokenProvider, IApplicationDatab
             .Where(rt => rt.Token == command.RefreshToken && rt.ExpiresAtUtc > DateTime.UtcNow)
             .ExecuteUpdateAsync(setters => setters.SetProperty(rt => rt.ExpiresAtUtc, DateTime.UtcNow), cancellationToken: cancellationToken);
 
-        if(rowsAffected == 0)
+        if (rowsAffected == 0)
         {
             return Result<RefreshTokenResult>.Unauthorized("Failed to invalidate the refresh token.");
         }
@@ -30,7 +30,7 @@ public class RefreshTokenHandler(ITokenProvider tokenProvider, IApplicationDatab
 
         ApplicationUser? user = await unitOfWork.ApplicationUserRepository.FirstOrDefaultAsync(spec, cancellationToken);
 
-        if(user is null)
+        if (user is null)
         {
             return Result<RefreshTokenResult>.Unauthorized("User associated with the refresh token not found.");
         }

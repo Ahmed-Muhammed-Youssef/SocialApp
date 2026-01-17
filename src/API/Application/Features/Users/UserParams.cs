@@ -1,6 +1,6 @@
 ﻿namespace Application.Features.Users;
 
-public record UserParams: PaginationParams
+public record UserParams : PaginationParams
 {
     public int MinAge { get; init; } = SystemPolicy.UsersMinimumAge;
     public int? MaxAge { get; init; } = null;

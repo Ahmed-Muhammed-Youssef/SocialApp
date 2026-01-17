@@ -10,7 +10,7 @@ public interface IFriendRequestRepository : IRepositoryBase<FriendRequest>
     /// <returns>
     /// A <see cref="FriendRequest"/> object representing the friend request, or null if no request exists.
     /// </returns>
-    public Task<FriendRequest?> GetFriendRequestAsync(int senderId, int targetId);
+    Task<FriendRequest?> GetFriendRequestAsync(int senderId, int targetId);
 
 
     /// <summary>
@@ -19,7 +19,7 @@ public interface IFriendRequestRepository : IRepositoryBase<FriendRequest>
     /// <param name="senderId">The ID of the user who sent the friend request.</param>
     /// <param name="targetId">The ID of the user who received the friend request.</param>
     /// <returns>A boolean value indicating whether a friend request has been sent.</returns>
-    public Task<bool> IsFriendRequestedAsync(int senderId, int targetId);
+    Task<bool> IsFriendRequestedAsync(int senderId, int targetId);
 
     /// <summary>
     /// Retrieves a list of users who have been sent friend requests by a specific user.
@@ -28,7 +28,7 @@ public interface IFriendRequestRepository : IRepositoryBase<FriendRequest>
     /// <returns>
     /// An <see cref="IEnumerable{T}"/> of <see cref="UserDTO"/> objects representing the users who have been sent friend requests.
     /// </returns>
-    public Task<IEnumerable<UserDTO>> GetFriendRequestedUsersDTOAsync(int senderId);
+    Task<IEnumerable<UserDTO>> GetFriendRequestedUsersDTOAsync(int senderId);
 
     /// <summary>
     /// Retrieves a list of friend requests received by a specific user.
@@ -37,7 +37,7 @@ public interface IFriendRequestRepository : IRepositoryBase<FriendRequest>
     /// <returns>
     /// A list of <see cref="UserDTO"/> objects representing the users who sent friend requests.
     /// </returns>
-    public Task<List<UserDTO>> GetRecievedFriendRequestsAsync(int targetId);
+    Task<List<UserDTO>> GetRecievedFriendRequestsAsync(int targetId);
 
     /// <summary>
     /// Determines whether two users are friends.
@@ -45,5 +45,5 @@ public interface IFriendRequestRepository : IRepositoryBase<FriendRequest>
     /// <param name="userId">The ID of the first user.</param>
     /// <param name="targetId">The ID of the second user.</param>
     /// <returns>A boolean value indicating whether the two users are friends.</returns>
-    public Task<bool> IsFriend(int userId, int targetId);
+    Task<bool> IsFriend(int userId, int targetId);
 }

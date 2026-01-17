@@ -32,13 +32,24 @@ public static class DateTimeExtensions
         var timeDiff = DateTime.UtcNow - dateTime;
 
         if (timeDiff.TotalMinutes < 1)
+        {
             return "just now";
+        }
+
         if (timeDiff.TotalHours < 1)
+        {
             return $"{(int)timeDiff.TotalMinutes}m ago";
+        }
+
         if (timeDiff.TotalDays < 1)
+        {
             return $"{(int)timeDiff.TotalHours}h ago";
+        }
+
         if (timeDiff.TotalDays < 7)
+        {
             return $"{(int)timeDiff.TotalDays}d ago";
+        }
 
         return dateTime.ToString("dd MMM yyyy");
     }

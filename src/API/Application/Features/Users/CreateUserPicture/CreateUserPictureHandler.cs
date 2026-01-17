@@ -5,7 +5,9 @@ public class CreateUserPictureHandler(IUnitOfWork unitOfWork, IPictureService pi
     public async ValueTask<Result<int>> Handle(CreateUserPictureCommand command, CancellationToken cancellationToken)
     {
         if (command.File == null)
+        {
             return Result<int>.Error("No file provided.");
+        }
 
         ImageUploadResult uploadResult = await pictureService.AddPictureAsync(command.File);
         if (uploadResult == null || uploadResult.Error != null)

@@ -2,15 +2,15 @@
 
 #nullable disable
 
-namespace Infrastructure.Migrations
+namespace Infrastructure.Migrations;
+
+/// <inheritdoc />
+public partial class AdGetFriendRequestedUsersDTOStoredProcedure : Migration
 {
     /// <inheritdoc />
-    public partial class AdGetFriendRequestedUsersDTOStoredProcedure : Migration
+    protected override void Up(MigrationBuilder migrationBuilder)
     {
-        /// <inheritdoc />
-        protected override void Up(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.Sql(@"CREATE PROCEDURE GetFriendRequestedUsersDTO
+        migrationBuilder.Sql(@"CREATE PROCEDURE GetFriendRequestedUsersDTO
     @senderId INT
 AS
 BEGIN
@@ -28,12 +28,11 @@ BEGIN
 	INNER JOIN dbo.ApplicationUsers AS U ON FR.RequestedId = U.Id 
     WHERE RequesterId = @senderId;
 END");
-        }
+    }
 
-        /// <inheritdoc />
-        protected override void Down(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.Sql("DROP PROCEDURE GetFriendRequestedUsersDTO");
-        }
+    /// <inheritdoc />
+    protected override void Down(MigrationBuilder migrationBuilder)
+    {
+        migrationBuilder.Sql("DROP PROCEDURE GetFriendRequestedUsersDTO");
     }
 }

@@ -7,7 +7,7 @@ public class GetUserRolesHandler(IUnitOfWork unitOfWork, UserManager<IdentityUse
         // get user identity id
         ApplicationUser? user = await unitOfWork.ApplicationUserRepository.GetByIdAsync(query.UserId, cancellationToken);
 
-        if(user is null)
+        if (user is null)
         {
             return Result<List<string>>.NotFound($"User with id {query.UserId} not found.");
         }

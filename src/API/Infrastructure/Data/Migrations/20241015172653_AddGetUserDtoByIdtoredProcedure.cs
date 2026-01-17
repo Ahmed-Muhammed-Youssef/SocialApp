@@ -2,15 +2,15 @@
 
 #nullable disable
 
-namespace Infrastructure.Migrations
+namespace Infrastructure.Migrations;
+
+/// <inheritdoc />
+public partial class AddGetUserDtoByIdtoredProcedure : Migration
 {
     /// <inheritdoc />
-    public partial class AddGetUserDtoByIdtoredProcedure : Migration
+    protected override void Up(MigrationBuilder migrationBuilder)
     {
-        /// <inheritdoc />
-        protected override void Up(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.Sql(@"CREATE PROCEDURE GetUserDtoById
+        migrationBuilder.Sql(@"CREATE PROCEDURE GetUserDtoById
 	@id int
 AS
 BEGIN
@@ -28,12 +28,11 @@ BEGIN
 	FROM dbo.ApplicationUsers AS U
 	WHERE Id = @id;
 END");
-        }
+    }
 
-        /// <inheritdoc />
-        protected override void Down(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.Sql("DROP PROCEDURE GetUserDtoById");
-        }
+    /// <inheritdoc />
+    protected override void Down(MigrationBuilder migrationBuilder)
+    {
+        migrationBuilder.Sql("DROP PROCEDURE GetUserDtoById");
     }
 }

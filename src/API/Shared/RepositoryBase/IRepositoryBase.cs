@@ -117,7 +117,7 @@ public interface IRepositoryBase<T> where T : class
     /// source sequence contains any elements; otherwise, false.
     /// </returns>
     Task<bool> AnyAsync(CancellationToken cancellationToken = default);
-    
+
     /// <summary>
     /// Adds an entity in the database.
     /// </summary>

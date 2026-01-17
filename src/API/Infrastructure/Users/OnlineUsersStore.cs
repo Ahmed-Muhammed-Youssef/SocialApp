@@ -28,7 +28,9 @@ public class OnlineUsersStore : IOnlineUsersStore
     public Task<bool> RemoveUserConnection(int userId, string connectionId)
     {
         if (!OnlineUsers.TryGetValue(userId, out var connections))
+        {
             return Task.FromResult(false);
+        }
 
         lock (connections)
         {

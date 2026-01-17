@@ -25,7 +25,7 @@ public class ChatHub(IMediator mediator, IMessageNotifier messageNotifier) : Hub
             CurrentUserId: currentUserId,
             OtherUserId: otherUserId), cancellationToken);
 
-        if(result.IsSuccess)
+        if (result.IsSuccess)
         {
             await Groups.AddToGroupAsync(Context.ConnectionId, result.Value.Group.Name, cancellationToken);
             await Clients.Caller.SendAsync("ReceiveMessages", result.Value.Messages, cancellationToken);
@@ -41,8 +41,9 @@ public class ChatHub(IMediator mediator, IMessageNotifier messageNotifier) : Hub
         var cancellationToken = Context.ConnectionAborted;
         var result = await mediator.Send(new DisconnectFromChatCommand(ConnectionId: Context.ConnectionId), cancellationToken);
 
-        if (!result.IsSuccess) {
-            
+        if (!result.IsSuccess)
+        {
+
             throw new HubException(string.Join('-', result.Errors));
         }
 
@@ -61,7 +62,7 @@ public class ChatHub(IMediator mediator, IMessageNotifier messageNotifier) : Hub
             RecipientId: request.RecipientId,
             Content: request.Content), cancellationToken);
 
-        if(result.IsSuccess)
+        if (result.IsSuccess)
         {
             await Clients.Group(result.Value.GroupName).SendAsync("NewMessage", result.Value.MessageDTO, cancellationToken);
             await messageNotifier.NotifyRecipientAsync(result.Value.UserDTO, result.Value.MessageDTO, cancellationToken);

@@ -41,9 +41,9 @@ public class CreatePostHandlerTests
 
         // Assert
         Assert.True(result.IsSuccess);
-        
+
         Assert.Equal(ResultStatus.Created, result.Status);
-        
+
         _unitOfWork.PostRepository.Received(1).Add(Arg.Is<Post>(p =>
             p.Content == command.Content &&
             p.UserId == 1));
@@ -56,7 +56,7 @@ public class CreatePostHandlerTests
     {
         // Arrange
         var command = new CreatePostCommand("");
-        
+
         _unitOfWork.CommitAsync(Arg.Any<CancellationToken>()).Returns(1);
 
         // Act

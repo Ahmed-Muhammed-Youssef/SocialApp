@@ -8,11 +8,16 @@ public class LogUserActivity(IUnitOfWork unitOfWork) : IAsyncActionFilter
 
         var resultContext = await next();
         if (resultContext.HttpContext.User.Identity is not { IsAuthenticated: true })
+        {
             return;
+        }
 
         var userId = resultContext.HttpContext.User.GetPublicId();
         var user = await unitOfWork.ApplicationUserRepository.GetByIdAsync(userId, cancellationToken);
-        if (user is null) return;
+        if (user is null)
+        {
+            return;
+        }
 
         user.MarkActive();
         unitOfWork.ApplicationUserRepository.Update(user);

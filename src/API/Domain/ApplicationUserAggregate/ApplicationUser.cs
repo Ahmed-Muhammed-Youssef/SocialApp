@@ -14,13 +14,24 @@ public class ApplicationUser : EntityBase, IAggregateRoot
     public int CityId { get; private set; }
     public ICollection<UserPicture> Pictures { get; private set; } = [];
 
-    private ApplicationUser() { } 
+    private ApplicationUser() { }
 
     public ApplicationUser(string firstName, string lastName, DateTime dateOfBirth, Gender gender, int cityId)
     {
-        if (string.IsNullOrWhiteSpace(firstName)) throw new ArgumentException("First name is required.");
-        if (string.IsNullOrWhiteSpace(lastName)) throw new ArgumentException("Last name is required.");
-        if (dateOfBirth > DateTime.UtcNow) throw new ArgumentException("Date of birth cannot be in the future.");
+        if (string.IsNullOrWhiteSpace(firstName))
+        {
+            throw new ArgumentException("First name is required.");
+        }
+
+        if (string.IsNullOrWhiteSpace(lastName))
+        {
+            throw new ArgumentException("Last name is required.");
+        }
+
+        if (dateOfBirth > DateTime.UtcNow)
+        {
+            throw new ArgumentException("Date of birth cannot be in the future.");
+        }
 
         FirstName = firstName;
         LastName = lastName;
@@ -34,7 +45,11 @@ public class ApplicationUser : EntityBase, IAggregateRoot
 
     public void AssociateWithIdentity(string identityId)
     {
-        if(!string.IsNullOrWhiteSpace(IdentityId)) throw new InvalidOperationException("Identity cannot be changed once assigned.");
+        if (!string.IsNullOrWhiteSpace(IdentityId))
+        {
+            throw new InvalidOperationException("Identity cannot be changed once assigned.");
+        }
+
         IdentityId = identityId;
     }
 

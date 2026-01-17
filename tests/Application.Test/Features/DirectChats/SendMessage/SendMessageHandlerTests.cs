@@ -35,15 +35,15 @@ public class SendMessageHandlerTests
 
         _unitOfWork.ApplicationUserRepository.GetByIdAsync(1, Arg.Any<CancellationToken>())
             .Returns(sender);
-        
+
         _unitOfWork.ApplicationUserRepository.GetByIdAsync(2, Arg.Any<CancellationToken>())
             .Returns(recipient);
-        
+
         _unitOfWork.DirectChatRepository.GetOrAddAsync(1, 2, Arg.Any<CancellationToken>())
             .Returns(chat);
-        
+
         _unitOfWork.CommitAsync(Arg.Any<CancellationToken>()).Returns(1);
-        
+
         _groupsStore.GetOrAddGroup(1, 2).Returns(group);
 
         // Act
@@ -81,7 +81,7 @@ public class SendMessageHandlerTests
 
         _unitOfWork.ApplicationUserRepository.GetByIdAsync(1, Arg.Any<CancellationToken>())
             .Returns(sender);
-        
+
         _unitOfWork.ApplicationUserRepository.GetByIdAsync(2, Arg.Any<CancellationToken>())
             .Returns((ApplicationUser?)null);
 

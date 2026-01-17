@@ -1,6 +1,6 @@
 ﻿namespace Domain.FriendRequestAggregate;
 
-public class FriendRequest: EntityBase, IAggregateRoot
+public class FriendRequest : EntityBase, IAggregateRoot
 {
     public DateTime Date { get; private set; }
     public int RequesterId { get; private set; }
@@ -14,7 +14,9 @@ public class FriendRequest: EntityBase, IAggregateRoot
     public static FriendRequest Create(int requesterId, int requestedId)
     {
         if (requesterId == requestedId)
+        {
             throw new InvalidFriendRequestException("Cannot request self");
+        }
 
         return new FriendRequest
         {
@@ -28,7 +30,10 @@ public class FriendRequest: EntityBase, IAggregateRoot
     public void Accept(int accepterId)  // Called in app handler
     {
         if (Status != RequestStatus.Pending || accepterId != RequestedId)
+        {
             throw new InvalidFriendRequestException("Only pending requests can be accepted by recipient");
+        }
+
         Status = RequestStatus.Accepted;
     }
 }

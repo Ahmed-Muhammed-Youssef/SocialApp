@@ -1,6 +1,6 @@
 ﻿namespace Domain.ReferenceData;
 
-public class City: EntityBase
+public class City : EntityBase
 {
     public required string Name { get; set; }
 

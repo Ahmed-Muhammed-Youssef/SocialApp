@@ -1,6 +1,6 @@
 ﻿namespace API.Features.DirectChats;
 
-public class MessageNotifier (IHubContext<OnlineUsersHub> presenceHubContext, IOnlineUsersStore onlineUsersStore) : IMessageNotifier
+public class MessageNotifier(IHubContext<OnlineUsersHub> presenceHubContext, IOnlineUsersStore onlineUsersStore) : IMessageNotifier
 {
     /// <inheritdoc/>
     public async Task NotifyRecipientAsync(UserDTO sender, MessageDTO message, CancellationToken cancellationToken = default)

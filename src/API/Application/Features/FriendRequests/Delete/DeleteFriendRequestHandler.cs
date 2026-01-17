@@ -7,7 +7,7 @@ public class DeleteFriendRequestHandler(IUnitOfWork unitOfWork, ICurrentUserServ
         var senderId = currentUserService.GetPublicId();
 
         FriendRequest? fr = await unitOfWork.FriendRequestRepository.GetByIdAsync(command.Id, cancellationToken);
-        
+
         if (fr is null || fr.RequesterId != senderId || fr.Status != RequestStatus.Pending)
         {
             return Result<object?>.Error("You didn't sent a friend request.");

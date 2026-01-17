@@ -34,10 +34,14 @@ public class Specification<T> : ISpecification<T>
     public void ApplyPagination(int skip, int take, Func<T, object> orderBy, bool isDescending)
     {
         if (skip < 0)
+        {
             throw new ArgumentOutOfRangeException(nameof(skip), "Skip value cannot be negative.");
+        }
 
         if (take < 0)
+        {
             throw new ArgumentOutOfRangeException(nameof(take), "Take value cannot be negative.");
+        }
 
         OrderBy = orderBy ?? throw new ArgumentNullException(nameof(orderBy));
         Skip = skip;

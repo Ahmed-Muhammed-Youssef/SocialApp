@@ -6,7 +6,7 @@
 public class PostsController(IMediator mediator, ProblemDetailsFactory problemDetailsFactory) : ControllerBase
 {
     [HttpGet]
-    public async Task<ActionResult<PagedList<PostDTO>>> Get([FromQuery]PaginationParams paginationParams, CancellationToken cancellationToken)
+    public async Task<ActionResult<PagedList<PostDTO>>> Get([FromQuery] PaginationParams paginationParams, CancellationToken cancellationToken)
     {
         Result<PagedList<PostDTO>> result = await mediator.Send(new GetPostsQuery(paginationParams), cancellationToken);
 
@@ -38,9 +38,9 @@ public class PostsController(IMediator mediator, ProblemDetailsFactory problemDe
     }
 
     [HttpPost]
-    public async Task<ActionResult> Create([FromBody]CreatePostRequest request, CancellationToken cancellationToken)
+    public async Task<ActionResult> Create([FromBody] CreatePostRequest request, CancellationToken cancellationToken)
     {
-        if(!ModelState.IsValid)
+        if (!ModelState.IsValid)
         {
             var pd = problemDetailsFactory.CreateValidationProblemDetails(HttpContext, ModelState, StatusCodes.Status400BadRequest);
             return BadRequest(pd);

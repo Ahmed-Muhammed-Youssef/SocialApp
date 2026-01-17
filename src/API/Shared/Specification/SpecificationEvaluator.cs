@@ -30,26 +30,21 @@ public class SpecificationEvaluator : ISpecificationEvaluator
             query = query.Take(specification.Take.Value);
         }
 
-        if(specification.OrderBy is not null)
+        if (specification.OrderBy is not null)
         {
-            if(specification.IsDescending)
-            {
-                query = query.OrderByDescending(specification.OrderBy).AsQueryable();
-            }
-            else
-            {
-                query = query.OrderBy(specification.OrderBy).AsQueryable();
-            }
+            query = specification.IsDescending
+                ? query.OrderByDescending(specification.OrderBy).AsQueryable()
+                : query.OrderBy(specification.OrderBy).AsQueryable();
         }
 
-        if(specification.Includes.Count != 0)
+        if (specification.Includes.Count != 0)
         {
-            foreach(var includeExpression in specification.Includes)
+            foreach (var includeExpression in specification.Includes)
             {
                 query = query.Include(includeExpression);
             }
         }
-        
+
         return query;
     }
 

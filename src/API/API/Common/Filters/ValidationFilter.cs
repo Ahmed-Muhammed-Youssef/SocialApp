@@ -17,18 +17,25 @@ public sealed class ValidationFilter(IServiceProvider serviceProvider, ProblemDe
 
         foreach (var argument in context.ActionArguments.Values)
         {
-            if (argument is null) continue;
+            if (argument is null)
+            {
+                continue;
+            }
 
             var validatorType = typeof(IValidator<>).MakeGenericType(argument.GetType());
 
             if (serviceProvider.GetService(validatorType) is not IValidator validator)
+            {
                 continue;
+            }
 
             var validationContext = new ValidationContext<object>(argument);
             var result = await validator.ValidateAsync(validationContext);
 
             if (!result.IsValid)
+            {
                 failures.AddRange(result.Errors);
+            }
         }
 
         if (failures.Count == 0)

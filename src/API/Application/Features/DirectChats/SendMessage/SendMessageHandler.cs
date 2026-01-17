@@ -1,6 +1,6 @@
 ﻿namespace Application.Features.DirectChats.SendMessage;
 
-public class SendMessageHandler(IUnitOfWork unitOfWork, IDirectChatGroupsStore usersGroupsStore) 
+public class SendMessageHandler(IUnitOfWork unitOfWork, IDirectChatGroupsStore usersGroupsStore)
     : ICommandHandler<SendMessageCommand, Result<SendMessageResult>>
 {
     public async ValueTask<Result<SendMessageResult>> Handle(SendMessageCommand command, CancellationToken cancellationToken)

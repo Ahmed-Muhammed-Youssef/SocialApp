@@ -29,7 +29,7 @@ public class LoginHandlerTests
         _tokenProvider = Substitute.For<ITokenProvider>();
         _identityDbContext = Substitute.For<IApplicationDatabaseContext>();
     }
-    
+
     private SignInManager<IdentityUser> CreateSignInManager(UserManager<IdentityUser> userManager)
     {
         return Substitute.For<SignInManager<IdentityUser>>(
@@ -49,15 +49,15 @@ public class LoginHandlerTests
 
         var userManager = UserManagerTestHelper.CreateUserManagerWithUsers([identityUser], [new IdentityRole { Name = RolesNameValues.User, NormalizedName = RolesNameValues.User.ToUpper() }]);
         var signInManager = CreateSignInManager(userManager);
-        
+
         signInManager.CheckPasswordSignInAsync(identityUser, command.Password, false)
             .Returns(SignInResult.Success);
-        
+
         _unitOfWork.ApplicationUserRepository.GetDtoByIdentityAsync(Arg.Any<string>(), Arg.Any<CancellationToken>())
             .Returns(userDto);
-        
+
         _tokenProvider.CreateAccessToken(Arg.Any<TokenRequest>()).Returns("access-token");
-        
+
         var refreshToken = new RefreshToken
         {
             UserId = identityUser.Id,
@@ -106,7 +106,7 @@ public class LoginHandlerTests
 
         var userManager = UserManagerTestHelper.CreateUserManagerWithUsers([identityUser]);
         var signInManager = CreateSignInManager(userManager);
-        
+
         signInManager.CheckPasswordSignInAsync(identityUser, command.Password, false)
             .Returns(SignInResult.Failed);
 
@@ -129,10 +129,10 @@ public class LoginHandlerTests
 
         var userManager = UserManagerTestHelper.CreateUserManagerWithUsers([identityUser]);
         var signInManager = CreateSignInManager(userManager);
-        
+
         signInManager.CheckPasswordSignInAsync(identityUser, command.Password, false)
             .Returns(SignInResult.Success);
-        
+
         _unitOfWork.ApplicationUserRepository.FirstOrDefaultAsync(Arg.Any<ISpecification<ApplicationUser, UserDTO>>(), Arg.Any<CancellationToken>())
             .Returns((UserDTO?)null);
 

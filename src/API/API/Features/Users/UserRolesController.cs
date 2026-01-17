@@ -10,7 +10,7 @@ public class UserRolesController(IMediator mediator) : ControllerBase
     {
         Result<List<string>> result = await mediator.Send(new GetUserRolesQuery(userId));
 
-        if(result.IsSuccess)
+        if (result.IsSuccess)
         {
             return Ok(result.Value);
         }

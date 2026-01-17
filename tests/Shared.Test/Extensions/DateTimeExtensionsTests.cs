@@ -13,7 +13,7 @@ public class DateTimeExtensionsTests
 
         // Act
         int age = dob.CalculateAge();
-        
+
         // Assert
         Assert.Equal(expectedAge, age);
     }
@@ -23,7 +23,7 @@ public class DateTimeExtensionsTests
     {
         // Arrange
         DateTime dob = DateTime.UtcNow.AddYears(1);
-        
+
         // Act
         int age = dob.CalculateAge();
 

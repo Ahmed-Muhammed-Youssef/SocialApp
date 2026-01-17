@@ -8,7 +8,9 @@ public class CloudinaryPictureService : IPictureService
     {
         var opts = config?.Value ?? throw new ArgumentNullException(nameof(config));
         if (string.IsNullOrWhiteSpace(opts.CloudName) || string.IsNullOrWhiteSpace(opts.APIKey) || string.IsNullOrWhiteSpace(opts.APISecret))
+        {
             throw new ArgumentException("Cloudinary configuration is incomplete. Ensure CloudName, APIKey and APISecret are set in configuration.");
+        }
 
         var account = new Account(opts.CloudName, opts.APIKey, opts.APISecret);
         _cloudinary = new CloudinaryDotNet.Cloudinary(account);
@@ -65,7 +67,10 @@ public class CloudinaryPictureService : IPictureService
 
     public async Task<DeletionResult> DeletePictureAsync(string publiId)
     {
-        if (string.IsNullOrWhiteSpace(publiId)) throw new ArgumentNullException(nameof(publiId));
+        if (string.IsNullOrWhiteSpace(publiId))
+        {
+            throw new ArgumentNullException(nameof(publiId));
+        }
 
         try
         {

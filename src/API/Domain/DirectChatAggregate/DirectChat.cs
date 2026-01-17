@@ -26,14 +26,14 @@ public class DirectChat : EntityBase, IAggregateRoot
             throw new InvalidSenderException("Sender is not a participant of the chat.");
         }
 
-        if(string.IsNullOrWhiteSpace(content))
+        if (string.IsNullOrWhiteSpace(content))
         {
             throw new InvalidMessageException("Message content cannot be null or empty.");
         }
         var newMessage = new Message(Id, senderId, content);
 
         _messages.Add(newMessage);
-        
+
         return newMessage;
     }
 

@@ -17,7 +17,7 @@ public interface IDirectChatGroupsStore
     /// <returns>
     /// The existing <see cref="Group"/> instance if found; otherwise, it returnes the new <see cref="Group"/> instance.
     /// </returns>
-    public Group GetOrAddGroup(int issuerId, int otherUserId);
+    Group GetOrAddGroup(int issuerId, int otherUserId);
 
     /// <summary>
     /// Adds a new SignalR connection to a group shared between two users.
@@ -29,7 +29,7 @@ public interface IDirectChatGroupsStore
     /// The <see cref="Group"/> that the connection was added to.
     /// If the group did not exist, it will be created.
     /// </returns>
-    public Group AddConnection(int issuerId, int otherUserId, string connectionId);
+    Group AddConnection(int issuerId, int otherUserId, string connectionId);
 
     /// <summary>
     /// Removes a connection from all tracked groups.
@@ -39,5 +39,5 @@ public interface IDirectChatGroupsStore
     /// The <see cref="Group"/> from which the connection was removed,
     /// or <see langword="null"/> if no group contained the connection.
     /// </returns>
-    public Group? RemoveConnection(string connectionId);
+    Group? RemoveConnection(string connectionId);
 }

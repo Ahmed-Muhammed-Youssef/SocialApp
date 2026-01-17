@@ -1,7 +1,7 @@
-﻿using OpenTelemetry.Resources;
-using OpenTelemetry.Trace;
-using OpenTelemetry;
+﻿using OpenTelemetry;
 using OpenTelemetry.Metrics;
+using OpenTelemetry.Resources;
+using OpenTelemetry.Trace;
 
 namespace API;
 
@@ -134,7 +134,7 @@ public static class DependencyInjection
 
         builder.Services.AddScoped<ITokenProvider, TokenProvider>();
         builder.Services.AddScoped<IGoogleAuthService, GoogleAuthService>();
-  
+
         return builder;
     }
 

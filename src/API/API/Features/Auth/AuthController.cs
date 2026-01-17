@@ -28,7 +28,7 @@ public class AuthController(IMediator mediator) : ControllerBase
 
         Result<RegisterDTO> result = await mediator.Send(registerCommand, cancellationToken);
 
-        if(!result.IsSuccess)
+        if (!result.IsSuccess)
         {
             return BadRequest(result.Errors);
         }
@@ -55,7 +55,7 @@ public class AuthController(IMediator mediator) : ControllerBase
 
         Result<LoginDTO> result = await mediator.Send(new LoginCommand(loginRequest.Email, loginRequest.Password), cancellationToken);
 
-        if(!result.IsSuccess)
+        if (!result.IsSuccess)
         {
             return Unauthorized();
         }

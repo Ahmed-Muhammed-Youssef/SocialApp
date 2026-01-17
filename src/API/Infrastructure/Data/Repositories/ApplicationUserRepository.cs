@@ -1,7 +1,7 @@
 ﻿namespace Infrastructure.Data.Repositories;
 
 public class ApplicationUserRepository(ApplicationDatabaseContext dataContext) : RepositoryBase<ApplicationUser>(dataContext), IApplicationUserRepository // using the repository design pattern to isolate the contollers further more from the entity framework. (it may not be neccesary)
-{  
+{
     public async Task<PagedList<UserDTO>> GetUsersDTOAsync(int userId, UserParams userParams, CancellationToken cancellationToken = default)
     {
         DateTime? birthDateMax = userParams.MaxAge != null ? DateTime.UtcNow.AddYears(-userParams.MaxAge.Value - 1) : null;
@@ -39,7 +39,7 @@ public class ApplicationUserRepository(ApplicationDatabaseContext dataContext) :
         };
 
         var count = await query.CountAsync(cancellationToken: cancellationToken);
-        
+
         var projectedQuery = query.LeftJoin(dataContext.Pictures,
                                 u => u.ProfilePictureId,
                                 p => p.Id,
@@ -59,8 +59,8 @@ public class ApplicationUserRepository(ApplicationDatabaseContext dataContext) :
         UserDTO? userDTO = await dataContext.ApplicationUsers
             .Where(u => u.Id == id)
             .LeftJoin(dataContext.Pictures,
-                u => u.ProfilePictureId, 
-                p => p.Id, 
+                u => u.ProfilePictureId,
+                p => p.Id,
                 UserMappings.ToDtoWithPictureExpression)
             .FirstOrDefaultAsync(cancellationToken: cancellationToken);
 

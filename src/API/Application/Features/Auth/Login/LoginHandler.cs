@@ -22,7 +22,7 @@ public class LoginHandler(IUnitOfWork unitOfWork, UserManager<IdentityUser> user
 
         UserDTO? userData = await unitOfWork.ApplicationUserRepository.GetDtoByIdentityAsync(user.Id, cancellationToken);
 
-        if(userData is null)
+        if (userData is null)
         {
             return Result<LoginDTO>.Unauthorized();
         }

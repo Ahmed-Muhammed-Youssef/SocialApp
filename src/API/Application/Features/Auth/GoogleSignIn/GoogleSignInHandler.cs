@@ -4,7 +4,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace Application.Features.Auth.GoogleSignIn;
 
-public class GoogleSignInHandler(UserManager<IdentityUser> userManager, IUserProvisioningService userProvisioninService , ITokenProvider tokenService, IUnitOfWork unitOfWork, IApplicationDatabaseContext identityDbContext, IConfiguration configuration) : ICommandHandler<GoogleSignInCommand, Result<LoginDTO>>
+public class GoogleSignInHandler(UserManager<IdentityUser> userManager, IUserProvisioningService userProvisioninService, ITokenProvider tokenService, IUnitOfWork unitOfWork, IApplicationDatabaseContext identityDbContext, IConfiguration configuration) : ICommandHandler<GoogleSignInCommand, Result<LoginDTO>>
 {
     private readonly string googleClientId = configuration["Authentication:Google:ClientId"]!;
     public async ValueTask<Result<LoginDTO>> Handle(GoogleSignInCommand command, CancellationToken cancellationToken)
@@ -21,7 +21,7 @@ public class GoogleSignInHandler(UserManager<IdentityUser> userManager, IUserPro
         }
 
 
-        if(!payload.EmailVerified)
+        if (!payload.EmailVerified)
         {
             return Result<LoginDTO>.Unauthorized("Invalid Google credential.");
         }

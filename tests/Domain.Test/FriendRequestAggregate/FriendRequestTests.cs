@@ -32,9 +32,9 @@ public class FriendRequestTests
         var userId = 1;
 
         // Act & Assert
-        var exception = Assert.Throws<InvalidFriendRequestException>(() => 
+        var exception = Assert.Throws<InvalidFriendRequestException>(() =>
             FriendRequest.Create(userId, userId));
-        
+
         Assert.Contains("Cannot request self", exception.Message);
     }
 
@@ -78,9 +78,9 @@ public class FriendRequestTests
         var request = FriendRequest.Create(requesterId, requestedId);
 
         // Act & Assert
-        var exception = Assert.Throws<InvalidFriendRequestException>(() => 
+        var exception = Assert.Throws<InvalidFriendRequestException>(() =>
             request.Accept(requesterId));
-        
+
         Assert.Contains("Only pending requests can be accepted by recipient", exception.Message);
     }
 
@@ -94,9 +94,9 @@ public class FriendRequestTests
         var request = FriendRequest.Create(requesterId, requestedId);
 
         // Act & Assert
-        var exception = Assert.Throws<InvalidFriendRequestException>(() => 
+        var exception = Assert.Throws<InvalidFriendRequestException>(() =>
             request.Accept(nonParticipantId));
-        
+
         Assert.Contains("Only pending requests can be accepted by recipient", exception.Message);
     }
 
@@ -110,9 +110,9 @@ public class FriendRequestTests
         request.Accept(requestedId);
 
         // Act & Assert
-        var exception = Assert.Throws<InvalidFriendRequestException>(() => 
+        var exception = Assert.Throws<InvalidFriendRequestException>(() =>
             request.Accept(requestedId));
-        
+
         Assert.Contains("Only pending requests can be accepted", exception.Message);
     }
 

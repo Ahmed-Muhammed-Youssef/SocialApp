@@ -69,7 +69,7 @@ public class DirectChatRepository(ApplicationDatabaseContext dataContext) : Repo
             .Select(MessageMappings.ToDtoExpression)
             .OrderBy(m => m.SentDate)
             .ToListAsync(cancellationToken: cancellationToken) ?? [];
-            
+
         return messages;
     }
 }

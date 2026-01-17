@@ -32,7 +32,7 @@ public class ApplicationUserTests
     public void Constructor_EmptyFirstName_ThrowsArgumentException()
     {
         // Arrange & Act & Assert
-        Assert.Throws<ArgumentException>(() => 
+        Assert.Throws<ArgumentException>(() =>
             new ApplicationUser("", "Doe", new DateTime(1990, 1, 1), Gender.Male, 1));
     }
 
@@ -40,7 +40,7 @@ public class ApplicationUserTests
     public void Constructor_WhitespaceFirstName_ThrowsArgumentException()
     {
         // Arrange & Act & Assert
-        Assert.Throws<ArgumentException>(() => 
+        Assert.Throws<ArgumentException>(() =>
             new ApplicationUser("   ", "Doe", new DateTime(1990, 1, 1), Gender.Male, 1));
     }
 
@@ -48,7 +48,7 @@ public class ApplicationUserTests
     public void Constructor_NullFirstName_ThrowsArgumentException()
     {
         // Arrange & Act & Assert
-        Assert.Throws<ArgumentException>(() => 
+        Assert.Throws<ArgumentException>(() =>
             new ApplicationUser(null!, "Doe", new DateTime(1990, 1, 1), Gender.Male, 1));
     }
 
@@ -56,7 +56,7 @@ public class ApplicationUserTests
     public void Constructor_EmptyLastName_ThrowsArgumentException()
     {
         // Arrange & Act & Assert
-        Assert.Throws<ArgumentException>(() => 
+        Assert.Throws<ArgumentException>(() =>
             new ApplicationUser("John", "", new DateTime(1990, 1, 1), Gender.Male, 1));
     }
 
@@ -64,7 +64,7 @@ public class ApplicationUserTests
     public void Constructor_WhitespaceLastName_ThrowsArgumentException()
     {
         // Arrange & Act & Assert
-        Assert.Throws<ArgumentException>(() => 
+        Assert.Throws<ArgumentException>(() =>
             new ApplicationUser("John", "   ", new DateTime(1990, 1, 1), Gender.Male, 1));
     }
 
@@ -72,7 +72,7 @@ public class ApplicationUserTests
     public void Constructor_NullLastName_ThrowsArgumentException()
     {
         // Arrange & Act & Assert
-        Assert.Throws<ArgumentException>(() => 
+        Assert.Throws<ArgumentException>(() =>
             new ApplicationUser("John", null!, new DateTime(1990, 1, 1), Gender.Male, 1));
     }
 
@@ -83,7 +83,7 @@ public class ApplicationUserTests
         var futureDate = DateTime.UtcNow.AddDays(1);
 
         // Act & Assert
-        Assert.Throws<ArgumentException>(() => 
+        Assert.Throws<ArgumentException>(() =>
             new ApplicationUser("John", "Doe", futureDate, Gender.Male, 1));
     }
 
@@ -134,7 +134,7 @@ public class ApplicationUserTests
         user.AssociateWithIdentity("identity-1");
 
         // Act & Assert
-        Assert.Throws<InvalidOperationException>(() => 
+        Assert.Throws<InvalidOperationException>(() =>
             user.AssociateWithIdentity("identity-2"));
     }
 
@@ -146,7 +146,7 @@ public class ApplicationUserTests
         user.AssociateWithIdentity("identity-1");
 
         // Act & Assert
-        Assert.Throws<InvalidOperationException>(() => 
+        Assert.Throws<InvalidOperationException>(() =>
             user.AssociateWithIdentity("   "));
     }
 

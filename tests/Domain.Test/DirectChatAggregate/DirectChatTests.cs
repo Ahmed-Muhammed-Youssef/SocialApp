@@ -129,9 +129,9 @@ public class DirectChatTests
         var content = "Message from non-participant";
 
         // Act & Assert
-        var exception = Assert.Throws<InvalidSenderException>(() => 
+        var exception = Assert.Throws<InvalidSenderException>(() =>
             chat.AddMessage(nonParticipantId, content));
-        
+
         Assert.Contains("not a participant", exception.Message);
     }
 
@@ -143,9 +143,9 @@ public class DirectChatTests
         var senderId = 1;
 
         // Act & Assert
-        var exception = Assert.Throws<InvalidMessageException>(() => 
+        var exception = Assert.Throws<InvalidMessageException>(() =>
             chat.AddMessage(senderId, null!));
-        
+
         Assert.Contains("cannot be null or empty", exception.Message);
     }
 
@@ -157,9 +157,9 @@ public class DirectChatTests
         var senderId = 1;
 
         // Act & Assert
-        var exception = Assert.Throws<InvalidMessageException>(() => 
+        var exception = Assert.Throws<InvalidMessageException>(() =>
             chat.AddMessage(senderId, ""));
-        
+
         Assert.Contains("cannot be null or empty", exception.Message);
     }
 
@@ -171,9 +171,9 @@ public class DirectChatTests
         var senderId = 1;
 
         // Act & Assert
-        var exception = Assert.Throws<InvalidMessageException>(() => 
+        var exception = Assert.Throws<InvalidMessageException>(() =>
             chat.AddMessage(senderId, "   "));
-        
+
         Assert.Contains("cannot be null or empty", exception.Message);
     }
 
@@ -278,7 +278,7 @@ public class DirectChatTests
 
         // Act & Assert
         Assert.IsType<IReadOnlyCollection<Message>>(chat.Messages, exactMatch: false);
-        
+
         // Verify it's read-only - should not have Add method
         var messagesType = chat.Messages.GetType();
         var addMethod = messagesType.GetMethod("Add");

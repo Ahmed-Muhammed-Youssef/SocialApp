@@ -9,7 +9,7 @@ public class CreateFriendRequestHandler(IUnitOfWork unitOfWork, ICurrentUserServ
             int senderId = currentUserService.GetPublicId();
             int targetId = command.UserId;
 
-            FriendRequest friendRequest = FriendRequest.Create(senderId, targetId);
+            var friendRequest = FriendRequest.Create(senderId, targetId);
             var receivedFr = await unitOfWork.FriendRequestRepository.GetFriendRequestAsync(targetId, senderId);
 
             if (receivedFr is not null && receivedFr.Status == RequestStatus.Pending)

@@ -164,12 +164,15 @@ public class DatabaseInitializer
     {
         try
         {
-            if (await userManager.Users.AnyAsync(u => u.Email != configuration["AdminCred:Email"])) return;
+            if (await userManager.Users.AnyAsync(u => u.Email != configuration["AdminCred:Email"]))
+            {
+                return;
+            }
 
             Random random = new();
 
             var cities = await dataContext.Cities.ToListAsync();
-            
+
             if (cities.Count == 0)
             {
                 throw new Exception("No cities found in the database. Please ensure that countries and cities are seeded before adding test users.");
@@ -208,7 +211,11 @@ public class DatabaseInitializer
             }
 
             // add all users as friends to user1
-            if (dataContext.Friends.Any()) return;
+            if (dataContext.Friends.Any())
+            {
+                return;
+            }
+
             IdentityUser? firstIdentityUser = await userManager.Users.Where(u => u.Email == "user1@test").FirstOrDefaultAsync();
 
             List<ApplicationUser> applicationUsers = await dataContext.ApplicationUsers
@@ -224,7 +231,7 @@ public class DatabaseInitializer
                 {
                     if (user.IdentityId != firstIdentityUser?.Id)
                     {
-                        Friend fr = Friend.CreateFromAcceptedRequest(firstUser.Id, user.Id);
+                        var fr = Friend.CreateFromAcceptedRequest(firstUser.Id, user.Id);
                         friends.Add(fr);
                     }
                 }
@@ -257,7 +264,7 @@ public class DatabaseInitializer
     private static async Task CreateUser(IdentityUser identityUser, ApplicationUser appUser, string password, List<string> roles, UserManager<IdentityUser> userManager, ApplicationDatabaseContext dataContext)
     {
         await userManager.CreateAsync(identityUser, password);
-        foreach(var role in roles)
+        foreach (var role in roles)
         {
             await userManager.AddToRoleAsync(identityUser, role);
         }

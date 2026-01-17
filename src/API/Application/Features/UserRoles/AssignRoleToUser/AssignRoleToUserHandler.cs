@@ -8,16 +8,16 @@ public class AssignRoleToUserHandler(RoleManager<IdentityRole> roleManager, User
 
         if (user == null)
         {
-            return Result<object?>.NotFound("User not found"); 
+            return Result<object?>.NotFound("User not found");
         }
 
         IdentityUser? identityUser = await userManager.FindByIdAsync(user.IdentityId);
 
-        if(identityUser == null)
+        if (identityUser == null)
         {
             return Result<object?>.NotFound("User not found in identity store");
         }
-        
+
         IdentityRole? role = await roleManager.FindByIdAsync(user.IdentityId);
 
         if (role == null || role.Name is null)

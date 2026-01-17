@@ -36,7 +36,7 @@ public class RolesController(IMediator mediator) : ControllerBase
             return Ok(result.Value);
         }
     }
-    
+
     // DELETE: api/roles/{id}
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteRole(string id, CancellationToken cancellationToken)
@@ -45,9 +45,9 @@ public class RolesController(IMediator mediator) : ControllerBase
 
         if (result.IsSuccess)
         {
-            return NoContent(); 
+            return NoContent();
         }
-        else if(result.Status == ResultStatus.NotFound)
+        else if (result.Status == ResultStatus.NotFound)
         {
             return NotFound(result.Errors);
         }

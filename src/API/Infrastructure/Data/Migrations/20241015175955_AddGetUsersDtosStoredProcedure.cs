@@ -2,15 +2,15 @@
 
 #nullable disable
 
-namespace Infrastructure.Migrations
+namespace Infrastructure.Migrations;
+
+/// <inheritdoc />
+public partial class AddGetUsersDtosStoredProcedure : Migration
 {
     /// <inheritdoc />
-    public partial class AddGetUsersDtosStoredProcedure : Migration
+    protected override void Up(MigrationBuilder migrationBuilder)
     {
-        /// <inheritdoc />
-        protected override void Up(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.Sql(@"CREATE PROCEDURE[dbo].[GetUsersDtos]
+        migrationBuilder.Sql(@"CREATE PROCEDURE[dbo].[GetUsersDtos]
     @userId INT,
             @minAge INT,
     @maxAge INT,
@@ -82,12 +82,11 @@ BEGIN
     OFFSET @skip ROWS
     FETCH NEXT @pageSize ROWS ONLY;
             END");
-        }
+    }
 
-        /// <inheritdoc />
-        protected override void Down(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.Sql("DROP PROCEDURE GetUsersDtos");
-        }
+    /// <inheritdoc />
+    protected override void Down(MigrationBuilder migrationBuilder)
+    {
+        migrationBuilder.Sql("DROP PROCEDURE GetUsersDtos");
     }
 }

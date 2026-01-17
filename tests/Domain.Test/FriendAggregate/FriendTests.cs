@@ -46,9 +46,9 @@ public class FriendTests
         var userId = 1;
 
         // Act & Assert
-        var exception = Assert.Throws<InvalidFriendParametersException>(() => 
+        var exception = Assert.Throws<InvalidFriendParametersException>(() =>
             Friend.CreateFromAcceptedRequest(userId, userId));
-        
+
         Assert.Contains("cannot befriend yourself", exception.Message);
     }
 
