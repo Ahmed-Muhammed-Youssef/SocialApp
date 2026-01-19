@@ -35,7 +35,7 @@ public class AuthController(IMediator mediator) : ControllerBase
 
         Response.AppendRefreshTokenCookie(result.Value.RefreshToken, result.Value.RefreshTokenExpiresAtUtc);
 
-        return CreatedAtAction(nameof(UsersController.GetUser), "Users", new { id = result.Value.UserData.Id },
+        return CreatedAtAction(nameof(UsersController.GetById), "Users", new { id = result.Value.UserData.Id },
             new AuthResponse()
             {
                 UserData = result.Value.UserData,

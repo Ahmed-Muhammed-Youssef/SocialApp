@@ -59,12 +59,12 @@ public class DirectChatRepository(ApplicationDatabaseContext dataContext) : Repo
         .ToListAsync(cancellationToken);
         return new PagedList<DirectChatDTO>(chats, count, paginationParams.PageNumber, paginationParams.ItemsPerPage);
     }
-    public async Task<List<MessageDTO>> GetMessagesDTOThreadAsync(int issuerId, int theOtherUserId, CancellationToken cancellationToken = default)
+    public async Task<List<MessageDTO>> GetMessagesDTOThreadAsync(int user1Id, int user2Id, CancellationToken cancellationToken = default)
     {
 
-        (int user1Id, int user2Id) = DirectChat.OrderIds(issuerId, theOtherUserId);
+        (int firstId, int secondId) = DirectChat.OrderIds(user1Id, user2Id);
 
-        List<MessageDTO> messages = await dataContext.DirectChats.Where(c => c.User1Id == user1Id && c.User2Id == user2Id)
+        List<MessageDTO> messages = await dataContext.DirectChats.Where(c => c.User1Id == firstId && c.User2Id == secondId)
             .SelectMany(c => c.Messages)
             .Select(MessageMappings.ToDtoExpression)
             .OrderBy(m => m.SentDate)

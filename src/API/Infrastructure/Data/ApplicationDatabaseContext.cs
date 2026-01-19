@@ -14,11 +14,11 @@ public class ApplicationDatabaseContext(DbContextOptions<ApplicationDatabaseCont
     public DbSet<Message> Messages { get; set; }
     public DbSet<DirectChat> DirectChats { get; set; }
     public DbSet<RefreshToken> RefreshTokens { get; set; }
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    protected override void OnModelCreating(ModelBuilder builder)
     {
-        base.OnModelCreating(modelBuilder);
+        base.OnModelCreating(builder);
 
         // Apply configurations
-        modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDatabaseContext).Assembly);
+        builder.ApplyConfigurationsFromAssembly(typeof(ApplicationDatabaseContext).Assembly);
     }
 }

@@ -19,7 +19,7 @@ public abstract class RepositoryBase<T> : IRepositoryBase<T> where T : class
     /// <remarks>This constructor uses the default specification evaluator to filter and project data
     /// queries.</remarks>
     /// <param name="dbContext">The database context used to interact with the data store. Cannot be null.</param>
-    public RepositoryBase(DbContext dbContext)
+    protected RepositoryBase(DbContext dbContext)
        : this(dbContext, Specification.SpecificationEvaluator.Default)
     {
     }
@@ -30,7 +30,7 @@ public abstract class RepositoryBase<T> : IRepositoryBase<T> where T : class
     /// </summary>
     /// <param name="dbContext">The database context used to interact with the data store. Cannot be null.</param>
     /// <param name="specificationEvaluator">The specification evaluator used to apply query specifications. Cannot be null.</param>
-    public RepositoryBase(DbContext dbContext, ISpecificationEvaluator specificationEvaluator)
+    protected RepositoryBase(DbContext dbContext, ISpecificationEvaluator specificationEvaluator)
     {
         DbContext = dbContext;
         SpecificationEvaluator = specificationEvaluator;

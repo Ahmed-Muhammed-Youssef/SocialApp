@@ -2,6 +2,11 @@
 
 public static class HealthCheckResponseFormatter
 {
+    private static readonly JsonSerializerOptions _jsonOptions = new()
+    {
+        WriteIndented = true
+    };
+
     public static Task WriteHealthCheckResponse(HttpContext context, HealthReport report)
     {
         context.Response.ContentType = "application/json";
@@ -18,10 +23,6 @@ public static class HealthCheckResponseFormatter
             })
         };
 
-        return context.Response.WriteAsync(
-            JsonSerializer.Serialize(response, new JsonSerializerOptions
-            {
-                WriteIndented = true
-            }));
+        return context.Response.WriteAsync(JsonSerializer.Serialize(response, _jsonOptions));
     }
 }

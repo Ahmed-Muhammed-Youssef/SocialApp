@@ -65,16 +65,16 @@ public class CloudinaryPictureService : IPictureService
         }
     }
 
-    public async Task<DeletionResult> DeletePictureAsync(string publiId)
+    public async Task<DeletionResult> DeletePictureAsync(string pictureId)
     {
-        if (string.IsNullOrWhiteSpace(publiId))
+        if (string.IsNullOrWhiteSpace(pictureId))
         {
-            throw new ArgumentNullException(nameof(publiId));
+            throw new ArgumentNullException(nameof(pictureId));
         }
 
         try
         {
-            var deletionParams = new DeletionParams(publiId);
+            var deletionParams = new DeletionParams(pictureId);
             var result = await _cloudinary.DestroyAsync(deletionParams);
             return result;
         }

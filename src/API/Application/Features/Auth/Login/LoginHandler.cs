@@ -1,4 +1,6 @@
-﻿namespace Application.Features.Auth.Login;
+﻿using System.Globalization;
+
+namespace Application.Features.Auth.Login;
 
 public class LoginHandler(IUnitOfWork unitOfWork, UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, ITokenProvider tokenService, IApplicationDatabaseContext identityDbContext)
     : ICommandHandler<LoginCommand, Result<LoginDTO>>
@@ -28,7 +30,7 @@ public class LoginHandler(IUnitOfWork unitOfWork, UserManager<IdentityUser> user
         }
 
         TokenRequest tokenRequest = new(
-            UserId: userData.Id.ToString(),
+            UserId: userData.Id.ToString(CultureInfo.InvariantCulture),
             UserEmail: user.Email ?? string.Empty,
             Roles: await userManager.GetRolesAsync(user)
         );

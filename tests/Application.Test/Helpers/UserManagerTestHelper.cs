@@ -35,7 +35,9 @@ public static class UserManagerTestHelper
             .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
             .Options;
 
+#pragma warning disable CA2000 // Dispose objects before losing scope
         var context = new TestIdentityDbContext(options);
+#pragma warning restore CA2000 // Dispose objects before losing scope
         if (users.Count > 0)
         {
             context.Users.AddRange(users);
@@ -69,7 +71,9 @@ public static class UserManagerTestHelper
             }
         });
 
+#pragma warning disable CA2000 // Dispose objects before losing scope
         var store = new UserStore<IdentityUser>(context);
+#pragma warning restore CA2000 // Dispose objects before losing scope
         var userManager = new UserManager<IdentityUser>(
             store,
             identityOptions,
@@ -85,7 +89,7 @@ public static class UserManagerTestHelper
         return userManager;
     }
 
-    private class TestIdentityDbContext(DbContextOptions<UserManagerTestHelper.TestIdentityDbContext> options) : IdentityDbContext<IdentityUser>(options)
+    private sealed class TestIdentityDbContext(DbContextOptions<UserManagerTestHelper.TestIdentityDbContext> options) : IdentityDbContext<IdentityUser>(options)
     {
     }
 }

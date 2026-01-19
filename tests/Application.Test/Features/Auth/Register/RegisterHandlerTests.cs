@@ -39,7 +39,7 @@ public class RegisterHandlerTests
             CityId = 1
         };
 
-        var userManager = UserManagerTestHelper.CreateUserManagerWithUsers([], [new IdentityRole { Name = RolesNameValues.User, NormalizedName = RolesNameValues.User.ToUpper() }]);
+        using var userManager = UserManagerTestHelper.CreateUserManagerWithUsers([], [new IdentityRole { Name = RolesNameValues.User, NormalizedName = RolesNameValues.User.ToUpper() }]);
 
         _unitOfWork.CommitAsync(Arg.Any<CancellationToken>()).Returns(1);
 
@@ -96,6 +96,8 @@ public class RegisterHandlerTests
         Assert.False(result.IsSuccess);
         Assert.Single(result.Errors);
         Assert.Contains("Email is already taken", result.Errors.First());
+
+        userManager.Dispose();
     }
 }
 

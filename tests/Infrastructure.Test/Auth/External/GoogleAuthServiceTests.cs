@@ -29,7 +29,7 @@ public class GoogleAuthServiceTests
         const string accessToken = "access_token_123";
         const string userInfoEndpoint = "https://www.googleapis.com/userinfo/v2/me";
 
-        var mockHttp = new MockHttpMessageHandler();
+        using var mockHttp = new MockHttpMessageHandler();
 
         // Mock token endpoint
         mockHttp.When("https://oauth2.googleapis.com/token")
@@ -68,7 +68,7 @@ public class GoogleAuthServiceTests
     {
         // Arrange
         const string code = "auth_code";
-        var mockHttp = new MockHttpMessageHandler();
+        using var mockHttp = new MockHttpMessageHandler();
 
         // Simulate failed token response
         mockHttp.When("https://oauth2.googleapis.com/token")
@@ -94,7 +94,7 @@ public class GoogleAuthServiceTests
         const string code = "auth_code";
         const string accessToken = "access_token_123";
 
-        var mockHttp = new MockHttpMessageHandler();
+        using var mockHttp = new MockHttpMessageHandler();
 
         // Token response is OK
         mockHttp.When("https://oauth2.googleapis.com/token")

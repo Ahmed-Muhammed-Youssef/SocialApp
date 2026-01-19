@@ -39,7 +39,7 @@ public class UsersController(JsonSerializerOptions jsonSerializerOptions, IMedia
 
     // GET: api/users/{id}
     [HttpGet("{id}")]
-    public async Task<ActionResult<UserDTO>> GetUser(int id, CancellationToken cancellationToken)
+    public async Task<ActionResult<UserDTO>> GetById(int id, CancellationToken cancellationToken)
     {
         Result<UserDTO> result = await mediator.Send(new GetUserQuery(id), cancellationToken);
 

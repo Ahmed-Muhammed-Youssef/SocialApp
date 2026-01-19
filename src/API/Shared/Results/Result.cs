@@ -22,8 +22,6 @@ public class Result<T> : IResult
     public string Location { get; protected set; } = string.Empty;
     public IEnumerable<string> Errors { get; protected set; } = [];
 
-    public object? GetValue() => Value;
-
     public static Result<T> Success(T value) => new(value);
 
     public static Result<T> Success(T value, string successMessage) => new(value, successMessage);

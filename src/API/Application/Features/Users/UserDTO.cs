@@ -11,6 +11,6 @@ public record UserDTO
     public DateTime LastActive { get; init; }
     public required string Bio { get; init; }
     public RelationStatus RelationStatus { get; init; } = RelationStatus.None;
-    public required string? ProfilePictureUrl { get; init; } = null;
+    public required string? ProfilePictureUrl { get; init; }
     public IEnumerable<PictureDTO> Pictures { get; init; } = [];
 }

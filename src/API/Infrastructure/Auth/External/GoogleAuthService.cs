@@ -8,17 +8,7 @@ public class GoogleAuthService(IConfiguration configuration, IHttpClientFactory 
     private readonly string _clientId = configuration["Authentication:Google:ClientId"]!;
     private readonly string _clientSecret = configuration["Authentication:Google:ClientSecret"]!;
     private readonly string _redirectUri = configuration["Authentication:Google:RedirectUri"]!;
-    private readonly string _googleAuthorizationEndpoint = configuration["Authentication:Google:GoogleAuthorizationEndpoint"]!;
-    private readonly string _scope = configuration["Authentication:Google:Scope"]!;
     private readonly string _tokenEndpoint = configuration["Authentication:Google:TokenEndpoint"]!;
-    public string BuildGoogleSignInUrl()
-    {
-        UriBuilder builder = new(_googleAuthorizationEndpoint)
-        {
-            Query = $"client_id={_clientId}&redirect_uri={Uri.EscapeDataString(_redirectUri)}&response_type=code&scope={Uri.EscapeDataString(_scope)}&access_type=offline"
-        };
-        return builder.ToString();
-    }
 
     public async Task<GoogleUserInfo> GetUserFromGoogleAsync(string code)
     {
@@ -55,7 +45,7 @@ public class GoogleAuthService(IConfiguration configuration, IHttpClientFactory 
 
     private async Task<Dictionary<string, string>> GetAccessToken(string code)
     {
-        var formContent = new FormUrlEncodedContent(
+        using var formContent = new FormUrlEncodedContent(
         [
             new KeyValuePair<string, string>("code", code),
             new KeyValuePair<string, string>("client_id", _clientId),

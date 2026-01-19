@@ -51,6 +51,6 @@ public static class DateTimeExtensions
             return $"{(int)timeDiff.TotalDays}d ago";
         }
 
-        return dateTime.ToString("dd MMM yyyy");
+        return dateTime.ToString("dd MMM yyyy", System.Globalization.CultureInfo.InvariantCulture);
     }
 }

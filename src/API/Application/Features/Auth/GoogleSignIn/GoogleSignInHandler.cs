@@ -1,4 +1,5 @@
-﻿using Google.Apis.Auth;
+﻿using System.Globalization;
+using Google.Apis.Auth;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
@@ -70,7 +71,7 @@ public class GoogleSignInHandler(UserManager<IdentityUser> userManager, IUserPro
         }
 
         TokenRequest tokenRequest = new(
-            UserId: appUser.Id.ToString(),
+            UserId: appUser.Id.ToString(CultureInfo.InvariantCulture),
             UserEmail: existingLoginUser.Email ?? string.Empty,
             Roles: await userManager.GetRolesAsync(existingLoginUser)
         );

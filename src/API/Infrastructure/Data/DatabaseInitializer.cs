@@ -1,12 +1,12 @@
 ﻿namespace Infrastructure.Data;
 
-public class DatabaseInitializer
+public static class DatabaseInitializer
 {
     public static async Task InitializeAsync(IServiceProvider serviceProvider)
     {
         using var scope = serviceProvider.CreateScope();
         var services = scope.ServiceProvider;
-        ILogger<DatabaseInitializer> logger = services.GetRequiredService<ILogger<DatabaseInitializer>>();
+        ILogger logger = services.GetRequiredService<ILogger>();
         try
         {
             ApplicationDatabaseContext dataContext = services.GetRequiredService<ApplicationDatabaseContext>();
@@ -31,7 +31,7 @@ public class DatabaseInitializer
         }
     }
 
-    private static async Task MigrateDatabaseAsync(ApplicationDatabaseContext dataContext, ILogger<DatabaseInitializer> logger)
+    private static async Task MigrateDatabaseAsync(ApplicationDatabaseContext dataContext, ILogger logger)
     {
         try
         {
@@ -43,13 +43,13 @@ public class DatabaseInitializer
         }
     }
 
-    private static async Task SeedStaticData(ApplicationDatabaseContext dataContext, RoleManager<IdentityRole> roleManager, ILogger<DatabaseInitializer> logger)
+    private static async Task SeedStaticData(ApplicationDatabaseContext dataContext, RoleManager<IdentityRole> roleManager, ILogger logger)
     {
         await SeedCountriesAndCities(dataContext, logger);
         await SeedRoles(roleManager, logger);
     }
 
-    private static async Task SeedCountriesAndCities(ApplicationDatabaseContext dataContext, ILogger<DatabaseInitializer> logger)
+    private static async Task SeedCountriesAndCities(ApplicationDatabaseContext dataContext, ILogger logger)
     {
         try
         {
@@ -108,7 +108,7 @@ public class DatabaseInitializer
         }
     }
 
-    private static async Task SeedAdmin(UserManager<IdentityUser> userManager, IConfiguration configuration, ApplicationDatabaseContext dataContext, ILogger<DatabaseInitializer> logger)
+    private static async Task SeedAdmin(UserManager<IdentityUser> userManager, IConfiguration configuration, ApplicationDatabaseContext dataContext, ILogger logger)
     {
         try
         {
@@ -135,7 +135,7 @@ public class DatabaseInitializer
         }
     }
 
-    private static async Task SeedRoles(RoleManager<IdentityRole> roleManager, ILogger<DatabaseInitializer> logger)
+    private static async Task SeedRoles(RoleManager<IdentityRole> roleManager, ILogger logger)
     {
         try
         {
@@ -160,7 +160,7 @@ public class DatabaseInitializer
         }
     }
 
-    private static async Task AddTestUsers(UserManager<IdentityUser> userManager, ApplicationDatabaseContext dataContext, IConfiguration configuration, ILogger<DatabaseInitializer> logger)
+    private static async Task AddTestUsers(UserManager<IdentityUser> userManager, ApplicationDatabaseContext dataContext, IConfiguration configuration, ILogger logger)
     {
         try
         {

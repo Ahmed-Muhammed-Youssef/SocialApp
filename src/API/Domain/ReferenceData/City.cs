@@ -6,5 +6,5 @@ public class City : EntityBase
 
     // Foreign Key
     public int RegionId { get; set; }
-    public Region? Region { get; set; } = null;
+    public Region? Region { get; set; }
 }

@@ -1,4 +1,6 @@
-﻿namespace Application.Features.Auth.RefreshToken;
+﻿using System.Globalization;
+
+namespace Application.Features.Auth.RefreshToken;
 
 public class RefreshTokenHandler(ITokenProvider tokenProvider, IApplicationDatabaseContext identityDbContext, UserManager<IdentityUser> userManager, IUnitOfWork unitOfWork) : ICommandHandler<RefreshTokenCommand, Result<RefreshTokenResult>>
 {
@@ -48,7 +50,7 @@ public class RefreshTokenHandler(ITokenProvider tokenProvider, IApplicationDatab
         await tx.CommitAsync(cancellationToken);
 
         TokenRequest tokenRequest = new(
-            UserId: userPublicId.ToString(),
+            UserId: userPublicId.ToString(CultureInfo.InvariantCulture),
             UserEmail: refreshToken.User.Email ?? string.Empty,
             Roles: await userManager.GetRolesAsync(refreshToken.User)
         );

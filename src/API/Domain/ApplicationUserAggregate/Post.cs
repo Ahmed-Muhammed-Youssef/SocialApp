@@ -6,7 +6,7 @@ public class Post
     public int UserId { get; set; }
     public required string Content { get; set; }
     public DateTime DatePosted { get; set; } = DateTime.UtcNow;
-    public DateTime? DateEdited { get; set; } = null;
+    public DateTime? DateEdited { get; set; }
 
 
     // Navigation Properties

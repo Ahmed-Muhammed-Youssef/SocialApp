@@ -1,3 +1,5 @@
+using System.Globalization;
+
 namespace API.Features.Users;
 
 [Authorize]
@@ -10,7 +12,7 @@ public class OnlineUsersHub(IOnlineUsersStore presenceTracker) : Hub
         var isFirstConnection = await presenceTracker.AddUserConnection(id, Context.ConnectionId);
         if (isFirstConnection)
         {
-            await Clients.Others.SendAsync("UserIsOnline", Context.User.GetPublicId().ToString());
+            await Clients.Others.SendAsync("UserIsOnline", Context.User.GetPublicId().ToString(CultureInfo.InvariantCulture));
         }
         var currentUsers = await presenceTracker.GetOnlineUsers();
         await Clients.Caller.SendAsync("GetOnlineUsers", currentUsers);
@@ -22,7 +24,7 @@ public class OnlineUsersHub(IOnlineUsersStore presenceTracker) : Hub
         var isJustDisconnected = await presenceTracker.RemoveUserConnection(id, Context.ConnectionId);
         if (isJustDisconnected)
         {
-            await Clients.Others.SendAsync("UserIsOffline", Context.User.GetPublicId().ToString());
+            await Clients.Others.SendAsync("UserIsOffline", Context.User.GetPublicId().ToString(CultureInfo.InvariantCulture));
         }
         await base.OnDisconnectedAsync(exception);
     }

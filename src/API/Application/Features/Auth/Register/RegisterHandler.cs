@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using System.Globalization;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace Application.Features.Auth.Register;
 
@@ -55,7 +56,7 @@ public class RegisterHandler(IUnitOfWork unitOfWork, UserManager<IdentityUser> u
         UserDTO userData = UserMappings.ToDto(newApplicationUser);
 
         TokenRequest tokenRequest = new(
-            UserId: userData.Id.ToString(),
+            UserId: userData.Id.ToString(CultureInfo.InvariantCulture),
             UserEmail: newIdentityUser.Email ?? string.Empty,
             Roles: await userManager.GetRolesAsync(newIdentityUser)
         );
