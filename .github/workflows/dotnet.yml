@@ -2,9 +2,9 @@ name: .NET
 
 on:
   push:
-    branches: [ "master" ]
+    branches: [ "master", "develop"]
   pull_request:
-    branches: [ "master" ]
+    branches: [ "master", "develop" ]
 
 jobs:
   build:
@@ -18,8 +18,8 @@ jobs:
       with:
         dotnet-version: 10.0.x
     - name: Restore dependencies
-      run: dotnet restore SocialApp.sln
+      run: dotnet restore SocialApp.slnx
     - name: Build
-      run: dotnet build SocialApp.sln --no-restore
+      run: dotnet build SocialApp.slnx --no-restore
     - name: Test
-      run: dotnet test SocialApp.sln --no-build --verbosity normal
+      run: dotnet test SocialApp.slnx --no-build --verbosity normal
