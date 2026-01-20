@@ -32,15 +32,11 @@ export class Profile {
 
   constructor()
   {
-    const id = Number(this.route.snapshot.paramMap.get('id'));
-
     this.route.paramMap.subscribe(params => {
         const id = Number(params.get('id'));
         this.userId.set(id);
         this.loadUser(id);
-      });
-
-    
+      });    
   }
 
   loadUser(id: number | null) {
