@@ -6,7 +6,8 @@ public static class DatabaseInitializer
     {
         using var scope = serviceProvider.CreateScope();
         var services = scope.ServiceProvider;
-        ILogger logger = services.GetRequiredService<ILogger>();
+        var loggerFactory = services.GetRequiredService<ILoggerFactory>();
+        var logger = loggerFactory.CreateLogger(typeof(DatabaseInitializer).FullName ?? nameof(DatabaseInitializer));
         try
         {
             ApplicationDatabaseContext dataContext = services.GetRequiredService<ApplicationDatabaseContext>();
