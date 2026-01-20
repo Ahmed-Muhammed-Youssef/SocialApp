@@ -2,7 +2,6 @@ import { afterRenderEffect, Component, DestroyRef, ElementRef, inject, signal, V
 import { ActivatedRoute } from '@angular/router';
 import { ChatHubService } from '../../shared/services/chat-hub.service';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { ChatMessage } from '../models/chat-message';
 import { MatIconModule } from '@angular/material/icon';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
@@ -30,26 +29,29 @@ export class Chat {
 
   readonly userId = () => this.authService.getUserData()?.id ?? 0;
   otherUser = signal<UserDTO | null>(null);
-  readonly otherUserId : number;
+  otherUserId = signal<number | null>(null);
 
   readonly messages = toSignal(this.chatHub.messages$, { initialValue: [] });
   readonly newMessage = signal('');
   
-  // 3. Input Content Signal: Local state
   newMessageContent = signal('');
   constructor() {
-    this.otherUserId = Number(this.route.snapshot.paramMap.get('id'));
-    if (this.otherUserId) {
-      this.chatHub.startConnection(this.otherUserId)
-        .catch(err => console.error('SignalR connection failed:', err));
+  this.route.paramMap.subscribe(params => {      
+          this.otherUserId.set(Number(params.get('id')));
 
-      this.userService.getUserById(this.otherUserId).subscribe({
-        next: (res) => this.otherUser.set(res),
-        error: (err) => console.error(err)
-      });
-    } else {
-      console.error('Missing User ID. Cannot start chat.');
-    }
+          const otherId = this.otherUserId();
+          if (otherId != null) {
+            this.chatHub.startConnection(otherId)
+              .catch(err => console.error('SignalR connection failed:', err));
+      
+            this.userService.getUserById(otherId).subscribe({
+              next: (res) => this.otherUser.set(res),
+              error: (err) => console.error(err)
+            });
+          } else {
+            console.error('Missing User ID. Cannot start chat.');
+          }
+        });
 
     this.destroyRef.onDestroy(() => {
       this.chatHub.stop();
@@ -65,7 +67,7 @@ export class Chat {
     const content = this.newMessage().trim();
     if (!content) return;
 
-    this.chatHub.sendMessage(this.otherUserId, content)
+    this.chatHub.sendMessage(this.otherUserId()!, content)
       .then(() => this.newMessage.set('')); // Clear input
   }
 
