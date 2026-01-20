@@ -22,10 +22,9 @@
     <!-- Message icon: menu (desktop) / page (mobile) -->
     <div class="messages-container">
 
-      <!-- Desktop -->
+      <!-- Message menu trigger (desktop and mobile) -->
       <button
         mat-icon-button
-        class="messages-desktop"
         [matMenuTriggerFor]="messagesMenu">
         <mat-icon>chat</mat-icon>
         @if(unreadCount() > 0) {
@@ -33,30 +32,36 @@
         }
       </button>
 
-      <!-- Mobile (whole icon navigates to messages page) -->
-      <button
-        mat-icon-button
-        class="messages-mobile"
-        routerLink="/messages">
-        <mat-icon>chat</mat-icon>
-        @if(unreadCount() > 0) {
-          <span class="badge">{{ unreadCount() }}</span>
-        }
-      </button>
-
       <!-- Desktop dropdown menu -->
-      <mat-menu #messagesMenu="matMenu">
+      <mat-menu #messagesMenu="matMenu" panelClass="messages-menu-panel">
         <div class="menu-title">Recent Chats</div>
 
-        @for (chat of chats(); track chat.id) {
-          <button mat-menu-item (click)="openChat(chat.id)">
-            <img class="chat-avatar" [src]="chat.avatar" />
-            <span>{{ chat.name }}</span>
-          </button>
-        }
-
-        @if (chats().length === 0) {
+        @if (isLoadingChats()) {
+          <div class="loading-state">
+            <mat-icon class="spinner">hourglass_empty</mat-icon>
+            <span>Loading chats...</span>
+          </div>
+        } @else if (chatsError()) {
+          <div class="error-state">
+            <mat-icon>error_outline</mat-icon>
+            <span>{{ chatsError() }}</span>
+          </div>
+        } @else if (chats().length === 0) {
           <div class="empty-state">No recent chats</div>
+        } @else {
+          @for (chat of chats(); track chat.userId) {
+            <button mat-menu-item (click)="openChat(chat.userId)">
+              <div class="chat-item">
+                <img class="chat-avatar" [src]="getChatAvatar(chat)" [alt]="getChatName(chat)" />
+                <div class="chat-info">
+                  <span class="chat-name">{{ getChatName(chat) }}</span>
+                  @if (chat.lastMessage) {
+                    <span class="last-message">{{ chat.lastMessage.content }}</span>
+                  }
+                </div>
+              </div>
+            </button>
+          }
         }
       </mat-menu>
     </div>
