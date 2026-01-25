@@ -9,7 +9,7 @@
 - [ ] Expand test coverage: add integration tests (testserver) and increase unit tests for handlers
 - [x] Add health checks (`AddHealthChecks()` + endpoints)
 - [ ] Review DbContext separation (consolidate Identity + Application contexts or document rationale)
-- [ ] Add rate limiting middleware or policies (Microsoft rate limiting or AspNetCoreRateLimit)
+- [x] Add rate limiting middleware or policies (Microsoft rate limiting or AspNetCoreRateLimit)
 - [x] Fix CORS to be configurable for non-Development environments (move `UseCors` out of dev-only block)
 - [ ] Replace manual Identity cleanup with transactional flows (use `BeginTransaction/Commit/Rollback` in UoW)
 - [ ] Implement domain-event-driven workflows for side effects (e.g., notifications, cache invalidation)
