@@ -3,6 +3,7 @@ import * as signalR from '@microsoft/signalr';
 import { BehaviorSubject } from 'rxjs';
 import { ChatMessage } from '../../direct-chat/models/chat-message';
 import { AuthService } from '../../auth/services/auth';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -13,7 +14,7 @@ export class ChatHubService {
   private messagesSubject = new BehaviorSubject<ChatMessage[]>([]);
   public messages$ = this.messagesSubject.asObservable();
   private authService = inject(AuthService);
-  private readonly baseUrl = 'https://localhost:5001/hubs/' + 'message';
+  private readonly baseUrl = `${environment.hubUrl}/message`;
 
   async startConnection(otherUserId: number): Promise<void> {
     let token = this.authService.getToken();

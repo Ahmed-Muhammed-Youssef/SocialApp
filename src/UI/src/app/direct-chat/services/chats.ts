@@ -3,13 +3,14 @@ import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { PagedList } from '../../shared/models/paged-list';
 import { ChatDto } from '../models/chat-dto';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ChatsService {
   private http = inject(HttpClient);
-  private readonly baseUrl = 'https://localhost:5001/api/chat';
+  private readonly baseUrl = `${environment.apiUrl}/chat`;
 
   getChats(pageNumber: number, itemsPerPage: number): Observable<PagedList<ChatDto>> {
     const params = new HttpParams()

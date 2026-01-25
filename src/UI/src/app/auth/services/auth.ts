@@ -5,6 +5,7 @@ import { Observable, tap } from 'rxjs';
 import { AuthResponse } from '../models/auth-response';
 import { UserDTO } from '../models/user-dto';
 import { RegisterRequst } from '../models/register-request';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -13,7 +14,7 @@ export class AuthService {
   private http: HttpClient = inject(HttpClient);
   private token: string | null = null;
   private userData: UserDTO | null = null;
-  private readonly baseUrl = 'https://localhost:5001/api/auth';
+  private readonly baseUrl = `${environment.apiUrl}/auth`;
 
   constructor() {
     this.token = sessionStorage.getItem('access_token');
@@ -53,14 +54,14 @@ export class AuthService {
     return this.userData;
   }
 
-  registerUser(request: RegisterRequst) : Observable<AuthResponse>{
+  registerUser(request: RegisterRequst): Observable<AuthResponse> {
     return this.http.post<AuthResponse>(`${this.baseUrl}/register`, request)
-    .pipe(
-      tap(res => {
-        this.setToken(res.token);
-        this.setUserData(res.userData);
-      })
-    );;
+      .pipe(
+        tap(res => {
+          this.setToken(res.token);
+          this.setUserData(res.userData);
+        })
+      );;
   }
   private setUserData(userData: UserDTO) {
     this.userData = userData;
