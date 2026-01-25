@@ -1,0 +1,39 @@
+name: Build and Deploy API
+
+on:
+  push:
+    branches: [ "master" ]
+    paths:
+      - 'src/API/**'
+      - '.github/workflows/deploy-api.yml'
+  workflow_dispatch:
+
+env:
+  APP_NAME: ${{ secrets.APP_NAME }}
+  RESOURCE_GROUP: ${{ secrets.RESOURCE_GROUP }}
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 10.0.x
+
+    - name: Build and Publish
+      run: |
+        dotnet restore src/API/API/API.csproj
+        dotnet publish src/API/API/API.csproj -c Release -o ./publish
+
+    - uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+    - name: Deploy to App Service
+      uses: azure/webapps-deploy@v2
+      with:
+        app-name: ${{ env.APP_NAME }}
+        package: ./publish
