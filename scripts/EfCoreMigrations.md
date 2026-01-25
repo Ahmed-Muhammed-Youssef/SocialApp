@@ -1,50 +1,39 @@
 # EF Core Migration Commands
 
-This document contains the commands for creating and applying migrations using Entity Framework Core, with specific folder locations for each step.
+This document contains the commands for creating and applying migrations using Entity Framework Core.
 
 ## Initial Setup
-
-Before you can start creating migrations, ensure you have the EF Core CLI tools installed. Run this command in any directory:
-
-```
+Ensure you have the EF Core CLI tools installed:
+```bash
 dotnet tool install --global dotnet-ef
 ```
 
-## Creating Migrations
+## Running Migrations
+Run these commands from the `SocialApp` solution root folder (where `SocialApp.slnx` is).
 
-To create a new migration, navigate to the project directory containing your DbContext:
+### Creating a New Migration
+Replace `MigrationName` with a descriptive name (e.g., `AddUserBio`).
 
-```
-cd SoicalApp\src\WebApp\Common\Infrastructure
-```
-
-Then run:
-
-```
-dotnet ef migrations add MigrationName -o Data/Migrations -c DataContext
-dotnet ef migrations add IdentityMigrationName -o Identity/Migrations -c IdentityDatabaseContext
+```bash
+dotnet ef migrations add MigrationName --project src/API/Infrastructure --startup-project src/API/API --output-dir Data/Migrations
 ```
 
-Replace `MigrationName` with a descriptive name for your migration. For example:
+### Applying Migrations to Database
+This applies all pending migrations to the database configured in `appsettings.json`.
 
-```
-dotnet ef migrations add InitialCreate -o Data/Migrations -c DataContext
-dotnet ef migrations add InitialIdentityCreate -o Identity/Migrations -c IdentityDatabaseContext
-```
-
-## Applying Migrations
-
-To apply the migrations to your database, ensure you're still in the project directory:
-
-```
-cd SoicalApp\src\WebApp\Common\Infrastructure
+```bash
+dotnet ef database update --project src/API/Infrastructure --startup-project src/API/API
 ```
 
-Then run:
-
+### Removing Last Migration (If applied)
+```bash
+dotnet ef database update LastGoodMigrationName --project src/API/Infrastructure --startup-project src/API/API
+dotnet ef migrations remove --project src/API/Infrastructure --startup-project src/API/API
 ```
-dotnet ef database update -c DataContext
-dotnet ef database update -c IdentityDatabaseContext
-```
 
-This command will apply any pending migrations to your database.
+### Generating SQL Script (For Production)
+Use this to generate a script you can run on your Azure SQL Database if you don't want to run `dotnet ef database update` from the CI/CD pipeline.
+
+```bash
+dotnet ef migrations script --project src/API/Infrastructure --startup-project src/API/API --output scripts/deploy_db.sql --idempotent
+```
