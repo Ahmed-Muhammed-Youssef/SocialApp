@@ -17,11 +17,11 @@ public static class DatabaseInitializer
             IConfiguration configuration = services.GetRequiredService<IConfiguration>();
 
             await MigrateDatabaseAsync(dataContext, logger);
-            await SeedStaticData(dataContext, roleManager, logger);
-            await SeedAdmin(userManager, configuration, dataContext, logger);
 
             if (environment.IsDevelopment())
             {
+                await SeedStaticData(dataContext, roleManager, logger);
+                await SeedAdmin(userManager, configuration, dataContext, logger);
                 // seed test records
                 await AddTestUsers(userManager, dataContext, configuration, logger);
             }
@@ -113,12 +113,21 @@ public static class DatabaseInitializer
     {
         try
         {
-            if (!await userManager.Users.AnyAsync(u => u.Email == configuration["AdminCred:Email"]))
+            string? adminEmail = configuration["AdminCred:Email"];
+            string? adminPassword = configuration["AdminCred:Password"];
+
+            if (string.IsNullOrEmpty(adminEmail) || string.IsNullOrEmpty(adminPassword))
+            {
+                logger.LogWarning("Skipping Admin Seeding: 'AdminCred:Email' or 'AdminCred:Password' not found in configuration.");
+                return;
+            }
+
+            if (!await userManager.Users.AnyAsync(u => u.Email == adminEmail))
             {
                 IdentityUser admin = new()
                 {
-                    UserName = configuration["AdminCred:Email"],
-                    Email = configuration["AdminCred:Email"]
+                    UserName = adminEmail,
+                    Email = adminEmail
                 };
 
                 City city = await dataContext.Cities
@@ -127,7 +136,7 @@ public static class DatabaseInitializer
 
                 ApplicationUser adminAppUser = new("Admin", "Admin", DateTime.UtcNow.AddYears(-25), Gender.Male, city.Id);
 
-                await CreateUser(admin, adminAppUser, configuration["AdminCred:Password"]!, [RolesNameValues.Admin, RolesNameValues.User, RolesNameValues.Moderator], userManager, dataContext);
+                await CreateUser(admin, adminAppUser, adminPassword, [RolesNameValues.Admin, RolesNameValues.User, RolesNameValues.Moderator], userManager, dataContext);
             }
         }
         catch (Exception ex)
