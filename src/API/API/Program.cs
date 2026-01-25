@@ -2,6 +2,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder
     .AddGenericServices()
+    .AddSecurity()
     .AddErrorHandling()
     .AddObservability()
     .AddIdentity()
@@ -17,6 +18,10 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "API v1"));
 }
+else
+{
+    app.UseHsts();
+}
 
 app.UseExceptionHandler();
 
@@ -28,6 +33,7 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseCors("AllowSpecificOrigin");
+app.UseRateLimiter();
 
 app.UseAuthentication();
 app.UseAuthorization();
