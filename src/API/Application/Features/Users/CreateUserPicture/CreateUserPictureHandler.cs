@@ -15,19 +15,21 @@ public class CreateUserPictureHandler(IUnitOfWork unitOfWork, IPictureService pi
             return Result<int>.Error(uploadResult?.Error?.Message ?? "Failed to upload image.");
         }
 
-        Picture picture = new()
-        {
-            Url = uploadResult.SecureUrl.AbsoluteUri,
-            PublicId = uploadResult.PublicId
-        };
+        var picture = Picture.Create(uploadResult.SecureUrl.AbsoluteUri, uploadResult.PublicId);
 
         unitOfWork.PictureRepository.Add(picture);
 
         await unitOfWork.CommitAsync(cancellationToken);
 
-        var publicId = currentUserService.GetPublicId();
+        var userId = currentUserService.GetPublicId();
 
-        unitOfWork.ApplicationUserRepository.AddUserPicture(publicId, picture.Id);
+        var user = await unitOfWork.ApplicationUserRepository.GetByIdAsync(userId, cancellationToken);
+        if (user == null)
+        {
+            return Result<int>.Error("User not found.");
+        }
+
+        user.AddPicture(picture.Id);
 
         await unitOfWork.CommitAsync(cancellationToken);
 

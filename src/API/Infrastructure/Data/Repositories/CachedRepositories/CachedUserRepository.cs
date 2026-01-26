@@ -50,4 +50,14 @@ public class CachedUserRepository(IApplicationUserRepository usersRepository, IM
 
     public Task<PagedList<PostDTO>> GetNewsfeed(int userId, PaginationParams paginationParams, CancellationToken cancellationToken = default)
         => usersRepository.GetNewsfeed(userId, paginationParams, cancellationToken);
+
+    // Picture-related queries
+    public Task<List<Picture>> GetUserPicturesAsync(int userId, CancellationToken cancellationToken = default)
+        => usersRepository.GetUserPicturesAsync(userId, cancellationToken);
+
+    public Task<List<PictureDTO>> GetUserPictureDTOsAsync(int userId, CancellationToken cancellationToken = default)
+        => usersRepository.GetUserPictureDTOsAsync(userId, cancellationToken);
+
+    public Task<PictureDTO?> GetUserPictureDTOAsync(int userId, int pictureId, CancellationToken cancellationToken = default)
+        => usersRepository.GetUserPictureDTOAsync(userId, pictureId, cancellationToken);
 }

@@ -9,7 +9,7 @@ public class Message : EntityBase
         SenderId = senderId;
         Content = content;
     }
-    public int ChatId { get; set; }
+    public int ChatId { get; private set; }
     public string Content { get; private set; } = string.Empty;
     public DateTime SentDate { get; private set; } = DateTime.UtcNow;
     public int SenderId { get; private set; }

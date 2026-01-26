@@ -13,4 +13,8 @@ public interface IApplicationUserRepository : IRepositoryBase<ApplicationUser>
     Task<Post?> GetPostByIdAsync(ulong postId, CancellationToken cancellationToken = default);
     Task<List<PostDTO>> GetUserPostsAsync(int userId, CancellationToken cancellationToken = default);
     Task<PagedList<PostDTO>> GetNewsfeed(int userId, PaginationParams paginationParams, CancellationToken cancellationToken = default);
+    // Picture-related queries
+    Task<List<Picture>> GetUserPicturesAsync(int userId, CancellationToken cancellationToken = default);
+    Task<List<PictureDTO>> GetUserPictureDTOsAsync(int userId, CancellationToken cancellationToken = default);
+    Task<PictureDTO?> GetUserPictureDTOAsync(int userId, int pictureId, CancellationToken cancellationToken = default);
 }

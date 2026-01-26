@@ -78,4 +78,15 @@ public class ApplicationUser : EntityBase, IAggregateRoot
         MarkActive();
         return post;
     }
+
+    public void AddPicture(int pictureId)
+    {
+        if (Pictures.Any(up => up.PictureId == pictureId))
+        {
+            return;
+        }
+
+        Pictures.Add(new UserPicture(Id, pictureId));
+        MarkActive();
+    }
 }

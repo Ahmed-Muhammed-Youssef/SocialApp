@@ -89,7 +89,7 @@ public class ApplicationUserRepository(ApplicationDatabaseContext dataContext) :
 
     public void AddUserPicture(int userId, int pictureId)
     {
-        UserPicture userPicture = new() { UserId = userId, PictureId = pictureId };
+        UserPicture userPicture = new(userId, pictureId);
         dataContext.UserPictures.Add(userPicture);
     }
 
@@ -131,5 +131,34 @@ public class ApplicationUserRepository(ApplicationDatabaseContext dataContext) :
             .Take(paginationParams.ItemsPerPage).ToListAsync(cancellationToken: cancellationToken);
 
         return new PagedList<PostDTO>(posts, count, paginationParams.PageNumber, paginationParams.ItemsPerPage);
+    }
+
+    // Picture-related queries
+    public async Task<List<Picture>> GetUserPicturesAsync(int userId, CancellationToken cancellationToken = default)
+    {
+        return await dataContext.UserPictures
+            .Where(up => up.UserId == userId)
+            .Join(dataContext.Pictures, up => up.PictureId, p => p.Id, (up, p) => p)
+            .OrderByDescending(p => p.Created)
+            .ToListAsync(cancellationToken);
+    }
+
+    public async Task<List<PictureDTO>> GetUserPictureDTOsAsync(int userId, CancellationToken cancellationToken = default)
+    {
+        return await dataContext.UserPictures
+            .Where(up => up.UserId == userId)
+            .Join(dataContext.Pictures, up => up.PictureId, p => p.Id, (up, p) => p)
+            .OrderByDescending(p => p.Created)
+            .Select(p => new PictureDTO(p.Id, p.Url))
+            .ToListAsync(cancellationToken);
+    }
+
+    public async Task<PictureDTO?> GetUserPictureDTOAsync(int userId, int pictureId, CancellationToken cancellationToken = default)
+    {
+        return await dataContext.UserPictures
+            .Where(up => up.UserId == userId && up.PictureId == pictureId)
+            .Join(dataContext.Pictures, up => up.PictureId, p => p.Id, (up, p) => p)
+            .Select(PictureMappings.ToDtoExpression)
+            .FirstOrDefaultAsync(cancellationToken);
     }
 }
