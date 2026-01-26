@@ -2,9 +2,18 @@
 
 public class Country : EntityBase
 {
-    public required string Name { get; set; }
-    public required string Code { get; set; }
-    public required string Language { get; set; }
+    private Country() { }
 
-    public ICollection<Region> Regions { get; set; } = [];
+    public Country(string name, string code, string language)
+    {
+        Name = name;
+        Code = code;
+        Language = language;
+    }
+
+    public string Name { get; private set; } = string.Empty;
+    public string Code { get; private set; } = string.Empty;
+    public string Language { get; private set; } = string.Empty;
+
+    public ICollection<Region> Regions { get; private set; } = [];
 }

@@ -56,48 +56,29 @@ public static class DatabaseInitializer
         {
             if (!await dataContext.Countries.AnyAsync(c => c.Code == "EG"))
             {
-                var egypt = new Country
-                {
-                    Name = "Egypt",
-                    Code = "EG",
-                    Language = "ar",
-                    Regions =
-                    [
-                        new Region
-                        {
-                            Name = "Cairo",
-                            Cities =
-                            [
-                                new City { Name = "Nasr City" },
-                                new City { Name = "Heliopolis" },
-                                new City { Name = "Maadi" },
-                                new City { Name = "Downtown Cairo" }
-                            ]
-                        },
-                        new Region
-                        {
-                            Name = "Alexandria",
-                            Cities =
-                            [
-                                new City { Name = "Montaza" },
-                                new City { Name = "Sidi Gaber" },
-                                new City { Name = "Smouha" },
-                                new City { Name = "Mansheya" }
-                            ]
-                        },
-                        new Region
-                        {
-                            Name = "Giza",
-                            Cities =
-                            [
-                                new City { Name = "Dokki" },
-                                new City { Name = "Mohandessin" },
-                                new City { Name = "Haram" },
-                                new City { Name = "Sheikh Zayed" }
-                            ]
-                        }
-                    ]
-                };
+                var egypt = new Country("Egypt", "EG", "ar");
+                
+                var cairo = new Region("Cairo", egypt.Id);
+                cairo.Cities.Add(new City("Nasr City", cairo.Id));
+                cairo.Cities.Add(new City("Heliopolis", cairo.Id));
+                cairo.Cities.Add(new City("Maadi", cairo.Id));
+                cairo.Cities.Add(new City("Downtown Cairo", cairo.Id));
+
+                var alex = new Region("Alexandria", egypt.Id);
+                alex.Cities.Add(new City("Montaza", alex.Id));
+                alex.Cities.Add(new City("Sidi Gaber", alex.Id));
+                alex.Cities.Add(new City("Smouha", alex.Id));
+                alex.Cities.Add(new City("Mansheya", alex.Id));
+
+                var giza = new Region("Giza", egypt.Id);
+                giza.Cities.Add(new City("Dokki", giza.Id));
+                giza.Cities.Add(new City("Mohandessin", giza.Id));
+                giza.Cities.Add(new City("Haram", giza.Id));
+                giza.Cities.Add(new City("Sheikh Zayed", giza.Id));
+
+                egypt.Regions.Add(cairo);
+                egypt.Regions.Add(alex);
+                egypt.Regions.Add(giza);
 
                 await dataContext.Countries.AddAsync(egypt);
                 await dataContext.SaveChangesAsync();
@@ -259,10 +240,7 @@ public static class DatabaseInitializer
     private static async Task AddPostsToUser(ApplicationDatabaseContext dataContext, Random random, ApplicationUser applicationUser)
     {
         Faker<Post> postsFaker = new Faker<Post>()
-                            .RuleFor(p => p.UserId, f => applicationUser.Id)
-                            .RuleFor(p => p.Content, f => f.Lorem.Paragraph())
-                            .RuleFor(p => p.DatePosted, f => f.Date.Past(3))
-                            .RuleFor(p => p.DateEdited, f => f.Date.Recent(30));
+                            .CustomInstantiator(f => Post.Create(applicationUser.Id, f.Lorem.Paragraph()));
 
         int randomNumber = random.Next(0, 101);
         List<Post> fakePosts = postsFaker.Generate(randomNumber);

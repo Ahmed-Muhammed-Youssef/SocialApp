@@ -58,12 +58,8 @@ public class LoginHandlerTests
 
         _tokenProvider.CreateAccessToken(Arg.Any<TokenRequest>()).Returns("access-token");
 
-        var refreshToken = new RefreshToken
-        {
-            UserId = identityUser.Id,
-            Token = "refresh-token",
-            ExpiresAtUtc = DateTime.UtcNow.AddDays(7)
-        };
+        var refreshToken = RefreshToken.Create(identityUser.Id, "refresh-token", DateTime.UtcNow.AddDays(7));
+
         _tokenProvider.CreateRefreshToken(identityUser.Id).Returns(refreshToken);
         _identityDbContext.SaveChangesAsync(Arg.Any<CancellationToken>()).Returns(1);
 

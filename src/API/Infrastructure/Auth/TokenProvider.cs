@@ -39,14 +39,9 @@ public class TokenProvider(IOptions<JwtAuthOptions> options) : ITokenProvider
         byte[] randomBytes = RandomNumberGenerator.GetBytes(32);
         string refreshToken = Convert.ToBase64String(randomBytes);
 
-        RefreshToken refreshTokenEntity = new()
-        {
-            Id = Guid.CreateVersion7(),
-            UserId = userId,
-            Token = refreshToken,
-            ExpiresAtUtc = DateTime.UtcNow.AddDays(_jwtAuthOptions.RefreshTokenExpirationDays)
-        };
-
-        return refreshTokenEntity;
+        return RefreshToken.Create(
+            userId, 
+            refreshToken, 
+            DateTime.UtcNow.AddDays(_jwtAuthOptions.RefreshTokenExpirationDays));
     }
 }

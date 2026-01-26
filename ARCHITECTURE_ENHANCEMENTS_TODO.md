@@ -5,17 +5,9 @@
 
 ## 1. Domain Layer Violations (Critical)
 
-- [ ] **Fix Anemic Domain Models (Remaining Entities)**
-  - **Problem**: The following entities are still property bags with public setters:
-    - `RefreshToken` (in `Domain.AuthUserAggregate`)
-    - `Country`, `Region`, `City` (in `Domain.ReferenceData`)
-  - **Fix**: Convert them to Rich Entities with private setters and factory methods.
-
-- [ ] **Fix Aggregate Boundaries (Remaining)**
-  - **Action**: Evaluate and Refactor:
-    - `RefreshToken`: Ensure it is managed as part of a coherent Auth aggregate if applicable.
-
 - [ ] **Introduce Domain Services**
+  - **Problem**: `CreateFriendRequestHandler` contains core domain logic (checking for existing requests, friendship status). This is "Application Logic leaking".
+  - **Fix**: Create `FriendRequestService` in Domain to handle complex interactions between aggregates (e.g., `friendRequestService.SendRequest(sender, target)`).
   - **Problem**: `CreateFriendRequestHandler` contains core domain logic (checking for existing requests, friendship status). This is "Application Logic leaking".
   - **Fix**: Create `FriendRequestService` in Domain to handle complex interactions between aggregates (e.g., `friendRequestService.SendRequest(sender, target)`).
 
@@ -58,6 +50,6 @@
 - [x] Add migration & EF tooling guidance corrections in `scripts/EfCoreMigrations.md`
 - [x] Fix CORS to be configurable for non-Development environments (move `UseCors` out of dev-only block)
 - [x] Refactor `Post` to Rich Domain Model (Private setters, Factory methods, Validation)
-- [x] Refactor `Picture`, `UserPicture`, and `Message` to Rich Domain Model (Private setters, Factory/Constructor encapsulation)
+- [x] Refactor `Picture`, `UserPicture`, `Message`, `RefreshToken`, and Reference Data (`Country`, `Region`, `City`) to Rich Domain Models
 - [x] Align Post and Picture aggregate boundaries (Managed via `ApplicationUser`, logic moved to `ApplicationUserRepository`)
 - [x] Extract Post constants (Max length) to `SystemPolicy`
