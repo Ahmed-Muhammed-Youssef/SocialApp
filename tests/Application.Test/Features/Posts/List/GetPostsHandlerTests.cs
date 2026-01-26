@@ -1,6 +1,6 @@
 using Application.Common.Interfaces;
-using Application.Features.Posts;
-using Application.Features.Posts.List;
+using Application.Features.Users.Posts;
+using Application.Features.Users.Posts.List;
 using Application.Test.Helpers;
 using NSubstitute;
 using Shared.Pagination;
@@ -29,7 +29,7 @@ public class GetPostsHandlerTests
         var query = new GetPostsQuery(paginationParams);
         var posts = new PagedList<PostDTO>([], 0, 1, 10);
 
-        _unitOfWork.PostRepository.GetNewsfeed(1, paginationParams, Arg.Any<CancellationToken>())
+        _unitOfWork.ApplicationUserRepository.GetNewsfeed(1, paginationParams, Arg.Any<CancellationToken>())
             .Returns(Task.FromResult(posts));
 
         // Act

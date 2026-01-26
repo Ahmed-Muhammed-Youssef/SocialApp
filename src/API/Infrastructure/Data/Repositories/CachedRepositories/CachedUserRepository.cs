@@ -38,4 +38,16 @@ public class CachedUserRepository(IApplicationUserRepository usersRepository, IM
     {
         return usersRepository.GetDtoByIdentityAsync(identityId, cancellationToken);
     }
+
+    // Post-related methods
+    public void AddPost(Post post) => usersRepository.AddPost(post);
+
+    public Task<Post?> GetPostByIdAsync(ulong postId, CancellationToken cancellationToken = default)
+        => usersRepository.GetPostByIdAsync(postId, cancellationToken);
+
+    public Task<List<PostDTO>> GetUserPostsAsync(int userId, CancellationToken cancellationToken = default)
+        => usersRepository.GetUserPostsAsync(userId, cancellationToken);
+
+    public Task<PagedList<PostDTO>> GetNewsfeed(int userId, PaginationParams paginationParams, CancellationToken cancellationToken = default)
+        => usersRepository.GetNewsfeed(userId, paginationParams, cancellationToken);
 }

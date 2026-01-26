@@ -1,5 +1,5 @@
 using Application.Common.Interfaces;
-using Application.Features.Posts.Create;
+using Application.Features.Users.Posts.Create;
 using Application.Test.Helpers;
 using Domain.ApplicationUserAggregate;
 using NSubstitute;
@@ -25,15 +25,13 @@ public class CreatePostHandlerTests
     {
         // Arrange
         var command = new CreatePostCommand("This is a test post");
-        var post = new Post
-        {
-            Id = 1,
-            Content = command.Content,
-            UserId = 1,
-            DatePosted = DateTime.UtcNow
-        };
+        var user = new ApplicationUser("John", "Doe", DateTime.UtcNow.AddYears(-25), Gender.Male, 1);
+        user.AssociateWithIdentity("test-identity");
 
-        _unitOfWork.PostRepository.Add(Arg.Any<Post>()).Returns(post);
+        // Set the Id property (normally set by EF Core)
+        typeof(ApplicationUser).GetProperty("Id")!.SetValue(user, 1);
+
+        _unitOfWork.ApplicationUserRepository.GetByIdAsync(1, Arg.Any<CancellationToken>()).Returns(user);
         _unitOfWork.CommitAsync(Arg.Any<CancellationToken>()).Returns(1);
 
         // Act
@@ -41,10 +39,9 @@ public class CreatePostHandlerTests
 
         // Assert
         Assert.True(result.IsSuccess);
-
         Assert.Equal(ResultStatus.Created, result.Status);
 
-        _unitOfWork.PostRepository.Received(1).Add(Arg.Is<Post>(p =>
+        _unitOfWork.ApplicationUserRepository.Received(1).AddPost(Arg.Is<Post>(p =>
             p.Content == command.Content &&
             p.UserId == 1));
 
@@ -52,19 +49,18 @@ public class CreatePostHandlerTests
     }
 
     [Fact]
-    public async Task Handle_EmptyContent_CreatesPostWithEmptyContent()
+    public async Task Handle_EmptyContent_ThrowsArgumentException()
     {
         // Arrange
         var command = new CreatePostCommand("");
+        var user = new ApplicationUser("John", "Doe", DateTime.UtcNow.AddYears(-25), Gender.Male, 1);
+        user.AssociateWithIdentity("test-identity");
 
-        _unitOfWork.CommitAsync(Arg.Any<CancellationToken>()).Returns(1);
+        _unitOfWork.ApplicationUserRepository.GetByIdAsync(1, Arg.Any<CancellationToken>()).Returns(user);
 
-        // Act
-        var result = await _handler.Handle(command, CancellationToken.None);
-
-        // Assert
-        Assert.True(result.IsSuccess);
-        _unitOfWork.PostRepository.Received(1).Add(Arg.Any<Post>());
+        // Act & Assert
+        await Assert.ThrowsAsync<ArgumentException>(async () =>
+            await _handler.Handle(command, CancellationToken.None));
     }
 }
 

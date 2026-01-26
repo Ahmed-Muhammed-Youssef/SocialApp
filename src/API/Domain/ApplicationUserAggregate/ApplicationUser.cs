@@ -71,4 +71,11 @@ public class ApplicationUser : EntityBase, IAggregateRoot
     {
         ProfilePictureId = pictureId;
     }
+
+    public Post AddPost(string content)
+    {
+        var post = Post.Create(Id, content);
+        MarkActive();
+        return post;
+    }
 }
