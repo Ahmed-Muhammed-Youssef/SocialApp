@@ -8,8 +8,6 @@
 - [ ] **Introduce Domain Services**
   - **Problem**: `CreateFriendRequestHandler` contains core domain logic (checking for existing requests, friendship status). This is "Application Logic leaking".
   - **Fix**: Create `FriendRequestService` in Domain to handle complex interactions between aggregates (e.g., `friendRequestService.SendRequest(sender, target)`).
-  - **Problem**: `CreateFriendRequestHandler` contains core domain logic (checking for existing requests, friendship status). This is "Application Logic leaking".
-  - **Fix**: Create `FriendRequestService` in Domain to handle complex interactions between aggregates (e.g., `friendRequestService.SendRequest(sender, target)`).
 
 - [ ] **Standardize Entity Implementation**
   - **Problem**: Inconsistency between `FriendRequest` (Good: Factory/Private Setters) and `Post` (Bad: Public Setters).
