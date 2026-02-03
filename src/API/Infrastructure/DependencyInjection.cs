@@ -5,7 +5,17 @@ public static class DependencyInjection
     public static IHostApplicationBuilder AddInfrastructureServices(this IHostApplicationBuilder builder)
     {
         // Database Contexts
-        builder.Services.AddDbContext<ApplicationDatabaseContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("AppConnection")));
+        builder.Services.AddDbContext<ApplicationDatabaseContext>(options =>
+        {
+            if(builder.Environment.IsDevelopment())
+            {
+                options.UseSqlServer(builder.Configuration.GetConnectionString("AppConnection"));
+            }
+            else
+            {
+                options.UseSqlite(builder.Configuration.GetConnectionString("AppConnection"));
+            }
+        });
         builder.Services.AddScoped<IApplicationDatabaseContext>(sp => sp.GetRequiredService<ApplicationDatabaseContext>());
 
         // Repositories
@@ -21,7 +31,6 @@ public static class DependencyInjection
         builder.Services.AddScoped<IDirectChatRepository, DirectChatRepository>();
         builder.Services.AddScoped<IFriendRequestRepository, FriendRequestsRepository>();
         builder.Services.AddScoped<IFriendRepository, FriendRepository>();
-        builder.Services.AddScoped<IPostRepository, PostRepository>();
         builder.Services.AddScoped<ICityRepository, CityRepository>();
 
         // Cloudinary

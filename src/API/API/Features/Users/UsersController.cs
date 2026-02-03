@@ -1,6 +1,4 @@
-﻿using Application.Features.Users.GetUserPictureById;
-
-namespace API.Features.Users;
+﻿namespace API.Features.Users;
 
 [Route("api/[controller]")]
 [ApiController]

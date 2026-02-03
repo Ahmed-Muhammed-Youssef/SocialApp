@@ -2,6 +2,14 @@
 
 public class UserPicture : EntityBase
 {
-    public required int UserId { get; set; }
-    public required int PictureId { get; set; }
+    private UserPicture() { }
+
+    public UserPicture(int userId, int pictureId)
+    {
+        UserId = userId;
+        PictureId = pictureId;
+    }
+
+    public int UserId { get; private set; }
+    public int PictureId { get; private set; }
 }

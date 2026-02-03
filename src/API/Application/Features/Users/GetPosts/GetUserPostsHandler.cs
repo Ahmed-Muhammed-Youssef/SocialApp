@@ -4,7 +4,7 @@ public class GetUserPostsHandler(IUnitOfWork unitOfWork) : IQueryHandler<GetUser
 {
     public async ValueTask<Result<List<PostDTO>>> Handle(GetUserPostsQuery query, CancellationToken cancellationToken)
     {
-        List<PostDTO> posts = await unitOfWork.PostRepository.GetUserPostsAsync(query.UserId, cancellationToken);
+        List<PostDTO> posts = await unitOfWork.ApplicationUserRepository.GetUserPostsAsync(query.UserId, cancellationToken);
 
         return Result<List<PostDTO>>.Success(posts);
     }

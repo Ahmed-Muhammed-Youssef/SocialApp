@@ -5,13 +5,14 @@ import { map } from 'rxjs/operators';
 import { PostDTO } from '../models/post-dto';
 import { CreatePostRequest } from '../models/create-post-request';
 import { PagedList } from '../../shared/models/paged-list';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class NewsfeedService {
   private http = inject(HttpClient);
-  private readonly baseUrl = 'https://localhost:5001/api/posts';
+  private readonly baseUrl = `${environment.apiUrl}/posts`;
 
   // GET /api/posts?userId=123
   getUserPosts(userId: number): Observable<PostDTO[]> {
@@ -19,12 +20,12 @@ export class NewsfeedService {
   }
 
   getPosts(pageNumber: number, itemsPerPage: number): Observable<PagedList<PostDTO>> {
-  const params = new HttpParams()
-    .set('pageNumber', pageNumber)
-    .set('itemsPerPage', itemsPerPage);
+    const params = new HttpParams()
+      .set('pageNumber', pageNumber)
+      .set('itemsPerPage', itemsPerPage);
 
-  return this.http.get<PagedList<PostDTO>>(this.baseUrl, { params });
-}
+    return this.http.get<PagedList<PostDTO>>(this.baseUrl, { params });
+  }
 
   // GET /api/posts/{postId}
   getPostById(postId: number): Observable<PostDTO> {

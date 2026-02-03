@@ -1,4 +1,4 @@
-﻿namespace Application.Features.Posts;
+namespace Application.Features.Users.Posts;
 
 public record PostDTO
 {

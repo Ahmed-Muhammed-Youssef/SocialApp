@@ -6,7 +6,6 @@ public interface IUnitOfWork
     IPictureRepository PictureRepository { get; }
     IDirectChatRepository DirectChatRepository { get; }
     IFriendRequestRepository FriendRequestRepository { get; }
-    IPostRepository PostRepository { get; }
     IFriendRepository FriendRepository { get; }
     ICityRepository CityRepository { get; }
 

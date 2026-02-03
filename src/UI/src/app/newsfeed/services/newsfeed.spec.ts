@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { NewsfeedService } from './newsfeed';
 
-describe('Newsfeed', () => {
+describe('NewsfeedService', () => {
   let service: NewsfeedService;
 
   beforeEach(() => {

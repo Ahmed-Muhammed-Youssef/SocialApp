@@ -11,7 +11,7 @@ public class DeleteUserPictureHandler(IUnitOfWork unitOfWork, IPictureService pi
             return Result<object?>.Unauthorized();
         }
 
-        var pictures = await unitOfWork.PictureRepository.GetUserPictureAsync(user.Id, cancellationToken);
+        var pictures = await unitOfWork.ApplicationUserRepository.GetUserPicturesAsync(user.Id, cancellationToken);
         var picture = pictures.FirstOrDefault(p => p.Id == command.PictureId);
         if (picture == null)
         {

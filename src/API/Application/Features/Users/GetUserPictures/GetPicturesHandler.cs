@@ -4,7 +4,7 @@ public class GetPicturesHandler(IUnitOfWork unitOfWork, ICurrentUserService curr
 {
     public async ValueTask<Result<List<PictureDTO>>> Handle(GetUserPicturesQuery query, CancellationToken cancellationToken)
     {
-        var pictures = await unitOfWork.PictureRepository.GetUserPictureDTOsAsync(currentUserService.GetPublicId(), cancellationToken);
+        var pictures = await unitOfWork.ApplicationUserRepository.GetUserPictureDTOsAsync(currentUserService.GetPublicId(), cancellationToken);
         return Result<List<PictureDTO>>.Success(pictures);
     }
 }

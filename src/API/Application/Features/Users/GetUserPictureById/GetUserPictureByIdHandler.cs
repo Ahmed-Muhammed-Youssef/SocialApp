@@ -5,7 +5,7 @@ public class GetUserPictureByIdHandler(IUnitOfWork unitOfWork, ICurrentUserServi
     public async ValueTask<Result<PictureDTO>> Handle(GetUserPictureByIdQuery query, CancellationToken cancellationToken)
     {
         var userId = currentUserService.GetPublicId();
-        PictureDTO? picture = await unitOfWork.PictureRepository.GetUserPictureDTOAsync(query.PictureId, userId, cancellationToken);
+        PictureDTO? picture = await unitOfWork.ApplicationUserRepository.GetUserPictureDTOAsync(userId, query.PictureId, cancellationToken);
         if (picture == null)
         {
             return Result<PictureDTO>.Error($"Picture with id {query.PictureId} was not found.");
