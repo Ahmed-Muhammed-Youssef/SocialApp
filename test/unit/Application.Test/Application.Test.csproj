@@ -13,7 +13,6 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
     <PackageReference Include="NSubstitute" />
-    <PackageReference Include="RichardSzalay.MockHttp" />
     <PackageReference Include="xunit" />
     <PackageReference Include="xunit.runner.visualstudio">
       <PrivateAssets>all</PrivateAssets>
@@ -22,7 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\API\Infrastructure\Infrastructure.csproj" />
+    <ProjectReference Include="..\..\..\src\API\Application\Application.csproj" />
   </ItemGroup>
 
   <ItemGroup>

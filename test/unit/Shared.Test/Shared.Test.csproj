@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-	<IsPackable>false</IsPackable>
+    <IsPackable>false</IsPackable>
 	<IsTestProject>true</IsTestProject>
   </PropertyGroup>
 
@@ -12,11 +12,14 @@
     </PackageReference>
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
     <PackageReference Include="xunit" />
-    <PackageReference Include="xunit.runner.visualstudio" />
+    <PackageReference Include="xunit.runner.visualstudio">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\API\Domain\Domain.csproj" />
+    <ProjectReference Include="..\..\..\src\API\Shared\Shared.csproj" />
   </ItemGroup>
 
   <ItemGroup>
