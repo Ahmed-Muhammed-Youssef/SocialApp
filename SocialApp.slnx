@@ -12,11 +12,12 @@
     <Project Path="src/API/Infrastructure/Infrastructure.csproj" />
     <Project Path="src/API/Shared/Shared.csproj" />
   </Folder>
-  <Folder Name="/tests/">
-    <Project Path="tests/Application.Test/Application.Test.csproj" />
-    <Project Path="tests/Domain.Test/Domain.Test.csproj" Id="653b78e5-337d-48c8-a958-663c42acc402" />
-    <Project Path="tests/Infrastructure.Test/Infrastructure.Test.csproj" />
-    <Project Path="tests/Shared.Test/Shared.Test.csproj" />
+  <Folder Name="/test/" />
+  <Folder Name="/test/unit/">
+    <Project Path="test/unit/Application.Test/Application.Test.csproj" />
+    <Project Path="test/unit/Domain.Test/Domain.Test.csproj" />
+    <Project Path="test/unit/Infrastructure.Test/Infrastructure.Test.csproj" />
+    <Project Path="test/unit/Shared.Test/Shared.Test.csproj" />
   </Folder>
   <Project Path="docker-compose.dcproj">
     <Build />
