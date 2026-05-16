@@ -61,11 +61,13 @@ public sealed class AuthTests(WebAppFactory webAppFactory) : IntegrationTestFixt
         var refreshToken = setCookieHeader
             .Split(';')[0]
             .Split('=')[1];
+        AuthResponse? authResponse = await response.Content.ReadFromJsonAsync<AuthResponse>();
 
         // Assert
         Assert.Equal(HttpStatusCode.Created, response.StatusCode);
-        AuthResponse? authResponse = await response.Content.ReadFromJsonAsync<AuthResponse>();
+
         Assert.NotNull(authResponse);
+        
         Assert.NotEmpty(authResponse.Token);
 
         Assert.NotEmpty(refreshToken);
