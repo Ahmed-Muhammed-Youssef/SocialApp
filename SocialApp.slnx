@@ -13,6 +13,9 @@
     <Project Path="src/API/Shared/Shared.csproj" />
   </Folder>
   <Folder Name="/test/" />
+  <Folder Name="/test/integration/">
+    <Project Path="test/integration/API.Test/API.Test.csproj" Id="7b3aad7b-1e4f-4287-a00f-25674b7778a4" />
+  </Folder>
   <Folder Name="/test/unit/">
     <Project Path="test/unit/Application.Test/Application.Test.csproj" />
     <Project Path="test/unit/Domain.Test/Domain.Test.csproj" />
