@@ -7,7 +7,7 @@ namespace API.Test.Infrastructure;
 public sealed class WebAppFactory : WebApplicationFactory<Program>, IAsyncLifetime
 {
     private readonly MsSqlContainer _sqlContainer = new MsSqlBuilder("mcr.microsoft.com/mssql/server:2022-CU14-ubuntu-22.04")
-        .WithName("AppDb")
+        .WithName($"AppDb{Guid.NewGuid()}")
         .WithPassword("Password123!")
         .Build();
 
