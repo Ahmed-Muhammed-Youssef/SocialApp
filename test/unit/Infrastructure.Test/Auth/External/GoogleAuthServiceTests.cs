@@ -15,7 +15,7 @@ public class GoogleAuthServiceTests
         config["Authentication:Google:ClientId"].Returns("client_id");
         config["Authentication:Google:ClientSecret"].Returns("client_secret");
         config["Authentication:Google:RedirectUri"].Returns("https://localhost/signin-google");
-        config["Authentication:Google:GoogleAuthorizationEndpoint"].Returns("https://accounts.google.com/o/oauth2/v2/auth");
+        config["Authentication:Google:AuthorizationEndpoint"].Returns("https://accounts.google.com/o/oauth2/v2/auth");
         config["Authentication:Google:Scope"].Returns("profile email");
         config["Authentication:Google:TokenEndpoint"].Returns("https://oauth2.googleapis.com/token");
         return config;
