@@ -1,20 +1,18 @@
 ﻿using System.Globalization;
-using Google.Apis.Auth;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
 namespace Application.Features.Auth.GoogleSignIn;
 
-public class GoogleSignInHandler(UserManager<IdentityUser> userManager, IUserProvisioningService userProvisioninService, ITokenProvider tokenService, IUnitOfWork unitOfWork, IApplicationDatabaseContext identityDbContext, IConfiguration configuration) : ICommandHandler<GoogleSignInCommand, Result<LoginDTO>>
+public class GoogleSignInHandler(UserManager<IdentityUser> userManager, IUserProvisioningService userProvisioninService, ITokenProvider tokenService, IUnitOfWork unitOfWork, IApplicationDatabaseContext identityDbContext, IGoogleCredentialValidator credentialValidator) : ICommandHandler<GoogleSignInCommand, Result<LoginDTO>>
 {
-    private readonly string googleClientId = configuration["Authentication:Google:ClientId"]!;
     public async ValueTask<Result<LoginDTO>> Handle(GoogleSignInCommand command, CancellationToken cancellationToken)
     {
-        GoogleJsonWebSignature.Payload payload;
+        Google.Apis.Auth.GoogleJsonWebSignature.Payload payload;
 
         try
         {
-            payload = await ValidateGoogleCredential(command.Credential);
+            payload = await credentialValidator.ValidateAsync(command.Credential);
         }
         catch
         {
@@ -84,17 +82,5 @@ public class GoogleSignInHandler(UserManager<IdentityUser> userManager, IUserPro
         await identityDbContext.SaveChangesAsync(cancellationToken);
 
         return Result<LoginDTO>.Success(new LoginDTO(UserMappings.ToDto(appUser), accessToken, refreshToken.Token, refreshToken.ExpiresAtUtc));
-    }
-
-    private async Task<GoogleJsonWebSignature.Payload> ValidateGoogleCredential(string credential)
-    {
-        GoogleJsonWebSignature.Payload payload;
-
-        payload = await GoogleJsonWebSignature.ValidateAsync(credential,
-            new GoogleJsonWebSignature.ValidationSettings
-            {
-                Audience = [googleClientId],
-            });
-        return payload;
     }
 }
