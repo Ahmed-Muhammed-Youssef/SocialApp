@@ -54,7 +54,7 @@ public static class DependencyInjection
 
         builder.Services.AddHttpClient("GoogleAuth", client =>
         {
-            client.BaseAddress = new Uri("https://www.googleapis.com/");
+            client.BaseAddress = new Uri(builder.Configuration["Authentication:Google:ApiEndpoint"] ?? "");
             client.DefaultRequestHeaders.Accept
                 .Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
         });

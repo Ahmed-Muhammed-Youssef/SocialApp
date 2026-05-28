@@ -1,4 +1,6 @@
-﻿namespace Infrastructure;
+﻿using Infrastructure.Auth.External;
+
+namespace Infrastructure;
 
 public static class DependencyInjection
 {
@@ -45,6 +47,8 @@ public static class DependencyInjection
         builder.Services.AddScoped<IUserProvisioningService, UserProvisioningService>();
 
         builder.Services.Configure<JwtAuthOptions>(builder.Configuration.GetSection("Jwt"));
+
+        builder.Services.AddScoped<IGoogleCredentialValidator, GoogleCredentialValidator>();
 
         return builder;
     }
