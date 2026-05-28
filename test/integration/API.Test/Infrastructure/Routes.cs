@@ -10,6 +10,7 @@ internal static class Routes
     {
         public const string Register = "/api/auth/register";
         public const string Login = "/api/auth/login";
+        public const string GoogleSignIn = "/api/auth/google-signin";
     }
 
     internal static class Users

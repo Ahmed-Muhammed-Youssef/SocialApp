@@ -5,18 +5,29 @@ using System.Net.Http.Json;
 using System.Text;
 using API.Features.Auth.Requests;
 using API.Features.Auth.Responses;
+using Application.Features.Auth;
 using Application.Features.Users;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using WireMock.Server;
 
 namespace API.Test.Infrastructure;
 
-public abstract class IntegrationTestFixture(WebAppFactory webAppFactory) : IClassFixture<WebAppFactory>
+public abstract class IntegrationTestFixture : IClassFixture<WebAppFactory>
 {
-    public HttpClient CreateClient() => webAppFactory.CreateClient();
+    protected readonly WebAppFactory WebAppFactory;
+
+    protected IntegrationTestFixture(WebAppFactory webAppFactory)
+    {
+        WebAppFactory = webAppFactory;
+    }
+
+    public HttpClient CreateClient() => WebAppFactory.CreateClient();
     private HttpClient? authenticatedClient;
     private UserDTO? authenticatedUserData;
+
+    public WireMockServer GetWireMockServer() => WebAppFactory.GetWireMockServer();
 
     public async Task<HttpClient> CreateAuthenticatedClientAsync(string email = "test@test.com", string password = "Password123!")
     {
@@ -29,7 +40,7 @@ public abstract class IntegrationTestFixture(WebAppFactory webAppFactory) : ICla
 
         bool userExists;
 
-        using IServiceScope scope = webAppFactory.Services.CreateScope();
+        using IServiceScope scope = WebAppFactory.Services.CreateScope();
         using ApplicationDatabaseContext dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDatabaseContext>();
         userExists = await dbContext.Users.AnyAsync(u => u.Email == email);
 
@@ -83,9 +94,54 @@ public abstract class IntegrationTestFixture(WebAppFactory webAppFactory) : ICla
         {
             return authenticatedUserData;
         }
-        
+
         await CreateAuthenticatedClientAsync();
 
         return authenticatedUserData;
+    }
+
+    /// <summary>
+    /// Gets the mock Google credential validator from the factory.
+    /// Use this to register test credentials in your tests.
+    /// </summary>
+    public MockGoogleCredentialValidator GetMockGoogleValidator()
+    {
+        return WebAppFactory.GetMockGoogleValidator();
+    }
+
+    /// <summary>
+    /// Creates an HttpClient and authenticates it via Google Sign In with a new user.
+    /// </summary>
+    public async Task<HttpClient> CreateAuthenticatedClientViaGoogleAsync(string email = "google.test@example.com", string givenName = "Google", string familyName = "User", string subject = "google-123")
+    {
+        HttpClient client = CreateClient();
+
+        // Get the mock validator and register a test credential
+        var mockValidator = GetMockGoogleValidator();
+        var testCredential = mockValidator.CreateAndRegisterCredential(email, subject, givenName, familyName);
+
+        // Call Google Sign In
+        var response = await client.PostAsJsonAsync(Routes.Auth.GoogleSignIn, new { credential = testCredential });
+
+        response.EnsureSuccessStatusCode();
+
+        var authResponse = await response.Content.ReadFromJsonAsync<AuthResponse>()
+            ?? throw new InvalidOperationException("Failed to read auth response");
+
+        authenticatedUserData = authResponse.UserData;
+
+        // Extract and set the refresh token cookie
+        var setCookieHeader = response.Headers
+            .GetValues("Set-Cookie")
+            .First(x => x.StartsWith("refreshToken=", StringComparison.OrdinalIgnoreCase));
+
+        var refreshToken = setCookieHeader
+            .Split(';')[0]
+            .Split('=')[1];
+
+        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", authResponse.Token);
+        authenticatedClient = client;
+
+        return client;
     }
 }
