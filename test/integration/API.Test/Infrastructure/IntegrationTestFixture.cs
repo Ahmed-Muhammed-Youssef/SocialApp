@@ -95,6 +95,7 @@ public abstract class IntegrationTestFixture : IClassFixture<WebAppFactory>
             return authenticatedUserData;
         }
 
+        
         await CreateAuthenticatedClientAsync();
 
         return authenticatedUserData;
