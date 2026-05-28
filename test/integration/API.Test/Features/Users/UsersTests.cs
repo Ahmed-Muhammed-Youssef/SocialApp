@@ -7,7 +7,7 @@ using API.Features.Auth.Responses;
 using API.Test.Infrastructure;
 using Application.Features.Users;
 
-namespace API.Test.Features;
+namespace API.Test.Features.Users;
 
 public sealed class UsersTests(WebAppFactory webAppFactory) : IntegrationTestFixture(webAppFactory)
 {
