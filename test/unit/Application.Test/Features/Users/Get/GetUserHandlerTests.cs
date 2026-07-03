@@ -25,11 +25,10 @@ public class GetUserHandlerTests
         var query = new GetUserQuery(1);
         var userDto = TestHelpers.CreateTestUserDto(1);
 
-        _unitOfWork.ApplicationUserRepository.GetDtoByIdAsync(query.Id)
-            .Returns(userDto);
+        _unitOfWork.ApplicationUserRepository.GetDtoByIdAsync(query.Id, TestContext.Current.CancellationToken).Returns(userDto);
 
         // Act
-        var result = await _handler.Handle(query, CancellationToken.None);
+        var result = await _handler.Handle(query, TestContext.Current.CancellationToken);
 
         // Assert
         Assert.True(result.IsSuccess);
@@ -44,11 +43,10 @@ public class GetUserHandlerTests
         // Arrange
         var query = new GetUserQuery(999);
 
-        _unitOfWork.ApplicationUserRepository.GetDtoByIdAsync(query.Id)
-            .Returns((UserDTO?)null);
+        _unitOfWork.ApplicationUserRepository.GetDtoByIdAsync(query.Id, TestContext.Current.CancellationToken).Returns((UserDTO?)null);
 
         // Act
-        var result = await _handler.Handle(query, CancellationToken.None);
+        var result = await _handler.Handle(query, TestContext.Current.CancellationToken);
 
         // Assert
         Assert.False(result.IsSuccess);

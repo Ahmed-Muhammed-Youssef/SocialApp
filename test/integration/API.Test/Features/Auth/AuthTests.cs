@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http.Json;
@@ -29,7 +29,7 @@ public sealed class AuthTests(WebAppFactory webAppFactory) : IntegrationTestFixt
         HttpClient client = CreateClient();
         
         // Act
-        var response = await client.PostAsJsonAsync(Routes.Auth.Register, registerRequest);
+        var response = await client.PostAsJsonAsync(Routes.Auth.Register, registerRequest, TestContext.Current.CancellationToken);
 
         // Assert
         Assert.Equal(HttpStatusCode.Created, response.StatusCode);
@@ -53,7 +53,7 @@ public sealed class AuthTests(WebAppFactory webAppFactory) : IntegrationTestFixt
         HttpClient client = CreateClient();
 
         // Act
-        var response = await client.PostAsJsonAsync(Routes.Auth.Register, registerRequest);
+        var response = await client.PostAsJsonAsync(Routes.Auth.Register, registerRequest, TestContext.Current.CancellationToken);
         var setCookieHeader = response.Headers
             .GetValues("Set-Cookie")
             .First(x => x.StartsWith("refreshToken=", StringComparison.OrdinalIgnoreCase));
@@ -61,7 +61,7 @@ public sealed class AuthTests(WebAppFactory webAppFactory) : IntegrationTestFixt
         var refreshToken = setCookieHeader
             .Split(';')[0]
             .Split('=')[1];
-        AuthResponse? authResponse = await response.Content.ReadFromJsonAsync<AuthResponse>();
+        AuthResponse? authResponse = await response.Content.ReadFromJsonAsync<AuthResponse>(TestContext.Current.CancellationToken);
 
         // Assert
         Assert.Equal(HttpStatusCode.Created, response.StatusCode);
@@ -90,8 +90,8 @@ public sealed class AuthTests(WebAppFactory webAppFactory) : IntegrationTestFixt
         var googleSignInRequest = new { credential = testCredential };
 
         // Act
-        var response = await client.PostAsJsonAsync(Routes.Auth.GoogleSignIn, googleSignInRequest);
-        var authResponse = await response.Content.ReadFromJsonAsync<AuthResponse>();
+        var response = await client.PostAsJsonAsync(Routes.Auth.GoogleSignIn, googleSignInRequest, TestContext.Current.CancellationToken);
+        var authResponse = await response.Content.ReadFromJsonAsync<AuthResponse>(TestContext.Current.CancellationToken);
 
         // Assert
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
@@ -126,8 +126,8 @@ public sealed class AuthTests(WebAppFactory webAppFactory) : IntegrationTestFixt
         var googleSignInRequest = new { credential = testCredential };
 
         // Act
-        var response = await client.PostAsJsonAsync(Routes.Auth.GoogleSignIn, googleSignInRequest);
-        var authResponse = await response.Content.ReadFromJsonAsync<AuthResponse>();
+        var response = await client.PostAsJsonAsync(Routes.Auth.GoogleSignIn, googleSignInRequest, TestContext.Current.CancellationToken);
+        var authResponse = await response.Content.ReadFromJsonAsync<AuthResponse>(cancellationToken: TestContext.Current.CancellationToken);
 
         // Assert
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
@@ -151,7 +151,7 @@ public sealed class AuthTests(WebAppFactory webAppFactory) : IntegrationTestFixt
         var googleSignInRequest = new { credential = invalidCredential };
 
         // Act
-        var response = await client.PostAsJsonAsync(Routes.Auth.GoogleSignIn, googleSignInRequest);
+        var response = await client.PostAsJsonAsync(Routes.Auth.GoogleSignIn, googleSignInRequest, TestContext.Current.CancellationToken);
 
         // Assert
         Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
@@ -174,7 +174,7 @@ public sealed class AuthTests(WebAppFactory webAppFactory) : IntegrationTestFixt
         };
 
         HttpClient client = CreateClient();
-        var registerResponse = await client.PostAsJsonAsync(Routes.Auth.Register, registerRequest);
+        var registerResponse = await client.PostAsJsonAsync(Routes.Auth.Register, registerRequest, TestContext.Current.CancellationToken);
         Assert.Equal(HttpStatusCode.Created, registerResponse.StatusCode);
 
         // Now try to sign in with Google using the same email
@@ -189,7 +189,7 @@ public sealed class AuthTests(WebAppFactory webAppFactory) : IntegrationTestFixt
         var googleSignInRequest = new { credential = googleCredential };
 
         // Act
-        var googleSignInResponse = await client.PostAsJsonAsync(Routes.Auth.GoogleSignIn, googleSignInRequest);
+        var googleSignInResponse = await client.PostAsJsonAsync(Routes.Auth.GoogleSignIn, googleSignInRequest, TestContext.Current.CancellationToken);
 
         // Assert
         // This test expects linking to fail because the user already has a password
@@ -214,7 +214,7 @@ public sealed class AuthTests(WebAppFactory webAppFactory) : IntegrationTestFixt
         };
 
         HttpClient client = CreateClient();
-        var registerResponse = await client.PostAsJsonAsync(Routes.Auth.Register, registerRequest);
+        var registerResponse = await client.PostAsJsonAsync(Routes.Auth.Register, registerRequest, TestContext.Current.CancellationToken);
         Assert.Equal(HttpStatusCode.Created, registerResponse.StatusCode);
 
         // Try Google Sign In with same email
@@ -227,11 +227,11 @@ public sealed class AuthTests(WebAppFactory webAppFactory) : IntegrationTestFixt
         var googleSignInRequest = new { credential = googleCredential };
 
         // Act
-        var googleSignInResponse = await client.PostAsJsonAsync(Routes.Auth.GoogleSignIn, googleSignInRequest);
+        var googleSignInResponse = await client.PostAsJsonAsync(Routes.Auth.GoogleSignIn, googleSignInRequest, TestContext.Current.CancellationToken);
 
         // Assert
         Assert.Equal(HttpStatusCode.BadRequest, googleSignInResponse.StatusCode);
-        var errorContent = await googleSignInResponse.Content.ReadAsStringAsync();
+        var errorContent = await googleSignInResponse.Content.ReadAsStringAsync(TestContext.Current.CancellationToken);
         Assert.Contains("email/password", errorContent, StringComparison.OrdinalIgnoreCase);
     }
 
@@ -260,7 +260,7 @@ public sealed class AuthTests(WebAppFactory webAppFactory) : IntegrationTestFixt
         var googleSignInRequest = new { credential };
 
         // Act
-        var response = await client.PostAsJsonAsync(Routes.Auth.GoogleSignIn, googleSignInRequest);
+        var response = await client.PostAsJsonAsync(Routes.Auth.GoogleSignIn, googleSignInRequest, TestContext.Current.CancellationToken);
 
         // Assert
         // Handler returns Unauthorized for unverified email, which maps to 401 or BadRequest depending on controller logic
