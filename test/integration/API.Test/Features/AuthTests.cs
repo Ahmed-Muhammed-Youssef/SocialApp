@@ -29,7 +29,7 @@ public sealed class AuthTests(WebAppFactory webAppFactory) : IntegrationTestFixt
         HttpClient client = CreateClient();
         
         // Act
-        var response = await client.PostAsJsonAsync(Routes.Auth.Register, registerRequest);
+        var response = await client.PostAsJsonAsync(Routes.Auth.Register, registerRequest, TestContext.Current.CancellationToken);
 
         // Assert
         Assert.Equal(HttpStatusCode.Created, response.StatusCode);
@@ -53,7 +53,7 @@ public sealed class AuthTests(WebAppFactory webAppFactory) : IntegrationTestFixt
         HttpClient client = CreateClient();
 
         // Act
-        var response = await client.PostAsJsonAsync(Routes.Auth.Register, registerRequest);
+        var response = await client.PostAsJsonAsync(Routes.Auth.Register, registerRequest, TestContext.Current.CancellationToken);
         var setCookieHeader = response.Headers
             .GetValues("Set-Cookie")
             .First(x => x.StartsWith("refreshToken=", StringComparison.OrdinalIgnoreCase));
@@ -61,7 +61,7 @@ public sealed class AuthTests(WebAppFactory webAppFactory) : IntegrationTestFixt
         var refreshToken = setCookieHeader
             .Split(';')[0]
             .Split('=')[1];
-        AuthResponse? authResponse = await response.Content.ReadFromJsonAsync<AuthResponse>();
+        AuthResponse? authResponse = await response.Content.ReadFromJsonAsync<AuthResponse>(TestContext.Current.CancellationToken);
 
         // Assert
         Assert.Equal(HttpStatusCode.Created, response.StatusCode);

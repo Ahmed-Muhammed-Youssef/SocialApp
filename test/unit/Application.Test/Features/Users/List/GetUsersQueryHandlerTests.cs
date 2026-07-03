@@ -38,11 +38,10 @@ public class GetUsersQueryHandlerTests
         };
         var pagedList = new PagedList<UserDTO>(users, 2, 1, 10);
 
-        _unitOfWork.ApplicationUserRepository.GetUsersDTOAsync(1, userParams)
-            .Returns(pagedList);
+        _unitOfWork.ApplicationUserRepository.GetUsersDTOAsync(1, userParams, TestContext.Current.CancellationToken).Returns(pagedList);
 
         // Act
-        var result = await _handler.Handle(query, CancellationToken.None);
+        var result = await _handler.Handle(query, TestContext.Current.CancellationToken);
 
         // Assert
         Assert.True(result.IsSuccess);
@@ -63,11 +62,10 @@ public class GetUsersQueryHandlerTests
         var query = new GetUsersQuery(userParams);
         var pagedList = new PagedList<UserDTO>([], 0, 1, 10);
 
-        _unitOfWork.ApplicationUserRepository.GetUsersDTOAsync(1, userParams)
-            .Returns(pagedList);
+        _unitOfWork.ApplicationUserRepository.GetUsersDTOAsync(1, userParams, TestContext.Current.CancellationToken).Returns(pagedList);
 
         // Act
-        var result = await _handler.Handle(query, CancellationToken.None);
+        var result = await _handler.Handle(query, TestContext.Current.CancellationToken);
 
         // Assert
         Assert.True(result.IsSuccess);

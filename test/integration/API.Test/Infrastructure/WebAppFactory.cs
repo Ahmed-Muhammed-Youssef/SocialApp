@@ -1,4 +1,4 @@
-﻿using Application.Features.Auth;
+using Application.Features.Auth;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
@@ -46,15 +46,16 @@ public sealed class WebAppFactory : WebApplicationFactory<Program>, IAsyncLifeti
         base.ConfigureWebHost(builder);
     }
 
-    public async Task InitializeAsync()
+    public async ValueTask InitializeAsync()
     {
         await _sqlContainer.StartAsync();
         _wireMockServer = WireMockServer.Start();
     }
 
-    public new async Task DisposeAsync()
+    public override async ValueTask DisposeAsync()
     {
         await _sqlContainer.StopAsync();
         _wireMockServer.Stop();
+        await base.DisposeAsync();
     }
 }

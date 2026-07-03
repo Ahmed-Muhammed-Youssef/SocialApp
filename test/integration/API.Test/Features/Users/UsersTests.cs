@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Net;
+﻿using System.Net;
 using System.Net.Http.Json;
-using System.Text;
 using API.Features.Auth.Responses;
 using API.Test.Infrastructure;
 using Application.Features.Users;
@@ -18,9 +15,9 @@ public sealed class UsersTests(WebAppFactory webAppFactory) : IntegrationTestFix
         HttpClient client = await CreateAuthenticatedClientAsync();
         UserDTO userDTO = await GetAuthenticatedUserDataAsync();
         // Act
-        var response = await client.GetAsync(Routes.Users.GetById(userDTO.Id));
+        var response = await client.GetAsync(Routes.Users.GetById(userDTO.Id), TestContext.Current.CancellationToken);
         response.EnsureSuccessStatusCode();
-        UserDTO? getUserByIdResponse = await response.Content.ReadFromJsonAsync<UserDTO>();
+        UserDTO? getUserByIdResponse = await response.Content.ReadFromJsonAsync<UserDTO>(TestContext.Current.CancellationToken);
 
         // Assert
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
