@@ -11,31 +11,15 @@ This document outlines the current architectural state of the SocialApp project 
 
 ## 2. Mid-Level Engineering Enhancements
 
-While the foundation is solid, the following enhancements elevate the codebase to demonstrate intermediate to advanced software engineering practices.
+While the foundation is solid, several pragmatic enhancements have been identified to elevate the codebase towards mid-to-senior software engineering practices.
 
-### A. Resolve Domain Logic Leakage (Domain Services)
-- **Current State:** Some Application Command Handlers (like `CreateFriendRequestHandler`) still contain core domain rules (e.g., verifying if a user is already a friend, or if a pending request already exists).
-- **Action:** Introduce **Domain Services** (e.g., `FriendshipService`) to orchestrate complex interactions involving multiple aggregates. Command handlers should be purely orchestrational (Load Aggregates -> Invoke Domain Service -> Commit UnitOfWork).
+> [!NOTE]
+> For an in-depth breakdown of these improvements with specific code examples, please refer to the detailed implementation plan: [06 - Improvement Plan](file:///c:/Users/ahmed/source/repos/SocialApp/docs/06-improvement-plan.md).
 
-### B. Implement Domain Events (Event-Driven Workflows)
-- **Current State:** The system handles side-effects synchronously and manually within command handlers, increasing tight coupling.
-- **Action:** Introduce an in-process Domain Event dispatcher.
-  - Aggregates should record events (e.g., `FriendRequestAcceptedEvent`).
-  - The `UnitOfWork.CommitAsync()` method should gather and publish these events (via `IMediator` notifications) before or after committing to the database.
-  - This pattern demonstrates an understanding of decoupled workflows and eventual consistency.
-
-### C. Standardize Robust Error Handling (Result Pattern)
-- **Current State:** Some parts of the system rely on throwing `DomainException` to handle business rule violations.
-- **Action:** Broaden the use of the `Result<T>` pattern. Eliminate exceptions for expected control flow failures (like validation errors or business rule violations). This significantly improves performance and makes method signatures more honest.
-
-### D. Performance & Scalability Considerations
-- **Action (Caching):** Introduce caching strategies for high-read scenarios (like User Profiles or News Feeds) using `IDistributedCache` (backed by Redis or Memory cache).
-- **Action (Pagination):** Implement cursor-based pagination (keyset pagination) for feed and search endpoints to handle large datasets efficiently, replacing offset-based pagination which degrades at scale.
-
-### E. Observability & Diagnostics
-- **Current State:** Basic OpenTelemetry packages are referenced.
-- **Action:** Finalize structured logging (e.g., Serilog) and implement Correlation IDs middleware. This allows tracing a single request across the entire system, an essential skill for debugging production microservices or complex monoliths.
-
-### F. Advanced Testing Strategy
-- **Current State:** The project has an integration test structure (`API.Test`), but it can be expanded.
-- **Action:** Increase integration test coverage using `Testcontainers` (already referenced in the solution) to spin up ephemeral SQL Server instances for testing. Ensure core CQRS flows are tested end-to-end via `WebApplicationFactory`.
+### Summary of Enhancements:
+1. **Resolve Domain Logic Leakage (Domain Services):** Refactoring complex logic out of CQRS handlers and into dedicated Domain Services.
+2. **Implement Domain Events (Event-Driven Workflows):** Introducing an in-process Domain Event dispatcher in `EntityBase` and `UnitOfWork` to handle side effects in a decoupled manner.
+3. **Standardize Robust Error Handling (Result Pattern):** Broadening the use of `Result<T>` and factory methods, eliminating exceptions for expected business rule violations.
+4. **Performance & Scalability Considerations:** Introducing `IDistributedCache` for high-read scenarios and keyset (cursor-based) pagination for efficient data retrieval.
+5. **Observability & Diagnostics:** Implementing Serilog for structured logging and Correlation ID middleware for comprehensive request tracing.
+6. **Advanced Testing Strategy:** Utilizing `Testcontainers` alongside `WebApplicationFactory` for robust, ephemeral End-to-End CQRS integration testing.
