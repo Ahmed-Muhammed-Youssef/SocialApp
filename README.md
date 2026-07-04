@@ -12,6 +12,16 @@ The backend is engineered to showcase mid-level to senior software engineering s
 
 *(For detailed architectural plans and past/future refactoring, see [ARCHITECTURE_ENHANCEMENTS.md](./ARCHITECTURE_ENHANCEMENTS.md))*
 
+## 📚 Full Documentation
+
+For a comprehensive deep-dive into the project, please consult our full detailed documentation located in the `docs/` directory:
+
+- [01 - Getting Started](file:///c:/Users/ahmed/source/repos/SocialApp/docs/01-getting-started.md)
+- [02 - Architecture](file:///c:/Users/ahmed/source/repos/SocialApp/docs/02-architecture.md)
+- [03 - API Guide](file:///c:/Users/ahmed/source/repos/SocialApp/docs/03-api-guide.md)
+- [04 - Testing Strategy](file:///c:/Users/ahmed/source/repos/SocialApp/docs/04-testing-strategy.md)
+- [05 - Deployment Strategy](file:///c:/Users/ahmed/source/repos/SocialApp/docs/05-deployment.md)
+
 ## ✨ Features
 
 ### Common Features
