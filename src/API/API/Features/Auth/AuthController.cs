@@ -1,12 +1,19 @@
-﻿namespace API.Features.Auth;
+namespace API.Features.Auth;
 
 [Route("api/[controller]")]
 [ApiController]
 [ServiceFilter(typeof(LogUserActivity))]
 public class AuthController(IMediator mediator) : ControllerBase
 {
-    // POST: api/auth/register
+    /// <summary>
+    /// Registers a new user.
+    /// </summary>
+    /// <param name="registerRequest">The user registration details.</param>
+    /// <param name="cancellationToken">Cancellation token.</param>
+    /// <returns>The registered user data and authentication token.</returns>
     [HttpPost("register")]
+    [ProducesResponseType(typeof(AuthResponse), StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult<AuthResponse>> Register(RegisterRequest registerRequest, CancellationToken cancellationToken)
     {
         if (!ModelState.IsValid)
@@ -44,8 +51,16 @@ public class AuthController(IMediator mediator) : ControllerBase
 
     }
 
-    // POST: api/auth/login
+    /// <summary>
+    /// Authenticates a user.
+    /// </summary>
+    /// <param name="loginRequest">The login credentials.</param>
+    /// <param name="cancellationToken">Cancellation token.</param>
+    /// <returns>The user data and authentication token.</returns>
     [HttpPost("login")]
+    [ProducesResponseType(typeof(AuthResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     public async Task<ActionResult<AuthResponse>> Login(LoginRequest loginRequest, CancellationToken cancellationToken)
     {
         if (!ModelState.IsValid)
@@ -69,9 +84,15 @@ public class AuthController(IMediator mediator) : ControllerBase
         });
     }
 
-    // POST: api/auth/refresh
+    /// <summary>
+    /// Refreshes an access token using a refresh token cookie.
+    /// </summary>
+    /// <param name="cancellationToken">Cancellation token.</param>
+    /// <returns>A new access token and refresh token.</returns>
     [HttpPost("refresh")]
-    public async Task<ActionResult<AuthResponse>> Refresh(CancellationToken cancellationToken)
+    [ProducesResponseType(typeof(RefreshTokenResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    public async Task<ActionResult<RefreshTokenResponse>> Refresh(CancellationToken cancellationToken)
     {
         if (!Request.Cookies.TryGetValue("refreshToken", out string? refreshToken))
         {
@@ -92,9 +113,16 @@ public class AuthController(IMediator mediator) : ControllerBase
         return Ok(new RefreshTokenResponse(Token: result.Value.AccessToken, RefreshToken: result.Value.NewRefreshToken));
     }
 
-    // GET: api/auth/google-signin
+    /// <summary>
+    /// Authenticates a user using Google OAuth.
+    /// </summary>
+    /// <param name="googleSignInRequest">The Google sign-in request containing the credential.</param>
+    /// <param name="cancellationToken">Cancellation token.</param>
+    /// <returns>The user data and authentication token.</returns>
     [HttpPost("google-signin")]
-    public async Task<IActionResult> GoogleSignIn(GoogleSignInRequest googleSignInRequest, CancellationToken cancellationToken)
+    [ProducesResponseType(typeof(AuthResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<ActionResult<AuthResponse>> GoogleSignIn(GoogleSignInRequest googleSignInRequest, CancellationToken cancellationToken)
     {
         Result<LoginDTO> result = await mediator.Send(new GoogleSignInCommand(googleSignInRequest.Credential), cancellationToken);
         if (!result.IsSuccess)

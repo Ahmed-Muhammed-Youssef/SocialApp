@@ -1,4 +1,4 @@
-﻿namespace API.Features.Users;
+namespace API.Features.Users;
 
 [Route("api/[controller]")]
 [ApiController]
@@ -6,8 +6,15 @@
 [ServiceFilter(typeof(LogUserActivity))]
 public class UsersController(JsonSerializerOptions jsonSerializerOptions, IMediator mediator) : ControllerBase
 {
-    // GET: api/users
+    /// <summary>
+    /// Gets a paginated list of users.
+    /// </summary>
+    /// <param name="request">The pagination and filtering parameters.</param>
+    /// <param name="cancellationToken">Cancellation token.</param>
+    /// <returns>A paginated list of users.</returns>
     [HttpGet]
+    [ProducesResponseType(typeof(IEnumerable<UserDTO>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult<IEnumerable<UserDTO>>> GetUsers([FromQuery] GetUsersRequest request, CancellationToken cancellationToken)
     {
         UserParams userParam = new()
@@ -35,8 +42,15 @@ public class UsersController(JsonSerializerOptions jsonSerializerOptions, IMedia
 
     }
 
-    // GET: api/users/{id}
+    /// <summary>
+    /// Gets a user by ID.
+    /// </summary>
+    /// <param name="id">The user ID.</param>
+    /// <param name="cancellationToken">Cancellation token.</param>
+    /// <returns>The user details.</returns>
     [HttpGet("{id}")]
+    [ProducesResponseType(typeof(UserDTO), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<UserDTO>> GetById(int id, CancellationToken cancellationToken)
     {
         Result<UserDTO> result = await mediator.Send(new GetUserQuery(id), cancellationToken);
@@ -51,8 +65,16 @@ public class UsersController(JsonSerializerOptions jsonSerializerOptions, IMedia
         }
     }
 
-    // PUT: api/users/update
+    /// <summary>
+    /// Updates the current user's profile.
+    /// </summary>
+    /// <param name="userDTO">The updated user details.</param>
+    /// <param name="cancellationToken">Cancellation token.</param>
+    /// <returns>The updated user details.</returns>
     [HttpPut]
+    [ProducesResponseType(typeof(UserDTO), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<UserDTO>> Update(UpdateUserRequest userDTO, CancellationToken cancellationToken)
     {
         if (!ModelState.IsValid)
@@ -78,8 +100,17 @@ public class UsersController(JsonSerializerOptions jsonSerializerOptions, IMedia
         }
     }
 
+    /// <summary>
+    /// Sets the current user's active profile picture.
+    /// </summary>
+    /// <param name="pictureId">The picture ID to set as active.</param>
+    /// <param name="cancellationToken">Cancellation token.</param>
+    /// <returns>Success status.</returns>
     [HttpPost]
     [Route("set-profile-picture/{pictureId}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult> SetProfilePicture(int pictureId, CancellationToken cancellationToken)
     {
         Result<object?> result = await mediator.Send(new SetProfilePictureCommand(pictureId), cancellationToken);
@@ -97,7 +128,15 @@ public class UsersController(JsonSerializerOptions jsonSerializerOptions, IMedia
         }
     }
 
+    /// <summary>
+    /// Gets posts created by a specific user.
+    /// </summary>
+    /// <param name="userId">The user ID.</param>
+    /// <param name="cancellationToken">Cancellation token.</param>
+    /// <returns>A list of posts.</returns>
     [HttpGet("{userId}/posts")]
+    [ProducesResponseType(typeof(List<PostDTO>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult<List<PostDTO>>> GetUserPostsAsync(int userId, CancellationToken cancellationToken)
     {
         Result<List<PostDTO>> result = await mediator.Send(new GetUserPostsQuery(userId), cancellationToken);
@@ -111,15 +150,23 @@ public class UsersController(JsonSerializerOptions jsonSerializerOptions, IMedia
         }
     }
 
-    // POST: api/users/userpictures
+    /// <summary>
+    /// Uploads a new profile picture.
+    /// </summary>
+    /// <param name="file">The picture file.</param>
+    /// <param name="cancellationToken">Cancellation token.</param>
+    /// <returns>The ID of the uploaded picture.</returns>
     [HttpPost("user-pictures")]
-    public async Task<ActionResult> CreateUserPicture(IFormFile file, CancellationToken cancellationToken)
+    [ProducesResponseType(typeof(int), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<ActionResult<int>> CreateUserPicture(IFormFile file, CancellationToken cancellationToken)
     {
         Result<int> result = await mediator.Send(new CreateUserPictureCommand(file), cancellationToken);
 
         if (result.IsSuccess)
         {
-            return Ok(new { pictureId = result.Value });
+            return Ok(result.Value);
         }
         else if (result.Status == ResultStatus.Unauthorized)
         {
@@ -131,9 +178,18 @@ public class UsersController(JsonSerializerOptions jsonSerializerOptions, IMedia
         }
     }
 
-    // DELETE: api/users/user-pictures/{pictureId}
+    /// <summary>
+    /// Deletes a profile picture.
+    /// </summary>
+    /// <param name="pictureId">The picture ID.</param>
+    /// <param name="cancellationToken">Cancellation token.</param>
+    /// <returns>Success status.</returns>
     [HttpDelete("user-pictures/{pictureId}")]
-    public async Task<ActionResult<PictureDTO>> DeleteUserPicture(int pictureId, CancellationToken cancellationToken)
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<ActionResult> DeleteUserPicture(int pictureId, CancellationToken cancellationToken)
     {
         Result<object?> result = await mediator.Send(new DeleteUserPictureCommand(pictureId), cancellationToken);
 
@@ -155,9 +211,15 @@ public class UsersController(JsonSerializerOptions jsonSerializerOptions, IMedia
         }
     }
 
-    // GET: api/users/user-pictures
+    /// <summary>
+    /// Gets all profile pictures for the current user.
+    /// </summary>
+    /// <param name="cancellationToken">Cancellation token.</param>
+    /// <returns>A list of profile pictures.</returns>
     [HttpGet("user-pictures")]
-    public async Task<ActionResult<PictureDTO>> GetUserPictures(CancellationToken cancellationToken)
+    [ProducesResponseType(typeof(IEnumerable<PictureDTO>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<ActionResult<IEnumerable<PictureDTO>>> GetUserPictures(CancellationToken cancellationToken)
     {
         var result = await mediator.Send(new GetUserPicturesQuery(), cancellationToken);
 
@@ -168,8 +230,16 @@ public class UsersController(JsonSerializerOptions jsonSerializerOptions, IMedia
         return BadRequest(result.Errors);
     }
 
-    // GET: api/users/user-pictures/{pictureId}
+    /// <summary>
+    /// Gets a specific profile picture by ID.
+    /// </summary>
+    /// <param name="pictureId">The picture ID.</param>
+    /// <param name="cancellationToken">Cancellation token.</param>
+    /// <returns>The profile picture details.</returns>
     [HttpGet("user-pictures/{pictureId}")]
+    [ProducesResponseType(typeof(PictureDTO), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult<PictureDTO>> GetUserPictureById(int pictureId, CancellationToken cancellationToken)
     {
         Result<PictureDTO> result = await mediator.Send(new GetUserPictureByIdQuery(pictureId), cancellationToken);
