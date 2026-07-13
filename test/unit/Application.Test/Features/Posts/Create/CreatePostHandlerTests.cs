@@ -42,6 +42,7 @@ public class CreatePostHandlerTests
         Assert.Equal(ResultStatus.Created, result.Status);
 
         _unitOfWork.ApplicationUserRepository.Received(1).AddPost(Arg.Is<Post>(p =>
+            p != null &&
             p.Content == command.Content &&
             p.UserId == 1));
 
