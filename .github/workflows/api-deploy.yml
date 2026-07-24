@@ -8,9 +8,9 @@ on:
 
 jobs:
   test:
-    uses: ./.github/workflows/dotnet-ci.yml
+    uses: ./.github/workflows/api-ci.yml
 
-  build:
+  publish:
     runs-on: ubuntu-latest
     needs: test
     permissions:
@@ -36,10 +36,9 @@ jobs:
           name: .net-app
           path: ${{env.DOTNET_ROOT}}/myapp
 
-  # Azure deployment removed for now (was failing) - to be replaced with a publish-profile based deploy.
-  migrate:
+  migrate-database:
     runs-on: ubuntu-latest
-    needs: build
+    needs: publish
     permissions:
       contents: read #This is required for actions/checkout
 
@@ -50,6 +49,9 @@ jobs:
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '10.x'
+
+      - name: Restore dependencies
+        run: dotnet restore SocialApp.slnx
 
       - name: Install EF Core tools
         run: dotnet tool install --global dotnet-ef

@@ -1,4 +1,4 @@
-name: Angular CI
+name: UI CI
 
 on:
   push:
@@ -11,7 +11,7 @@ on:
       - 'src/UI/**'
 
 jobs:
-  build-and-test:
+  build:
     runs-on: ubuntu-latest
     
     defaults:
