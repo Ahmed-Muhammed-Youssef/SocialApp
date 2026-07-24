@@ -16,11 +16,16 @@ public static class DatabaseInitializer
             RoleManager<IdentityRole> roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
             IConfiguration configuration = services.GetRequiredService<IConfiguration>();
 
-            await MigrateDatabaseAsync(dataContext, logger);
+            if (environment.IsDevelopment())
+            {
+                await MigrateDatabaseAsync(dataContext, logger);
+            }
+
+            // Essential reference data (roles, countries/cities) is required in every environment.
+            await SeedStaticData(dataContext, roleManager, logger);
 
             if (environment.IsDevelopment())
             {
-                await SeedStaticData(dataContext, roleManager, logger);
                 await SeedAdmin(userManager, configuration, dataContext, logger);
                 // seed test records
                 await AddTestUsers(userManager, dataContext, configuration, logger);
