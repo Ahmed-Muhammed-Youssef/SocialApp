@@ -1,5 +1,4 @@
 using System.Threading.RateLimiting;
-using Azure.Monitor.OpenTelemetry.AspNetCore;
 using Microsoft.AspNetCore.RateLimiting;
 using OpenTelemetry;
 using OpenTelemetry.Metrics;
@@ -82,10 +81,6 @@ public static class DependencyInjection
         if (builder.Environment.IsDevelopment())
         {
             builder.Services.AddOpenTelemetry().UseOtlpExporter();
-        }
-        else
-        {
-            builder.Services.AddOpenTelemetry().UseAzureMonitor();
         }
 
         builder.Logging.AddOpenTelemetry(options =>
