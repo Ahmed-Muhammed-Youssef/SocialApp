@@ -54,13 +54,6 @@ public static class DependencyInjection
         });
         builder.Services.AddScoped<IMessageNotifier, MessageNotifier>();
 
-        builder.Services.AddHttpClient("GoogleAuth", client =>
-        {
-            client.BaseAddress = new Uri(builder.Configuration["Authentication:Google:ApiEndpoint"] ?? "");
-            client.DefaultRequestHeaders.Accept
-                .Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-        });
-
         return builder;
     }
 
@@ -145,7 +138,6 @@ public static class DependencyInjection
         });
 
         builder.Services.AddScoped<ITokenProvider, TokenProvider>();
-        builder.Services.AddScoped<IGoogleAuthService, GoogleAuthService>();
 
         return builder;
     }
