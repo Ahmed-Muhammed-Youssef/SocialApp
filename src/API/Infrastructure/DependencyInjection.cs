@@ -9,14 +9,7 @@ public static class DependencyInjection
         // Database Contexts
         builder.Services.AddDbContext<ApplicationDatabaseContext>(options =>
         {
-            if(builder.Environment.IsDevelopment())
-            {
-                options.UseSqlServer(builder.Configuration.GetConnectionString("AppConnection"));
-            }
-            else
-            {
-                options.UseSqlite(builder.Configuration.GetConnectionString("AppConnection"));
-            }
+            options.UseSqlServer(builder.Configuration.GetConnectionString("AppConnection"));
         });
         builder.Services.AddScoped<IApplicationDatabaseContext>(sp => sp.GetRequiredService<ApplicationDatabaseContext>());
 
