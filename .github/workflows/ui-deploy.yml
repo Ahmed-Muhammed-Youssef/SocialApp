@@ -32,6 +32,15 @@ jobs:
         with:
           submodules: true
           
+      - name: Inject production API URL
+        run: |
+          cat > src/UI/src/environments/environment.ts <<EOF
+          export const environment = {
+              apiUrl: '${{ vars.API_BASE_URL }}/api',
+              hubUrl: '${{ vars.API_BASE_URL }}/hubs'
+          };
+          EOF
+
       - name: Build And Deploy
         id: builddeploy
         uses: Azure/static-web-apps-deploy@v1

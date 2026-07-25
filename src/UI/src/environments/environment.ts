@@ -1,4 +1,4 @@
 export const environment = {
-    apiUrl: 'https://socialapp-api.azurewebsites.net/api',
-    hubUrl: 'https://socialapp-api.azurewebsites.net/hubs'
+    apiUrl: 'https://app-connect-be-dev-westus-01.azurewebsites.net/api',
+    hubUrl: 'https://app-connect-be-dev-westus-01.azurewebsites.net/hubs'
 };
