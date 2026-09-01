@@ -1,0 +1,199 @@
+Summary
+  Generated on: 01-Sep-26 - 7:09:49 PM
+  Coverage date: 01-Sep-26 - 7:08:35 PM - 01-Sep-26 - 7:09:16 PM
+  Parser: MultiReport (4x Cobertura)
+  Assemblies: 4
+  Classes: 171
+  Files: 183
+  Line coverage: 4.9%
+  Covered lines: 516
+  Uncovered lines: 9867
+  Coverable lines: 10383
+  Total lines: 13097
+  Branch coverage: 28.8% (108 of 374)
+  Covered branches: 108
+  Total branches: 374
+  Method coverage: 33.3% (170 of 510)
+  Full method coverage: 31.9% (163 of 510)
+  Covered methods: 170
+  Fully covered methods: 163
+  Total methods: 510
+
+Application                                                                           37.6%
+  Application.Common.Interfaces.Orchestration.UserProvisioningResult                     0%
+  Application.Common.Mappings.MessageMappings                                           50%
+  Application.Common.Mappings.PictureMappings                                            0%
+  Application.Common.Mappings.PostMappings                                               0%
+  Application.Common.Mappings.UserMappings                                            31.7%
+  Application.Features.Auth.GoogleSignIn.GoogleSignInCommand                             0%
+  Application.Features.Auth.GoogleSignIn.GoogleSignInHandler                             0%
+  Application.Features.Auth.Login.LoginCommand                                         100%
+  Application.Features.Auth.Login.LoginDTO                                             100%
+  Application.Features.Auth.Login.LoginHandler                                         100%
+  Application.Features.Auth.RefreshToken.RefreshTokenCommand                             0%
+  Application.Features.Auth.RefreshToken.RefreshTokenHandler                             0%
+  Application.Features.Auth.RefreshToken.RefreshTokenResult                              0%
+  Application.Features.Auth.Register.RegisterCommand                                   100%
+  Application.Features.Auth.Register.RegisterDTO                                       100%
+  Application.Features.Auth.Register.RegisterHandler                                  78.5%
+  Application.Features.Auth.TokenRequest                                               100%
+  Application.Features.DirectChats.ConnectToChat.ConnectToChatCommand                    0%
+  Application.Features.DirectChats.ConnectToChat.ConnectToChatHandler                    0%
+  Application.Features.DirectChats.ConnectToChat.ConnectToChatResult                     0%
+  Application.Features.DirectChats.DirectChatDTO                                         0%
+  Application.Features.DirectChats.DisconnectFromChat.DisconnectFromChatCommand          0%
+  Application.Features.DirectChats.DisconnectFromChat.DisconnectFromChatHandler          0%
+  Application.Features.DirectChats.DisconnectFromChat.DisconnectFromChatResult           0%
+  Application.Features.DirectChats.List.GetChatsHandler                                  0%
+  Application.Features.DirectChats.List.GetChatsQuery                                    0%
+  Application.Features.DirectChats.MessageDTO                                           80%
+  Application.Features.DirectChats.SendMessage.SendMessageCommand                      100%
+  Application.Features.DirectChats.SendMessage.SendMessageHandler                       85%
+  Application.Features.DirectChats.SendMessage.SendMessageResult                       100%
+  Application.Features.DirectChats.Stores.Connection                                     0%
+  Application.Features.DirectChats.Stores.Group                                        100%
+  Application.Features.FriendRequests.Accept.AcceptFriendRequestCommand                100%
+  Application.Features.FriendRequests.Accept.AcceptFriendRequestHandler               83.3%
+  Application.Features.FriendRequests.Accept.FriendCreatedResponse                     100%
+  Application.Features.FriendRequests.Create.CreateFriendRequestCommand                100%
+  Application.Features.FriendRequests.Create.CreateFriendRequestHandler               86.9%
+  Application.Features.FriendRequests.Delete.DeleteFriendRequestCommand                  0%
+  Application.Features.FriendRequests.Delete.DeleteFriendRequestHandler                  0%
+  Application.Features.FriendRequests.List.GetFriendRequestsHandler                      0%
+  Application.Features.FriendRequests.List.GetFriendRequstsQuery                         0%
+  Application.Features.ReferenceData.CityDTO                                             0%
+  Application.Features.ReferenceData.ListCities.GetCitiesHandler                         0%
+  Application.Features.ReferenceData.ListCities.GetCitiesQuery                           0%
+  Application.Features.ReferenceData.ListCities.Specifications.CityDtoSpecification      0%
+  Application.Features.Roles.Create.CreateRoleCommand                                  100%
+  Application.Features.Roles.Create.CreateRoleHandler                                  100%
+  Application.Features.Roles.Delete.DeleteRoleCommand                                    0%
+  Application.Features.Roles.Delete.DeleteRoleHandler                                    0%
+  Application.Features.Roles.List.GetRolesHandler                                        0%
+  Application.Features.Roles.List.GetRolesQuery                                          0%
+  Application.Features.Roles.RoleRequestDTO                                              0%
+  Application.Features.UserRoles.AssignRoleToUser.AssignRoleToUserCommand                0%
+  Application.Features.UserRoles.AssignRoleToUser.AssignRoleToUserHandler                0%
+  Application.Features.UserRoles.Get.GetUserRolesHandler                                 0%
+  Application.Features.UserRoles.Get.GetUserRolesQuery                                   0%
+  Application.Features.UserRoles.RemoveRoleFromUser.RemoveRoleFromUserCommand            0%
+  Application.Features.UserRoles.RemoveRoleFromUser.RemoveRoleFromUserHandler            0%
+  Application.Features.Users.CreateUserPicture.CreateUserPictureCommand                  0%
+  Application.Features.Users.CreateUserPicture.CreateUserPictureHandler                  0%
+  Application.Features.Users.DeleteUserPicture.DeleteUserPictureCommand                  0%
+  Application.Features.Users.DeleteUserPicture.DeleteUserPictureHandler                  0%
+  Application.Features.Users.Get.GetUserHandler                                        100%
+  Application.Features.Users.Get.GetUserQuery                                          100%
+  Application.Features.Users.GetPosts.GetUserPostsHandler                                0%
+  Application.Features.Users.GetPosts.GetUserPostsQuery                                  0%
+  Application.Features.Users.GetUserPictureById.GetUserPictureByIdHandler                0%
+  Application.Features.Users.GetUserPictureById.GetUserPictureByIdQuery                  0%
+  Application.Features.Users.GetUserPictures.GetPicturesHandler                          0%
+  Application.Features.Users.List.GetUsersQuery                                        100%
+  Application.Features.Users.List.GetUsersQueryHandler                                 100%
+  Application.Features.Users.PictureDTO                                                  0%
+  Application.Features.Users.Posts.Create.CreatePostCommand                            100%
+  Application.Features.Users.Posts.Create.CreatePostHandler                           83.3%
+  Application.Features.Users.Posts.GetById.GetPostByIdHandler                          100%
+  Application.Features.Users.Posts.GetById.GetPostByIdQuery                            100%
+  Application.Features.Users.Posts.List.GetPostsHandler                                100%
+  Application.Features.Users.Posts.List.GetPostsQuery                                  100%
+  Application.Features.Users.Posts.PostDTO                                               0%
+  Application.Features.Users.SetProfilePciture.SetProfilePictureCommand                  0%
+  Application.Features.Users.SetProfilePciture.SetProfilePictureHandler                  0%
+  Application.Features.Users.SimplifiedUserDTO                                           0%
+  Application.Features.Users.Specifications.UserByIdentitySpecification                  0%
+  Application.Features.Users.Specifications.UserDtoByIdentitySpecification               0%
+  Application.Features.Users.Update.UpdateUserCommand                                  100%
+  Application.Features.Users.Update.UpdateUserHandler                                  100%
+  Application.Features.Users.UserDTO                                                   100%
+  Application.Features.Users.UserParams                                                100%
+
+Domain                                                                                62.6%
+  Domain.ApplicationUserAggregate.ApplicationUser                                     80.6%
+  Domain.ApplicationUserAggregate.FilterSpecifications.UserByIdentityFilter              0%
+  Domain.ApplicationUserAggregate.FilterSpecifications.UserByIdFilter                    0%
+  Domain.ApplicationUserAggregate.Post                                                51.5%
+  Domain.ApplicationUserAggregate.Specifications.UserWithPicturesSpecification           0%
+  Domain.ApplicationUserAggregate.UserPicture                                            0%
+  Domain.AuthUserAggregate.RefreshToken                                               93.7%
+  Domain.DirectChatAggregate.DirectChat                                               95.4%
+  Domain.DirectChatAggregate.Exceptions.InvalidMessageException                        100%
+  Domain.DirectChatAggregate.Exceptions.InvalidSenderException                         100%
+  Domain.DirectChatAggregate.Message                                                  90.9%
+  Domain.FriendAggregate.Exceptions.InvalidFriendParametersException                   100%
+  Domain.FriendAggregate.Friend                                                        100%
+  Domain.FriendRequestAggregate.Exceptions.InvalidFriendRequestException               100%
+  Domain.FriendRequestAggregate.FriendRequest                                          100%
+  Domain.MediaAggregate.Picture                                                          0%
+  Domain.ReferenceData.City                                                              0%
+  Domain.ReferenceData.Country                                                           0%
+  Domain.ReferenceData.Region                                                            0%
+
+Infrastructure                                                                         0.8%
+  Infrastructure.Auth.CurrentUserService                                               100%
+  Infrastructure.Auth.External.GoogleCredentialValidator                                 0%
+  Infrastructure.Auth.Options.JwtAuthOptions                                           100%
+  Infrastructure.Auth.TokenProvider                                                    100%
+  Infrastructure.Data.ApplicationDatabaseContext                                         0%
+  Infrastructure.Data.Configurations.ApplicationUserConfigurations                       0%
+  Infrastructure.Data.Configurations.CityConfigurations                                  0%
+  Infrastructure.Data.Configurations.CountryConfigurations                               0%
+  Infrastructure.Data.Configurations.DirectChatConfigurations                            0%
+  Infrastructure.Data.Configurations.FriendConfigurations                                0%
+  Infrastructure.Data.Configurations.FriendRequestConfigurations                         0%
+  Infrastructure.Data.Configurations.IdentityUserConfigurations                          0%
+  Infrastructure.Data.Configurations.MessageConfigurations                               0%
+  Infrastructure.Data.Configurations.PictureConfigurations                               0%
+  Infrastructure.Data.Configurations.PostConfigurations                                  0%
+  Infrastructure.Data.Configurations.RefreshTokenConfigurations                          0%
+  Infrastructure.Data.Configurations.RegionConfigurations                                0%
+  Infrastructure.Data.Configurations.UserPictureConfigurations                           0%
+  Infrastructure.Data.DatabaseInitializer                                                0%
+  Infrastructure.Data.Migrations.Add_UserPicture_FK                                      0%
+  Infrastructure.Data.Migrations.Add_UserPictures                                        0%
+  Infrastructure.Data.Migrations.Add_UserPicturesConstraints                             0%
+  Infrastructure.Data.Migrations.AddIdentityKey                                          0%
+  Infrastructure.Data.Migrations.Migrate_IdentityDb                                      0%
+  Infrastructure.Data.Migrations.Update_FriendRequestsWorkFlow                           0%
+  Infrastructure.Data.Migrations.UpdateChatMessagesTables                                0%
+  Infrastructure.Data.Repositories.ApplicationUserRepository                             0%
+  Infrastructure.Data.Repositories.CachedRepositories.CachedUserRepository               0%
+  Infrastructure.Data.Repositories.CityRepository                                        0%
+  Infrastructure.Data.Repositories.DirectChatRepository                                  0%
+  Infrastructure.Data.Repositories.FriendRepository                                      0%
+  Infrastructure.Data.Repositories.FriendRequestsRepository                              0%
+  Infrastructure.Data.Repositories.PictureRepository                                     0%
+  Infrastructure.Data.UnitOfWork                                                         0%
+  Infrastructure.DependencyInjection                                                     0%
+  Infrastructure.DirectChats.DirectChatGroupsStore                                       0%
+  Infrastructure.Media.Cloudinary.CloudinaryOptions                                      0%
+  Infrastructure.Media.Cloudinary.CloudinaryPictureService                               0%
+  Infrastructure.Migrations.AddGetUserByIdStoredProcedure                                0%
+  Infrastructure.Migrations.AddGetUserDtoByIdtoredProcedure                              0%
+  Infrastructure.Migrations.AddGetUsersDtosStoredProcedure                               0%
+  Infrastructure.Migrations.AdGetFriendRequestedUsersDTOStoredProcedure                  0%
+  Infrastructure.Migrations.DataContextModelSnapshot                                     0%
+  Infrastructure.Migrations.DropCountriesTables                                          0%
+  Infrastructure.Migrations.InitialCreate                                                0%
+  Infrastructure.Migrations.ReaddCountriesTables                                         0%
+  Infrastructure.Migrations.RemoveInterestColumn                                         0%
+  Infrastructure.Orchestration.UserProvisioning.UserProvisioningService                  0%
+  Infrastructure.Users.OnlineUsersStore                                                100%
+
+Shared                                                                                18.9%
+  Shared.DomainEventBase                                                                 0%
+  Shared.DomainException                                                                50%
+  Shared.EntityBase                                                                    100%
+  Shared.EntityBase<T>                                                                 100%
+  Shared.Extensions.ClaimsPrincipalExtensions                                            0%
+  Shared.Extensions.DateTimeExtensions                                                  36%
+  Shared.HasDomainEvents                                                                 0%
+  Shared.Pagination.PagedList<T>                                                      86.6%
+  Shared.Pagination.PaginationParams                                                  66.6%
+  Shared.RepositoryBase.RepositoryBase<T>                                                0%
+  Shared.Results.Result<T>                                                            57.6%
+  Shared.Specification.BaseFilterSpecification<T>                                        0%
+  Shared.Specification.Specification<T>                                                  0%
+  Shared.Specification.Specification<T1, T2>                                             0%
+  Shared.Specification.SpecificationEvaluator                                            0%

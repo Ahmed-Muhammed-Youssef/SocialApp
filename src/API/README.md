@@ -196,4 +196,6 @@ Full strategy: [`docs/04-testing-strategy.md`](../../docs/04-testing-strategy.md
 - [04 - Testing Strategy](../../docs/04-testing-strategy.md)
 - [05 - Deployment Strategy](../../docs/05-deployment.md)
 - [06 - Improvement Plan](../../docs/06-improvement-plan.md)
+- [07 - Unit Test Coverage Report](../../docs/07-test-coverage-report.md) (measured baseline & gaps)
+- [08 - Test Coverage Plan](../../docs/08-test-coverage-plan.md)
 - [ARCHITECTURE_ENHANCEMENTS.md](../../ARCHITECTURE_ENHANCEMENTS.md) (refactoring roadmap)
