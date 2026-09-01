@@ -32,7 +32,9 @@ Per assembly, excluding generated code:
 | `Domain` | **62.6%** | Healthiest layer. Aggregates are well covered. |
 | `Application` | **37.6%** | 12 of 31 handlers tested; the other 19 sit at 0%. |
 | `Shared` | **18.9%** | `Result<T>`, the Specification engine and `RepositoryBase` — used by every feature — barely touched. |
-| `Infrastructure` | **11.3%** | Only `TokenProvider`, `CurrentUserService`, `OnlineUsersStore` are covered (those three at 100%). |
+| `Infrastructure` | **11.3%**† | Only `TokenProvider`, `CurrentUserService`, `OnlineUsersStore` and `JwtAuthOptions` are covered (those four at 100%). |
+
+† The other three figures are quoted directly from [`coverage-baseline-2026-09-01.txt`](./testing/coverage-baseline-2026-09-01.txt), which is an *unfiltered* run and reports `Infrastructure 0.8%` — dominated by migrations. `11.3%` is the migration/config-filtered figure, taken from [`coverage-after-session-2026-09-01.txt`](./testing/coverage-after-session-2026-09-01.txt); it is valid as a baseline because `Infrastructure` gained no tests in that session, so the filtered number is identical before and after.
 
 **There is no unit test project for the `API` assembly at all.** Controllers, SignalR hubs, MVC filters and all seven FluentValidation validators are absent from the coverage report entirely — they are reachable only through the integration suite.
 
@@ -123,7 +125,7 @@ Listing these so future coverage numbers aren't chased for their own sake. These
 
 ## 4. Housekeeping observed while measuring
 
-- **Duplicate integration test files.** `test/integration/API.Test/Features/AuthTests.cs` (75 lines, namespace `API.Test.Features`) coexists with `Features/Auth/AuthTests.cs` (269 lines, namespace `API.Test.Features.Auth`); same for `UsersTests.cs`. They differ, so this is leftover from a reorganisation rather than a copy — both currently compile and run.
+- **Duplicate integration test files.** `test/integration/API.Test/Features/AuthTests.cs` (75 lines, namespace `API.Test.Features`) coexists with `Features/Auth/AuthTests.cs` (269 lines, namespace `API.Test.Features.Auth`); same for `UsersTests.cs`. They differ, so this is leftover from a reorganisation rather than a copy. Both are compiled into the project (distinct namespaces, so there is no clash), but neither actually runs today — that project fails to build on the `NU1903` advisory described in [08 §4](./08-test-coverage-plan.md#4-session-results).
 - **Untracked `tests/` directory** at repo root, distinct from the real `test/`, not referenced by `SocialApp.slnx`. Build leftover; safe to delete.
 - **Test tree mirrors the old source layout.** Tests sit at `Application.Test/Features/Posts/Create/` while the source is at `Application/Features/Users/Posts/CreatePost/`. Harmless, but it makes "does this handler have a test?" harder to answer than it should be.
 

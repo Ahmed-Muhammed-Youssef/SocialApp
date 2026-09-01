@@ -133,9 +133,9 @@ Steps 1–7 executed 2026-09-01. Raw before/after tool output: [`coverage-baseli
 
 **The bug is fixed.** `AssignRoleToUserHandler.cs:21` now reads `roleManager.FindByIdAsync(command.RoleId)` instead of `user.IdentityId`. `test/unit/Application.Test/Features/UserRoles/AssignRoleToUser/AssignRoleToUserHandlerTests.cs` was written and run against the *unmodified* handler first — `Handle_ValidRequest_AssignsRequestedRoleAndReturnsSuccess` failed cleanly (`Assert.True: Expected True, Actual False`), confirming the defect before the fix landed, then passed after.
 
-**Deviation from plan:** Step 1's "assign fails" sub-case couldn't use the "assign the same role twice" approach described in the plan — `UserManagerTestHelper`'s real, store-backed `UserManager` is built with a `null` `ILogger`, and `UserManager.AddToRoleAsync`'s "already in role" branch calls `Logger.LogWarning` before returning the failed `IdentityResult`, which throws `NullReferenceException` through the null logger. Worked around by mocking `UserManager<IdentityUser>` directly for that one test case (same `Substitute.For<T>(store, null!, ...)` pattern already used for `RoleManager` in this file), rather than routing it through the real store. `UserManagerTestHelper` itself was left unchanged — giving it an optional logger parameter is a candidate for the next session if more tests need this path.
+**Deviation from plan:** Step 1's "assign fails" sub-case couldn't use the "assign the same role twice" approach described in the plan — `UserManagerTestHelper`'s real, store-backed `UserManager` is built with a `null` `ILogger`, and `UserManager.AddToRoleAsync`'s "already in role" branch logs before returning the failed `IdentityResult`, which throws through the null logger. (The observed exception was a `NullReferenceException`; a later audit of `Microsoft.Extensions.Identity.Core` 10.0.9 suggests the log call is at Debug level and would more likely surface as `ArgumentNullException`. The exact type is incidental — what matters is that the null logger makes that branch unreachable with the real store-backed manager.) Worked around by mocking `UserManager<IdentityUser>` directly for that one test case (same `Substitute.For<T>(store, null!, ...)` pattern already used for `RoleManager` in this file), rather than routing it through the real store. `UserManagerTestHelper` itself was left unchanged — giving it an optional logger parameter is a candidate for the next session if more tests need this path.
 
-**Every targeted type reached 100%**, measured per-class before/after:
+**Every targeted type reached 100% *line* coverage**, measured per-class before/after:
 
 | Type | Before | After |
 |---|---|---|
@@ -145,6 +145,8 @@ Steps 1–7 executed 2026-09-01. Raw before/after tool output: [`coverage-baseli
 | `SetProfilePictureHandler` | 0% | **100%** |
 | `Results.Result<T>` | 57.6% | **100%** |
 | `Extensions.ClaimsPrincipalExtensions` | 0% | **100%** |
+
+**100% line coverage is not 100% branch coverage** — solution-wide branch coverage is 38.5%, and an adversarial review of these tests found at least one specific unexercised branch: the `role.Name is null` half of the guard in `AssignRoleToUserHandler.cs:23` / `RemoveRoleFromUserHandler.cs:23` is never evaluated true, because both `Handle_RoleNotFound` tests stub the role itself to `null` and short-circuit. Deleting `|| role.Name is null` from either handler would leave the suite green. Follow-ups in §5 Priority 2.
 
 **`Shared` still landed lower than estimated (29.7% vs ~45%)** despite both its targets hitting 100%. The estimate simply assumed those two types were a larger share of the assembly than they are: `Specification<T>`/`SpecificationEvaluator` (0%), `RepositoryBase<T>` (0%), `PaginationParams` (66.6%) and `DateTimeExtensions.ToRelativeTimeString` were all correctly deferred to §3 and remain untested, and they dominate the remaining denominator. The planned work was fully delivered; the assembly-level projection was miscalibrated.
 
@@ -194,7 +196,21 @@ This finishes the tier the whole plan was built around, taking untested Tier-A h
   - Needs an `IPictureService` mock; everything else is covered by existing `TestHelpers`.
 - **`GetUserPictureByIdHandler`** — scoping: a picture belonging to another user must not be returned.
 
-### Priority 2 — test-suite maintainability (~5 min)
+### Priority 2 — act on the adversarial review of this session's tests (~20 min)
+
+An adversarial review confirmed the headline result — the fix is correct, and the `AssignRoleToUser` / `RemoveRoleFromUser` / `DeleteFriendRequest` tests are genuinely mutation-resistant (each fails when the guard they cover is deleted, inverted, or swapped). It found no high-severity tautology. It did find real weaknesses worth closing, roughly in value order:
+
+1. **`Assert.NotEmpty(result.Errors)` can never fail.** `AssignRoleToUserHandlerTests.cs:156`, `RemoveRoleFromUserHandlerTests.cs:153`. `Result<T>.Error(string)` always populates a one-element `Errors`, so this asserts nothing beyond the `Status` check above it. The behaviour actually at risk — `string.Join('\n', result.Errors.Select(e => e.Description))` in both handlers, which is what `UserRolesController` returns to the client — is unverified. Replace with `Assert.Contains("User already in role.", result.Errors)` and add a two-error case pinning the `'\n'` join. (The plan originally named this test `..._ReturnsErrorWithIdentityErrors`; the delivered version dropped both the suffix and the assertion.)
+2. **Exercise the `role.Name is null` branch** in both role handlers (see §4) with a `new IdentityRole { Name = null }`.
+3. **`SetProfilePictureHandlerTests.cs` "not owned" test stubs a no-op.** `.Returns(0)` matches NSubstitute's default for `Task<int>`, and the test asserts nothing about arguments — so it passes against a handler that ignores `ICurrentUserService`, swaps the two `int` arguments, or never calls the repository. Only its sibling success test pins argument order. Add a `Received(1)` assertion to the ownership-named test.
+4. **Unstubbed `RoleManager` auto-substitutes a non-null role.** `Substitute.For<RoleManager<IdentityRole>>(…).FindByIdAsync(…)` returns a proxy with `Name == ""` (not null), so `Handle_UserNotFound` / `Handle_IdentityUserNotFound` pass only because an earlier guard short-circuits first; reordering the handler's guards would push them into `AddToRoleAsync(user, "")`. Stub `FindByIdAsync(Arg.Any<string>())` explicitly in every test in both files.
+5. **Distinguish the three `NotFound` outcomes.** All three assert only `Status == NotFound` while the handlers emit three distinct messages, so nothing pins which guard fired. Assert on `result.Errors`.
+6. **Assert `Status` on failure paths, and on Assign's success path.** `DeleteFriendRequestHandlerTests` asserts only `IsSuccess == false` on its three failure tests, so switching the handler to `Forbidden`/`NotFound` would silently change the HTTP contract. Conversely `SetProfilePictureHandlerTests` and `AssignRoleToUserHandlerTests` never assert the success status (`Remove` does assert `NoContent`; the two sibling endpoints genuinely differ and Assign's side is unpinned).
+7. **Assert `CommitAsync` was *not* called** on `DeleteFriendRequestHandler`'s failure paths — currently only `Delete` is checked, so a refactor that commits regardless of the guard would pass.
+8. **Assert `.Succeeded` on the seeding `AddToRoleAsync`** at `RemoveRoleFromUserHandlerTests.cs:108`; if seeding silently failed, the post-condition assertion would pass vacuously.
+9. **Drop three redundant `ResultTests`** (`IsSuccess_ForOk`/`ForCreated`/`ForNoContent` duplicate assertions already made by the per-factory facts), and note `Assert.Equal(ResultStatus.Ok, …)` after `Success(T)` cannot fail since `Ok` is the field initialiser. Untouched on `Result<T>`: `CorrelationId`, `Location`'s default under the one-arg `Created`, and `Value` on failure results.
+
+### Priority 3 — test-suite maintainability (~5 min)
 
 - Extract `Substitute.For<UserManager<IdentityUser>>(store, null!, …)` into `TestHelpers.CreateMockUserManager()`. The nine-positional-`null!` incantation is currently duplicated verbatim in the `AssignRoleToUser` and `RemoveRoleFromUser` test files and is brittle against Identity constructor changes.
 - Optionally give `UserManagerTestHelper.CreateUserManagerWithUsers` an optional `ILogger<UserManager<IdentityUser>>` (defaulting to `NullLogger`). Its current `null` logger is why `AddToRoleAsync`'s "already in role" branch throws `NullReferenceException` (§4 deviation); fixing it would let those tests use the real store like their siblings instead of a full mock.

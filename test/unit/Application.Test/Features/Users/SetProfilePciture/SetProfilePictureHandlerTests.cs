@@ -42,7 +42,9 @@ public class SetProfilePictureHandlerTests
         // Arrange
         var command = new SetProfilePictureCommand(5);
 
-        // The picture id scoping comes from ICurrentUserService, not from the command.
+        // The user id must come from ICurrentUserService (the caller), and only the picture id
+        // from the command — a handler that took the user id from the command would let a caller
+        // set someone else's profile picture.
         _unitOfWork.ApplicationUserRepository.SetProfilePictureIfOwnedAsync(1, 5, Arg.Any<CancellationToken>())
             .Returns(1);
 
