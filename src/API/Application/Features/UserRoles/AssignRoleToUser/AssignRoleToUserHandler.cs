@@ -18,7 +18,7 @@ public class AssignRoleToUserHandler(RoleManager<IdentityRole> roleManager, User
             return Result<object?>.NotFound("User not found in identity store");
         }
 
-        IdentityRole? role = await roleManager.FindByIdAsync(user.IdentityId);
+        IdentityRole? role = await roleManager.FindByIdAsync(command.RoleId);
 
         if (role == null || role.Name is null)
         {
