@@ -174,7 +174,11 @@ The four unit test projects are unaffected and build/run independently, which is
 
 Ordered by what unblocks the most. Priority 0 is not a coverage task but gates everything else.
 
-### Priority 0 — unblock CI (~10 min, do before landing this session's branch)
+### Priority 0 — unblock CI ✅ DONE — on branch `fix/nuget-audit-ssh-net`
+
+> **Resolved.** Step 1 alone was sufficient: `Testcontainers.MsSql 4.14.0` resolves `Testcontainers 4.14.0` → `SSH.NET 2026.0.0`, which clears the advisory, so steps 3 and 4 (direct pin / audit scoping) were not needed. `dotnet build SocialApp.slnx` now exits 0 with no warnings, and all 128 unit tests on `develop` still pass. The Testcontainers-backed integration tests compile but were not run locally (no Docker daemon on the dev machine); CI provides one.
+>
+> **Merge `fix/nuget-audit-ssh-net` into `develop` before opening a PR for the coverage branch**, otherwise that PR inherits the red build described below.
 
 CI is red on `develop` for a reason unrelated to coverage (§4). Until it is fixed, no PR can show a green build and no integration test can even compile.
 
