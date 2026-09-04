@@ -1,0 +1,26 @@
+<Project>
+
+  <!--
+    MSBuild stops at the first Directory.Build.props it finds walking up from a project, so the repo-root
+    one (TargetFramework, Nullable, TreatWarningsAsErrors, AnalysisMode) has to be imported explicitly.
+    Without this line the test projects would silently lose all of those settings.
+  -->
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildThisFileDirectory)../'))" />
+
+  <PropertyGroup>
+    <!--
+      xUnit.net v3 test projects are self-hosting Microsoft.Testing.Platform applications, not libraries
+      loaded by an external VSTest host, so they must build as executables. Microsoft.NET.Test.Sdk used to
+      set this implicitly; that package is no longer referenced, so it is declared here.
+    -->
+    <OutputType>Exe</OutputType>
+
+    <!--
+      Makes xunit generate a Microsoft.Testing.Platform entry point instead of its own console-runner one.
+      Without it each project still builds and runs correctly when executed directly, but `dotnet test`
+      discovers zero tests — the app never hands control to the platform.
+    -->
+    <UseMicrosoftTestingPlatformRunner>true</UseMicrosoftTestingPlatformRunner>
+  </PropertyGroup>
+
+</Project>

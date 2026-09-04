@@ -23,4 +23,4 @@ jobs:
     - name: Build
       run: dotnet build SocialApp.slnx --no-restore
     - name: Test
-      run: dotnet test SocialApp.slnx --no-build --verbosity normal
+      run: dotnet test --solution SocialApp.slnx --no-build --verbosity normal
