@@ -1,5 +1,8 @@
 <Solution>
   <Folder Name="/benchmarks/" />
+  <Folder Name="/benchmarks/API/">
+    <Project Path="benchmarks/API/API/API.Benchmark.csproj" />
+  </Folder>
   <Folder Name="/Solution Items/">
     <File Path=".editorconfig" />
     <File Path="Directory.Build.props" />
