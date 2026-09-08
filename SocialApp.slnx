@@ -25,6 +25,9 @@
     <Project Path="test/unit/Infrastructure.Test/Infrastructure.Test.csproj" />
     <Project Path="test/unit/Shared.Test/Shared.Test.csproj" />
   </Folder>
+  <Folder Name="/tools/">
+    <Project Path="tools/SeedDB/SeedDB.csproj" Id="ec620a2e-8b78-49f8-9c9d-e2e126e90fd7" />
+  </Folder>
   <Project Path="docker-compose.dcproj">
     <Build />
   </Project>

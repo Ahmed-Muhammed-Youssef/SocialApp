@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+	<IsPackable>false</IsPackable>
+	<IsPublishable>false</IsPublishable>
+  </PropertyGroup>
+
+  <!-- Infrastructure reaches for ASP.NET Identity and hosting abstractions, so this console host
+       needs the same shared framework the API runs on. -->
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\API\Infrastructure\Infrastructure.csproj" />
+  </ItemGroup>
+
+</Project>
