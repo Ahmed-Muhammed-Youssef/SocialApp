@@ -25,8 +25,9 @@ Related backend assets elsewhere in the repo:
 |---|---|
 | `test/unit/` | Unit tests per layer (`Domain.Test`, `Application.Test`, `Infrastructure.Test`, `Shared.Test`) |
 | `test/integration/API.Test` | End-to-end API tests (`WebApplicationFactory` + Testcontainers SQL Server) |
-| `benchmarks/API` | BenchmarkDotNet micro-benchmarks (e.g., `UsersControllerBenchmark`) |
-| `scripts/` | `EfCoreMigrations.md` cheat-sheet and `seed_essential_data.sql` |
+| `benchmarks/API` | BenchmarkDotNet micro-benchmarks (e.g., `PostQueriesBenchmark`); see [`benchmarks/README.md`](../../benchmarks/README.md) |
+| `tools/SeedDB` | CLI that fills a database with generated users, friendships and posts |
+| `scripts/` | `EfCoreMigrations.md` cheat-sheet, `seed_essential_data.sql`, and `seed-bench.ps1` (runs SeedDB at a fixed scale: `small` … `xxlarge`) |
 | `src/API/API/Dockerfile` | Container image for the API (used by `docker-compose.yml`) |
 
 ---
@@ -174,19 +175,19 @@ This starts:
 ## 🧪 Testing
 
 ```bash
-dotnet test SocialApp.slnx        # run everything (root of the repo)
+dotnet test --solution SocialApp.slnx   # run everything (root of the repo; Microsoft.Testing.Platform)
 ```
 
 - **Unit tests** (`test/unit`) — xUnit v3 + NSubstitute; one project per layer. Handlers are tested for happy and error paths; domain aggregates for invariant enforcement.
 - **Integration tests** (`test/integration/API.Test`) — xUnit v3 + `WebApplicationFactory`, with **Testcontainers** spinning up an ephemeral SQL Server and **WireMock.Net** stubbing external HTTP (e.g., Google auth). Covers the auth and user flows end-to-end. Docker must be running for these.
-- **Benchmarks** (`benchmarks/API`) — BenchmarkDotNet console project targeting hot endpoints.
+- **Benchmarks** (`benchmarks/API`): BenchmarkDotNet micro-benchmarks of handler → repository → EF Core → SQL Server paths. Seed first with `scripts/seed-bench.ps1`; see [`benchmarks/README.md`](../../benchmarks/README.md).
 
 Full strategy: [`docs/04-testing-strategy.md`](../../docs/04-testing-strategy.md).
 
 ## 🔄 CI/CD
 
-- [`dotnet-ci.yml`](../../.github/workflows/dotnet-ci.yml) — restore, build, and test the whole solution on pushes/PRs to `master`/`develop`.
-- [`deploy-api.yml`](../../.github/workflows/deploy-api.yml) — publish and deploy the API to an **Azure Web App** on pushes to `master`.
+- [`api-ci.yml`](../../.github/workflows/api-ci.yml): restores, builds and tests the whole solution on pushes to `develop` and PRs to `master`/`develop`.
+- [`api-deploy.yml`](../../.github/workflows/api-deploy.yml): on pushes to `master`, runs CI, publishes, applies EF Core migrations to the production database, and deploys the API to an **Azure Web App**.
 
 ## 📚 Further Reading
 

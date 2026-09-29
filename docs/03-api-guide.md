@@ -50,8 +50,14 @@ When a business rule is violated (e.g., trying to add a friend who is already a 
 ## Real-Time Messaging (SignalR)
 
 The chat functionality relies on ASP.NET Core SignalR.
-- **Hub Endpoint:** `/hubs/chat`
-- **Authentication:** The client must pass the JWT token (typically via query string `?access_token=...` when establishing the WebSocket connection).
-- **Methods:**
-  - `SendMessage(int receiverId, string content)`
-  - Listen for `ReceiveMessage` on the client.
+There are two hubs. Both require the JWT, passed as the `?access_token=...` query string: browsers can't set the `Authorization` header on a WebSocket upgrade.
+
+**Chat: `/hubs/message?userId=<otherUserId>`**
+- Connecting requires `userId`, the id of the other participant. It joins the direct chat with that user.
+- Client → server: `SendMessage({ recipientId, content })`
+- Server → client: `ReceiveMessages` (the chat history, sent on connect) and `NewMessage` (each new message).
+
+**Presence: `/hubs/presence`**
+- Server → client: `GetOnlineUsers` (sent on connect), `UserIsOnline` and `UserIsOffline` (the user's id).
+
+Presence and chat-group state is kept in memory, so this only works with a single API instance.

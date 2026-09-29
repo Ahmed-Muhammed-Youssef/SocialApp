@@ -1,34 +1,37 @@
 # 05 - Deployment Strategy
 
-This document outlines the current local deployment mechanisms and the upcoming plans for a CI/CD pipeline.
+This document describes local deployment with Docker Compose and the GitHub Actions pipelines that deploy to Azure.
 
 ## 1. Local Deployment (Docker Compose)
-For local testing and deployment, the project uses `docker-compose`. 
+For local testing and deployment, the project uses `docker compose`.
 
 ### Services Defined:
-- **api:** The main ASP.NET Core API application. Built via the Dockerfile in `src/API/API/Dockerfile`.
-- **sqlserver:** The Microsoft SQL Server database.
+- **api** (`socialapp_api`): the ASP.NET Core API, built from `src/API/API/Dockerfile`. It connects to the database as `Server=app-db,1433;Database=AppDb` (set in `docker-compose.override.yml`).
+- **app-db** (`socialapp_db`): SQL Server 2022, published on `localhost:1433` (user `sa`, password `Password123!`), with data kept in the `app-db-data` volume.
+- **api.aspire-dashboard** (`aspire_dashboard`): the Aspire Dashboard on `http://localhost:18888`, which receives the API's OpenTelemetry traces, metrics and logs.
 
 ### Running the Stack:
 Ensure Docker is running on your machine, then execute:
 ```bash
-docker-compose up -d --build
+docker compose up -d --build
 ```
+To run only the database (e.g. for `dotnet run` or `scripts/seed-bench.ps1` on the host), use `docker compose up -d app-db`.
+
 > [!IMPORTANT]
 > When running via Docker, you must supply external API secrets (like Cloudinary and Google Client IDs) as environment variables inside the `docker-compose.override.yml` or a `.env` file. Do not commit sensitive tokens to version control.
 
-## 2. Upcoming CI/CD Pipeline (GitHub Actions)
-As part of our next major push, we will implement a fully automated CI/CD pipeline.
+## 2. CI/CD Pipeline (GitHub Actions)
 
-### Proposed Workflow:
-1. **Continuous Integration (CI):**
-   - Triggered on every pull request to the `develop` or `main` branches.
-   - Steps: Checkout code -> Setup .NET 10 -> Restore Dependencies -> Run Unit and Integration Tests (using Testcontainers).
-2. **Continuous Deployment (CD):**
-   - Triggered on merges to the `main` branch.
-   - Steps: Build Docker images -> Push to Container Registry (e.g., GitHub CR or Docker Hub) -> Execute EF Core migrations -> Deploy to the hosting environment.
+| Workflow | Trigger | What it does |
+| --- | --- | --- |
+| `api-ci.yml` | Push to `develop`; PR to `master`/`develop`; called by `api-deploy.yml` | Restore, build and test `SocialApp.slnx` (unit + Testcontainers integration tests) |
+| `api-deploy.yml` | Push to `master`, or manual | Run `api-ci.yml` → publish the API → apply EF Core migrations to the production database → deploy to the Azure Web App |
+| `ui-ci.yml` | Push/PR to `master`/`develop` touching `src/UI/**` | Build the Angular client with the production configuration |
+| `ui-deploy.yml` | Push/PR to `master` touching `src/UI/**`, or manual | Inject the production API URL into `environment.ts` and deploy to Azure Static Web Apps; manages PR preview environments |
+
+Deploys happen only from `master`. Follow the `release/*` / `hotfix/*` flow in `CONTRIBUTING.md` rather than pushing there directly.
 
 ## 3. Database Migrations in Production
-Unlike development environments where you might run `dotnet ef database update` locally, production migrations must be handled carefully. 
-- The CD pipeline should be responsible for orchestrating the migration script against the production database *before* the new API containers are rolled out, or via an init container.
-- We strictly avoid calling `context.Database.EnsureCreated()` or applying migrations dynamically inside `Program.cs` for production workloads to prevent concurrent migration execution issues.
+- In production, the `migrate-database` job in `api-deploy.yml` runs `dotnet ef database update` against the production database (`DB_CONNECTION_STRING` secret) *before* the new build is deployed.
+- The API applies migrations on startup (`DatabaseInitializer`) **only in `Development`**. In every environment it seeds the essential reference data (roles, countries, cities); the admin and test users are seeded only in `Development`. This keeps several instances from racing to migrate at startup.
+- Never call `context.Database.EnsureCreated()`: it bypasses migrations entirely.
