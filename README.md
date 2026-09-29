@@ -9,8 +9,9 @@ This repository contains a modern, production-grade social web application built
 ├── src/UI/         # Angular SPA client
 ├── test/           # Unit & integration test projects
 ├── benchmarks/     # BenchmarkDotNet performance benchmarks
+├── tools/SeedDB/   # CLI that seeds generated users, friendships & posts
 ├── docs/           # Full project documentation
-└── scripts/        # EF Core migration notes & seed data
+└── scripts/        # EF Core migration notes, essential seed data & seed-bench.ps1
 ```
 
 ## 🏛 Backend

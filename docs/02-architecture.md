@@ -21,11 +21,11 @@ At the heart of the application is the `Domain` layer.
 
 ## 2. Application Layer (CQRS)
 The `Application` layer orchestrates business use cases.
-- **MediatR:** We use `Mediator.SourceGenerator` for high-performance Command Query Responsibility Segregation (CQRS).
+- **Mediator (source-generated):** CQRS commands and queries are dispatched by the [`Mediator`](https://github.com/martinothamar/Mediator) source generator (`Mediator.SourceGenerator`), **not MediatR**. Handlers implement `ICommandHandler`/`IQueryHandler` and return `ValueTask`.
 - **Commands vs. Queries:**
   - *Commands* (Write operations) change system state and return `Result<T>`.
   - *Queries* (Read operations) return DTOs or ViewModels.
-- **Validation:** `FluentValidation` is integrated into the MediatR pipeline to automatically validate commands before they reach the handler.
+- **Validation:** `FluentValidation` validators run in a global MVC `ValidationFilter`, which validates request models before the controller action dispatches a command.
 
 ## 3. Infrastructure Layer
 The `Infrastructure` layer handles external concerns.
@@ -35,7 +35,7 @@ The `Infrastructure` layer handles external concerns.
 
 ## 4. API Layer
 The `API` layer acts as the entry point.
-- **Controllers:** Thin controllers that map HTTP requests to MediatR Queries/Commands.
+- **Controllers:** Thin controllers that map HTTP requests to Mediator queries/commands.
 - **Middleware:** Global exception handling, Authentication (JWT), and CORS configuration.
 
 ## Architectural Enhancements (Roadmap)
