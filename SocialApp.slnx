@@ -15,6 +15,9 @@
     <Project Path="src/API/Infrastructure/Infrastructure.csproj" />
     <Project Path="src/API/Shared/Shared.csproj" />
   </Folder>
+  <Folder Name="/src/Notifications/">
+    <Project Path="src/Notifications/Notifications.API/Notifications.API.csproj" Id="e998c8eb-5577-420e-830d-e1f96b0824e3" />
+  </Folder>
   <Folder Name="/test/" />
   <Folder Name="/test/integration/">
     <Project Path="test/integration/API.Test/API.Test.csproj" Id="7b3aad7b-1e4f-4287-a00f-25674b7778a4" />

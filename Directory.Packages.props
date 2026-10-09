@@ -29,6 +29,7 @@
     <PackageVersion Include="Dapper" Version="2.1.79" />
     <PackageVersion Include="System.IdentityModel.Tokens.Jwt" Version="8.22.0" />
     <PackageVersion Include="CloudinaryDotNet" Version="1.29.3" />
+    <PackageVersion  Include="Microsoft.AspNetCore.OpenApi" Version="10.0.12" />
     <!-- Test Packages -->
     <PackageVersion Include="BenchmarkDotNet" Version="0.15.8" />
     <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="18.9.0" />
