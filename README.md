@@ -6,6 +6,7 @@ This repository contains a modern, production-grade social web application built
 
 ```text
 ├── src/API/        # .NET backend (Clean Architecture: Domain, Application, Infrastructure, API, Shared)
+├── src/Notifications/ # Notifications service (PostgreSQL, resilient SignalR delivery)
 ├── src/UI/         # Angular SPA client
 ├── test/           # Unit & integration test projects
 ├── benchmarks/     # BenchmarkDotNet performance benchmarks
@@ -19,6 +20,12 @@ This repository contains a modern, production-grade social web application built
 The backend showcases Clean Architecture, Domain-Driven Design, and CQRS, with JWT + Google authentication, SignalR real-time chat/presence, OpenTelemetry observability, and a Testcontainers-based integration test suite.
 
 ➡️ **See the dedicated [Backend README](./src/API/README.md)** for the full architecture description, API surface, configuration, and how to run it.
+
+## 🔔 Notifications Service
+
+A separate service that stores notifications in **PostgreSQL** and delivers them over SignalR. Delivery is at-least-once: idempotent intake, a delivery outbox with retries and backoff, client acknowledgements, and replay when an offline user reconnects.
+
+➡️ **See the [Notifications README](./src/Notifications/README.md)** for the producer API, the client contract, and configuration.
 
 *(For architectural plans and past/future refactoring, see [ARCHITECTURE_ENHANCEMENTS.md](./ARCHITECTURE_ENHANCEMENTS.md))*
 
@@ -72,6 +79,7 @@ To elevate this project to full production readiness and solidify it as a stando
 - **.NET 10 SDK**
 - **Node.js** and **npm** (for the Angular client)
 - **SQL Server** (or Docker to run the provided SQL Server container via `docker-compose`)
+- **PostgreSQL** for the notifications service (or Docker: `docker compose up -d notifications-db`)
 - A **Cloudinary account** (for storing profile pictures)
 - A **Google Cloud account** (optional, for Google Sign-In)
 
@@ -87,4 +95,4 @@ To elevate this project to full production readiness and solidify it as a stando
    - Navigate to `src/UI`.
    - Run `npm install`, then `npm start` (or `ng serve`) and open `http://localhost:4200`.
 5. **Or run the full stack with Docker**:
-   - `docker compose up --build` (API + SQL Server + Aspire Dashboard).
+   - `docker compose up --build` (API + SQL Server + Notifications service + PostgreSQL + Aspire Dashboard).

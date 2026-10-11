@@ -25,6 +25,33 @@ services:
       - app-db-data:/var/opt/mssql
     networks:
       - app-network
+  notifications-api:
+    container_name: socialapp_notifications_api
+    image: ${DOCKER_REGISTRY-}notifications-api
+    build:
+      context: .
+      dockerfile: src/Notifications/Notifications.API/Dockerfile
+    depends_on:
+      - notifications-db
+    networks:
+      - app-network
+    environment:
+      # Aspire Dashboard
+      - OTEL_EXPORTER_OTLP_ENDPOINT=http://api.aspire-dashboard:18889
+      - OTEL_EXPORTER_OTLP_PROTOCOL=grpc
+  notifications-db:
+    container_name: socialapp_notifications_db
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_DB: "notifications"
+      POSTGRES_USER: "notifications"
+      POSTGRES_PASSWORD: "Password123!"  # Local development only
+    ports:
+      - "5432:5432"  # Expose notifications DB on localhost:5432
+    volumes:
+      - notifications-db-data:/var/lib/postgresql/data
+    networks:
+      - app-network
   api.aspire-dashboard:
     container_name: aspire_dashboard
     image: mcr.microsoft.com/dotnet/aspire-dashboard:13
@@ -40,3 +67,4 @@ networks:
 
 volumes:
   app-db-data:
+  notifications-db-data:

@@ -8,7 +8,9 @@ For local testing and deployment, the project uses `docker compose`.
 ### Services Defined:
 - **api** (`socialapp_api`): the ASP.NET Core API, built from `src/API/API/Dockerfile`. It connects to the database as `Server=app-db,1433;Database=AppDb` (set in `docker-compose.override.yml`).
 - **app-db** (`socialapp_db`): SQL Server 2022, published on `localhost:1433` (user `sa`, password `Password123!`), with data kept in the `app-db-data` volume.
-- **api.aspire-dashboard** (`aspire_dashboard`): the Aspire Dashboard on `http://localhost:18888`, which receives the API's OpenTelemetry traces, metrics and logs.
+- **notifications-api** (`socialapp_notifications_api`): the notifications service, built from `src/Notifications/Notifications.API/Dockerfile` and published on `http://localhost:5010`. It connects to `notifications-db`. `Jwt:*` and `Intake:ApiKey` come from the mounted user-secrets store it shares with the API.
+- **notifications-db** (`socialapp_notifications_db`): PostgreSQL 17, published on `localhost:5432` (database/user `notifications`, password `Password123!`), with data kept in the `notifications-db-data` volume.
+- **api.aspire-dashboard** (`aspire_dashboard`): the Aspire Dashboard on `http://localhost:18888`, which receives OpenTelemetry traces, metrics and logs from the API and the notifications service.
 
 ### Running the Stack:
 Ensure Docker is running on your machine, then execute:
@@ -35,3 +37,4 @@ Deploys happen only from `master`. Follow the `release/*` / `hotfix/*` flow in `
 - In production, the `migrate-database` job in `api-deploy.yml` runs `dotnet ef database update` against the production database (`DB_CONNECTION_STRING` secret) *before* the new build is deployed.
 - The API applies migrations on startup (`DatabaseInitializer`) **only in `Development`**. In every environment it seeds the essential reference data (roles, countries, cities); the admin and test users are seeded only in `Development`. This keeps several instances from racing to migrate at startup.
 - Never call `context.Database.EnsureCreated()`: it bypasses migrations entirely.
+- The notifications service follows the same rule: it migrates at startup only in `Development`. It isn't part of `api-deploy.yml` yet; production migrations for it have to run `dotnet ef database update --connection ...` (see `scripts/EfCoreMigrations.md`).

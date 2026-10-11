@@ -1,0 +1,28 @@
+namespace Notifications.API.Common;
+
+public static class HealthCheckResponseFormatter
+{
+    private static readonly JsonSerializerOptions _jsonOptions = new()
+    {
+        WriteIndented = true
+    };
+
+    public static Task WriteHealthCheckResponse(HttpContext context, HealthReport report)
+    {
+        context.Response.ContentType = "application/json";
+
+        var response = new
+        {
+            status = report.Status.ToString(),
+            checks = report.Entries.Select(e => new
+            {
+                name = e.Key,
+                status = e.Value.Status.ToString(),
+                description = e.Value.Description,
+                duration = e.Value.Duration.TotalMilliseconds
+            })
+        };
+
+        return context.Response.WriteAsync(JsonSerializer.Serialize(response, _jsonOptions));
+    }
+}

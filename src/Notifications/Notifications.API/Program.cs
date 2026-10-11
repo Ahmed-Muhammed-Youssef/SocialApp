@@ -1,23 +1,44 @@
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-// Learn more about configuring OpenAPI at https://aka.ms
-builder.Services.AddOpenApi();
+builder
+    .AddGenericServices()
+    .AddErrorHandling()
+    .AddObservability()
+    .AddAuth()
+    .AddDatabase()
+    .AddDelivery();
 
 var app = builder.Build();
+
+await DatabaseInitializer.InitializeAsync(app.Services);
 
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
 }
 
+app.UseExceptionHandler();
+
 app.UseHttpsRedirection();
 
-app.MapPost("/push", () =>
+app.UseCors(DependencyInjection.CorsPolicyName);
+
+app.UseAuthentication();
+app.UseAuthorization();
+
+app.MapPushEndpoint();
+app.MapHub<NotificationsHub>(NotificationsHub.Route);
+
+// Health endpoints
+app.MapHealthChecks("/health/live", new HealthCheckOptions
 {
-    return TypedResults.Ok();
-})
-.WithName("push");
+    Predicate = check => check.Tags.Contains("live")
+});
 
-app.Run();
+app.MapHealthChecks("/health/ready", new HealthCheckOptions
+{
+    Predicate = check => check.Tags.Contains("ready"),
+    ResponseWriter = HealthCheckResponseFormatter.WriteHealthCheckResponse
+});
 
+await app.RunAsync();

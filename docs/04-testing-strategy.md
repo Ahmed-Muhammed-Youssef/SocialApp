@@ -17,6 +17,7 @@ Integration tests ensure that the API, Database, and external dependencies work 
 - **Testcontainers:** Instead of an In-Memory Database, we use `Testcontainers` (specifically `Testcontainers.MsSql`) to spin up an ephemeral SQL Server instance using Docker for *true* integration testing.
 - **WireMock.Net:** External APIs (like Google OAuth token validation) are mocked using `WireMock.Net` to prevent flaky tests relying on external networks.
 - **Location:** `test/integration/API.Test`.
+- **Notifications service:** `test/integration/Notifications.API.Test` uses `Testcontainers.PostgreSql`. It covers idempotent intake and API-key auth, and drives real SignalR clients (`Microsoft.AspNetCore.SignalR.Client` over the test server) through delivery, ack, re-send, park/replay, give-up and expiry. The same project holds pure unit tests for the retry and transition policy (`Deliveries/DeliveryPolicyTests`).
 
 ## How to Run the Tests
 
@@ -31,7 +32,7 @@ dotnet test --project test/unit/Shared.Test --filter-method "*Success*"         
 
 Tests run on **Microsoft.Testing.Platform** (selected in `global.json`), not VSTest. As a result, `dotnet test` takes `--solution` / `--project` rather than a bare path, and the VSTest filter `--filter "FullyQualifiedName~..."` does not work. Use xUnit v3's `--filter-class`, `--filter-method`, `--filter-namespace`, `--filter-trait` or `--filter-query` instead.
 
-*(Note: Running integration tests requires Docker Desktop or an equivalent container runtime to be running locally so Testcontainers can start the SQL Server container).*
+*(Note: Running integration tests requires Docker Desktop or an equivalent container runtime to be running locally so Testcontainers can start the SQL Server and PostgreSQL containers).*
 
 ## 3. Performance Benchmarks
 `benchmarks/API` contains BenchmarkDotNet micro-benchmarks for the data-access paths. `dotnet test` does not run them, and their numbers depend on how much data is in the database. Seed at a known scale first, with `-Reset` so data from a previous run doesn't skew the numbers:

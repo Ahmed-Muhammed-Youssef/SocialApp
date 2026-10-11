@@ -38,5 +38,20 @@ The `API` layer acts as the entry point.
 - **Controllers:** Thin controllers that map HTTP requests to Mediator queries/commands.
 - **Middleware:** Global exception handling, Authentication (JWT), and CORS configuration.
 
+## 5. Notifications Service
+`src/Notifications/Notifications.API` is a separate, single-project service with its own **PostgreSQL** database (EF Core + Npgsql, snake_case naming). Producers call `POST /notifications/push`. Users receive notifications over SignalR at `/hubs/notifications`, authenticated with the same JWT as the API.
+
+Its reliability comes from two tables:
+- **`notifications`, the inbox.** `event_id` is unique, so a producer can retry safely: duplicates are ignored.
+- **`deliveries`, an internal outbox.** It has one row per recipient per channel. The row is written in the same transaction as the notification.
+
+A `DeliveryWorker` per channel claims due rows with `FOR UPDATE SKIP LOCKED` and a lease, sends them, and records the outcome. Outcomes are:
+- retry with exponential backoff,
+- park while the recipient is offline, replayed when they reconnect,
+- wait for the client's acknowledgement, re-sending if it doesn't arrive,
+- fail or expire.
+
+Channels sit behind `INotificationChannel`, so FCM or email can be added alongside SignalR. See the [Notifications README](../src/Notifications/README.md) for the full state machine and contracts.
+
 ## Architectural Enhancements (Roadmap)
 For details on upcoming refactoring and enhancements (like Domain Services, Domain Events, and enhanced Observability), please refer to the `ARCHITECTURE_ENHANCEMENTS.md` file in the root directory.
