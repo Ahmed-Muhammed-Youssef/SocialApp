@@ -3,8 +3,11 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 // Learn more about configuring OpenAPI at https://aka.ms
 builder.Services.AddOpenApi();
+builder.AddDatabase();
 
 var app = builder.Build();
+
+await DatabaseInitializer.InitializeAsync(app);
 
 if (app.Environment.IsDevelopment())
 {
@@ -19,5 +22,4 @@ app.MapPost("/push", () =>
 })
 .WithName("push");
 
-app.Run();
-
+await app.RunAsync();
