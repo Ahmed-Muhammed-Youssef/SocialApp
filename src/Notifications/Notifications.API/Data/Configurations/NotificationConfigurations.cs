@@ -10,14 +10,16 @@ public class NotificationConfigurations : IEntityTypeConfiguration<Notification>
         builder.HasKey(n => n.Id);
 
         // Properties
-        builder.Property(n => n.EventId).IsRequired().HasMaxLength(128);
-        builder.Property(n => n.Title).IsRequired().HasMaxLength(200);
-        builder.Property(n => n.Body).HasMaxLength(2000);
+        builder.Property(n => n.Source).IsRequired().HasMaxLength(NotificationLimits.SourceMaxLength);
+        builder.Property(n => n.EventId).IsRequired().HasMaxLength(NotificationLimits.EventIdMaxLength);
+        builder.Property(n => n.Type).IsRequired().HasMaxLength(NotificationLimits.TypeMaxLength);
+        builder.Property(n => n.Title).IsRequired().HasMaxLength(NotificationLimits.TitleMaxLength);
+        builder.Property(n => n.Body).HasMaxLength(NotificationLimits.BodyMaxLength);
         builder.Property(n => n.Data).HasColumnType("jsonb");
         builder.Property(n => n.CreatedAt).IsRequired();
 
-        // A duplicate event_id is how a repeated send from a producer is detected.
-        builder.HasIndex(n => n.EventId).IsUnique();
+        // A duplicate (source, event_id) is how a repeated send from a producer is detected.
+        builder.HasIndex(n => new { n.Source, n.EventId }).IsUnique();
 
         builder.HasMany(n => n.Recipients)
             .WithOne(r => r.Notification)

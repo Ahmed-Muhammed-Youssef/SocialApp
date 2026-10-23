@@ -10,7 +10,7 @@ public class UserNotificationConfigurations : IEntityTypeConfiguration<UserNotif
         builder.HasKey(r => new { r.NotificationId, r.RecipientId });
 
         // Properties
-        builder.Property(r => r.RecipientId).IsRequired().HasMaxLength(64);
+        builder.Property(r => r.RecipientId).IsRequired().HasMaxLength(NotificationLimits.RecipientIdMaxLength);
         builder.Property(r => r.CreatedAt).IsRequired();
         builder.Property(r => r.ReadAt).IsRequired(false);
 

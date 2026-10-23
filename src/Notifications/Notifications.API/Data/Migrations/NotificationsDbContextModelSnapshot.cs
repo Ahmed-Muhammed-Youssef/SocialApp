@@ -17,7 +17,7 @@ namespace Notifications.API.Data.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "10.0.11")
+                .HasAnnotation("ProductVersion", "10.0.13")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
@@ -48,18 +48,30 @@ namespace Notifications.API.Data.Migrations
                         .HasColumnType("character varying(128)")
                         .HasColumnName("event_id");
 
+                    b.Property<string>("Source")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("character varying(64)")
+                        .HasColumnName("source");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("character varying(200)")
                         .HasColumnName("title");
 
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("character varying(64)")
+                        .HasColumnName("type");
+
                     b.HasKey("Id")
                         .HasName("pk_notifications");
 
-                    b.HasIndex("EventId")
+                    b.HasIndex("Source", "EventId")
                         .IsUnique()
-                        .HasDatabaseName("ix_notifications_event_id");
+                        .HasDatabaseName("ix_notifications_source_event_id");
 
                     b.ToTable("notifications", (string)null);
                 });
