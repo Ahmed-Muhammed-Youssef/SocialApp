@@ -10,6 +10,10 @@ public static class NotificationEndpoints
     public static void MapNotificationEndpoints(this WebApplication app)
     {
         app.MapPushNotification();
+        app.MapListNotifications();
+        app.MapMarkNotificationRead();
+        app.MapMarkAllNotificationsRead();
+        app.MapGetUnreadCount();
 
         app.MapHub<NotificationsHub>("/hubs/notifications");
     }

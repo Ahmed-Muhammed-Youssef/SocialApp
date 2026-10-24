@@ -11,10 +11,13 @@ public static class PushNotificationEndpoint
         return endpoints.MapPost("/internal/notifications", HandleAsync)
             .AllowAnonymous()
             .AddEndpointFilter<ValidationFilter<PushNotificationRequest>>()
-            .WithName("Push");
+            .WithName("Push")
+            .Produces(StatusCodes.Status201Created)
+            .Produces(StatusCodes.Status200OK)
+            .ProducesValidationProblem();
     }
 
-    public static async Task<IResult> HandleAsync(
+    public static async Task<Results<Created, Ok>> HandleAsync(
         PushNotificationRequest request,
         NotificationsDbContext db,
         IHubContext<NotificationsHub, INotificationsClient> hubContext,

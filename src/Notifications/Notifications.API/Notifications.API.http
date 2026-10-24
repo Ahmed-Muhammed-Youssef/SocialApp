@@ -1,0 +1,49 @@
+@Notifications.API_HostAddress = http://localhost:5014
+@Token = YOUR_JWT_TOKEN_HERE
+
+### Health Check (Live)
+GET {{Notifications.API_HostAddress}}/health/live
+Accept: application/json
+
+### Health Check (Ready - includes Database check)
+GET {{Notifications.API_HostAddress}}/health
+Accept: application/json
+
+### Push Notification (Internal Event Producer)
+POST {{Notifications.API_HostAddress}}/internal/notifications
+Content-Type: application/json
+
+{
+  "source": "social-api",
+  "eventId": "evt-001-test",
+  "type": "direct-message",
+  "title": "New Message Received",
+  "body": "Ahmed sent you a direct message.",
+  "data": "{\"conversationId\": 123}",
+  "recipientIds": [
+    "user-12345"
+  ]
+}
+
+### List Notifications for Current User (Paged)
+GET {{Notifications.API_HostAddress}}/notifications?page=1&pageSize=10
+Authorization: Bearer {{Token}}
+Accept: application/json
+
+### List Unread Notifications Only
+GET {{Notifications.API_HostAddress}}/notifications?page=1&pageSize=10&unreadOnly=true
+Authorization: Bearer {{Token}}
+Accept: application/json
+
+### Get Unread Notification Count
+GET {{Notifications.API_HostAddress}}/notifications/unread-count
+Authorization: Bearer {{Token}}
+Accept: application/json
+
+### Mark Single Notification As Read
+PATCH {{Notifications.API_HostAddress}}/notifications/1/read
+Authorization: Bearer {{Token}}
+
+### Mark All Notifications As Read
+POST {{Notifications.API_HostAddress}}/notifications/read-all
+Authorization: Bearer {{Token}}

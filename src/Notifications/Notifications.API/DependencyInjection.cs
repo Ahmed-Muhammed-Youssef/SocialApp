@@ -3,6 +3,10 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.IdentityModel.Tokens;
 using Notifications.API.Hubs;
+using OpenTelemetry;
+using OpenTelemetry.Metrics;
+using OpenTelemetry.Resources;
+using OpenTelemetry.Trace;
 
 namespace Notifications.API;
 
@@ -95,6 +99,41 @@ public static class DependencyInjection
                       .AllowAnyMethod()
                       .AllowAnyHeader()
                       .AllowCredentials());
+        });
+
+        return builder;
+    }
+
+    public static IHostApplicationBuilder AddHealthChecksServices(this IHostApplicationBuilder builder)
+    {
+        builder.Services.AddHealthChecks()
+            .AddDbContextCheck<NotificationsDbContext>("db", tags: ["live", "ready"]);
+        return builder;
+    }
+
+    public static IHostApplicationBuilder AddObservability(this IHostApplicationBuilder builder)
+    {
+        builder.Services
+            .AddOpenTelemetry()
+            .ConfigureResource(resource => resource.AddService(builder.Environment.ApplicationName))
+            .WithTracing(tracing => tracing
+                .AddHttpClientInstrumentation()
+                .AddAspNetCoreInstrumentation()
+                .AddEntityFrameworkCoreInstrumentation())
+            .WithMetrics(metrics => metrics
+                .AddHttpClientInstrumentation()
+                .AddAspNetCoreInstrumentation()
+                .AddRuntimeInstrumentation());
+
+        if (builder.Environment.IsDevelopment())
+        {
+            builder.Services.AddOpenTelemetry().UseOtlpExporter();
+        }
+
+        builder.Logging.AddOpenTelemetry(options =>
+        {
+            options.IncludeScopes = true;
+            options.IncludeFormattedMessage = true;
         });
 
         return builder;

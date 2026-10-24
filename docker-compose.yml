@@ -13,6 +13,16 @@ services:
       # Aspire Dashboard
       - OTEL_EXPORTER_OTLP_ENDPOINT=http://api.aspire-dashboard:18889
       - OTEL_EXPORTER_OTLP_PROTOCOL=grpc
+  notifications-api:
+    container_name: socialapp_notifications_api
+    image: ${DOCKER_REGISTRY-}notifications-api
+    build:
+      context: .
+      dockerfile: src/Notifications/Notifications.API/Dockerfile
+    depends_on:
+      - notifications-db
+    networks:
+      - app-network
   app-db:
     container_name: socialapp_db
     image: mcr.microsoft.com/mssql/server:2022-latest

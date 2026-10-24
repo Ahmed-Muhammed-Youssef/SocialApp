@@ -5,11 +5,14 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddOpenApi();
+builder.Services.AddProblemDetails();
 builder.AddDatabase();
 builder.AddValidation();
 builder.AddJwtAuthentication();
 builder.AddSignalRServices();
 builder.AddCorsPolicy();
+builder.AddHealthChecksServices();
+builder.AddObservability();
 
 var app = builder.Build();
 
@@ -20,10 +23,14 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
 }
 
+app.UseExceptionHandler();
 app.UseCors(DependencyInjection.CorsPolicyName);
 app.UseAuthentication();
 app.UseAuthorization();
 app.UseHttpsRedirection();
+
+app.MapHealthChecks("/health");
+app.MapHealthChecks("/health/live");
 
 app.MapNotificationEndpoints();
 
