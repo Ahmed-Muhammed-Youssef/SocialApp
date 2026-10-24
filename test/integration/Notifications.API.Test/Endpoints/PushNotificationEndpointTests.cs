@@ -10,14 +10,14 @@ using Notifications.API.Contracts;
 using Notifications.API.Entities;
 using Notifications.API.Test.Infrastructure;
 
-namespace Notifications.API.Test.Features;
+namespace Notifications.API.Test.Endpoints;
 
 /// <summary>
 /// Tests for <c>POST /internal/notifications</c> — the producer-facing endpoint that persists a
 /// notification and fans it out to the given recipient list.
 /// </summary>
 [Collection(nameof(NotificationsTestCollection))]
-public sealed class PushTests(NotificationsWebAppFactory factory) : NotificationsTestFixture(factory)
+public sealed class PushNotificationEndpointTests(NotificationsWebAppFactory factory) : NotificationsTestFixture(factory)
 {
     // ──────────────────────────────────────────────────────────────
     //  Happy path
@@ -335,3 +335,4 @@ public sealed class PushTests(NotificationsWebAppFactory factory) : Notification
         };
     }
 }
+

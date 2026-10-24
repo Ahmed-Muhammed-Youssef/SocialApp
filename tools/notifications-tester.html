@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Notifications Service - SignalR & API Tester</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/8.0.7/signalr.min.js"></script>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card-bg: #1e293b;
+      --border: #334155;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --success: #22c55e;
+      --danger: #ef4444;
+      --badge-bg: #334155;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+    body { background: var(--bg); color: var(--text); padding: 24px; }
+    h1 { font-size: 1.5rem; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 8px; padding: 18px; }
+    .card h2 { font-size: 1.1rem; margin-bottom: 14px; border-bottom: 1px solid var(--border); padding-bottom: 8px; }
+    label { display: block; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 4px; margin-top: 10px; }
+    input, textarea { width: 100%; padding: 8px 12px; background: #0f172a; border: 1px solid var(--border); border-radius: 6px; color: var(--text); font-size: 0.9rem; }
+    input:focus, textarea:focus { outline: none; border-color: var(--primary); }
+    .btn-row { display: flex; gap: 10px; margin-top: 14px; }
+    button { padding: 8px 16px; border-radius: 6px; font-weight: 600; cursor: pointer; border: none; font-size: 0.9rem; transition: background 0.2s; }
+    .btn-primary { background: var(--primary); color: white; }
+    .btn-primary:hover { background: var(--primary-hover); }
+    .btn-danger { background: var(--danger); color: white; }
+    .btn-secondary { background: var(--badge-bg); color: var(--text); }
+    .status-badge { display: inline-block; padding: 4px 10px; border-radius: 9999px; font-size: 0.8rem; font-weight: 600; }
+    .status-disconnected { background: #7f1d1d; color: #fca5a5; }
+    .status-connected { background: #14532d; color: #86efac; }
+    .log-stream { height: 380px; overflow-y: auto; background: #090d16; border: 1px solid var(--border); border-radius: 6px; padding: 12px; display: flex; flex-direction: column; gap: 10px; margin-top: 10px; }
+    .log-item { background: var(--card-bg); border-left: 4px solid var(--primary); padding: 10px 14px; border-radius: 4px; }
+    .log-item-header { display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--text-muted); margin-bottom: 4px; }
+    .log-item-title { font-weight: 600; font-size: 0.95rem; }
+    .log-item-body { font-size: 0.85rem; margin-top: 4px; color: #cbd5e1; }
+    .log-item-data { font-family: monospace; font-size: 0.75rem; background: #0f172a; padding: 6px; border-radius: 4px; margin-top: 6px; color: #a5f3fc; }
+  </style>
+</head>
+<body>
+
+  <h1>
+    <span>🔔 Notifications Service SignalR Tester</span>
+    <span id="statusBadge" class="status-badge status-disconnected">Disconnected</span>
+  </h1>
+
+  <div class="grid">
+    <!-- Left Column: SignalR Connection & Producer -->
+    <div>
+      <div class="card">
+        <h2>1. SignalR Client Connection</h2>
+        <label>Hub URL:</label>
+        <input id="hubUrl" value="http://localhost:5014/hubs/notifications" />
+
+        <label>User ID (NameIdentifier):</label>
+        <input id="userId" value="user-12345" />
+
+        <label>Bearer Token (JWT with sub/nameid = User ID):</label>
+        <textarea id="jwtToken" rows="3" placeholder="Paste JWT token here, or click 'Generate Dev Token'"></textarea>
+
+        <div class="btn-row">
+          <button class="btn-secondary" onclick="generateDevToken()">Generate Dev Token</button>
+          <button id="connectBtn" class="btn-primary" onclick="toggleConnect()">Connect</button>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top: 20px;">
+        <h2>2. Push Test Event (POST /internal/notifications)</h2>
+        <label>Event Type:</label>
+        <input id="eventType" value="direct-message" />
+
+        <label>Title:</label>
+        <input id="eventTitle" value="New message from Alice" />
+
+        <label>Body:</label>
+        <input id="eventBody" value="Hey! Are we still meeting at 3pm?" />
+
+        <div class="btn-row">
+          <button class="btn-primary" onclick="pushTestEvent()">Push Notification</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Column: Live Notifications Stream -->
+    <div class="card">
+      <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); padding-bottom: 8px;">
+        <h2>3. Live SignalR Received Stream (<span id="eventCount">0</span>)</h2>
+        <button class="btn-secondary" style="padding: 4px 8px; font-size: 0.75rem;" onclick="clearStream()">Clear</button>
+      </div>
+      <div id="logStream" class="log-stream">
+        <div style="color: var(--text-muted); font-size: 0.85rem; text-align: center; margin-top: 40px;">
+          Connect to SignalR to observe incoming notifications in real-time.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let connection = null;
+    let eventCounter = 0;
+
+    // Fast client-side JWT generator using HS256 for local development
+    async function generateDevToken() {
+      const userId = document.getElementById('userId').value.trim();
+      const secret = "key-must-be-at-least-64-characters---------key-must-be-at-least-64-characters--------key-must-be-at-least-64-characters";
+
+      const header = { alg: "HS256", typ: "JWT" };
+      const now = Math.floor(Date.now() / 1000);
+      const payload = {
+        sub: userId,
+        nameid: userId,
+        "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier": userId,
+        iss: "socialapp.api",
+        aud: "social.app",
+        nbf: now,
+        exp: now + 3600 * 24
+      };
+
+      const base64UrlEncode = (obj) => {
+        const str = typeof obj === 'string' ? obj : JSON.stringify(obj);
+        return btoa(str).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+      };
+
+      const encodedHeader = base64UrlEncode(header);
+      const encodedPayload = base64UrlEncode(payload);
+      const dataToSign = `${encodedHeader}.${encodedPayload}`;
+
+      const encoder = new TextEncoder();
+      const keyData = encoder.encode(secret);
+      const key = await crypto.subtle.importKey(
+        'raw', keyData, { name: 'HMAC', hash: 'SHA-256' }, false, ['sign']
+      );
+      const signature = await crypto.subtle.sign('HMAC', key, encoder.encode(dataToSign));
+      const encodedSignature = btoa(String.fromCharCode(...new Uint8Array(signature)))
+        .replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+
+      const token = `${dataToSign}.${encodedSignature}`;
+      document.getElementById('jwtToken').value = token;
+    }
+
+    async function toggleConnect() {
+      if (connection && connection.state === signalR.HubConnectionState.Connected) {
+        await connection.stop();
+        return;
+      }
+
+      const hubUrl = document.getElementById('hubUrl').value.trim();
+      let token = document.getElementById('jwtToken').value.trim();
+      if (!token) {
+        await generateDevToken();
+        token = document.getElementById('jwtToken').value.trim();
+      }
+
+      connection = new signalR.HubConnectionBuilder()
+        .withUrl(hubUrl, {
+          accessTokenFactory: () => token
+        })
+        .withAutomaticReconnect()
+        .build();
+
+      connection.on("ReceiveNotification", (n) => {
+        appendNotification(n);
+      });
+
+      connection.onreconnecting(() => updateStatus("Reconnecting...", "status-disconnected"));
+      connection.onreconnected(() => updateStatus("Connected", "status-connected"));
+      connection.onclose(() => {
+        updateStatus("Disconnected", "status-disconnected");
+        document.getElementById('connectBtn').textContent = "Connect";
+        document.getElementById('connectBtn').className = "btn-primary";
+      });
+
+      try {
+        updateStatus("Connecting...", "status-disconnected");
+        await connection.start();
+        updateStatus("Connected", "status-connected");
+        document.getElementById('connectBtn').textContent = "Disconnect";
+        document.getElementById('connectBtn').className = "btn-danger";
+      } catch (err) {
+        alert("Failed to connect to SignalR: " + err.message);
+        updateStatus("Disconnected", "status-disconnected");
+      }
+    }
+
+    function updateStatus(text, className) {
+      const badge = document.getElementById('statusBadge');
+      badge.textContent = text;
+      badge.className = `status-badge ${className}`;
+    }
+
+    function appendNotification(n) {
+      if (eventCounter === 0) {
+        document.getElementById('logStream').innerHTML = '';
+      }
+      eventCounter++;
+      document.getElementById('eventCount').textContent = eventCounter;
+
+      const item = document.createElement('div');
+      item.className = 'log-item';
+      item.innerHTML = `
+        <div class="log-item-header">
+          <span>Type: <b>${escapeHtml(n.type)}</b></span>
+          <span>${new Date(n.createdAt).toLocaleTimeString()}</span>
+        </div>
+        <div class="log-item-title">${escapeHtml(n.title)}</div>
+        <div class="log-item-body">${escapeHtml(n.body || '')}</div>
+        ${n.data ? `<div class="log-item-data">${escapeHtml(n.data)}</div>` : ''}
+      `;
+      const stream = document.getElementById('logStream');
+      stream.prepend(item);
+    }
+
+    function clearStream() {
+      document.getElementById('logStream').innerHTML = '';
+      eventCounter = 0;
+      document.getElementById('eventCount').textContent = 0;
+    }
+
+    function escapeHtml(text) {
+      const div = document.createElement('div');
+      div.innerText = text;
+      return div.innerHTML;
+    }
+
+    async function pushTestEvent() {
+      const hubUrl = document.getElementById('hubUrl').value.trim();
+      const baseUrl = hubUrl.replace(/\/hubs\/notifications\/?$/, '');
+      const userId = document.getElementById('userId').value.trim();
+      const title = document.getElementById('eventTitle').value.trim();
+      const body = document.getElementById('eventBody').value.trim();
+      const type = document.getElementById('eventType').value.trim();
+
+      const payload = {
+        source: "tester-ui",
+        eventId: "test-" + Date.now(),
+        type: type,
+        title: title,
+        body: body,
+        recipientIds: [userId]
+      };
+
+      try {
+        const response = await fetch(`${baseUrl}/internal/notifications`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
+        });
+
+        if (response.ok) {
+          console.log("Push sent successfully!");
+        } else {
+          alert(`Push failed: HTTP ${response.status} - ${await response.text()}`);
+        }
+      } catch (err) {
+        alert("Push failed: " + err.message);
+      }
+    }
+  </script>
+</body>
+</html>
