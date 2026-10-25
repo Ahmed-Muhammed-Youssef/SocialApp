@@ -4,6 +4,7 @@ public sealed class NotificationsDbContext(DbContextOptions<NotificationsDbConte
 {
     public DbSet<Notification> Notifications => Set<Notification>();
     public DbSet<UserNotification> UserNotifications => Set<UserNotification>();
+    public DbSet<NotificationDelivery> NotificationDeliveries => Set<NotificationDelivery>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

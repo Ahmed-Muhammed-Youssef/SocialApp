@@ -3,12 +3,16 @@ using System.Net.Http.Json;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.AspNetCore.TestHost;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Notifications.API.Hubs;
 using Notifications.API.Contracts;
+using Notifications.API.Data;
+using Notifications.API.Delivery;
 using Notifications.API.Entities;
 using Notifications.API.Test.Infrastructure;
+using Npgsql;
 
 namespace Notifications.API.Test.Endpoints;
 
@@ -160,6 +164,87 @@ public sealed class PushNotificationEndpointTests(NotificationsWebAppFactory fac
         List<UserNotification> stored = await GetStoredNotificationsAsync(userId);
 
         Assert.Equal("direct-message", Assert.Single(stored).Notification!.Type);
+    }
+
+    // ──────────────────────────────────────────────────────────────
+    //  Delivery outbox
+    // ──────────────────────────────────────────────────────────────
+
+    [Fact]
+    public async Task Push_ShouldQueueAPendingSignalRDelivery()
+    {
+        // Arrange
+        HttpClient client = CreateClient();
+        var request = MakeRequest();
+
+        // Act
+        HttpResponseMessage response = await client.PostAsJsonAsync(
+            Routes.Push, request, TestContext.Current.CancellationToken);
+        response.EnsureSuccessStatusCode();
+
+        // Assert
+        NotificationDelivery delivery = Assert.Single(await GetDeliveriesAsync(request.Source, request.EventId));
+
+        Assert.Equal(DeliveryChannels.SignalR, delivery.Channel);
+        Assert.Equal(DeliveryStatus.Pending, delivery.Status);
+        Assert.Equal(0, delivery.Attempts);
+        Assert.Null(delivery.ProcessedAt);
+        Assert.True(delivery.NextAttemptAt <= DateTimeOffset.UtcNow);
+    }
+
+    [Fact]
+    public async Task Push_ShouldNotQueueAgain_WhenSameEventIdSentTwice()
+    {
+        // Arrange
+        HttpClient client = CreateClient();
+        var request = MakeRequest();
+
+        // Act
+        HttpResponseMessage first = await client.PostAsJsonAsync(
+            Routes.Push, request, TestContext.Current.CancellationToken);
+        HttpResponseMessage second = await client.PostAsJsonAsync(
+            Routes.Push, request, TestContext.Current.CancellationToken);
+
+        first.EnsureSuccessStatusCode();
+        second.EnsureSuccessStatusCode();
+
+        // Assert
+        Assert.Single(await GetDeliveriesAsync(request.Source, request.EventId));
+    }
+
+    [Fact]
+    public async Task Database_ShouldReject_AFinalStatusWithoutProcessedAt()
+    {
+        // Arrange — a real notification to attach the delivery to
+        HttpClient client = CreateClient();
+        var request = MakeRequest();
+        HttpResponseMessage response = await client.PostAsJsonAsync(
+            Routes.Push, request, TestContext.Current.CancellationToken);
+        response.EnsureSuccessStatusCode();
+
+        NotificationDelivery existing = Assert.Single(await GetDeliveriesAsync(request.Source, request.EventId));
+
+        using IServiceScope scope = Factory.Services.CreateScope();
+        var db = scope.ServiceProvider.GetRequiredService<NotificationsDbContext>();
+
+        db.NotificationDeliveries.Add(new NotificationDelivery
+        {
+            NotificationId = existing.NotificationId,
+            Channel = "check-test", // another channel, so the unique index is not what fails
+            Status = DeliveryStatus.Delivered,
+            ProcessedAt = null,
+            CreatedAt = DateTimeOffset.UtcNow,
+            NextAttemptAt = DateTimeOffset.UtcNow,
+        });
+
+        // Act
+        DbUpdateException ex = await Assert.ThrowsAsync<DbUpdateException>(
+            () => db.SaveChangesAsync(TestContext.Current.CancellationToken));
+
+        // Assert
+        PostgresException pg = Assert.IsType<PostgresException>(ex.InnerException);
+        Assert.Equal(PostgresErrorCodes.CheckViolation, pg.SqlState);
+        Assert.Equal("ck_notification_deliveries_processed_at_matches_status", pg.ConstraintName);
     }
 
     // ──────────────────────────────────────────────────────────────

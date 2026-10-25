@@ -35,6 +35,17 @@ public abstract class NotificationsTestFixture : IClassFixture<NotificationsWebA
             .ToListAsync(TestContext.Current.CancellationToken);
     }
 
+    /// <summary>Returns the delivery rows of the notification sent as (<paramref name="source"/>, <paramref name="eventId"/>).</summary>
+    protected async Task<List<NotificationDelivery>> GetDeliveriesAsync(string source, string eventId)
+    {
+        using IServiceScope scope = Factory.Services.CreateScope();
+        var db = scope.ServiceProvider.GetRequiredService<NotificationsDbContext>();
+
+        return await db.NotificationDeliveries
+            .Where(d => d.Notification!.Source == source && d.Notification.EventId == eventId)
+            .ToListAsync(TestContext.Current.CancellationToken);
+    }
+
     /// <summary>Returns a client with a valid JWT for the given user id.</summary>
     protected HttpClient CreateAuthenticatedClient(string userId = "user-1")
     {

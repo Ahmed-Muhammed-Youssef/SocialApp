@@ -76,6 +76,67 @@ namespace Notifications.API.Data.Migrations
                     b.ToTable("notifications", (string)null);
                 });
 
+            modelBuilder.Entity("Notifications.API.Entities.NotificationDelivery", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
+
+                    b.Property<int>("Attempts")
+                        .HasColumnType("integer")
+                        .HasColumnName("attempts");
+
+                    b.Property<string>("Channel")
+                        .IsRequired()
+                        .HasMaxLength(32)
+                        .HasColumnType("character varying(32)")
+                        .HasColumnName("channel");
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("created_at");
+
+                    b.Property<DateTimeOffset?>("ExpiresAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("expires_at");
+
+                    b.Property<string>("LastError")
+                        .HasMaxLength(2000)
+                        .HasColumnType("character varying(2000)")
+                        .HasColumnName("last_error");
+
+                    b.Property<DateTimeOffset>("NextAttemptAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("next_attempt_at");
+
+                    b.Property<Guid>("NotificationId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("notification_id");
+
+                    b.Property<DateTimeOffset?>("ProcessedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("processed_at");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasMaxLength(16)
+                        .HasColumnType("character varying(16)")
+                        .HasColumnName("status");
+
+                    b.HasKey("Id")
+                        .HasName("pk_notification_deliveries");
+
+                    b.HasIndex("NotificationId", "Channel")
+                        .IsUnique()
+                        .HasDatabaseName("ix_notification_deliveries_notification_id_channel");
+
+                    b.ToTable("notification_deliveries", null, t =>
+                        {
+                            t.HasCheckConstraint("ck_notification_deliveries_processed_at_matches_status", "(status = 'Pending') = (processed_at IS NULL)");
+                        });
+                });
+
             modelBuilder.Entity("Notifications.API.Entities.UserNotification", b =>
                 {
                     b.Property<Guid>("NotificationId")
@@ -107,6 +168,18 @@ namespace Notifications.API.Data.Migrations
                         .HasDatabaseName("ix_user_notifications_recipient_id_created_at");
 
                     b.ToTable("user_notifications", (string)null);
+                });
+
+            modelBuilder.Entity("Notifications.API.Entities.NotificationDelivery", b =>
+                {
+                    b.HasOne("Notifications.API.Entities.Notification", "Notification")
+                        .WithMany()
+                        .HasForeignKey("NotificationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_notification_deliveries_notifications_notification_id");
+
+                    b.Navigation("Notification");
                 });
 
             modelBuilder.Entity("Notifications.API.Entities.UserNotification", b =>

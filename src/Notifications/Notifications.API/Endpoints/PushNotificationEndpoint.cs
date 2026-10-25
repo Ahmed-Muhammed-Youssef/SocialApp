@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.SignalR;
+using Notifications.API.Delivery;
 using Notifications.API.Hubs;
 using Npgsql;
 
@@ -53,6 +54,15 @@ public static class PushNotificationEndpoint
         };
 
         db.Notifications.Add(notification);
+
+        // Outbox: saved by the same SaveChangesAsync (one transaction) as the notification.
+        db.NotificationDeliveries.Add(new NotificationDelivery
+        {
+            NotificationId = notification.Id,
+            Channel = DeliveryChannels.SignalR,
+            CreatedAt = now,
+            NextAttemptAt = now,
+        });
 
         try
         {
